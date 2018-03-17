@@ -187,3 +187,5 @@ protocols:
     os_repo: "https://github.com/nikhita/nikhita.github.io"
     os_rcs_type: "git"
     os_src: "git@github.com:nikhita.github.io.git"
+
+theme: jekyll-theme-cayman
