@@ -5,7 +5,6 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
-# AWS Certified Solution Architect - Associate
 
 <!-- TOC START min:1 max:5 link:true update:true -->
 - [AWS Certified Solution Architect - Associate](#aws-certified-solution-architect---associate)
