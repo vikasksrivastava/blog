@@ -1,6 +1,6 @@
 
 # Site settings
-title: Nikhita Raghunath
+title: Devops
 name: Nikhita Raghunath
 subtitle: Learnings, Ramblings and Rants
 email: nikitaraghunath@gmail.com
@@ -28,7 +28,7 @@ defaults:
     scope:
       path: ""
     values:
-      author: "Nikhita Raghunath"
+      author: "Vikas Srivastava"
 
 
 # External gems
