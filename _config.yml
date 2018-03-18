@@ -8,7 +8,7 @@ description: >
   A personal website about technical things I find useful. Also, random ramblings and rants.
 baseurl: "/"
 url: "https://vikasksrivastava.github.io/"
-twitter_username: @vikassri
+twitter_username: vikassri
 github_username:  vikasksrivastava
 disqus_baseurl: "https://vikasksrivastava.github.io/"
 disqus_shortname: devopssimplified-com
