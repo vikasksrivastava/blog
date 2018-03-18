@@ -7,14 +7,25 @@ permalink: /about/
 <br>
 
 
-I am Nikhita Raghunath, an undergraduate from VJTI, Mumbai. I am an intern at [Red Hat](https://www.redhat.com/en) and work on the extensibility of [Kubernetes](https://kubernetes.io/). Previously, I was a Google Summer of Code (2017) student for the Cloud Native Computing Foundation (CNCF) and also worked on Kubernetes. You can know more about my GSoC work [here](https://github.com/nikhita/gsoc-meta-k8s).
+An experienced **CCIE Datacenter Engineer** having 9 years of experience , with recognized strength in implementing and supporting advanced **Enterprise Datacenters, cloud solutions** and applications. Ability to design, troubleshoot and optimize legacy and new datacenter designs. Keen in learning new technologies on my own, current interests include cloud solutions like **OpenStack, AWS and SDN, OpenFlow**. Successfully maintain complete professionalism and personal commitment with excellent communication and people skills and the ability to train, motivate and supervise a team.
 
-I am interested in backend applications, distributed systems and Linux. I like programming in Go, C++, C and Python. I also like to give talks at conferences and speak about my work.
+**Certifications:**
 
-This blog is used not only to catalogue projects that I embark on but also to serve as an outlet for my more long-form thoughts on software engineering as both a discipline and an industry.
+CCIE Datacenter # 42302
+AWS Certified Solutions Architect - Associate
+Mirantis Certified Openstack Administrator - Professional Level
+Redhat Certified Engineer (RHCE)
+VMware Certified Professional – Network Virtualization (VCP-NV)
+VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
+NetApp Certified Data Management Administrator (NCDA)
+Cisco Storage Networking Support Specialist (ICSNS)
+Cisco Data Center Unified Computing Support Specialist (DCUCI)
+CCNP Voice (CCNP-V)
+Cisco Certified Network Associate (CCNA)
+Certified Ethical Hacker (CEH)
+ITIL Foundation v3
 
-Feel free to reach out to me at these places.
-
+**Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches , Cisco Nexus 1000v, FC, FCoE, NetApp
 
 
 <div align="center">
