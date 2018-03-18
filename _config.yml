@@ -14,7 +14,7 @@ disqus_baseurl: "https://vikasksrivastava.github.io/"
 disqus_shortname: devopssimplified-com
 permalink: :title
 cover: "/assets/giphy.gif"
-logo: "/assets/nr-logo.jpg"
+logo: "/assets/nr-logo.png"
 ga_tracking_id: "UA-82647777-1"
 
 # Build settings
