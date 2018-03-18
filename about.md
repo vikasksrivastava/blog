@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About Me
-description: Nikhita Raghunath is an undergrad who is extremely passionate about software development, distributed systems and open source.
+description: Vikas Srivastava is extremely passionate about software development, distributed systems and open source.
 permalink: /about/
 ---
 <br>
