@@ -1,5 +1,9 @@
-## EIGRP Notes
-
+---
+layout: post
+title: EIGRP Tech Notes
+description: My Notes on EIGRP
+comments: true
+---
 Cisco added some of the features from link-state routing protocols to EIGRP which makes it far more advanced than a true distance vector routing protocol like RIP. This is why (probably the marketing department) calls EIGRP an **advanced distance vector or hybrid routing protocol** .
 
 
