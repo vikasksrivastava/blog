@@ -26,16 +26,16 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
     - Certified Ethical Hacker (CEH)
     - ITIL Foundation v3
 
-**Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches , Cisco Nexus 1000v, FC, FCoE, NetApp
+**Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches, Cisco Nexus 1000v, FC, FCoE, NetApp
 
 #### Systems Engineer
-- `Company Name ` :  Cisco Systems
+- `Company Name ` :  **Cisco Systems**
 - `Dates Employed` : Jan 2017 – Present
 - `Employment Duration` : 1 yr 3 mos
 - `Location` : Columbus, Ohio Area
 
 #### Cloud Admin (Openstack) Team Lead
-  - `Company Name` : Cisco Systems
+  - `Company Name` : **Cisco Systems**
   - `Dates Employed` : Jul 2014 – Jan 2017
   - `Employment Duration` : 2 yrs 7 mos
   - `Location` : Cary, North Carolina
@@ -51,7 +51,7 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
 
 #### Network Consulting Engineer
 
-- `Company Name` : Cisco Systems
+- `Company Name` : **Cisco Systems**
 - `Dates Employed` : Dec 2012 – Jul 2014
 - `Employment Duration` : 1 yr 8 mos
 - `Location `: Bangalore
@@ -70,7 +70,7 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
   - Mentor team on the Datacenter related topics and provide trainings.
 
 #### Technical Marketing Engineer - Flexpod
-- `Company Name` : NetApp
+- `Company Name` : **NetApp**
 - `Dates Employed` : Dec 2011 – Dec 2012
 - `Employment Duration` : 1 yr 1 mo
 - `Location` : Bengaluru Area, India
@@ -85,7 +85,7 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
 
   #### Systems Engineer (Cisco Practice)
 
-- `Company Name` : Tata Consultancy Services
+- `Company Name` : **Tata Consultancy Services**
 -  `Dates Employed` : Jul 2011 – Nov 2011
 -  `Employment Duration` : 5 mos
 - `Location` : Bangalore
@@ -105,7 +105,7 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
   - Upgrading the Cisco UCS and Nexus Switches.
 
 #### Network Specialist
-- `Company Name` : Aricent Technologies `(Cisco Technical Assistance Center)`
+- `Company Name` : **Aricent Technologies (Cisco Technical Assistance Center)**
 - `Dates Employed` : Mar 2009 – Jul 2011
 - `Employment Duration` : 2 yrs 5 mos
 - `Location` : Gurgaon, India
@@ -121,12 +121,12 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
   - Used Open Source platform to build Case management system for a new team which was very well appreciated and rewarded.
 
 #### ICT Assistant
-- `Company Name` : United Nations WFP
+- `Company Name` : **United Nations World Food Programme**
 - `Dates Employed` : Dec 2006 – Mar 2009
 - `Employment Duration` : 2 yrs 4 mos
 - `Location` : New Delhi Area, India
 <br>
-  - Technical Support for LAN/WAN Operations , First level support for Proxies and Firewalls
+  - Technical Support for LAN/WAN Operations,First level support for Proxies and Firewalls
 
 
 <br><br><br>
