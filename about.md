@@ -11,25 +11,99 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 
 **Certifications:**
 
-CCIE Datacenter # 42302
-AWS Certified Solutions Architect - Associate
-Mirantis Certified Openstack Administrator - Professional Level
-Redhat Certified Engineer (RHCE)
-VMware Certified Professional – Network Virtualization (VCP-NV)
-VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
-NetApp Certified Data Management Administrator (NCDA)
-Cisco Storage Networking Support Specialist (ICSNS)
-Cisco Data Center Unified Computing Support Specialist (DCUCI)
-CCNP Voice (CCNP-V)
-Cisco Certified Network Associate (CCNA)
-Certified Ethical Hacker (CEH)
-ITIL Foundation v3
+    - CCIE Datacenter # 42302
+    - AWS Certified Solutions Architect - Associate
+    - Mirantis Certified Openstack Administrator - Professional Level
+    - Redhat Certified Engineer (RHCE)
+    - VMware Certified Professional – Network Virtualization (VCP-NV)
+    - VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
+    - NetApp Certified Data Management Administrator (NCDA)
+    - Cisco Storage Networking Support Specialist (ICSNS)
+    - Cisco Data Center Unified Computing Support Specialist (DCUCI)
+    - CCNP Voice (CCNP-V)
+    - Cisco Certified Network Associate (CCNA)
+    - Certified Ethical Hacker (CEH)
+    - ITIL Foundation v3
 
 **Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches , Cisco Nexus 1000v, FC, FCoE, NetApp
 
+#### Systems Engineer
+- `Company Name ` :  Cisco Systems
+  `Dates Employed` : Jan 2017 – Present
+  `Employment Duration` : 1 yr 3 mos
+  `Location` : Columbus, Ohio Area
+
+#### Cloud Admin (Openstack) Team Lead
+  - `Company Name` : Cisco Systems
+    `Dates Employed` : Jul 2014 – Jan 2017
+    `Employment Duration` : 2 yrs 7 mos
+    `Location` : Cary, North Carolina
+
+      - Supporting Cisco's Openstack Cloud (Cisco Cloud Infrastructure Services)
+     - Good understanding of cloud computing domain, especially IaaS and PaaS space
+      - Experience with deployment, configuration and operations in any or all of OpenStack,
+    - Deep understanding of Linux networking stack and tools
+    - Good troubleshooting skills on OpenvSwitch, Neutron.
+    - Working knowledge of configuration management frameworks (Puppet, Chef), orchestration frameworks and
+  Bare-metal provisioning tools
+    - Experience with troubleshooting complex Openstack environments.
+
+#### Network Consulting Engineer
+
+- `Company Name` : Cisco Systems
+  `Dates Employed` : Dec 2012 – Jul 2014
+  `Employment Duration` : 1 yr 8 mos
+  `Location `: Bangalore
 
 
-<img src="blog/assets/Resume_Vikas _Srivastava.pdf" alt="some text"  width="4200" height="4200">
+    Tier-2 Data Center Engineer for Cisco’s Hosted Voice Architecture of UCaaS and HCS for various high profile clients like RBS, Thomas Cook, Allianz, Gen-I and Ingram Micro.
+
+  - Performing Capacity and Release Management on Data Center Front.
+  - Planning, Design and Implementation of Datacenter Architectures.
+  - Performing Operations Readiness Testing of the entire Hosted Architecture before a customer goes live.
+  - Engaging with Cisco Business Unit / Architecture team to evolve and develop the UCaaS Architecture.
+  - Proactively performing Audits on the deployments in order to ensure smooth operations and compliance.
+  - Perform Defect analysis on the code which is being planned to be upgraded in the infrastructure and thoroughly test the fine details in the lab before implementing it in production environments.
+  - Create a fully automated HCS backup solution using Shell Scripts and later on ported the architecture on Cisco Process Orchestrator.
+  - Ordered, Designed and implemented complete Datacenter lab for CaaS.
+  - Mentor team on the Datacenter related topics and provide trainings.
+
+#### Technical Marketing Engineer - Flexpod
+  `Company Name` : NetApp
+  `Dates Employed` : Dec 2011 – Dec 2012
+  `Employment Duration` : 1 yr 1 mo
+  `Location` : Bengaluru Area, India
+  - Design and Validation of new FlexPod Systems
+  - Design cloud infrastructure solutions in collaboration with NetApp partners.
+  - PoC on Cloupia (Cloupia Unified Infrastructure Controller)
+  - Design , architect and validate storage centric enterprise solutions, by integrating NetApp and partner or third party vendor technologies.
+  - Accountable for project deliverables working with cross-functional and business unit teams and lead projects within the team.
+  - Develop technical collateral for best practices guides, design guides, integration guides etc. Time includes lab work, technical writing, and revision work.
+  - Create and present technical presentations to customers and partners, and gather feedback to influence product and solution offerings.
+
+  #### Systems Engineer (Cisco Practice)
+
+- `Company Name` : Tata Consultancy Services
+  `Dates Employed` : Jul 2011 – Nov 2011
+  `Employment Duration` : 5 mos
+  `Location` : Bangalore
+  - Datacenter Design and Implementation Engineer
+
+  - Created technical solutions built on Cisco UCS and Nexus switching infrastructure.
+  - Setup PoC for Nexus 1000v and VMware products like vCloud director.
+  - Developed and delivered complex technical presentations and trainings on Cisco UCS to Internal teams and onsite.
+  - Provided assistance on Webex/Phone to implementation teams onsite.
+  - Creating VPC, VDC, VFC, policy map, Fabric Extender, FEX associates, Peer links, VLAN & Management Interfaces on Cisco Nexus switches.
+  - Extending the network from Nexus core switches(5010,5020,5548,7010) to Nexus Fabric Extender switches(2248TP,2232)
+  - LAN Switching using VLAN, VTP, Trunking, Ether channel and STP Protocols
+  - Creating and maintaining multiple VLAN’s assigning ports to it and extending the VLAN from Core router to switch with a same VTP domain name and VTP mode.
+  - Configuration of FC switches.
+  - Configurations of UCS Blade server Chassis (5108), Fabric interconnect (6120XP) and MDS switches for Storage connectivity.
+  - Upgrading the Cisco UCS and Nexus Switches.
+
+
+
+
 
 <div align="center">
 <p>
