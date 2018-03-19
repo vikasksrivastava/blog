@@ -39,7 +39,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
   - `Dates Employed` : Jul 2014 – Jan 2017
   - `Employment Duration` : 2 yrs 7 mos
   - `Location` : Cary, North Carolina
-
+<br>
       - Supporting Cisco's Openstack Cloud (Cisco Cloud Infrastructure Services)
      - Good understanding of cloud computing domain, especially IaaS and PaaS space
       - Experience with deployment, configuration and operations in any or all of OpenStack,
@@ -55,7 +55,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 - `Dates Employed` : Dec 2012 – Jul 2014
 - `Employment Duration` : 1 yr 8 mos
 - `Location `: Bangalore
-
+<br>
 
     Tier-2 Data Center Engineer for Cisco’s Hosted Voice Architecture of UCaaS and HCS for various high profile clients like RBS, Thomas Cook, Allianz, Gen-I and Ingram Micro.
 
@@ -74,6 +74,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 - `Dates Employed` : Dec 2011 – Dec 2012
 - `Employment Duration` : 1 yr 1 mo
 - `Location` : Bengaluru Area, India
+<br>
   - Design and Validation of new FlexPod Systems
   - Design cloud infrastructure solutions in collaboration with NetApp partners.
   - PoC on Cloupia (Cloupia Unified Infrastructure Controller)
@@ -88,6 +89,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 -  `Dates Employed` : Jul 2011 – Nov 2011
 -  `Employment Duration` : 5 mos
 - `Location` : Bangalore
+<br>
   - Datacenter Design and Implementation Engineer
 
   - Created technical solutions built on Cisco UCS and Nexus switching infrastructure.
@@ -107,6 +109,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 - `Dates Employed` : Mar 2009 – Jul 2011
 - `Employment Duration` : 2 yrs 5 mos
 - `Location` : Gurgaon, India
+<br>
   - Worked at Cisco TAC, providing support for Cisco Unified Communications and Cisco Unified Computing System
 
   - As a support engineer supported Cisco Unified Computing System (UCS) and Cisco Unified Communications Manager, troubleshot complex customer network issues frequently requiring recreates in our lab environment.
@@ -122,6 +125,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 - `Dates Employed` : Dec 2006 – Mar 2009
 - `Employment Duration` : 2 yrs 4 mos
 - `Location` : New Delhi Area, India
+<br>
   - Technical Support for LAN/WAN Operations , First level support for Proxies and Firewalls
 
 
