@@ -19,7 +19,7 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
     - VMware Certified Professional – Network Virtualization (VCP-NV)
     - VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
     - NetApp Certified Data Management Administrator (NCDA)
-      - Cisco Storage Networking Support Specialist (ICSNS)
+    - Cisco Storage Networking Support Specialist (ICSNS)
     - Cisco Data Center Unified Computing Support Specialist (DCUCI)
     - CCNP Voice (CCNP-V)
     - Cisco Certified Network Associate (CCNA)
