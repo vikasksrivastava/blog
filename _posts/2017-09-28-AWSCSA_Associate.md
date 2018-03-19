@@ -5,7 +5,7 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
-  
+
 <!-- TOC START min:1 max:5 link:true update:true -->
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
@@ -62,7 +62,7 @@ This represents how how you manage multiple services and account managment.
 <!-- assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 300px;"/>
 -->
 
-<img src="assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180317155120909.png" alt="" style="width: 200px;"/>
 
 
  > The above picture shows a organisation of the AWS Users and Groups and the different ways (You can have different groups for `PROD` and `QA`) , Console or CLI they can use to login and manage the AWS Cloud.
@@ -77,11 +77,11 @@ At a very high level AWS can be broken down into two main blocks
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
-<img src="assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
 
 An `AWS Region` has multiple `Availabilty Zones`
 
-<img src="assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
 
 Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
@@ -89,11 +89,11 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
-<img src="assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
 
 Now as we further move ahead , the `VPC` is the
 
-<img src="assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
 
 ### AWS Terminology
 
@@ -119,23 +119,23 @@ Now lets look at the `IAM` Components where you manager Users, roles and groups,
 - `IAM Password Policy`
 
 
-<img src="assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
 
 > IAM is Global and does not require a region selection.
 
 Now once you have enable IAM , you can use the link show in the picture below to login
 
-<img src="assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM Policy
 
 An IAM Policy , looks like this. Note that `Deny` will have a precedence over `Allow`.
 
-<img src="assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
 
 An example of where you can see the policy in detail and whats how it is organised
 
-<img src="assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM groups
 
@@ -153,19 +153,19 @@ So now the `policies` can be attached to the `groups` directy.
 
 > An EC2 instance can only have one role attached to it .
 
-<img src="assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
 
 #### Role Assumption
 
 Now lets say , the users below in the `DEV` group need access to the  resources in the `PROD`, then can **assume** a `Role` and be able to access the resource in `PROD`.
 
-<img src="assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
 
 **How does the above assumption happen?**
 
 An `IAM Policy` is attached to an `IAM Role` which is then assigned to the `User` or `Resource` which needs acces.
 
-<img src="assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
 
 Notice in the screenshot below , we have 3 different types of Roles:
 
