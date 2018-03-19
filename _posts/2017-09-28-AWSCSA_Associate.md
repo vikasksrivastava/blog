@@ -24,11 +24,24 @@ comments: true
     - [VPC Routing Basics](#vpc-routing-basics)
     - [VPC Security](#vpc-security)
     - [VPC Workflow](#vpc-workflow)
-      - [Create the VPC](#create-the-vpc)
     - [VPC Limits](#vpc-limits)
   - [Server-Based Compute Services](#server-based-compute-services)
-  - [Server**less** Compute Services](#serverless-compute-services)
-  - [Advanced Networking](#advanced-networking)
+    - [EC2 Limits](#ec2-limits)
+    - [EC2 Purchasing Options](#ec2-purchasing-options)
+    - [Linux AMI Virtualisation Type :](#linux-ami-virtualisation-type-)
+    - [EC2 Instance Type :](#ec2-instance-type-)
+    - [EC2 Instance Metadata](#ec2-instance-metadata)
+    - [EC2 Instance Storage types](#ec2-instance-storage-types)
+    - [Different EBS types](#different-ebs-types)
+    - [EBS snapshot](#ebs-snapshot)
+    - [Placement groups](#placement-groups)
+    - [EFS Elastic File System](#efs-elastic-file-system)
+  - [Server**less** Compute Services (AWS Lambda)](#serverless-compute-services-aws-lambda)
+  - [Quick Detour](#quick-detour)
+    - [CloudWatch (Monitoring)](#cloudwatch-monitoring)
+    - [CloudTrail (API Logging Service)](#cloudtrail-api-logging-service)
+    - [SNS Notification Service](#sns-notification-service)
+- [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
   - [Network Troubleshooting](#network-troubleshooting)
   - [Storage Services](#storage-services)
@@ -46,8 +59,11 @@ comments: true
 
 This represents how how you manage multiple services and account managment.
 
+<!-- assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 300px;"/>
+-->
 
-![](assets/markdown-img-paste-20180317155120909.png)
+<img src="assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 400px;"/>
+
 
  > The above picture shows a organisation of the AWS Users and Groups and the different ways (You can have different groups for `PROD` and `QA`) , Console or CLI they can use to login and manage the AWS Cloud.
 
@@ -55,17 +71,17 @@ This represents how how you manage multiple services and account managment.
 
 At a very high level AWS can be broken down into two main blocks
 
-**`AWS Regions`** : These are grouping of independenly separated datacenters in a specific geographic regions know as `Availabilty Zones`.
+- **`AWS Regions`** : These are grouping of independenly separated datacenters in a specific geographic regions know as `Availabilty Zones`.
 
-**`AWS Edge Location`** : It is a Datacenter whic does not contain any AWS Services ; Instead it is used to deliver contents to parts of the world. `CloudFront`
+- **`AWS Edge Location`** : It is a Datacenter whic does not contain any AWS Services ; Instead it is used to deliver contents to parts of the world. `CloudFront`
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
-![](assets/markdown-img-paste-20180317155925901.png)
+<img src="assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
 
 An `AWS Region` has multiple `Availabilty Zones`
 
-![](assets/markdown-img-paste-20180317160605765.png)
+<img src="assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
 
 Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
@@ -73,21 +89,21 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
-![](assets/markdown-img-paste-20180317160708670.png)
+<img src="assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
 
 Now as we further move ahead , the `VPC` is the
 
-![](assets/markdown-img-paste-20180317161347849.png)
+<img src="assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
 
 ### AWS Terminology
 
-`High Availability (HA)` This means creating and managing the ability to automatically “failover” to a secondary system if the primary system goes down for any reason as well as **eliminating all single points of failure** from your infrastructure.
+- `High Availability (HA)` This means creating and managing the ability to automatically “failover” to a secondary system if the primary system goes down for any reason as well as **eliminating all single points of failure** from your infrastructure.
 
-`Fault Tolerance` this means infrastructure that is designed in such a way that **when one component fails**(be it hardware or software), a **backup component takes over operations immediately** so that there is no loss of service.
+- `Fault Tolerance` this means infrastructure that is designed in such a way that **when one component fails**(be it hardware or software), a **backup component takes over operations immediately** so that there is no loss of service.
 
-`Scalability` is the capability to scale out **easily**.
+- `Scalability` is the capability to scale out **easily**.
 
-`Elasticity` the ability to **scale-up** as well as **scale-down**
+- `Elasticity` the ability to **scale-up** as well as **scale-down**
 
 -------
 
@@ -95,30 +111,31 @@ Now as we further move ahead , the `VPC` is the
 
 Now lets look at the `IAM` Components where you manager Users, roles and groups, IAM Consistes of :
 
-`IAM User`
-`IAM Groups`
-`IAM Policy`
-`IAM Role `
-`IAM API Keys`
-`IAM Password Policy`
+- `IAM User`
+- `IAM Groups`
+- `IAM Policy`
+- `IAM Role `
+- `IAM API Keys`
+- `IAM Password Policy`
 
-![](assets/markdown-img-paste-20180317162435923.png)
+
+<img src="assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
 
 > IAM is Global and does not require a region selection.
 
 Now once you have enable IAM , you can use the link show in the picture below to login
 
-![](assets/markdown-img-paste-20180317163005646.png)
+<img src="assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM Policy
 
 An IAM Policy , looks like this. Note that `Deny` will have a precedence over `Allow`.
 
-![](assets/markdown-img-paste-20180317163328797.png)
+<img src="assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
 
 An example of where you can see the policy in detail and whats how it is organised
 
-![](assets/markdown-img-paste-20180317163621375.png)
+<img src="assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM groups
 
@@ -128,37 +145,37 @@ So now the `policies` can be attached to the `groups` directy.
 
 ### IAM Roles
 
-Look at the example below and notice how that all the Users and Roles are created at the IAM Level.
+- Look at the example below and notice how that all the Users and Roles are created at the IAM Level.
 
-`Non AWS Account Holder` : Now what we integrate AWS with the AD in a company. The users from AD who are **authenticated via SAML** now need to be mapped to `Role` to be able to do things in the AWS
+  - `Non AWS Account Holder` : Now what we integrate AWS with the AD in a company. The users from AD who are **authenticated via SAML** now need to be mapped to `Role` to be able to do things in the AWS
 
-`EC2 instance needing access to S3`
+  - `EC2 instance needing access to S3`
 
 > An EC2 instance can only have one role attached to it .
 
-![](assets/markdown-img-paste-20180317164404537.png)
+<img src="assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
 
 #### Role Assumption
 
 Now lets say , the users below in the `DEV` group need access to the  resources in the `PROD`, then can **assume** a `Role` and be able to access the resource in `PROD`.
 
-![](assets/markdown-img-paste-20180317165031723.png)
+<img src="assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
 
 **How does the above assumption happen?**
 
 An `IAM Policy` is attached to an `IAM Role` which is then assigned to the `User` or `Resource` which needs acces.
 
-![](assets/markdown-img-paste-20180317165340821.png)
+<img src="assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
 
 Notice in the screenshot below , we have 3 different types of Roles:
 
-**`AWS Service Roles`** : Like EC2 accessing S3
-**`Role for Cross Account access`** : Allowing access for `DEV` IAM group to `PROD`
-**`Role for Identity Provider Access`** : Federation and SAML , Facebook, Google.
+- **`AWS Service Roles`** : Like EC2 accessing S3
+- **`Role for Cross Account access`** : Allowing access for `DEV` IAM group to `PROD`
+- **`Role for Identity Provider Access`** : Federation and SAML , Facebook, Google.
 
 
 
-![](assets/markdown-img-paste-20180317165948959.png)
+<img src="assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;"/>
 
 #### Security Token Service
 
@@ -178,87 +195,91 @@ These are the API Keys like openstack which enables programmatic access to the A
 
 > VPC `Virtual Private Cloud` is the networking is architected in the cloud.
 
-Now lets take a deeper dive into VPC ad look it under the hood.
+- Now lets take a deeper dive into VPC ad look it under the hood.
 
-`VPC` spans `Avalaibility Zones` and `Multiple Datacenters`.
+  `VPC` spans `Avalaibility Zones` and `Multiple Datacenters`.
 
-![](assets/markdown-img-paste-20180317171726859.png)
+  <img src="assets/markdown-img-paste-20180317171726859.png" alt="Drawing" style="width: 300px;"/>
 
-Now take a look at the picture belpw and see what the a dissection of VPC looks like internally.
+  Now take a look at the picture belpw and see what the a dissection of VPC looks like internally.
 
- - Notice how the VPC spans the two different AZs in the picture.
- - Notice the **private subnets** e.g `172.16.0.0` spanning two different AZs. This enables you to design and put your servers in **different failure domains enabling High Avalaibility**
- - You can define custom `CIDR` in each subnet.
- - You can create routes between the Subnets.
- - You can also have subnet level firewalls and access rules.
+   - Notice how the VPC spans the two different AZs in the picture.
+   - Notice the **private subnets** e.g `172.16.0.0` spanning two different AZs. This enables you to design and put your servers in **different failure domains enabling High Avalaibility**
+   - You can define custom `CIDR` in each subnet.
+   - You can create routes between the Subnets.
+   - You can also have subnet level firewalls and access rules.
 
-![](assets/markdown-img-paste-20180317172222633.png)
+  <img src="assets/markdown-img-paste-20180317172222633.png" alt="Drawing" style="width: 300px;"/>
 
 
 ### Typical VPC screen
 
-Notice on the left the different networking constructs you have to work and play with :)
+- Notice on the left the different networking constructs you have to work and play with :)
 
-![](assets/markdown-img-paste-20180317174000405.png)
-
+  <img src="assets/markdown-img-paste-20180317174000405.png" alt="Drawing" style="width: 200px;"/>
 
 ### VPC Routing Basics
 
-Now lets take a look at a deeper level on the VPC Routing Basics the `Internet  gateway`, `Subnets` and the `Routing table`.
+- Now lets take a look at a deeper level on the VPC Routing Basics the `Internet  gateway`, `Subnets` and the `Routing table`.
 
-`Internet Gateway` : The is a default internet gateway connected to the default VPC. It is horizontally scales in the backend and there is no need to manage the bandwidth and capacity of the same. It has **built in Fault tolernace at the Amazon Networking level**.
+  - `Internet Gateway` : The is a default internet gateway connected to the default VPC. It is horizontally scales in the backend and there is no need to manage the bandwidth and capacity of the same. It has **built in Fault tolernace at the Amazon Networking level**.
 
-> We dont have to manage `Internet Gateways` bandwidth, AWS Does that for us.
+    > We dont have to manage `Internet Gateways` bandwidth, AWS Does that for us.
 
-Again , you can only have **one Internet Gatewat attached a VPC**.
-Notice the attached `Internet Gateway` to the VPC in the picture below.
+    Again , you can only have **one Internet Gatewat attached a VPC**.
 
-![](assets/markdown-img-paste-20180317174555203.png)
+    Notice the attached `Internet Gateway` to the VPC in the picture below.
 
-Now take a look at the `Route Table` in the picture below and how `0.0.0.0` is mapped to the `Internet Gateway` for all **outbound internet traffic**.
+    <img src="assets/markdown-img-paste-20180317174555203.png" alt="Drawing" style="width: 300px;"/>
 
-![](assets/markdown-img-paste-20180317174853412.png)
+    Now take a look at the `Route Table` in the picture below and how `0.0.0.0` is mapped to the `Internet Gateway` for all **outbound internet traffic**.
 
-`Subnets`: After creating VPC, you can create o**ne or more subnets** in each `Availabilty Zone`. Each **subet much reside in one Availaibilty Zone** and **cannot span** different `Availability Zone`.
+    <img src="assets/markdown-img-paste-20180317174853412.png" alt="Drawing" style="width: 300px;"/>
 
-> So **VPC spans Availabilty Zones** but **Subnet are contained in one Availabilty Zone**.
+  - `Subnets`: After creating VPC, you can create o**ne or more subnets** in each `Availabilty Zone`. Each **subet much reside in one Availaibilty Zone** and **cannot span** different `Availability Zone`.
 
-IMPORTANT NOTE : `Subnets` are associated to `Route Tables` and the `Route Table` may or may not be attached to an `Internet Gateway`
+    > So **VPC spans Availabilty Zones** but **Subnet are contained in one Availabilty Zone**.
 
-The following association is show in the picture below .
+    IMPORTANT NOTE : `Subnets` are associated to `Route Tables` and the `Route Table` may or may not be attached to an `Internet Gateway`
 
-`Subnet ---> Route Table ---> Internet Gateway`
+  The following association is show in the picture below .
 
-![](assets/markdown-img-paste-20180318151727852.png)
+  `Subnet ---> Route Table ---> Internet Gateway`
 
-`Explicit Association` is when you move the route tables from default to the one which you created.
+  <img src="assets/markdown-img-paste-20180318151727852.png" alt="Drawing" style="width: 300px;"/>
+
+  `Explicit Association` is when you move the route tables from default to the one which you created.
+
+  **High Level AWS Networking Internal Architecture**
+
+  <img src="assets/markdown-img-paste-20180318212412969.png" alt="Drawing" style="width: 300px;"/>
+
 
 ### VPC Security
 
-**`Network ACLs`** `allow` or `deny` traffic at the subnet level and are stateless, which means that the return traffic had to be `ALLOWED` for traffic for both direction.
+- **`Network ACLs`** `allow` or `deny` traffic at the subnet level and are stateless, which means that the return traffic had to be `ALLOWED` for traffic for both direction.
 
-This follows at the Cisco ACL `access-list` order charecteristics.
+  This follows at the Cisco ACL `access-list` order charecteristics.
 
-**`Security Groups`** Just like Openstack Security groups but they are **statefull** . Security group **only supports** `allow` rules.
+
+- **`Security Groups`** Just like Openstack Security groups but they are **statefull** . Security group **only supports** `allow` rules.
 
 ### VPC Workflow
 
-#### Create the VPC
-
-1. Create the VPC and give it a `CIDR` Block range. **Notice** that you can also define `IPv6` CIDR ranges. When `Tenancy`  is set to dedicate you are **not sharing** your servers with the other users.
-![](assets/markdown-img-paste-20180318160426965.png)
+1. Create the `VPC` and give it a `CIDR` Block range. **Notice** that you can also define `IPv6` CIDR ranges. When `Tenancy`  is set to dedicate you are **not sharing** your servers with the other users.
+<img src="assets/markdown-img-paste-20180318160426965.png" alt="Drawing" style="width: 300px;"/>
 2. Create the `Internet Gateway`
-![](assets/markdown-img-paste-20180318160902338.png)
-3. Attach the `Internet Gateway` to the VPC
-![](assets/markdown-img-paste-20180318161028276.png)
+<img src="assets/markdown-img-paste-20180318160902338.png" alt="Drawing" style="width: 300px;"/>
+3. Attach the `Internet Gateway` to the `VPC`
+<img src="assets/markdown-img-paste-20180318161028276.png" alt="Drawing" style="width: 300px;"/>
 4. Next we will create **two different** `Route Tables`, one which is **connected** to the `Internet Gateway` and the other **which is not** connected.
-![](assets/markdown-img-paste-20180318161246639.png)
+<img src="assets/markdown-img-paste-20180318161246639.png" alt="Drawing" style="width: 300px;"/>
 Now **connect** the `Route Table` created above to the `Internet Gateway`. If you leave the `Route Table` not connected to the `Internet Gateway` it becomes a private route table.
-![](assets/markdown-img-paste-20180318161517281.png)
+<img src="assets/markdown-img-paste-20180318161517281.png" alt="Drawing" style="width: 300px;"/>
 5. Now Create a `Subnet`. Notice that you have to specifically define the `Availabilty Zone` (a subnet can only span an AZ) and the `CIDR` block range which is within the range of the VPC.
-![](assets/markdown-img-paste-20180318162016693.png)
+<img src="assets/markdown-img-paste-20180318162016693.png" alt="Drawing" style="width: 300px;"/>
 6. Now you can create the Network ACL which is a straight forward process.
-![](assets/markdown-img-paste-20180318162441801.png)
+<img src="assets/markdown-img-paste-20180318162441801.png" alt="Drawing" style="width: 300px;"/>
 
 ### VPC Limits
 
@@ -274,12 +295,148 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 -------
 
 ## Server-Based Compute Services
+
+### EC2 Limits
+
+- Take a look at the default EC2 Limits :
+
+  <img src="assets/markdown-img-paste-20180318200924374.png" alt="Drawing" style="width: 300px;"/>
+
+### EC2 Purchasing Options
+
+
+- <img src="assets/markdown-img-paste-20180318202820909.png" alt="Drawing" style="width: 300px;"/>
+
+  Workflow : Choose `AMI` --> Choose `Instance Type`
+
+**There are 3 different types of EC2 Instances :**
+
+- **`Ondemand`** Most expensive , run and destroy whenever you like. You care billed as per per `second` or per `hour`. **These differ based on Images** too , not all images support per second basis. A`mazon Linux` or `Ubuntu` offer per second pricing.
+
+  > Note that if the image is stopped  you are not charged for the same.
+
+- **`Reserved`** Allows you purchase instance for `1` or `3` years and you get **discount** becuause of the commitment. But here you pay the whole amount regardless of how much you use it. You can pay upfront partial partial and no upfornt
+
+- **`Spot`** In this case prices of instances fluctuate based on what AWS considers is **unused capacity in their datacenters**. In this case you the billing happens like the `Ondemand` instance.
+
+  And instance is provisioned for you **when your bid price is less than or equal to the instance price**. If the **AWS's price increases your instance is terminated**.
+
+  If the instance is **terminated by AWS** you **dont pay for that slot** of duration (1 minute or 1 hour) . If **you delete it**, **you pay** for it.
+
+### Linux AMI Virtualisation Type :
+
+- **`HVM`**  **Hardware Virtual Machine** , Conside this like Intel VTx/d technology by which guests can take advantage of virtualisation feature supported by the CPU. Proved enhanced networking and GPU processing to the VM.
+
+- **`PV`**  **Paravirtual** AMIs Guests could run on Hardware which does not have HVM support. cannot take advantage of GPU / Advanced networking.
+
+
+
+### EC2 Instance Type :
+
+Has the following virtual hardware components, you have to choose the right instance type **based on your application requirement** :
+
+- `vCPU`
+- `RAM`
+- `Storage Options `
+- `Network Performance`
+
+  Notice in the picture below the above characteristics.
+  <img src="assets/markdown-img-paste-20180318203911238.png" alt="Drawing" style="width: 600px;"/>
+
+  Different Instance types
+
+  <img src="assets/markdown-img-paste-20180318204119218.png" alt="Drawing" style="width: 600px;"/>
+
+### EC2 Instance Metadata
+
+- `http://169.254.169.254/lates/user-data` Shows the **user data provided for bootstrapping**.
+
+- `http://169.254.169.254/lates/user-data` Displays **AMI, Instance Type** etc.
+
+### EC2 Instance Storage types
+
+EBS Elastic Block Store ,
+
+ - EBS Volumes are persistent and can stay even after instance deletion, unlike Instance Store.
+ - Can **only be attached to one instance** a time.
+ - EBC can be backed up into snapshots. These snapshot can later be restored to EBS volume.
+ - EBS Volume measures performance in IOPS , AWS one IOPS is 256KB chunk (input or output)
+ - Even with provision IOPs you may not get the performance you want, you may want to choose an instance type which is EBS optimized instance type.
+ - New EBS volume no longer need to be pre-warmed. Maximum performance is received as soon as the EBS volume is spawned.
+ - Now with the above point note that if you created a volume from a snapshot you still need to warm-up  (read all the storage blocks)/ read otherwise the access could be slow.
+
+
+### Different EBS types
+
+- `General Purpose` (1GiB - 16TiB), best used for Dev and Test environment. This allows 3 IOPS/GiB (so size of the disk has direct relation with the IOPS) but is burstable upto 3000 IOPS.
+- `Provisioned IOPS SSD` (4GiB - 16TiB) , Used for mission critical applications. This performs at the provisioned IOPS level and can go upto 20,000 IOPS.
+- `Magnetic` Rarely used , slow .
+
+Now there is another type of store different than EBS :
+
+- `Instance Store` volumes are ephemeral data. The data on the volume only exists till the life of the instance. If the instance is stopped or shutdown the data will be lost.
+If the instance is rebooted the data is retained.
+
+### EBS snapshot
+
+- You can take a snapshot to recreate the volume. Snapshots are stored in S3. You are only charged for the difference between the snapshots.
+
+### Placement groups
+
+> Instances must have **10G connection** type to be able to use Placement Groups.
+
+ - When there is a requirement to keep the instances as close possible to other instances a placement group is used. Like `Affinity Groups` in Openstack.
+
+    Instances not created in a Placement group cannot be moved into a placement group.
+    **A placement group cannot span AZs**.
+
+### EFS Elastic File System
+
+- **Consider this like NFS** , this can be shared between multiple EC2 instances.
+
+
 -------
 
-## Server**less** Compute Services
+## Server**less** Compute Services (AWS Lambda)
+
+- You do not need EC2 servers (Serverless) to run your application , you can directly run your programs here !
+
+  A picture says a thousand words :
+
+  <img src="assets/markdown-img-paste-20180318214149491.png" alt="Drawing" style="width: 500px;"/>
+
+
+
+  ### When should you run Lambda
+  > You are only billed for the duration your code is running.
+
+  Generally you will run Lambda when you want a function to run in response to an event.
+
+  Example Lambda Use :
+`Upload Object to S3 --> S3 Event --> Triggers a Lambda Function`
+
+## Quick Detour
+
+### CloudWatch (Monitoring)
+
+- Used to monitor AWS Services such as EC2
+- Provides centralised monitoring and performance mentrics.
+- CloudWatch Alarms can be used a triggers.
+
+### CloudTrail (API Logging Service)
+
+- Logs all API calls.
+
+### SNS Notification Service
+
+- Automates the process of sending notification email or text . SNS is integrated in many AWS services so it is easy to use it.
+
+
+
+
 -------
 
-## Advanced Networking
+# Advanced Networking (START HERE IN LINUXACADEMY)
 -------
 
 ## Advanced VPC Networking
