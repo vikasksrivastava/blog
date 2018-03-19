@@ -129,17 +129,14 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 
 <div align="center">
 <p>
-<a href="mailto:vikas.k.srivastava@gmail.com"><i class="fa fa-envelope-o fa-fw" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="mailto:vikas.k.srivastava@gmail.com"><i class="fa fa-envelope-o fa-fw" aria-hidden="true" style="font-size:20px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://github.com/vikasksrivastava"><i class="fa fa-github" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://github.com/vikasksrivastava"><i class="fa fa-github" aria-hidden="true" style="font-size:20px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://www.linkedin.com/in/vikasksrivastava/"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://www.linkedin.com/in/vikasksrivastava/"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:20px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://www.quora.com/profile/Vikas-Srivastava"><i class="fa fa-quora" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://www.quora.com/profile/Vikas-Srivastava"><i class="fa fa-quora" aria-hidden="true" style="font-size:20px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://kubernetes.slack.com/team/vikassri"><i class="fa fa-slack" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://kubernetes.slack.com/team/vikassri"><i class="fa fa-slack" aria-hidden="true" style="font-size:20px;color:#2980b9"></i></a>
 </p>
 </div>
-
-
-PS: Best way to reach me is email.
