@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: black-theme
 title: About Me
 description: Vikas Srivastava is extremely passionate about software development, distributed systems and open source.
 permalink: /about/
