@@ -28,11 +28,8 @@ ITIL Foundation v3
 **Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches , Cisco Nexus 1000v, FC, FCoE, NetApp
 
 
-<object data="blog/assets/Resume_Vikas _Srivastava.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="blog/assets/Resume_Vikas _Srivastava.pdf">
-        This browser does not support PDFs. Please download the PDF to view it: <a href="blog/assets/Resume_Vikas _Srivastava.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+
+<img src="blog/assets/Resume_Vikas _Srivastava.pdf" alt="some text"  width="4200" height="4200">
 
 <div align="center">
 <p>
