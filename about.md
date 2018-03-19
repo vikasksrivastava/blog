@@ -19,7 +19,7 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
     - VMware Certified Professional – Network Virtualization (VCP-NV)
     - VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
     - NetApp Certified Data Management Administrator (NCDA)
-    - Cisco Storage Networking Support Specialist (ICSNS)
+      - Cisco Storage Networking Support Specialist (ICSNS)
     - Cisco Data Center Unified Computing Support Specialist (DCUCI)
     - CCNP Voice (CCNP-V)
     - Cisco Certified Network Associate (CCNA)
@@ -30,15 +30,15 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 
 #### Systems Engineer
 - `Company Name ` :  Cisco Systems
-  `Dates Employed` : Jan 2017 – Present
-  `Employment Duration` : 1 yr 3 mos
-  `Location` : Columbus, Ohio Area
+- `Dates Employed` : Jan 2017 – Present
+- `Employment Duration` : 1 yr 3 mos
+- `Location` : Columbus, Ohio Area
 
 #### Cloud Admin (Openstack) Team Lead
   - `Company Name` : Cisco Systems
-    `Dates Employed` : Jul 2014 – Jan 2017
-    `Employment Duration` : 2 yrs 7 mos
-    `Location` : Cary, North Carolina
+  - `Dates Employed` : Jul 2014 – Jan 2017
+  - `Employment Duration` : 2 yrs 7 mos
+  - `Location` : Cary, North Carolina
 
       - Supporting Cisco's Openstack Cloud (Cisco Cloud Infrastructure Services)
      - Good understanding of cloud computing domain, especially IaaS and PaaS space
@@ -52,9 +52,9 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 #### Network Consulting Engineer
 
 - `Company Name` : Cisco Systems
-  `Dates Employed` : Dec 2012 – Jul 2014
-  `Employment Duration` : 1 yr 8 mos
-  `Location `: Bangalore
+- `Dates Employed` : Dec 2012 – Jul 2014
+- `Employment Duration` : 1 yr 8 mos
+- `Location `: Bangalore
 
 
     Tier-2 Data Center Engineer for Cisco’s Hosted Voice Architecture of UCaaS and HCS for various high profile clients like RBS, Thomas Cook, Allianz, Gen-I and Ingram Micro.
@@ -70,10 +70,10 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
   - Mentor team on the Datacenter related topics and provide trainings.
 
 #### Technical Marketing Engineer - Flexpod
-  `Company Name` : NetApp
-  `Dates Employed` : Dec 2011 – Dec 2012
-  `Employment Duration` : 1 yr 1 mo
-  `Location` : Bengaluru Area, India
+- `Company Name` : NetApp
+- `Dates Employed` : Dec 2011 – Dec 2012
+- `Employment Duration` : 1 yr 1 mo
+- `Location` : Bengaluru Area, India
   - Design and Validation of new FlexPod Systems
   - Design cloud infrastructure solutions in collaboration with NetApp partners.
   - PoC on Cloupia (Cloupia Unified Infrastructure Controller)
@@ -85,9 +85,9 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
   #### Systems Engineer (Cisco Practice)
 
 - `Company Name` : Tata Consultancy Services
-  `Dates Employed` : Jul 2011 – Nov 2011
-  `Employment Duration` : 5 mos
-  `Location` : Bangalore
+-  `Dates Employed` : Jul 2011 – Nov 2011
+-  `Employment Duration` : 5 mos
+- `Location` : Bangalore
   - Datacenter Design and Implementation Engineer
 
   - Created technical solutions built on Cisco UCS and Nexus switching infrastructure.
@@ -104,9 +104,9 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 
 #### Network Specialist
 - `Company Name` : Aricent Technologies `(Cisco Technical Assistance Center)`
-  `Dates Employed` : Mar 2009 – Jul 2011
-  `Employment Duration` : 2 yrs 5 mos
-  `Location` : Gurgaon, India
+- `Dates Employed` : Mar 2009 – Jul 2011
+- `Employment Duration` : 2 yrs 5 mos
+- `Location` : Gurgaon, India
   - Worked at Cisco TAC, providing support for Cisco Unified Communications and Cisco Unified Computing System
 
   - As a support engineer supported Cisco Unified Computing System (UCS) and Cisco Unified Communications Manager, troubleshot complex customer network issues frequently requiring recreates in our lab environment.
@@ -119,9 +119,9 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
 
 #### ICT Assistant
 - `Company Name` : United Nations WFP
-  `Dates Employed` : Dec 2006 – Mar 2009
-  `Employment Duration` : 2 yrs 4 mos
-  `Location` : New Delhi Area, India
+- `Dates Employed` : Dec 2006 – Mar 2009
+- `Employment Duration` : 2 yrs 4 mos
+- `Location` : New Delhi Area, India
   - Technical Support for LAN/WAN Operations , First level support for Proxies and Firewalls
 
 
