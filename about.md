@@ -6,6 +6,7 @@ permalink: /about/
 ---
 <br>
 
+## Vikas Srivastava
 
 An experienced **CCIE Datacenter Engineer** having 9 years of experience , with recognized strength in implementing and supporting advanced **Enterprise Datacenters, cloud solutions** and applications. Ability to design, troubleshoot and optimize legacy and new datacenter designs. Keen in learning new technologies on my own, current interests include cloud solutions like **OpenStack, AWS and SDN, OpenFlow**. Successfully maintain complete professionalism and personal commitment with excellent communication and people skills and the ability to train, motivate and supervise a team.
 
@@ -101,26 +102,44 @@ An experienced **CCIE Datacenter Engineer** having 9 years of experience , with 
   - Configurations of UCS Blade server Chassis (5108), Fabric interconnect (6120XP) and MDS switches for Storage connectivity.
   - Upgrading the Cisco UCS and Nexus Switches.
 
+#### Network Specialist
+- `Company Name` : Aricent Technologies `(Cisco Technical Assistance Center)`
+  `Dates Employed` : Mar 2009 – Jul 2011
+  `Employment Duration` : 2 yrs 5 mos
+  `Location` : Gurgaon, India
+  - Worked at Cisco TAC, providing support for Cisco Unified Communications and Cisco Unified Computing System
+
+  - As a support engineer supported Cisco Unified Computing System (UCS) and Cisco Unified Communications Manager, troubleshot complex customer network issues frequently requiring recreates in our lab environment.
+  - Identified and got software defects filed and worked with development teams on the same for lab recreates and troubleshooting.
+  - Provided Level 2 Escalation Support for Cisco Voice/Data Center TAC,
+  including hardware and software.
+  - Trained new team members for Cisco UCS.
+  - Built tools for assisting TAC Engineers easy case handling and closure
+  - Used Open Source platform to build Case management system for a new team which was very well appreciated and rewarded.
+
+#### ICT Assistant
+- `Company Name` : United Nations WFP
+  `Dates Employed` : Dec 2006 – Mar 2009
+  `Employment Duration` : 2 yrs 4 mos
+  `Location` : New Delhi Area, India
+  - Technical Support for LAN/WAN Operations , First level support for Proxies and Firewalls
 
 
-
+<br><br><br>
 
 <div align="center">
 <p>
-<a href="mailto:nikitaraghunath@gmail.com"><i class="fa fa-envelope-o fa-fw" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="mailto:vikas.k.srivastava@gmail.com"><i class="fa fa-envelope-o fa-fw" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://github.com/nikhita"><i class="fa fa-github" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://github.com/vikasksrivastava"><i class="fa fa-github" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://twitter.com/TheNikhita"><i class="fa fa-twitter" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://www.linkedin.com/in/vikasksrivastava/"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://www.linkedin.com/in/nikinath/"><i class="fa fa-linkedin" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://www.quora.com/profile/Vikas-Srivastava"><i class="fa fa-quora" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
 &nbsp; &nbsp; &nbsp;
-<a href="https://www.quora.com/profile/Nikhita-Raghunath"><i class="fa fa-quora" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
-&nbsp; &nbsp; &nbsp;
-<a href="https://kubernetes.slack.com/team/nikhita"><i class="fa fa-slack" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
+<a href="https://kubernetes.slack.com/team/vikassri"><i class="fa fa-slack" aria-hidden="true" style="font-size:40px;color:#2980b9"></i></a>
 </p>
 </div>
 
-For all the security geeks out there, my public key is [B944F27A57CF61F5](https://keybase.io/nikhita).
 
-PS: Best way to reach me is email, the k8s slack or twitter.
+PS: Best way to reach me is email.
