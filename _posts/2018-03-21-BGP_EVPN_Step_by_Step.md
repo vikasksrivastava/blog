@@ -16,7 +16,8 @@ comments: true
 
 ## Introduction
 
-  <img src="_includes/assets/markdown-img-paste-20180321163632812.png" alt="" style="width: 800px;"/>
+
+<img src="/assets/markdown-img-paste-20180321163632812.png" alt="" style="width: 800px;"/>
 
 
 
@@ -304,7 +305,6 @@ evpn
     rd auto
     route-target import auto
     route-target export auto
-
 
 !
 !end
