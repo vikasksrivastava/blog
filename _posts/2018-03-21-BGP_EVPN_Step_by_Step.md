@@ -20,8 +20,6 @@ comments: true
   feature vn-segment-vlan-based
   feature nv overlay
 
-
-
   ip pim rp-address 192.168.9.9 group-list 224.0.0.0/4
   ip pim ssm range 232.0.0.0/8
 
@@ -72,7 +70,6 @@ comments: true
       inherit peer VTEP-PEERS
     neighbor 192.168.22.22
       inherit peer VTEP-PEERS
-
   !
   !end
 
@@ -80,8 +77,8 @@ comments: true
 
 ```sh
 
-  version 7.0(3)I7(3)
-  hostname VTEP-1
+ version 7.0(3)I7(3)
+ hostname VTEP-1
 
  nv overlay evpn
  feature ospf
@@ -94,7 +91,6 @@ comments: true
 
  ip pim rp-address 192.168.9.9 group-list 224.0.0.0/4
  ip pim ssm range 232.0.0.0/8
-
 
  vlan 1,30,40,100,200
  vlan 10
@@ -142,7 +138,6 @@ comments: true
    member vni 10000040
      mcast-group 239.1.1.20
 
-
  interface Ethernet1/1
    description Going to Spine
    no switchport
@@ -171,7 +166,6 @@ comments: true
      address-family ipv4 unicast
      address-family l2vpn evpn
        send-community extended
-
  evpn
    vni 10000030 l2
      rd auto
@@ -181,12 +175,9 @@ comments: true
      rd auto
      route-target import auto
      route-target export auto
-
  !
  !end
  ```
-
-
 
 
 ```sh
@@ -203,7 +194,6 @@ fabric forwarding anycast-gateway-mac 0001.0001.0001
 
 ip pim rp-address 192.168.9.9 group-list 224.0.0.0/4
 ip pim ssm range 232.0.0.0/8
-
 
 vlan 1,10,30,40,100,200
 vlan 10
@@ -251,7 +241,6 @@ interface nve1
   member vni 10000040
     mcast-group 239.1.1.20
 
-
 interface Ethernet1/1
   description "Going to Spine"
   no switchport
@@ -259,8 +248,6 @@ interface Ethernet1/1
   ip router ospf UNDERLAY area 0.0.0.0
   ip pim sparse-mode
   no shutdown
-
-
 
 interface loopback2
   description "Loopback for BGP"
@@ -292,7 +279,6 @@ evpn
     rd auto
     route-target import auto
     route-target export auto
-
 !
 !end
 ```
