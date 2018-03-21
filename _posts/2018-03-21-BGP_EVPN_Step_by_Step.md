@@ -7,7 +7,6 @@ comments: true
 
 <img src="/assets/markdown-img-paste-20180321163632812.png" alt="" style="width: 800px;"/>
 
-
 ```sh
   version 7.0(3)I7(3)
   hostname SPINE-1
