@@ -5,20 +5,7 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
-
-<!-- TOC START min:1 max:5 link:true update:true -->
-  - [Introduction](#introduction)
-
-<!-- TOC END -->
-
-
-
-
-## Introduction
-
-
 <img src="/assets/markdown-img-paste-20180321163632812.png" alt="" style="width: 800px;"/>
-
 
 
 ```sh
