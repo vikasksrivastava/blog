@@ -293,9 +293,6 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 
 
 
-
-
-
 -------
 
 ## Server-Based Compute Services
