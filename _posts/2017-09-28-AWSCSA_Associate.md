@@ -5,8 +5,10 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
+# AWS Certified Solution Architect - Associate
 
 <!-- TOC START min:1 max:5 link:true update:true -->
+- [AWS Certified Solution Architect - Associate](#aws-certified-solution-architect---associate)
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
     - [AWS Account and Physical Organisation](#aws-account-and-physical-organisation)
@@ -41,7 +43,9 @@ comments: true
     - [CloudWatch (Monitoring)](#cloudwatch-monitoring)
     - [CloudTrail (API Logging Service)](#cloudtrail-api-logging-service)
     - [SNS Notification Service](#sns-notification-service)
-- [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
+  - [Advanced Networking](#advanced-networking)
+  - [Workflow](#workflow)
+    - [Service Traffic to and from Private Web Servers](#service-traffic-to-and-from-private-web-servers)
   - [Advanced VPC Networking](#advanced-vpc-networking)
   - [Network Troubleshooting](#network-troubleshooting)
   - [Storage Services](#storage-services)
@@ -62,7 +66,7 @@ This represents how how you manage multiple services and account managment.
 <!-- assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 300px;"/>
 -->
 
-<img src="/assets/markdown-img-paste-20180317155120909.png" alt="" style="width: 200px;"/>
+<img src="assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 400px;"/>
 
 
  > The above picture shows a organisation of the AWS Users and Groups and the different ways (You can have different groups for `PROD` and `QA`) , Console or CLI they can use to login and manage the AWS Cloud.
@@ -77,11 +81,11 @@ At a very high level AWS can be broken down into two main blocks
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
-<img src="/assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
 
 An `AWS Region` has multiple `Availabilty Zones`
 
-<img src="/assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
 
 Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
@@ -89,11 +93,11 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
-<img src="/assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
 
 Now as we further move ahead , the `VPC` is the
 
-<img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
 
 ### AWS Terminology
 
@@ -119,23 +123,23 @@ Now lets look at the `IAM` Components where you manager Users, roles and groups,
 - `IAM Password Policy`
 
 
-<img src="/assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
 
 > IAM is Global and does not require a region selection.
 
 Now once you have enable IAM , you can use the link show in the picture below to login
 
-<img src="/assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM Policy
 
 An IAM Policy , looks like this. Note that `Deny` will have a precedence over `Allow`.
 
-<img src="/assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
 
 An example of where you can see the policy in detail and whats how it is organised
 
-<img src="/assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM groups
 
@@ -153,19 +157,19 @@ So now the `policies` can be attached to the `groups` directy.
 
 > An EC2 instance can only have one role attached to it .
 
-<img src="/assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
 
 #### Role Assumption
 
 Now lets say , the users below in the `DEV` group need access to the  resources in the `PROD`, then can **assume** a `Role` and be able to access the resource in `PROD`.
 
-<img src="/assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
 
 **How does the above assumption happen?**
 
 An `IAM Policy` is attached to an `IAM Role` which is then assigned to the `User` or `Resource` which needs acces.
 
-<img src="/assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
+<img src="assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
 
 Notice in the screenshot below , we have 3 different types of Roles:
 
@@ -431,6 +435,116 @@ If the instance is rebooted the data is retained.
 
 - Automates the process of sending notification email or text . SNS is integrated in many AWS services so it is easy to use it.
 
+
+
+
+-------
+
+## Advanced Networking
+
+###
+
+If you notice in the picture below , we have now added a load balancer and an autoscaling group which now spans two vPCs .
+
+![](assets/markdown-img-paste-20180322075845612.png)
+
+**`Elastic Loadbalancer`** : EC2 Service which loadbalances traffic to multiple EC2 instances across multiple `Availabilty Zones`.
+
+- Also `Elastic Loadbalancer` should also be paired with `Auto Scaling Group` for High Availabilty.
+
+- There could also be an Internal Elastic Loadbalancer for loadbalancing traffic internally within private subnets.
+- Elastic Loadbalancer can also stop sending traffic to a non responding instance based on `Health Checks`.
+- It can an also do the SSL Encryption and Decryption at its level , instead of these certificates installed at the instance level.
+
+**`Auto Scaling Group`** :  Automates the process of increasing or decreasing the amount of provised on-demand instances availaible for your application.
+
+ - Auto Scaling can increase or decrease the amount of instances based on `CloudWatch` metrics.
+
+Auto Scaling has two main components :
+
+- `Launch Configuration` : The template of the instance which will be launched.
+- `Auto Scaling Groups` : All the rules and setting which defines the trigger for when the instance will be created or deleted.
+      - Number of `MIN` and `MAX` instances allowed.
+      - VPCs and AZs to launch instances into.
+
+
+> For an architecture to be considered highly availaible and fault tolerant it MUST have an ELB service traffic to an Auto Scaling Group with a minimum of two instances in separate AZs.
+
+## Workflow
+
+It makes sense to create the Target Groups first and then the Load Balancers
+
+> In the example below we are creating the following scenario and based on the content (pictures or videos) in the URL and route based on the same.
+
+![](assets/markdown-img-paste-20180322112423269.png)
+
+
+![](assets/markdown-img-paste-20180322112318970.png)
+
+1. Create a Target Group
+![](assets/markdown-img-paste-20180322132805821.png)
+2. Add Target (instances) to the target group
+![](assets/markdown-img-paste-2018032213302429.png)
+![](assets/markdown-img-paste-20180322133049555.png)
+3. Configure the Load balancer
+![](assets/markdown-img-paste-2018032213324375.png)
+4. Add the Target group created in step 1
+![](assets/markdown-img-paste-20180322133338478.png)
+5. Note that we have now the DNS name of the loadbalancer which can be accessed to access the service:
+![](assets/markdown-img-paste-20180322133500210.png)
+6. Additionaly when the Load balancer is created we can edit the rules for more advanced rules and routing:
+![](assets/markdown-img-paste-20180322134148144.png)
+Example is , that any time the path contains *pictures* we can forward it to the pictures target group , similary another group can be created for videos:
+![](assets/markdown-img-paste-20180322134322594.png)
+
+### Service Traffic to and from Private Web Servers
+
+**`Bastion Host`**: A terminal server for getting into instance in the private subnet.
+
+**`NAT Gateway`** : For providing internet access to the instances in the private subnet.
+`NAT Gateway` is without an actual instance doing the NATing and `NAT Instances` uses an actual instance.
+
+### ELB Troubleshooting
+
+- Loadbalancing is  not occuring in multiple `Availaibility Zones`
+Enable Cross-Zone Loadbalancing
+![](assets/markdown-img-paste-20180322161335110.png)
+
+- If the Instance not coming up as health in the AWS, Check the ping protocol and make sure it is right.
+![](assets/markdown-img-paste-20180322161603584.png)
+
+- Also check the security group setting of the ELB to ensure if it has the right ports allowed for the communication
+![](assets/markdown-img-paste-20180322162035550.png)
+
+- Access Logs show IP Address of ELB and not the source traffic. For this to work configure the S3 Access Logs  in the picture below.
+![](assets/markdown-img-paste-20180322162203901.png)
+
+- Unable to add instances from a specific subnet . In this case you need to make sure that the AZ of the instance in question should be listed in the `Edit Availabilty Zone` and then it will appear in `Edit Instances` .
+![](assets/markdown-img-paste-20180322162345922.png)
+
+### Auto Scaling Troubleshooting
+
+- An Auto Scaled instance continues to Start and Stop or `Create`/`Terminate` instances in short intervals.
+This could happen if the `trigger` is too close for example CPU threshold `< 30 , > 40 `
+
+- Also keep a note of `Max` instaces as this may not let you spin more instances.
+
+
+
+
+
+-------
+
+## Advanced VPC Networking
+-------
+
+## Network Troubleshooting
+-------
+
+## Storage Services
+-------
+
+## Hybrid Environments
 
 
 
