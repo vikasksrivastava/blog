@@ -80,7 +80,7 @@ EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver 
 ## Loop Free Logic
 
 
-![](blog-assets/markdown-img-paste-2018031700284195.png)
+![](assets/markdown-img-paste-2018031700284195.png)
 
 > Since `R3` told `R2` about the **destination**, `R2` will not advertise on the same link back to `R3` about its path to destination. **Split Horizon**
 
