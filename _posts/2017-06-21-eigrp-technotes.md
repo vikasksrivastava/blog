@@ -147,11 +147,11 @@ Successor `10 x10 = 100`  which is >  than `109` . **So Load balancing happens n
 ## Auto Summarisation
 
 
-![](blog-assets/markdown-img-paste-20180317015339480.png)
+![](assets/markdown-img-paste-20180317015339480.png)
 
 With Auto Summarization, any network configured on the routers is summarised back to the subnet mask they fall under as per the above table .
 
-![ ](blog-assets/markdown-img-paste-20180317015459946.png)
+![ ](assets/markdown-img-paste-20180317015459946.png)
 
 So in the example above , the `172.16.0.0` will be advertised by default to `Hearts` and he wouldnt know where to send the packets. `no auto-summary` under the EIGRP process will eleviate this issue.
 
