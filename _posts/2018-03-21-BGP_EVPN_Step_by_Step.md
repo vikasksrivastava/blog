@@ -5,8 +5,61 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
+<!-- TOC START min:1 max:5 link:true update:true -->
+  - [Introduction](#introduction)
+  - [Lab Topology](#lab-topology)
+  - [Methodology](#methodology)
+    - [Building the Basic Configuration Out](#building-the-basic-configuration-out)
+    - [Building the Multicast Configuration](#building-the-multicast-configuration)
+  - [Full Configuration](#full-configuration)
+    - [SPINE-1](#spine-1)
+    - [VTEP-1](#vtep-1)
+    - [VTEP-2](#vtep-2)
+  - [Troubleshooting Tips](#troubleshooting-tips)
+
+<!-- TOC END -->
+
+
+## Introduction
+
+In this post I would like to introduce you the concepts of BGP EVPN from a 100ft view and give you some understanding of what it is and how to get it up and running quickly.
+
+This by no means is a deep-dive on the topice but a way to get started quick and build upon it . I will refer different documents and notes which which I took when I first started learnign this topic. Hope that helps you too.
+
+## Lab Topology
+
+I used EVE-NG to build this lab out with Nexus 9000v running n9000-i-bin.boot and 2 vCPU and 12GB RAM per instance. The code I am running is 7.0(3)I7(3). Note that the end device are VPCs (Virtual PCs) and not Routers as I had issues with them.
+
 <img src="/assets/markdown-img-paste-20180321163632812.png" alt="" style="width: 800px;"/>
 
+
+## Methodology
+
+Here's my approach on how I built our the configuration in a layered approach
+
+- Build the basic connectivity out (Interfaces,IP Addressing, Routing Protocol Configuration)
+- Test basic reachability in the Underlay.
+- Configure Overlay Networking and Ensure basic connectivity at swtich level.
+
+Alright so lets get started and start building our EVPN setup piece by piece.
+
+### Building the Basic Configuration Out
+
+Again , since we are doing this in a phased manner , I would enable only the `feature` when it is required so that it would make sense how when and why we are using a given `feature`.
+
+Alright so to begin with since we have to configure the `UNDERLAY` which consists of the SVIs and the Routing we will configure the feaure `interface-vlan` and `ospf`
+
+### Building the Multicast Configuration
+
+- Cover why do we need multicast and characterics of BUM Traffic
+- Break out and show where we are using the multicast configuration.
+- Configuration without BGP (peer to peer NVE)
+- Configuration with BGP (auto peer discovery and mapping)
+
+
+
+## Full Configuration
+### SPINE-1
 ```sh
   version 7.0(3)I7(3)
   hostname SPINE-1
@@ -74,6 +127,7 @@ comments: true
 
   ```
 
+### VTEP-1
 ```sh
 
  version 7.0(3)I7(3)
@@ -178,7 +232,7 @@ comments: true
  !end
  ```
 
-
+### VTEP-2
 ```sh
 version 7.0(3)I7(3)
 hostname VTEP-2
@@ -280,4 +334,24 @@ evpn
     route-target export auto
 !
 !end
+```
+
+## Troubleshooting Tips
+
+```sh
+root@VTEP-1#tcpdump -i eth8 icmp
+tcpdump: WARNING: eth8: no IPv4 address assigned
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth8, link-type EN10MB (Ethernet), capture size 65535 bytes
+09:48:31.589679 IP 172.16.30.10 > 172.16.40.10: ICMP echo request,
+
+
+
+show l2 route mac all
+
+
+show bgp l2vpn evpn
+
+
+
 ```
