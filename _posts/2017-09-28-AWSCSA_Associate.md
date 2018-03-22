@@ -435,9 +435,6 @@ If the instance is rebooted the data is retained.
 
 - Automates the process of sending notification email or text . SNS is integrated in many AWS services so it is easy to use it.
 
-
-
-
 -------
 
 ## Advanced Networking
@@ -446,7 +443,7 @@ If the instance is rebooted the data is retained.
 
 If you notice in the picture below , we have now added a load balancer and an autoscaling group which now spans two vPCs .
 
-![](assets/markdown-img-paste-20180322075845612.png)
+<img src="assets/markdown-img-paste-20180322075845612.png" alt="Drawing" style="width: 400px;"/>
 
 **`Elastic Loadbalancer`** : EC2 Service which loadbalances traffic to multiple EC2 instances across multiple `Availabilty Zones`.
 
@@ -476,26 +473,26 @@ It makes sense to create the Target Groups first and then the Load Balancers
 
 > In the example below we are creating the following scenario and based on the content (pictures or videos) in the URL and route based on the same.
 
-![](assets/markdown-img-paste-20180322112423269.png)
+<img src="assets/markdown-img-paste-20180322112423269.png" alt="Drawing" style="width: 400px;"/>
 
 
-![](assets/markdown-img-paste-20180322112318970.png)
+<img src="assets/markdown-img-paste-20180322112318970.png" alt="Drawing" style="width: 400px;"/>
 
 1. Create a Target Group
-![](assets/markdown-img-paste-20180322132805821.png)
+<img src="assets/markdown-img-paste-20180322132805821.png" alt="Drawing" style="width: 400px;"/>
 2. Add Target (instances) to the target group
-![](assets/markdown-img-paste-2018032213302429.png)
-![](assets/markdown-img-paste-20180322133049555.png)
+<img src="assets/markdown-img-paste-2018032213302429.png" alt="Drawing" style="width: 400px;"/>
+<img src="assets/markdown-img-paste-20180322133049555.png" alt="Drawing" style="width: 400px;"/>
 3. Configure the Load balancer
-![](assets/markdown-img-paste-2018032213324375.png)
+<img src="assets/markdown-img-paste-2018032213324375.png" alt="Drawing" style="width: 400px;"/>
 4. Add the Target group created in step 1
-![](assets/markdown-img-paste-20180322133338478.png)
+<img src="assets/markdown-img-paste-20180322133338478.png" alt="Drawing" style="width: 400px;"/>
 5. Note that we have now the DNS name of the loadbalancer which can be accessed to access the service:
-![](assets/markdown-img-paste-20180322133500210.png)
+<img src="assets/markdown-img-paste-20180322133500210.png" alt="Drawing" style="width: 400px;"/>
 6. Additionaly when the Load balancer is created we can edit the rules for more advanced rules and routing:
-![](assets/markdown-img-paste-20180322134148144.png)
+<img src="assets/markdown-img-paste-20180322134148144.png" alt="Drawing" style="width: 400px;"/>
 Example is , that any time the path contains *pictures* we can forward it to the pictures target group , similary another group can be created for videos:
-![](assets/markdown-img-paste-20180322134322594.png)
+<img src="assets/markdown-img-paste-20180322134322594.png" alt="Drawing" style="width: 400px;"/>
 
 ### Service Traffic to and from Private Web Servers
 
@@ -508,19 +505,19 @@ Example is , that any time the path contains *pictures* we can forward it to the
 
 - Loadbalancing is  not occuring in multiple `Availaibility Zones`
 Enable Cross-Zone Loadbalancing
-![](assets/markdown-img-paste-20180322161335110.png)
+<img src="assets/markdown-img-paste-20180322161335110.png" alt="Drawing" style="width: 400px;"/>
 
 - If the Instance not coming up as health in the AWS, Check the ping protocol and make sure it is right.
-![](assets/markdown-img-paste-20180322161603584.png)
+<img src="assets/markdown-img-paste-20180322161603584.png" alt="Drawing" style="width: 400px;"/>
 
 - Also check the security group setting of the ELB to ensure if it has the right ports allowed for the communication
-![](assets/markdown-img-paste-20180322162035550.png)
+<img src="assets/markdown-img-paste-20180322162035550.png" alt="Drawing" style="width: 400px;"/>
 
 - Access Logs show IP Address of ELB and not the source traffic. For this to work configure the S3 Access Logs  in the picture below.
-![](assets/markdown-img-paste-20180322162203901.png)
+<img src="assets/markdown-img-paste-20180322162203901.png" alt="Drawing" style="width: 400px;"/>
 
 - Unable to add instances from a specific subnet . In this case you need to make sure that the AZ of the instance in question should be listed in the `Edit Availabilty Zone` and then it will appear in `Edit Instances` .
-![](assets/markdown-img-paste-20180322162345922.png)
+<img src="assets/markdown-img-paste-20180322162345922.png" alt="Drawing" style="width: 400px;"/>
 
 ### Auto Scaling Troubleshooting
 
