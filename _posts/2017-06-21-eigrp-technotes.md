@@ -68,7 +68,7 @@ EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver 
 
 ## Path Selection
 
-![](blog-assets/markdown-img-paste-2018031700284195.png)
+![](assets/markdown-img-paste-2018031700284195.png)
 
 > **Advertised Distance** : Is what your neigbor told you the cost to the distance is.
 > **Feasible Distance** : Is what your neigbor told you plus the cost to reach the neighbor .
