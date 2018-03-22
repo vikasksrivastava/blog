@@ -68,7 +68,7 @@ EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver 
 
 ## Path Selection
 
-![](assets/markdown-img-paste-2018031700284195.png)
+![](blog-assets/markdown-img-paste-2018031700284195.png)
 
 > **Advertised Distance** : Is what your neigbor told you the cost to the distance is.
 > **Feasible Distance** : Is what your neigbor told you plus the cost to reach the neighbor .
@@ -80,7 +80,7 @@ EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver 
 ## Loop Free Logic
 
 
-![](assets/markdown-img-paste-2018031700284195.png)
+![](blog-assets/markdown-img-paste-2018031700284195.png)
 
 > Since `R3` told `R2` about the **destination**, `R2` will not advertise on the same link back to `R3` about its path to destination. **Split Horizon**
 
@@ -147,11 +147,11 @@ Successor `10 x10 = 100`  which is >  than `109` . **So Load balancing happens n
 ## Auto Summarisation
 
 
-![](assets/markdown-img-paste-20180317015339480.png)
+![](blog-assets/markdown-img-paste-20180317015339480.png)
 
 With Auto Summarization, any network configured on the routers is summarised back to the subnet mask they fall under as per the above table .
 
-![ ](assets/markdown-img-paste-20180317015459946.png)
+![ ](blog-assets/markdown-img-paste-20180317015459946.png)
 
 So in the example above , the `172.16.0.0` will be advertised by default to `Hearts` and he wouldnt know where to send the packets. `no auto-summary` under the EIGRP process will eleviate this issue.
 
@@ -320,7 +320,7 @@ everything.
 
    > An EIGRP router that is configured as a stub does not receive queries when one of its neighbors loses a network.
 
-![](assets/markdown-img-paste-20180317021123916.png)
+![](blog-assets/markdown-img-paste-20180317021123916.png)
 
 In the above example when you make `Jack` the stub router ,  when lo0 (2.2.2.0) goes down it will send out a `QUERY`
 But John will not send any query to Jack because it knows that it is a Stub router .
