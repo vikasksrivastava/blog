@@ -1,7 +1,11 @@
-## EIGRP Notes
+---
+layout: post
+title: EIGRP Tech Notes
+description: My Notes on EIGRP
+comments: true
+---
 
 <!-- TOC START min:1 max:3 link:true update:true -->
-  - [EIGRP Notes](#eigrp-notes)
     - [About EIGRP](#about-eigrp)
   - [Path Selection](#path-selection)
   - [Loop Free Logic](#loop-free-logic)
@@ -463,14 +467,6 @@ But John will not send any query to Jack because it knows that it is a Stub rout
  Jack# debug ip packet 100
  IP packet debugging is on for access list 100
 ```
-
-
-
-
-
-
-
-
 
 
 
