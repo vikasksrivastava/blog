@@ -6,7 +6,7 @@ comments: true
 ---
 
 <!-- TOC START min:1 max:3 link:true update:true -->
-    - [About EIGRP](#about-eigrp)
+  - [About EIGRP](#about-eigrp)
   - [Path Selection](#path-selection)
   - [Loop Free Logic](#loop-free-logic)
   - [Successor / Feasible Successor Selection](#successor--feasible-successor-selection)
