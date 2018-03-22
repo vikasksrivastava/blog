@@ -179,7 +179,7 @@ Notice in the screenshot below , we have 3 different types of Roles:
 
 
 
-<img src="_posts/assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;"/>
+<img src="assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;"/>
 
 #### Security Token Service
 
