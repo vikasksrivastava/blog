@@ -572,7 +572,40 @@ In the example below , we are moving the object to Infrequent Access to Glacier.
 
 ![](assets/markdown-img-paste-20180322200344251.png)
 
+#### S3 Event Notification
 
+Allows you to setup automated communication between S3 and other AWS services when a selected event occurs.
+Event can be sent to `SNS`, `Lambda`, `SQS Queue`
+![](assets/markdown-img-paste-20180322201116455.png)
+
+#### S3 Static Web Hosting
+
+Mainly lets say if your servers are unreachanble , they can atleast get a page notifying your company message rather than a 404.
+
+
+#### CORS / Cross Origin Resource Sharing
+
+Sharing accross wed domains
+![](assets/markdown-img-paste-2018032220164126.png)
+
+To be able to share information between two different buckets for two different domains CORS have to be enabled.
+
+#### Multipart Upload
+
+Uploading files in pieces , *highly suggested* when objects are bigger than `100MB`
+
+#### AWS Import Export
+
+You send a physical device to AWS which AWS Uploads for you .
+
+#### Snowball
+
+AWS Send you a transfer appliance which you can copy your data to to send .
+This is for PB Scale data.
+
+#### Storage Gateway
+
+Storage
 
 
 
