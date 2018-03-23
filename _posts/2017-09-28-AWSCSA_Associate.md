@@ -523,19 +523,59 @@ This could happen if the `trigger` is too close for example CPU threshold `< 30 
 
 - Also keep a note of `Max` instaces as this may not let you spin more instances.
 
-
-
-
-
--------
-
-## Advanced VPC Networking
--------
-
-## Network Troubleshooting
 -------
 
 ## Storage Services
+
+Notice the Transit service which are responsible for sending data in and out of S3 and Glacier.
+![](assets/markdown-img-paste-2018032219013824.png)
+
+Differen components of S3
+
+![](assets/markdown-img-paste-20180322190930356.png)
+
+### S3 Permissions
+
+`Bucket Policies` These are the permissions which are direclty assigned to the S3 Bucket . These are called Bucket Policies.
+
+`S3 Access Control List` : For Public Access or AWS authenticated user.
+
+![](assets/markdown-img-paste-20180322193909333.png)
+
+
+### S3 Storage Class
+
+Object Durability : The percent the object is goign to be there. Not goign to be deleted or corrupted.
+Object Availaibilty : Availaible for Access.
+
+
+Different types of S3 Storage :
+
+- `Standard`:  Durability : 99.999999999%  Availabilty : 99.99%
+- `Standard Infrequent Access`:  Durability : 99.999999999%  Availabilty : 99.90%
+- `Reduced Redundancy Storage `:  Durability : 99.99%  Availabilty : 99.99%
+- `Glacier`:  Durability : 99.999999999%. Following are the recovery options :
+  - `Expedited` : 1- 5 minutes.
+  - `Standard`: 3-5 hours.
+  - `Bulk`: 5-12 hours.
+
+> To move object to Glacier you have to use `Life Cycle Policies`
+
+#### S3 Versioning
+
+By default versioning is disabled on all objects.  Once enable it cannt be disabled completely , but stopped for future objects.
+Versioning can only be setup at the bucket level.
+
+#### S3 Lifecycle managment
+
+In the example below , we are moving the object to Infrequent Access to Glacier.
+
+![](assets/markdown-img-paste-20180322200344251.png)
+
+
+
+
+
 -------
 
 ## Hybrid Environments
