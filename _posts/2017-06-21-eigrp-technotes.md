@@ -65,21 +65,22 @@ EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver 
 
 **Different types of EIGRP Packets**:
 
-`Hello`:  These are used for neighbor discovery.
+- `Hello`:  These are used for neighbor discovery.
 
-`Updates`: Updates are for sending routing information updates .
+- `Updates`: Updates are for sending routing information updates .
 
-`Query`:  When the router has lost information on a certain network and does not have a back path , it send the query request.
+- `Query`:  When the router has lost information on a certain network and does not have a back path , it send the query request.
 
-`Reply`: Reply packets are used in response to the query packets and are reliable.
+- `Reply`: Reply packets are used in response to the query packets and are reliable.
 
-`ACK`: Acknowledgment
+- `ACK`: Acknowledgment
 
 ## Path Selection
 
 ![](assets/markdown-img-paste-2018031700284195.png)
 
 > **Advertised Distance** : Is what your neigbor told you the cost to the distance is.
+>
 > **Feasible Distance** : Is what your neigbor told you plus the cost to reach the neighbor .
 
  So in the above example , `R3` tells `R2` that the cost to go to destination is `5` (Advertised Distance) but `R2` knows that the Feasible Distance is `5 + 4` (Actual Distance)
@@ -114,7 +115,7 @@ In the example above , `Advertised Distance` is what **other routers** have told
 
 For `Feasible Successor` to be selected the following criteria should be fullfilled:
 
-`Advertised Distance of Feasible Sucessor < Feasible Distance of Successor`
+> Advertised Distance of Feasible Sucessor **<** Feasible Distance of Successor`
 
 In the table above neither `R1` nor `R2` satisfied that criteria hence are not selected as the backup paths `Feasible Sucessor`
 
@@ -131,7 +132,7 @@ Lets take an example of the following EIGRP routing table :
 In the above example , since `R2` has lowest FD it becomes the `Feasible Successor`.
 Now the question to ask for Feasible Successor Selection is :
 
-`Is my Advertised Distance less than the FD of Successor ?`
+> Is my `Advertised Distance` less than the `FD` of Successor ?
 
 Since in the above table `9` is less than `FD` 10 , it is selected as the `FS`.
 
@@ -142,14 +143,14 @@ Since in the above table `9` is less than `FD` 10 , it is selected as the `FS`.
 
 In the table above
 
-`In order to be able to do Load Balancing to the FS, the FD (total distance) should be less than SUCCESSOR x MULTIPLIER.`
+> In order to be able to do Load Balancing to the FS, the FD (total distance) should be less than `SUCCESSOR x MULTIPLIER`
 
 So in the above example , the let say the `variance` is set to  2 which means :
-Successor `10 x 2 = 20`  which is <  than `109` ; So **no load balancing**.
-Again , changing the successor to `4` :
+- Successor `10 x 2 = 20`  which is <  than `109` ; So **no load balancing**.
+- Again , changing the successor to `4` :
 Successor `10 x4 = 40`  which is <  than `109` . So **no load balancing**.
 
-**Finally :**
+- **Finally :**
 Successor `10 x10 = 100`  which is >  than `109` . **So Load balancing happens now** .
 
 
