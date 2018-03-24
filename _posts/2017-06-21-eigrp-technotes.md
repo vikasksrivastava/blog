@@ -65,10 +65,14 @@ EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver 
 
 **Different types of EIGRP Packets**:
 
-`Hello`:  These are used for neighbor discovery .
+`Hello`:  These are used for neighbor discovery.
+
 `Updates`: Updates are for sending routing information updates .
+
 `Query`:  When the router has lost information on a certain network and does not have a back path , it send the query request.
+
 `Reply`: Reply packets are used in response to the query packets and are reliable.
+
 `ACK`: Acknowledgment
 
 ## Path Selection
