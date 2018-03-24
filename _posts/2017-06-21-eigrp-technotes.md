@@ -6,7 +6,7 @@ comments: true
 ---
 
 <!-- TOC START min:1 max:3 link:true update:true -->
-  - [About EIGRP](#about-eigrp)
+    - [About EIGRP](#about-eigrp)
   - [Path Selection](#path-selection)
   - [Loop Free Logic](#loop-free-logic)
   - [Successor / Feasible Successor Selection](#successor--feasible-successor-selection)
@@ -14,7 +14,10 @@ comments: true
   - [Auto Summarisation](#auto-summarisation)
   - [Passive Interface](#passive-interface)
     - [EIGRP Metrics](#eigrp-metrics)
+    - [EIGRP Scalability Issues](#eigrp-scalability-issues)
   - [Stub Router](#stub-router)
+    - [Name EIGRP Instance Example](#name-eigrp-instance-example)
+    - [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
 
 <!-- TOC END -->
 
@@ -302,7 +305,7 @@ Which further expands to:
   > The metrics in EIGRP are a pain to work with since the values are so LARGE! If you want to practice with EIGRP you can try to disable all the K-values except K3. This will make EIGRP only use delay as metric.
 
 
- ### EIGRP Scalability Issues
+### EIGRP Scalability Issues
 
  EIGRP is designed for large enterprise networks but having one big EIGRP network **(5000+ prefixes and many hops) can lead to some problems**:
 - **Lots of EIGRP prefixes** equal a large topology table and routing table.
@@ -329,7 +332,7 @@ But John will not send any query to Jack because it knows that it is a Stub rout
 
 
 
- ### How to see if a router is Stub or not :
+ ### How to see if a router is Stub or not
 
   >  In the example below , it means that the stub is Adverstising **CONNECTED SUMMARY** routes
 
@@ -374,7 +377,7 @@ But John will not send any query to Jack because it knows that it is a Stub rout
    <cr>
 ```
 
- ### Name EIGRP Instance , Example
+### Name EIGRP Instance Example
 
 ```sh
  R1(config)#router eigrp HELLO_WORLD
@@ -458,8 +461,7 @@ But John will not send any query to Jack because it knows that it is a Stub rout
  R2#
 ```
 
-
- ### How to Debug Interesting Packet :
+### How to Debug Interesting Packet :
 
 ```sh
  Jack(config)# access-list 100 permit ip any 192.168.200.20 0.0.0.0
