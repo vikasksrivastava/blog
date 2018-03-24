@@ -16,6 +16,7 @@ comments: true
     - [EIGRP Metrics](#eigrp-metrics)
     - [EIGRP Scalability Issues](#eigrp-scalability-issues)
   - [Stub Router](#stub-router)
+    - [How to see if a router is Stub or not](#how-to-see-if-a-router-is-stub-or-not)
     - [Name EIGRP Instance Example](#name-eigrp-instance-example)
     - [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
 
@@ -331,8 +332,7 @@ But John will not send any query to Jack because it knows that it is a Stub rout
  > When we say a switch is a Stub EIGRP Switch , it means that the Switch will learn  the information about others in the network , but no it will not be able to advertise what it knows as John will not be able to send `QUERY` to it .
 
 
-
- ### How to see if a router is Stub or not
+### How to see if a router is Stub or not
 
   >  In the example below , it means that the stub is Adverstising **CONNECTED SUMMARY** routes
 
