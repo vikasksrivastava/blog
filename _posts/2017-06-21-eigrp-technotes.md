@@ -6,7 +6,7 @@ comments: true
 ---
 
 <!-- TOC START min:1 max:3 link:true update:true -->
-    - [About EIGRP](#about-eigrp)
+  - [About EIGRP](#about-eigrp)
   - [Path Selection](#path-selection)
   - [Loop Free Logic](#loop-free-logic)
   - [Successor / Feasible Successor Selection](#successor--feasible-successor-selection)
@@ -50,7 +50,8 @@ Cisco added **some of the features from link-state routing protocols to EIGRP** 
 > - Besides IPv4 you can also use EIGRP to route IPv6 or even some older network layer protocols like IPX or AppleTalk.
 > - EIGRP is **100% loop-free** and I'm going to show you why this is true.
 
-### About EIGRP
+## About EIGRP
+
 EIGRP Protocol Number is `88`, EIGRP runs **directly on top of the IP header**. If you look at the picture above you see we have a frame header (for example an Ethernet Frame), an IP Header (we are using IPv4) and inside the IP packet you'll find EIGRP.
 
 EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver EIGRP packets between neighbors in a reliable and ordered way. Reliability means that there is **acknowledgement for an operation , which makes it a reliable protocol**.
