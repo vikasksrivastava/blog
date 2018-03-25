@@ -104,10 +104,10 @@ We are looking the topology from router `R3`'s perspective.
 
 
 | Router | Advertised Distance  | Feasible Distance |
-| ------  | ------ | ----- |
-| R4 | 1  | 6 `(5+1)` `SUCCESSOR`
-|R2   | 24  `(8+10+5+1)`  | 28 `(24+4)`
-|R1   | 18 ``(8+4+5+1)``  | 28 `(18+10)`
+| ------ |         ------       | -----             |
+| R4     | 1                    | 6 `(5+1)` `SUCCESSOR`
+| R2     | 24  `(8+10+5+1)`     | 28 `(24+4)`
+| R1     | 18 ``(8+4+5+1)``     | 28 `(18+10)`
 
 In the example above , `Advertised Distance` is what **other routers** have told `R3` , `Feasible Distance` is what it takes `R3` to reach **other routers**.
 
