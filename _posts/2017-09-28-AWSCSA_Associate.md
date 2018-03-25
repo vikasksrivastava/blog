@@ -5,10 +5,8 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
-# AWS Certified Solution Architect - Associate
 
 <!-- TOC START min:1 max:5 link:true update:true -->
-- [AWS Certified Solution Architect - Associate](#aws-certified-solution-architect---associate)
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
     - [AWS Account and Physical Organisation](#aws-account-and-physical-organisation)
@@ -46,10 +44,26 @@ comments: true
   - [Advanced Networking](#advanced-networking)
   - [Workflow](#workflow)
     - [Service Traffic to and from Private Web Servers](#service-traffic-to-and-from-private-web-servers)
+    - [ELB Troubleshooting](#elb-troubleshooting)
+    - [Auto Scaling Troubleshooting](#auto-scaling-troubleshooting)
+  - [Storage Services](#storage-services)
+    - [S3 Permissions](#s3-permissions)
+    - [S3 Storage Class](#s3-storage-class)
+      - [S3 Versioning](#s3-versioning)
+      - [S3 Lifecycle managment](#s3-lifecycle-managment)
+      - [S3 Event Notification](#s3-event-notification)
+      - [S3 Static Web Hosting](#s3-static-web-hosting)
+      - [CORS / Cross Origin Resource Sharing](#cors--cross-origin-resource-sharing)
+      - [Multipart Upload](#multipart-upload)
+      - [AWS Import Export](#aws-import-export)
+      - [Snowball](#snowball)
+      - [Storage Gateway](#storage-gateway)
+  - [Hybrid Environments](#hybrid-environments)
+- [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
   - [Network Troubleshooting](#network-troubleshooting)
-  - [Storage Services](#storage-services)
-  - [Hybrid Environments](#hybrid-environments)
+  - [Storage Services](#storage-services-1)
+  - [Hybrid Environments](#hybrid-environments-1)
 
 <!-- TOC END -->
 
