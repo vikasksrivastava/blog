@@ -619,7 +619,10 @@ This is for PB Scale data.
 
 #### Storage Gateway
 
-Storage
+Connects On-Premise Datacenter to S3 Storage
+
+- `Gateway Cached Volumes` (Read as **locally** **cached** volumes): Create the volume and mount them as iSCSI devices. The data will be stored in S3 and frequently accessed data will be cached locally.
+- `Gateway Stored Volumes` (Read as **locally** **stored** volumes) : All data is stored locally and snapshots of the same as incremental backup are stored in S3.
 
 
 
