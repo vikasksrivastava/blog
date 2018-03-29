@@ -54,3 +54,73 @@ and the packet is sent to that VTEP.
 The managment is still centralised as today , but the datapath becomes much more scalablae and high bandwidth capable. Notice in the picture above the Datapath between the WLCs.
 
 The `Fabric Enabled WLC` registers Wireless Clients with the Control Plane (the LISP DB).
+
+### Virtual Network
+
+`Virtual Network` maintains a separate Routing and Switching instance for each VN.
+
+The `Virtual Network` is based on VRFs. Now why do we not call it VRF is it is based on it ?
+
+In the picture below only the Fabric Border and the Edge nodes have the VRFs. Anything else between these devices is a VXLAN Forwarder.
+
+![](assets/markdown-img-paste-20180328064342979.png)
+
+### Scalable Group Tag
+
+![](assets/markdown-img-paste-20180328064612236.png)
+
+SGT is carried in the VXLAN and now can tranverse devices which do not have SGT Capability. Unlike hostorically where SGT was a hop by hop protocol.
+
+`Subtended Node` Should be connected to only one physical edge (No Redundancy ?)
+
+### A very important and good slide summarising a lot of info :
+
+![](assets/markdown-img-paste-20180328071006218.png)
+
+### A light and scalable Control Plane based on LISP
+
+![](assets/markdown-img-paste-20180328072634856.png)
+
+Notice the Table Sizes on the routers have narrowed down and is offloaded to the Mapping Database.
+
+### LISP Lookup Protocol
+
+![](assets/markdown-img-paste-2018032807290141.png)
+
+![](assets/markdown-img-paste-20180328072929191.png)
+
+### The VXLAN Header
+
+![](assets/markdown-img-paste-20180328073258309.png)
+
+VRF is carried in the VNI and SGT is carried in the Se
+
+### Cisco Trustsec
+
+![](assets/markdown-img-paste-20180328073504455.png)
+
+
+#### Cisco Trustsec TAG Assignment
+
+![](assets/markdown-img-paste-20180328073634552.png)
+
+
+
+
+
+![](assets/markdown-img-paste-20180328073904227.png)
+
+
+`Grapevine`  is the Assurance Part , which is a container infrastructructure whic is moving to Maglab.
+
+APIC-EM Services has the Inventory and other servies.
+
+Then using the north bound APIS the GUI is created.
+
+
+![](assets/markdown-img-paste-20180328074403482.png)
+
+
+### APIC EM Cluster Architecture
+
+![](assets/markdown-img-paste-20180328074752927.png)
