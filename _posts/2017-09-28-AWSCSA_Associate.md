@@ -58,6 +58,7 @@ comments: true
       - [AWS Import Export](#aws-import-export)
       - [Snowball](#snowball)
       - [Storage Gateway](#storage-gateway)
+      - [DNS Management](#dns-management)
   - [Hybrid Environments](#hybrid-environments)
 - [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
@@ -623,6 +624,34 @@ Connects On-Premise Datacenter to S3 Storage
 
 - `Gateway Cached Volumes` (Read as **locally** **cached** volumes): Create the volume and mount them as iSCSI devices. The data will be stored in S3 and frequently accessed data will be cached locally.
 - `Gateway Stored Volumes` (Read as **locally** **stored** volumes) : All data is stored locally and snapshots of the same as incremental backup are stored in S3.
+
+
+#### DNS Management
+
+`Hosted Zones` : A Hosted Zone basically keep record of your DNS domain and know what to do with a DNS Request .
+
+`Public Hosted Zone` : On the Internet
+
+`Private Zone` : Withing Virtual Private Cloud .
+
+`Record Sets` : Record Sets are instructions that actually match domain names to IP Address. Record set comprised of the following:
+  - Record type
+  - Standard/alias
+  - Routing Policy
+  - Evaluated target health
+
+Common Record types include :
+
+- `A` : Point to IPv4 address
+- `AAAA` : Points to IPv6 IP address
+- `CNAME` : Used to point to a hostname or other hostname.
+- `MX` : Point to a mail record.
+
+
+
+
+
+
 
 
 
