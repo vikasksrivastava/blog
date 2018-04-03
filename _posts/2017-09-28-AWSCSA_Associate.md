@@ -5,7 +5,6 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
-
 <!-- TOC START min:1 max:5 link:true update:true -->
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
@@ -59,6 +58,17 @@ comments: true
       - [Snowball](#snowball)
       - [Storage Gateway](#storage-gateway)
       - [DNS Management](#dns-management)
+      - [CloudFront](#cloudfront)
+      - [VPN Connection](#vpn-connection)
+      - [AWS Direct Connnect](#aws-direct-connnect)
+      - [VPC Peering](#vpc-peering)
+      - [AWS CLI Configuration](#aws-cli-configuration)
+      - [AWS Database](#aws-database)
+      - [AWS RDS](#aws-rds)
+    - [RDS Launch Demo](#rds-launch-demo)
+    - [DynamoDB](#dynamodb)
+    - [ElasticCache](#elasticcache)
+    - [RedShift](#redshift)
   - [Hybrid Environments](#hybrid-environments)
 - [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
@@ -646,6 +656,128 @@ Common Record types include :
 - `AAAA` : Points to IPv6 IP address
 - `CNAME` : Used to point to a hostname or other hostname.
 - `MX` : Point to a mail record.
+
+#### CloudFront
+
+CloudFront is a global CDN which delivers content from an `origin` location to an `edge` locations .
+
+> In order to server a new version of an object, either create a new object with a new name or create an `invalidation` on the CloudFront distribution based on onject names.
+> Invalidations have cost so if you have to invalidate large CloudFront distributions then perhaps you should create a new distribution and move DNS names.
+
+#### VPN Connection
+
+`Virtual Private Gateway` : It is the connector at the VPC Side , the `Customer Gateway` is the connector at the customer side.
+
+![](assets/markdown-img-paste-20180331234616674.png)
+
+#### AWS Direct Connnect
+
+AWS Direct Connect is a service that provides a dedicated network connection between your network and one of the AWS Direct connect providers.
+
+Dedicated Private connection is like a VPN connection to your DC , it does not provide Internet .
+
+![](assets/markdown-img-paste-20180401000721669.png)
+
+`Private Virtual Interface` : This allows you to interface with an AWS VPC with automatic route discovery using BGP , this requires a private of a public ASN number.
+
+`Public Virtual Interfaces` : This allows you to have a direct connection to public AWS endpoints like Amazon S3 or DynamoDB
+
+
+#### VPC Peering
+
+
+![](assets/markdown-img-paste-20180401001713511.png)
+
+> Earlier VPC Peerign was only allowed withing the region , but with new feature VPC Peering can be done within different regions as well.
+
+
+![](assets/markdown-img-paste-20180401003523130.png)
+
+Notice the appearance of vpc-peer entry to point to in the route table
+
+![](assets/markdown-img-paste-2018040100361218.png)
+
+
+#### AWS CLI Configuration
+
+`aws configure`
+
+`aws s3 mb s3://testbucket`
+
+#### AWS Database
+
+![](assets/markdown-img-paste-20180403080739308.png)
+
+RDS is a fully managed database service , you do not have access to the instance.
+
+RDS sizes like M1 , Large etc correcpoind to the instance sizes.
+
+The following databases are supported :
+
+- MySQL
+- MariaDB
+- PostgreSQL
+- Oracle
+- MS SQL Servers
+- Aurora
+  - Amazon Developed DB Service.
+
+
+Benefits of RDS :
+- Automatic minor updates
+- Automatic backups.
+
+#### AWS RDS
+
+![](assets/markdown-img-paste-20180401013344765.png)
+
+`RDS Read Replica` : A DB copy which can be used for `READS` and can offload some load from the main DB .
+
+`Multi AZ Failover` : RDS can be synchronously replicated to the `Standby` Instance which can be used for the failover.
+
+### RDS Launch Demo
+
+1. First This is to create a subnet group (you do not create the subnet but just associate the subnet already created)
+![](assets/markdown-img-paste-20180402210530609.png)
+2. Select the instance type.
+![](assets/markdown-img-paste-20180402210745413.png)
+3. Provide the SB Launch Details
+![](assets/markdown-img-paste-2018040221082210.png)
+![](assets/markdown-img-paste-20180402210941830.png)
+4. View of a fully launched database
+![](assets/markdown-img-paste-20180402211024126.png)
+Notice the `middle tab` with lot of information
+![](assets/markdown-img-paste-20180402211135353.png)
+Creating `Read Replicas`
+![](assets/markdown-img-paste-20180402211953464.png)
+
+### DynamoDB
+
+DynamoDB is a serverless SQL Service. A fully managed NoSQL Service , similar to MongoDB.
+All you need to do is define the throughput capacity. This scales automatically (grow and shrink)
+AWS handles the backups as well.
+
+Very straight forward configuration
+![](assets/markdown-img-paste-20180403080044390.png)
+
+Used for storing : IoT , Gaming , Mobile
+
+### ElasticCache
+
+It a fullymanaged `in-memory` cache engine. It caches large taxing queries on the DB which increases performance.
+
+memcached and redis are the currently availaible engines to power the ElasticCache.
+
+### RedShift
+
+Amazon Redshift is a petabyte scale datawareshousing solution, fully managed and scalable and is generally used for Big Data analytics.
+
+
+
+
+
+
+
 
 
 

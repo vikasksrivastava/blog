@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>AWS Certified Solution Architect Associate Notes</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#aws-organisation">AWS Organisation</a>
+<ul>
+<li><a href="#aws-account-and-physical-organisation">AWS Account and Physical Organisation</a></li>
+<li><a href="#physical-organisation">Physical Organisation</a></li>
+<li><a href="#aws-terminology">AWS Terminology</a></li>
+</ul>
+</li>
+<li><a href="#aws-access-management">AWS Access Management</a>
+<ul>
+<li><a href="#iam-policy">IAM Policy</a></li>
+<li><a href="#iam-groups">IAM groups</a></li>
+<li><a href="#iam-roles">IAM Roles</a>
+<ul>
+<li><a href="#role-assumption">Role Assumption</a></li>
+<li><a href="#security-token-service">Security Token Service</a></li>
+<li><a href="#iam-api-keys">IAM API Keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#aws-networking">AWS Networking</a>
+<ul>
+<li><a href="#typical-vpc-screen">Typical VPC screen</a></li>
+<li><a href="#vpc-routing-basics">VPC Routing Basics</a></li>
+<li><a href="#vpc-security">VPC Security</a></li>
+<li><a href="#vpc-workflow">VPC Workflow</a></li>
+<li><a href="#vpc-limits">VPC Limits</a></li>
+</ul>
+</li>
+<li><a href="#server-based-compute-services">Server-Based Compute Services</a>
+<ul>
+<li><a href="#ec2-limits">EC2 Limits</a></li>
+<li><a href="#ec2-purchasing-options">EC2 Purchasing Options</a></li>
+<li><a href="#linux-ami-virtualisation-type-">Linux AMI Virtualisation Type :</a></li>
+<li><a href="#ec2-instance-type-">EC2 Instance Type :</a></li>
+<li><a href="#ec2-instance-metadata">EC2 Instance Metadata</a></li>
+<li><a href="#ec2-instance-storage-types">EC2 Instance Storage types</a></li>
+<li><a href="#different-ebs-types">Different EBS types</a></li>
+<li><a href="#ebs-snapshot">EBS snapshot</a></li>
+<li><a href="#placement-groups">Placement groups</a></li>
+<li><a href="#efs-elastic-file-system">EFS Elastic File System</a></li>
+</ul>
+</li>
+<li><a href="#serverless-compute-services-aws-lambda">Server<strong>less</strong> Compute Services (AWS Lambda)</a></li>
+<li><a href="#quick-detour">Quick Detour</a>
+<ul>
+<li><a href="#cloudwatch-monitoring">CloudWatch (Monitoring)</a></li>
+<li><a href="#cloudtrail-api-logging-service">CloudTrail (API Logging Service)</a></li>
+<li><a href="#sns-notification-service">SNS Notification Service</a></li>
+</ul>
+</li>
+<li><a href="#advanced-networking">Advanced Networking</a></li>
+<li><a href="#workflow">Workflow</a>
+<ul>
+<li><a href="#service-traffic-to-and-from-private-web-servers">Service Traffic to and from Private Web Servers</a></li>
+<li><a href="#elb-troubleshooting">ELB Troubleshooting</a></li>
+<li><a href="#auto-scaling-troubleshooting">Auto Scaling Troubleshooting</a></li>
+</ul>
+</li>
+<li><a href="#storage-services">Storage Services</a>
+<ul>
+<li><a href="#s3-permissions">S3 Permissions</a></li>
+<li><a href="#s3-storage-class">S3 Storage Class</a>
+<ul>
+<li><a href="#s3-versioning">S3 Versioning</a></li>
+<li><a href="#s3-lifecycle-managment">S3 Lifecycle managment</a></li>
+<li><a href="#s3-event-notification">S3 Event Notification</a></li>
+<li><a href="#s3-static-web-hosting">S3 Static Web Hosting</a></li>
+<li><a href="#cors--cross-origin-resource-sharing">CORS / Cross Origin Resource Sharing</a></li>
+<li><a href="#multipart-upload">Multipart Upload</a></li>
+<li><a href="#aws-import-export">AWS Import Export</a></li>
+<li><a href="#snowball">Snowball</a></li>
+<li><a href="#storage-gateway">Storage Gateway</a></li>
+<li><a href="#dns-management">DNS Management</a></li>
+<li><a href="#cloudfront">CloudFront</a></li>
+<li><a href="#vpn-connection">VPN Connection</a></li>
+<li><a href="#aws-direct-connnect">AWS Direct Connnect</a></li>
+<li><a href="#vpc-peering">VPC Peering</a></li>
+<li><a href="#aws-cli-configuration">AWS CLI Configuration</a></li>
+<li><a href="#aws-database">AWS Database</a></li>
+<li><a href="#aws-rds">AWS RDS</a></li>
+</ul>
+</li>
+<li><a href="#rds-launch-demo">RDS Launch Demo</a></li>
+</ul>
+</li>
+<li><a href="#hybrid-environments">Hybrid Environments</a></li>
+<li><a href="#advanced-networking-start-here-in-linuxacademy">Advanced Networking (START HERE IN LINUXACADEMY)</a>
+<ul>
+<li><a href="#advanced-vpc-networking">Advanced VPC Networking</a></li>
+<li><a href="#network-troubleshooting">Network Troubleshooting</a></li>
+<li><a href="#storage-services-1">Storage Services</a></li>
+<li><a href="#hybrid-environments-1">Hybrid Environments</a></li>
+</ul>
+</li>
+</ul>
+<h2 class="mume-header" id="introduction">Introduction</h2>
+
+<h2 class="mume-header" id="aws-organisation">AWS Organisation</h2>
+
+<h3 class="mume-header" id="aws-account-and-physical-organisation">AWS Account and Physical Organisation</h3>
+
+<p>This represents how how you manage multiple services and account managment.</p>
+<img src="assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 400px;">
+<blockquote>
+<p>The above picture shows a organisation of the AWS Users and Groups and the different ways (You can have different groups for <code>PROD</code> and <code>QA</code>) , Console or CLI they can use to login and manage the AWS Cloud.</p>
+</blockquote>
+<h3 class="mume-header" id="physical-organisation">Physical Organisation</h3>
+
+<p>At a very high level AWS can be broken down into two main blocks</p>
+<ul>
+<li>
+<p><strong><code>AWS Regions</code></strong> : These are grouping of independenly separated datacenters in a specific geographic regions know as <code>Availabilty Zones</code>.</p>
+</li>
+<li>
+<p><strong><code>AWS Edge Location</code></strong> : It is a Datacenter whic does not contain any AWS Services ; Instead it is used to deliver contents to parts of the world. <code>CloudFront</code></p>
+</li>
+</ul>
+<blockquote>
+<p>Not All AWS Services are availaible globally , one of the example of a Global Service is the <code>IAM</code></p>
+</blockquote>
+<img src="assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;">
+<p>An <code>AWS Region</code> has multiple <code>Availabilty Zones</code></p>
+<img src="assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;">
+<p>Now within each <code>Availabilty Zone</code> there can be multiple <code>Datacenters</code></p>
+<p><code>Availabilty Zones</code> are <strong>phyically sperated</strong> to each other but <strong>have high speed connection between them</strong> to provide <strong>Fault Tolerance</strong></p>
+<blockquote>
+<p>So as an example <code>S3</code> is replicated accross all <code>Availabilty Zones</code> and all <code>Datacenters</code> for <strong>reliability and high availaibility</strong>.</p>
+</blockquote>
+<img src="assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;">
+<p>Now as we further move ahead , the <code>VPC</code> is the</p>
+<img src="assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;">
+<h3 class="mume-header" id="aws-terminology">AWS Terminology</h3>
+
+<ul>
+<li>
+<p><code>High Availability (HA)</code> This means creating and managing the ability to automatically “failover” to a secondary system if the primary system goes down for any reason as well as <strong>eliminating all single points of failure</strong> from your infrastructure.</p>
+</li>
+<li>
+<p><code>Fault Tolerance</code> this means infrastructure that is designed in such a way that <strong>when one component fails</strong>(be it hardware or software), a <strong>backup component takes over operations immediately</strong> so that there is no loss of service.</p>
+</li>
+<li>
+<p><code>Scalability</code> is the capability to scale out <strong>easily</strong>.</p>
+</li>
+<li>
+<p><code>Elasticity</code> the ability to <strong>scale-up</strong> as well as <strong>scale-down</strong></p>
+</li>
+</ul>
+<hr>
+<h2 class="mume-header" id="aws-access-management">AWS Access Management</h2>
+
+<p>Now lets look at the <code>IAM</code> Components where you manager Users, roles and groups, IAM Consistes of :</p>
+<ul>
+<li><code>IAM User</code></li>
+<li><code>IAM Groups</code></li>
+<li><code>IAM Policy</code></li>
+<li><code>IAM Role</code></li>
+<li><code>IAM API Keys</code></li>
+<li><code>IAM Password Policy</code></li>
+</ul>
+<img src="assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;">
+<blockquote>
+<p>IAM is Global and does not require a region selection.</p>
+</blockquote>
+<p>Now once you have enable IAM , you can use the link show in the picture below to login</p>
+<img src="assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;">
+<h3 class="mume-header" id="iam-policy">IAM Policy</h3>
+
+<p>An IAM Policy , looks like this. Note that <code>Deny</code> will have a precedence over <code>Allow</code>.</p>
+<img src="assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;">
+<p>An example of where you can see the policy in detail and whats how it is organised</p>
+<img src="assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;">
+<h3 class="mume-header" id="iam-groups">IAM groups</h3>
+
+<p>Groups are like AD Groups in a company where you segregate users into respective division , like HR, Finace etc .</p>
+<p>So now the <code>policies</code> can be attached to the <code>groups</code> directy.</p>
+<h3 class="mume-header" id="iam-roles">IAM Roles</h3>
+
+<ul>
+<li>
+<p>Look at the example below and notice how that all the Users and Roles are created at the IAM Level.</p>
+<ul>
+<li>
+<p><code>Non AWS Account Holder</code> : Now what we integrate AWS with the AD in a company. The users from AD who are <strong>authenticated via SAML</strong> now need to be mapped to <code>Role</code> to be able to do things in the AWS</p>
+</li>
+<li>
+<p><code>EC2 instance needing access to S3</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>An EC2 instance can only have one role attached to it .</p>
+</blockquote>
+<img src="assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;">
+<h4 class="mume-header" id="role-assumption">Role Assumption</h4>
+
+<p>Now lets say , the users below in the <code>DEV</code> group need access to the  resources in the <code>PROD</code>, then can <strong>assume</strong> a <code>Role</code> and be able to access the resource in <code>PROD</code>.</p>
+<img src="assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;">
+<p><strong>How does the above assumption happen?</strong></p>
+<p>An <code>IAM Policy</code> is attached to an <code>IAM Role</code> which is then assigned to the <code>User</code> or <code>Resource</code> which needs acces.</p>
+<img src="assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;">
+<p>Notice in the screenshot below , we have 3 different types of Roles:</p>
+<ul>
+<li><strong><code>AWS Service Roles</code></strong> : Like EC2 accessing S3</li>
+<li><strong><code>Role for Cross Account access</code></strong> : Allowing access for <code>DEV</code> IAM group to <code>PROD</code></li>
+<li><strong><code>Role for Identity Provider Access</code></strong> : Federation and SAML , Facebook, Google.</li>
+</ul>
+<img src="assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;">
+<h4 class="mume-header" id="security-token-service">Security Token Service</h4>
+
+<p>This a temporary credetials which allows access to the AWS Resource.<br>
+So in the example of <code>EC2</code> accessing <code>S3</code> and <code>STS</code> is generated for the EC2 instance.</p>
+<p>The benefit is that the <strong>credetials are not required to be embedded</strong> in the application.</p>
+<p>STS times out / expires after certain time period.</p>
+<h4 class="mume-header" id="iam-api-keys">IAM API Keys</h4>
+
+<p>These are the API Keys like openstack which enables programmatic access to the AWS APIs.</p>
+<hr>
+<h2 class="mume-header" id="aws-networking">AWS Networking</h2>
+
+<blockquote>
+<p>VPC <code>Virtual Private Cloud</code> is the networking is architected in the cloud.</p>
+</blockquote>
+<ul>
+<li>
+<p>Now lets take a deeper dive into VPC ad look it under the hood.</p>
+<p><code>VPC</code> spans <code>Avalaibility Zones</code> and <code>Multiple Datacenters</code>.</p>
+<img src="assets/markdown-img-paste-20180317171726859.png" alt="Drawing" style="width: 300px;">
+<p>Now take a look at the picture belpw and see what the a dissection of VPC looks like internally.</p>
+<ul>
+<li>Notice how the VPC spans the two different AZs in the picture.</li>
+<li>Notice the <strong>private subnets</strong> e.g <code>172.16.0.0</code> spanning two different AZs. This enables you to design and put your servers in <strong>different failure domains enabling High Avalaibility</strong></li>
+<li>You can define custom <code>CIDR</code> in each subnet.</li>
+<li>You can create routes between the Subnets.</li>
+<li>You can also have subnet level firewalls and access rules.</li>
+</ul>
+<img src="assets/markdown-img-paste-20180317172222633.png" alt="Drawing" style="width: 300px;">
+</li>
+</ul>
+<h3 class="mume-header" id="typical-vpc-screen">Typical VPC screen</h3>
+
+<ul>
+<li>
+<p>Notice on the left the different networking constructs you have to work and play with 😃</p>
+<img src="assets/markdown-img-paste-20180317174000405.png" alt="Drawing" style="width: 200px;">
+</li>
+</ul>
+<h3 class="mume-header" id="vpc-routing-basics">VPC Routing Basics</h3>
+
+<ul>
+<li>
+<p>Now lets take a look at a deeper level on the VPC Routing Basics the <code>Internet gateway</code>, <code>Subnets</code> and the <code>Routing table</code>.</p>
+<ul>
+<li>
+<p><code>Internet Gateway</code> : The is a default internet gateway connected to the default VPC. It is horizontally scales in the backend and there is no need to manage the bandwidth and capacity of the same. It has <strong>built in Fault tolernace at the Amazon Networking level</strong>.</p>
+<blockquote>
+<p>We dont have to manage <code>Internet Gateways</code> bandwidth, AWS Does that for us.</p>
+</blockquote>
+<p>Again , you can only have <strong>one Internet Gatewat attached a VPC</strong>.</p>
+<p>Notice the attached <code>Internet Gateway</code> to the VPC in the picture below.</p>
+<img src="assets/markdown-img-paste-20180317174555203.png" alt="Drawing" style="width: 300px;">
+<p>Now take a look at the <code>Route Table</code> in the picture below and how <code>0.0.0.0</code> is mapped to the <code>Internet Gateway</code> for all <strong>outbound internet traffic</strong>.</p>
+<img src="assets/markdown-img-paste-20180317174853412.png" alt="Drawing" style="width: 300px;">
+</li>
+<li>
+<p><code>Subnets</code>: After creating VPC, you can create o<strong>ne or more subnets</strong> in each <code>Availabilty Zone</code>. Each <strong>subet much reside in one Availaibilty Zone</strong> and <strong>cannot span</strong> different <code>Availability Zone</code>.</p>
+<blockquote>
+<p>So <strong>VPC spans Availabilty Zones</strong> but <strong>Subnet are contained in one Availabilty Zone</strong>.</p>
+</blockquote>
+<p>IMPORTANT NOTE : <code>Subnets</code> are associated to <code>Route Tables</code> and the <code>Route Table</code> may or may not be attached to an <code>Internet Gateway</code></p>
+</li>
+</ul>
+<p>The following association is show in the picture below .</p>
+<p><code>Subnet ---&gt; Route Table ---&gt; Internet Gateway</code></p>
+<img src="assets/markdown-img-paste-20180318151727852.png" alt="Drawing" style="width: 300px;">
+<p><code>Explicit Association</code> is when you move the route tables from default to the one which you created.</p>
+<p><strong>High Level AWS Networking Internal Architecture</strong></p>
+<img src="assets/markdown-img-paste-20180318212412969.png" alt="Drawing" style="width: 300px;">
+</li>
+</ul>
+<h3 class="mume-header" id="vpc-security">VPC Security</h3>
+
+<ul>
+<li>
+<p><strong><code>Network ACLs</code></strong> <code>allow</code> or <code>deny</code> traffic at the subnet level and are stateless, which means that the return traffic had to be <code>ALLOWED</code> for traffic for both direction.</p>
+<p>This follows at the Cisco ACL <code>access-list</code> order charecteristics.</p>
+</li>
+<li>
+<p><strong><code>Security Groups</code></strong> Just like Openstack Security groups but they are <strong>statefull</strong> . Security group <strong>only supports</strong> <code>allow</code> rules.</p>
+</li>
+</ul>
+<h3 class="mume-header" id="vpc-workflow">VPC Workflow</h3>
+
+<ol>
+<li>Create the <code>VPC</code> and give it a <code>CIDR</code> Block range. <strong>Notice</strong> that you can also define <code>IPv6</code> CIDR ranges. When <code>Tenancy</code>  is set to dedicate you are <strong>not sharing</strong> your servers with the other users.<br>
+<img src="assets/markdown-img-paste-20180318160426965.png" alt="Drawing" style="width: 300px;"></li>
+<li>Create the <code>Internet Gateway</code><br>
+<img src="assets/markdown-img-paste-20180318160902338.png" alt="Drawing" style="width: 300px;"></li>
+<li>Attach the <code>Internet Gateway</code> to the <code>VPC</code><br>
+<img src="assets/markdown-img-paste-20180318161028276.png" alt="Drawing" style="width: 300px;"></li>
+<li>Next we will create <strong>two different</strong> <code>Route Tables</code>, one which is <strong>connected</strong> to the <code>Internet Gateway</code> and the other <strong>which is not</strong> connected.<br>
+<img src="assets/markdown-img-paste-20180318161246639.png" alt="Drawing" style="width: 300px;"><br>
+Now <strong>connect</strong> the <code>Route Table</code> created above to the <code>Internet Gateway</code>. If you leave the <code>Route Table</code> not connected to the <code>Internet Gateway</code> it becomes a private route table.<br>
+<img src="assets/markdown-img-paste-20180318161517281.png" alt="Drawing" style="width: 300px;"></li>
+<li>Now Create a <code>Subnet</code>. Notice that you have to specifically define the <code>Availabilty Zone</code> (a subnet can only span an AZ) and the <code>CIDR</code> block range which is within the range of the VPC.<br>
+<img src="assets/markdown-img-paste-20180318162016693.png" alt="Drawing" style="width: 300px;"></li>
+<li>Now you can create the Network ACL which is a straight forward process.<br>
+<img src="assets/markdown-img-paste-20180318162441801.png" alt="Drawing" style="width: 300px;"></li>
+</ol>
+<h3 class="mume-header" id="vpc-limits">VPC Limits</h3>
+
+<ul>
+<li>5 VPCs per region (you can have this increased)</li>
+<li>5 Internet Gateways per region , this is equal the VPC limit as <strong>one VPC can only have one internet gateway</strong>.</li>
+<li>50 VPN Connections per region.</li>
+</ul>
+<hr>
+<h2 class="mume-header" id="server-based-compute-services">Server-Based Compute Services</h2>
+
+<h3 class="mume-header" id="ec2-limits">EC2 Limits</h3>
+
+<ul>
+<li>
+<p>Take a look at the default EC2 Limits :</p>
+<img src="assets/markdown-img-paste-20180318200924374.png" alt="Drawing" style="width: 300px;">
+</li>
+</ul>
+<h3 class="mume-header" id="ec2-purchasing-options">EC2 Purchasing Options</h3>
+
+<ul>
+<li>
+<img src="assets/markdown-img-paste-20180318202820909.png" alt="Drawing" style="width: 300px;">
+<p>Workflow : Choose <code>AMI</code> --&gt; Choose <code>Instance Type</code></p>
+</li>
+</ul>
+<p><strong>There are 3 different types of EC2 Instances :</strong></p>
+<ul>
+<li>
+<p><strong><code>Ondemand</code></strong> Most expensive , run and destroy whenever you like. You care billed as per per <code>second</code> or per <code>hour</code>. <strong>These differ based on Images</strong> too , not all images support per second basis. A<code>mazon Linux</code> or <code>Ubuntu</code> offer per second pricing.</p>
+<blockquote>
+<p>Note that if the image is stopped  you are not charged for the same.</p>
+</blockquote>
+</li>
+<li>
+<p><strong><code>Reserved</code></strong> Allows you purchase instance for <code>1</code> or <code>3</code> years and you get <strong>discount</strong> becuause of the commitment. But here you pay the whole amount regardless of how much you use it. You can pay upfront partial partial and no upfornt</p>
+</li>
+<li>
+<p><strong><code>Spot</code></strong> In this case prices of instances fluctuate based on what AWS considers is <strong>unused capacity in their datacenters</strong>. In this case you the billing happens like the <code>Ondemand</code> instance.</p>
+<p>And instance is provisioned for you <strong>when your bid price is less than or equal to the instance price</strong>. If the <strong>AWS's price increases your instance is terminated</strong>.</p>
+<p>If the instance is <strong>terminated by AWS</strong> you <strong>dont pay for that slot</strong> of duration (1 minute or 1 hour) . If <strong>you delete it</strong>, <strong>you pay</strong> for it.</p>
+</li>
+</ul>
+<h3 class="mume-header" id="linux-ami-virtualisation-type">Linux AMI Virtualisation Type :</h3>
+
+<ul>
+<li>
+<p><strong><code>HVM</code></strong>  <strong>Hardware Virtual Machine</strong> , Conside this like Intel VTx/d technology by which guests can take advantage of virtualisation feature supported by the CPU. Proved enhanced networking and GPU processing to the VM.</p>
+</li>
+<li>
+<p><strong><code>PV</code></strong>  <strong>Paravirtual</strong> AMIs Guests could run on Hardware which does not have HVM support. cannot take advantage of GPU / Advanced networking.</p>
+</li>
+</ul>
+<h3 class="mume-header" id="ec2-instance-type">EC2 Instance Type :</h3>
+
+<p>Has the following virtual hardware components, you have to choose the right instance type <strong>based on your application requirement</strong> :</p>
+<ul>
+<li>
+<p><code>vCPU</code></p>
+</li>
+<li>
+<p><code>RAM</code></p>
+</li>
+<li>
+<p><code>Storage Options</code></p>
+</li>
+<li>
+<p><code>Network Performance</code></p>
+<p>Notice in the picture below the above characteristics.<br>
+<img src="assets/markdown-img-paste-20180318203911238.png" alt="Drawing" style="width: 600px;"></p>
+<p>Different Instance types</p>
+<img src="assets/markdown-img-paste-20180318204119218.png" alt="Drawing" style="width: 600px;">
+</li>
+</ul>
+<h3 class="mume-header" id="ec2-instance-metadata">EC2 Instance Metadata</h3>
+
+<ul>
+<li>
+<p><code>http://169.254.169.254/lates/user-data</code> Shows the <strong>user data provided for bootstrapping</strong>.</p>
+</li>
+<li>
+<p><code>http://169.254.169.254/lates/user-data</code> Displays <strong>AMI, Instance Type</strong> etc.</p>
+</li>
+</ul>
+<h3 class="mume-header" id="ec2-instance-storage-types">EC2 Instance Storage types</h3>
+
+<p>EBS Elastic Block Store ,</p>
+<ul>
+<li>EBS Volumes are persistent and can stay even after instance deletion, unlike Instance Store.</li>
+<li>Can <strong>only be attached to one instance</strong> a time.</li>
+<li>EBC can be backed up into snapshots. These snapshot can later be restored to EBS volume.</li>
+<li>EBS Volume measures performance in IOPS , AWS one IOPS is 256KB chunk (input or output)</li>
+<li>Even with provision IOPs you may not get the performance you want, you may want to choose an instance type which is EBS optimized instance type.</li>
+<li>New EBS volume no longer need to be pre-warmed. Maximum performance is received as soon as the EBS volume is spawned.</li>
+<li>Now with the above point note that if you created a volume from a snapshot you still need to warm-up  (read all the storage blocks)/ read otherwise the access could be slow.</li>
+</ul>
+<h3 class="mume-header" id="different-ebs-types">Different EBS types</h3>
+
+<ul>
+<li><code>General Purpose</code> (1GiB - 16TiB), best used for Dev and Test environment. This allows 3 IOPS/GiB (so size of the disk has direct relation with the IOPS) but is burstable upto 3000 IOPS.</li>
+<li><code>Provisioned IOPS SSD</code> (4GiB - 16TiB) , Used for mission critical applications. This performs at the provisioned IOPS level and can go upto 20,000 IOPS.</li>
+<li><code>Magnetic</code> Rarely used , slow .</li>
+</ul>
+<p>Now there is another type of store different than EBS :</p>
+<ul>
+<li><code>Instance Store</code> volumes are ephemeral data. The data on the volume only exists till the life of the instance. If the instance is stopped or shutdown the data will be lost.<br>
+If the instance is rebooted the data is retained.</li>
+</ul>
+<h3 class="mume-header" id="ebs-snapshot">EBS snapshot</h3>
+
+<ul>
+<li>You can take a snapshot to recreate the volume. Snapshots are stored in S3. You are only charged for the difference between the snapshots.</li>
+</ul>
+<h3 class="mume-header" id="placement-groups">Placement groups</h3>
+
+<blockquote>
+<p>Instances must have <strong>10G connection</strong> type to be able to use Placement Groups.</p>
+</blockquote>
+<ul>
+<li>
+<p>When there is a requirement to keep the instances as close possible to other instances a placement group is used. Like <code>Affinity Groups</code> in Openstack.</p>
+<p>Instances not created in a Placement group cannot be moved into a placement group.<br>
+<strong>A placement group cannot span AZs</strong>.</p>
+</li>
+</ul>
+<h3 class="mume-header" id="efs-elastic-file-system">EFS Elastic File System</h3>
+
+<ul>
+<li><strong>Consider this like NFS</strong> , this can be shared between multiple EC2 instances.</li>
+</ul>
+<hr>
+<h2 class="mume-header" id="serverless-compute-services-aws-lambda">Server<strong>less</strong> Compute Services (AWS Lambda)</h2>
+
+<ul>
+<li>
+<p>You do not need EC2 servers (Serverless) to run your application , you can directly run your programs here !</p>
+<p>A picture says a thousand words :</p>
+<img src="assets/markdown-img-paste-20180318214149491.png" alt="Drawing" style="width: 500px;">
+<h3>When should you run Lambda</h3>
+<blockquote>
+<p>You are only billed for the duration your code is running.</p>
+</blockquote>
+<p>Generally you will run Lambda when you want a function to run in response to an event.</p>
+<p>Example Lambda Use :<br>
+<code>Upload Object to S3 --&gt; S3 Event --&gt; Triggers a Lambda Function</code></p>
+</li>
+</ul>
+<h2 class="mume-header" id="quick-detour">Quick Detour</h2>
+
+<h3 class="mume-header" id="cloudwatch-monitoring">CloudWatch (Monitoring)</h3>
+
+<ul>
+<li>Used to monitor AWS Services such as EC2</li>
+<li>Provides centralised monitoring and performance mentrics.</li>
+<li>CloudWatch Alarms can be used a triggers.</li>
+</ul>
+<h3 class="mume-header" id="cloudtrail-api-logging-service">CloudTrail (API Logging Service)</h3>
+
+<ul>
+<li>Logs all API calls.</li>
+</ul>
+<h3 class="mume-header" id="sns-notification-service">SNS Notification Service</h3>
+
+<ul>
+<li>Automates the process of sending notification email or text . SNS is integrated in many AWS services so it is easy to use it.</li>
+</ul>
+<hr>
+<h2 class="mume-header" id="advanced-networking">Advanced Networking</h2>
+
+<h2 class="mume-header" id=""></h2>
+
+<p>If you notice in the picture below , we have now added a load balancer and an autoscaling group which now spans two vPCs .</p>
+<img src="assets/markdown-img-paste-20180322075845612.png" alt="Drawing" style="width: 400px;">
+<p><strong><code>Elastic Loadbalancer</code></strong> : EC2 Service which loadbalances traffic to multiple EC2 instances across multiple <code>Availabilty Zones</code>.</p>
+<ul>
+<li>
+<p>Also <code>Elastic Loadbalancer</code> should also be paired with <code>Auto Scaling Group</code> for High Availabilty.</p>
+</li>
+<li>
+<p>There could also be an Internal Elastic Loadbalancer for loadbalancing traffic internally within private subnets.</p>
+</li>
+<li>
+<p>Elastic Loadbalancer can also stop sending traffic to a non responding instance based on <code>Health Checks</code>.</p>
+</li>
+<li>
+<p>It can an also do the SSL Encryption and Decryption at its level , instead of these certificates installed at the instance level.</p>
+</li>
+</ul>
+<p><strong><code>Auto Scaling Group</code></strong> :  Automates the process of increasing or decreasing the amount of provised on-demand instances availaible for your application.</p>
+<ul>
+<li>Auto Scaling can increase or decrease the amount of instances based on <code>CloudWatch</code> metrics.</li>
+</ul>
+<p>Auto Scaling has two main components :</p>
+<ul>
+<li><code>Launch Configuration</code> : The template of the instance which will be launched.</li>
+<li><code>Auto Scaling Groups</code> : All the rules and setting which defines the trigger for when the instance will be created or deleted.<br>
+- Number of <code>MIN</code> and <code>MAX</code> instances allowed.<br>
+- VPCs and AZs to launch instances into.</li>
+</ul>
+<blockquote>
+<p>For an architecture to be considered highly availaible and fault tolerant it MUST have an ELB service traffic to an Auto Scaling Group with a minimum of two instances in separate AZs.</p>
+</blockquote>
+<h2 class="mume-header" id="workflow">Workflow</h2>
+
+<p>It makes sense to create the Target Groups first and then the Load Balancers</p>
+<blockquote>
+<p>In the example below we are creating the following scenario and based on the content (pictures or videos) in the URL and route based on the same.</p>
+</blockquote>
+<img src="assets/markdown-img-paste-20180322112423269.png" alt="Drawing" style="width: 400px;">
+<img src="assets/markdown-img-paste-20180322112318970.png" alt="Drawing" style="width: 400px;">
+<ol>
+<li>Create a Target Group<br>
+<img src="assets/markdown-img-paste-20180322132805821.png" alt="Drawing" style="width: 400px;"></li>
+<li>Add Target (instances) to the target group<br>
+<img src="assets/markdown-img-paste-2018032213302429.png" alt="Drawing" style="width: 400px;"><br>
+<img src="assets/markdown-img-paste-20180322133049555.png" alt="Drawing" style="width: 400px;"></li>
+<li>Configure the Load balancer<br>
+<img src="assets/markdown-img-paste-2018032213324375.png" alt="Drawing" style="width: 400px;"></li>
+<li>Add the Target group created in step 1<br>
+<img src="assets/markdown-img-paste-20180322133338478.png" alt="Drawing" style="width: 400px;"></li>
+<li>Note that we have now the DNS name of the loadbalancer which can be accessed to access the service:<br>
+<img src="assets/markdown-img-paste-20180322133500210.png" alt="Drawing" style="width: 400px;"></li>
+<li>Additionaly when the Load balancer is created we can edit the rules for more advanced rules and routing:<br>
+<img src="assets/markdown-img-paste-20180322134148144.png" alt="Drawing" style="width: 400px;"><br>
+Example is , that any time the path contains <em>pictures</em> we can forward it to the pictures target group , similary another group can be created for videos:<br>
+<img src="assets/markdown-img-paste-20180322134322594.png" alt="Drawing" style="width: 400px;"></li>
+</ol>
+<h3 class="mume-header" id="service-traffic-to-and-from-private-web-servers">Service Traffic to and from Private Web Servers</h3>
+
+<p><strong><code>Bastion Host</code></strong>: A terminal server for getting into instance in the private subnet.</p>
+<p><strong><code>NAT Gateway</code></strong> : For providing internet access to the instances in the private subnet.<br>
+<code>NAT Gateway</code> is without an actual instance doing the NATing and <code>NAT Instances</code> uses an actual instance.</p>
+<h3 class="mume-header" id="elb-troubleshooting">ELB Troubleshooting</h3>
+
+<ul>
+<li>
+<p>Loadbalancing is  not occuring in multiple <code>Availaibility Zones</code><br>
+Enable Cross-Zone Loadbalancing<br>
+<img src="assets/markdown-img-paste-20180322161335110.png" alt="Drawing" style="width: 400px;"></p>
+</li>
+<li>
+<p>If the Instance not coming up as health in the AWS, Check the ping protocol and make sure it is right.<br>
+<img src="assets/markdown-img-paste-20180322161603584.png" alt="Drawing" style="width: 400px;"></p>
+</li>
+<li>
+<p>Also check the security group setting of the ELB to ensure if it has the right ports allowed for the communication<br>
+<img src="assets/markdown-img-paste-20180322162035550.png" alt="Drawing" style="width: 400px;"></p>
+</li>
+<li>
+<p>Access Logs show IP Address of ELB and not the source traffic. For this to work configure the S3 Access Logs  in the picture below.<br>
+<img src="assets/markdown-img-paste-20180322162203901.png" alt="Drawing" style="width: 400px;"></p>
+</li>
+<li>
+<p>Unable to add instances from a specific subnet . In this case you need to make sure that the AZ of the instance in question should be listed in the <code>Edit Availabilty Zone</code> and then it will appear in <code>Edit Instances</code> .<br>
+<img src="assets/markdown-img-paste-20180322162345922.png" alt="Drawing" style="width: 400px;"></p>
+</li>
+</ul>
+<h3 class="mume-header" id="auto-scaling-troubleshooting">Auto Scaling Troubleshooting</h3>
+
+<ul>
+<li>
+<p>An Auto Scaled instance continues to Start and Stop or <code>Create</code>/<code>Terminate</code> instances in short intervals.<br>
+This could happen if the <code>trigger</code> is too close for example CPU threshold <code>&lt; 30 , &gt; 40</code></p>
+</li>
+<li>
+<p>Also keep a note of <code>Max</code> instaces as this may not let you spin more instances.</p>
+</li>
+</ul>
+<hr>
+<h2 class="mume-header" id="storage-services">Storage Services</h2>
+
+<p>Notice the Transit service which are responsible for sending data in and out of S3 and Glacier.<br>
+<img src="assets/markdown-img-paste-2018032219013824.png" alt=""></p>
+<p>Differen components of S3</p>
+<p><img src="assets/markdown-img-paste-20180322190930356.png" alt=""></p>
+<h3 class="mume-header" id="s3-permissions">S3 Permissions</h3>
+
+<p><code>Bucket Policies</code> These are the permissions which are direclty assigned to the S3 Bucket . These are called Bucket Policies.</p>
+<p><code>S3 Access Control List</code> : For Public Access or AWS authenticated user.</p>
+<p><img src="assets/markdown-img-paste-20180322193909333.png" alt=""></p>
+<h3 class="mume-header" id="s3-storage-class">S3 Storage Class</h3>
+
+<p>Object Durability : The percent the object is goign to be there. Not goign to be deleted or corrupted.<br>
+Object Availaibilty : Availaible for Access.</p>
+<p>Different types of S3 Storage :</p>
+<ul>
+<li><code>Standard</code>:  Durability : 99.999999999%  Availabilty : 99.99%</li>
+<li><code>Standard Infrequent Access</code>:  Durability : 99.999999999%  Availabilty : 99.90%</li>
+<li><code>Reduced Redundancy Storage</code>:  Durability : 99.99%  Availabilty : 99.99%</li>
+<li><code>Glacier</code>:  Durability : 99.999999999%. Following are the recovery options :
+<ul>
+<li><code>Expedited</code> : 1- 5 minutes.</li>
+<li><code>Standard</code>: 3-5 hours.</li>
+<li><code>Bulk</code>: 5-12 hours.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>To move object to Glacier you have to use <code>Life Cycle Policies</code></p>
+</blockquote>
+<h4 class="mume-header" id="s3-versioning">S3 Versioning</h4>
+
+<p>By default versioning is disabled on all objects.  Once enable it cannt be disabled completely , but stopped for future objects.<br>
+Versioning can only be setup at the bucket level.</p>
+<h4 class="mume-header" id="s3-lifecycle-managment">S3 Lifecycle managment</h4>
+
+<p>In the example below , we are moving the object to Infrequent Access to Glacier.</p>
+<p><img src="assets/markdown-img-paste-20180322200344251.png" alt=""></p>
+<h4 class="mume-header" id="s3-event-notification">S3 Event Notification</h4>
+
+<p>Allows you to setup automated communication between S3 and other AWS services when a selected event occurs.<br>
+Event can be sent to <code>SNS</code>, <code>Lambda</code>, <code>SQS Queue</code><br>
+<img src="assets/markdown-img-paste-20180322201116455.png" alt=""></p>
+<h4 class="mume-header" id="s3-static-web-hosting">S3 Static Web Hosting</h4>
+
+<p>Mainly lets say if your servers are unreachanble , they can atleast get a page notifying your company message rather than a 404.</p>
+<h4 class="mume-header" id="cors-cross-origin-resource-sharing">CORS / Cross Origin Resource Sharing</h4>
+
+<p>Sharing accross wed domains<br>
+<img src="assets/markdown-img-paste-2018032220164126.png" alt=""></p>
+<p>To be able to share information between two different buckets for two different domains CORS have to be enabled.</p>
+<h4 class="mume-header" id="multipart-upload">Multipart Upload</h4>
+
+<p>Uploading files in pieces , <em>highly suggested</em> when objects are bigger than <code>100MB</code></p>
+<h4 class="mume-header" id="aws-import-export">AWS Import Export</h4>
+
+<p>You send a physical device to AWS which AWS Uploads for you .</p>
+<h4 class="mume-header" id="snowball">Snowball</h4>
+
+<p>AWS Send you a transfer appliance which you can copy your data to to send .<br>
+This is for PB Scale data.</p>
+<h4 class="mume-header" id="storage-gateway">Storage Gateway</h4>
+
+<p>Connects On-Premise Datacenter to S3 Storage</p>
+<ul>
+<li><code>Gateway Cached Volumes</code> (Read as <strong>locally</strong> <strong>cached</strong> volumes): Create the volume and mount them as iSCSI devices. The data will be stored in S3 and frequently accessed data will be cached locally.</li>
+<li><code>Gateway Stored Volumes</code> (Read as <strong>locally</strong> <strong>stored</strong> volumes) : All data is stored locally and snapshots of the same as incremental backup are stored in S3.</li>
+</ul>
+<h4 class="mume-header" id="dns-management">DNS Management</h4>
+
+<p><code>Hosted Zones</code> : A Hosted Zone basically keep record of your DNS domain and know what to do with a DNS Request .</p>
+<p><code>Public Hosted Zone</code> : On the Internet</p>
+<p><code>Private Zone</code> : Withing Virtual Private Cloud .</p>
+<p><code>Record Sets</code> : Record Sets are instructions that actually match domain names to IP Address. Record set comprised of the following:</p>
+<ul>
+<li>Record type</li>
+<li>Standard/alias</li>
+<li>Routing Policy</li>
+<li>Evaluated target health</li>
+</ul>
+<p>Common Record types include :</p>
+<ul>
+<li><code>A</code> : Point to IPv4 address</li>
+<li><code>AAAA</code> : Points to IPv6 IP address</li>
+<li><code>CNAME</code> : Used to point to a hostname or other hostname.</li>
+<li><code>MX</code> : Point to a mail record.</li>
+</ul>
+<h4 class="mume-header" id="cloudfront">CloudFront</h4>
+
+<p>CloudFront is a global CDN which delivers content from an <code>origin</code> location to an <code>edge</code> locations .</p>
+<blockquote>
+<p>In order to server a new version of an object, either create a new object with a new name or create an <code>invalidation</code> on the CloudFront distribution based on onject names.<br>
+Invalidations have cost so if you have to invalidate large CloudFront distributions then perhaps you should create a new distribution and move DNS names.</p>
+</blockquote>
+<h4 class="mume-header" id="vpn-connection">VPN Connection</h4>
+
+<p><code>Virtual Private Gateway</code> : It is the connector at the VPC Side , the <code>Customer Gateway</code> is the connector at the customer side.</p>
+<p><img src="assets/markdown-img-paste-20180331234616674.png" alt=""></p>
+<h4 class="mume-header" id="aws-direct-connnect">AWS Direct Connnect</h4>
+
+<p>AWS Direct Connect is a service that provides a dedicated network connection between your network and one of the AWS Direct connect providers.</p>
+<p>Dedicated Private connection is like a VPN connection to your DC , it does not provide Internet .</p>
+<p><img src="assets/markdown-img-paste-20180401000721669.png" alt=""></p>
+<p><code>Private Virtual Interface</code> : This allows you to interface with an AWS VPC with automatic route discovery using BGP , this requires a private of a public ASN number.</p>
+<p><code>Public Virtual Interfaces</code> : This allows you to have a direct connection to public AWS endpoints like Amazon S3 or DynamoDB</p>
+<h4 class="mume-header" id="vpc-peering">VPC Peering</h4>
+
+<p><img src="assets/markdown-img-paste-20180401001713511.png" alt=""></p>
+<blockquote>
+<p>Earlier VPC Peerign was only allowed withing the region , but with new feature VPC Peering can be done within different regions as well.</p>
+</blockquote>
+<p><img src="assets/markdown-img-paste-20180401003523130.png" alt=""></p>
+<p>Notice the appearance of vpc-peer entry to point to in the route table</p>
+<p><img src="assets/markdown-img-paste-2018040100361218.png" alt=""></p>
+<h4 class="mume-header" id="aws-cli-configuration">AWS CLI Configuration</h4>
+
+<p><code>aws configure</code></p>
+<p><code>aws s3 mb s3://testbucket</code></p>
+<h4 class="mume-header" id="aws-database">AWS Database</h4>
+
+<p>RDS is a fully managed database service , you do not have access to the instance.</p>
+<p>RDS sizes like M1 , Large etc correcpoind to the instance sizes.</p>
+<p>The following databases are supported :</p>
+<ul>
+<li>MySQL</li>
+<li>MariaDB</li>
+<li>PostgreSQL</li>
+<li>Oracle</li>
+<li>MS SQL Servers</li>
+<li>Aurora
+<ul>
+<li>Amazon Developed DB Service.</li>
+</ul>
+</li>
+</ul>
+<p>Benefits of RDS :</p>
+<ul>
+<li>Automatic minor updates</li>
+<li>Automatic backups.</li>
+</ul>
+<h4 class="mume-header" id="aws-rds">AWS RDS</h4>
+
+<p><img src="assets/markdown-img-paste-20180401013344765.png" alt=""></p>
+<p><code>RDS Read Replica</code> : A DB copy which can be used for <code>READS</code> and can offload some load from the main DB .</p>
+<p><code>Multi AZ Failover</code> : RDS can be synchronously replicated to the <code>Standby</code> Instance which can be used for the failover.</p>
+<h3 class="mume-header" id="rds-launch-demo">RDS Launch Demo</h3>
+
+<ol>
+<li>First This is to create a subnet group (you do not create the subnet but just associate the subnet already created)<br>
+<img src="assets/markdown-img-paste-20180402210530609.png" alt=""></li>
+<li>Select the instance type.<br>
+<img src="assets/markdown-img-paste-20180402210745413.png" alt=""></li>
+<li>Provide the SB Launch Details<br>
+<img src="assets/markdown-img-paste-2018040221082210.png" alt=""><br>
+<img src="assets/markdown-img-paste-20180402210941830.png" alt=""></li>
+<li>View of a fully launched database<br>
+<img src="assets/markdown-img-paste-20180402211024126.png" alt=""><br>
+Notice the <code>middle tab</code> with lot of information<br>
+<img src="assets/markdown-img-paste-20180402211135353.png" alt=""></li>
+</ol>
+<hr>
+<h2 class="mume-header" id="hybrid-environments">Hybrid Environments</h2>
+
+<hr>
+<h1 class="mume-header" id="advanced-networking-start-here-in-linuxacademy">Advanced Networking (START HERE IN LINUXACADEMY)</h1>
+
+<hr>
+<h2 class="mume-header" id="advanced-vpc-networking">Advanced VPC Networking</h2>
+
+<hr>
+<h2 class="mume-header" id="network-troubleshooting">Network Troubleshooting</h2>
+
+<hr>
+<h2 class="mume-header" id="storage-services-1">Storage Services</h2>
+
+<hr>
+<h2 class="mume-header" id="hybrid-environments-1">Hybrid Environments</h2>
+
+
+      </div>
+      <div class="md-sidebar-toc"><pre><code>* [Introduction](#introduction)
+* [AWS Organisation](#aws-organisation)
+	* [AWS Account and Physical Organisation](#aws-account-and-physical-organisation)
+	* [Physical Organisation](#physical-organisation)
+	* [AWS Terminology](#aws-terminology)
+* [AWS Access Management](#aws-access-management)
+	* [IAM Policy](#iam-policy)
+	* [IAM groups](#iam-groups)
+	* [IAM Roles](#iam-roles)
+		* [Role Assumption](#role-assumption)
+		* [Security Token Service](#security-token-service)
+		* [IAM API Keys](#iam-api-keys)
+* [AWS Networking](#aws-networking)
+	* [Typical VPC screen](#typical-vpc-screen)
+	* [VPC Routing Basics](#vpc-routing-basics)
+	* [VPC Security](#vpc-security)
+	* [VPC Workflow](#vpc-workflow)
+	* [VPC Limits](#vpc-limits)
+* [Server-Based Compute Services](#server-based-compute-services)
+	* [EC2 Limits](#ec2-limits)
+	* [EC2 Purchasing Options](#ec2-purchasing-options)
+	* [Linux AMI Virtualisation Type :](#linux-ami-virtualisation-type)
+	* [EC2 Instance Type :](#ec2-instance-type)
+	* [EC2 Instance Metadata](#ec2-instance-metadata)
+	* [EC2 Instance Storage types](#ec2-instance-storage-types)
+	* [Different EBS types](#different-ebs-types)
+	* [EBS snapshot](#ebs-snapshot)
+	* [Placement groups](#placement-groups)
+	* [EFS Elastic File System](#efs-elastic-file-system)
+* [Server**less** Compute Services (AWS Lambda)](#serverless-compute-services-aws-lambda)
+* [Quick Detour](#quick-detour)
+	* [CloudWatch (Monitoring)](#cloudwatch-monitoring)
+	* [CloudTrail (API Logging Service)](#cloudtrail-api-logging-service)
+	* [SNS Notification Service](#sns-notification-service)
+* [Advanced Networking](#advanced-networking)
+* [#](#)
+* [Workflow](#workflow)
+	* [Service Traffic to and from Private Web Servers](#service-traffic-to-and-from-private-web-servers)
+	* [ELB Troubleshooting](#elb-troubleshooting)
+	* [Auto Scaling Troubleshooting](#auto-scaling-troubleshooting)
+* [Storage Services](#storage-services)
+	* [S3 Permissions](#s3-permissions)
+	* [S3 Storage Class](#s3-storage-class)
+		* [S3 Versioning](#s3-versioning)
+		* [S3 Lifecycle managment](#s3-lifecycle-managment)
+		* [S3 Event Notification](#s3-event-notification)
+		* [S3 Static Web Hosting](#s3-static-web-hosting)
+		* [CORS / Cross Origin Resource Sharing](#cors-cross-origin-resource-sharing)
+		* [Multipart Upload](#multipart-upload)
+		* [AWS Import Export](#aws-import-export)
+		* [Snowball](#snowball)
+		* [Storage Gateway](#storage-gateway)
+		* [DNS Management](#dns-management)
+		* [CloudFront](#cloudfront)
+		* [VPN Connection](#vpn-connection)
+		* [AWS Direct Connnect](#aws-direct-connnect)
+		* [VPC Peering](#vpc-peering)
+		* [AWS CLI Configuration](#aws-cli-configuration)
+		* [AWS Database](#aws-database)
+		* [AWS RDS](#aws-rds)
+	* [RDS Launch Demo](#rds-launch-demo)
+* [Hybrid Environments](#hybrid-environments)
+</code></pre>
+<ul>
+<li><a href="#advanced-networking-start-here-in-linuxacademy">Advanced Networking (START HERE IN LINUXACADEMY)</a>
+<ul>
+<li><a href="#advanced-vpc-networking">Advanced VPC Networking</a></li>
+<li><a href="#network-troubleshooting">Network Troubleshooting</a></li>
+<li><a href="#storage-services-1">Storage Services</a></li>
+<li><a href="#hybrid-environments-1">Hybrid Environments</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">≡</a>
+    </body>
+    
+    
+    
+    
+    
+    
+    <script>
+(function bindTaskListEvent() {
+  var taskListItemCheckboxes = document.body.getElementsByClassName('task-list-item-checkbox')
+  for (var i = 0; i < taskListItemCheckboxes.length; i++) {
+    var checkbox = taskListItemCheckboxes[i]
+    var li = checkbox.parentElement
+    if (li.tagName !== 'LI') li = li.parentElement
+    if (li.tagName === 'LI') {
+      li.classList.add('task-list-item')
+    }
+  }
+}())    
+</script>
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  </html>
