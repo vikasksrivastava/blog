@@ -69,6 +69,10 @@ comments: true
     - [DynamoDB](#dynamodb)
     - [ElasticCache](#elasticcache)
     - [RedShift](#redshift)
+  - [AWS Application Services](#aws-application-services)
+    - [SNS](#sns)
+      - [Workflow Example](#workflow-example)
+    - [SQS Essentials](#sqs-essentials)
   - [Hybrid Environments](#hybrid-environments)
 - [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
@@ -772,15 +776,55 @@ memcached and redis are the currently availaible engines to power the ElasticCac
 
 Amazon Redshift is a petabyte scale datawareshousing solution, fully managed and scalable and is generally used for Big Data analytics.
 
+## AWS Application Services
+
+![](assets/markdown-img-paste-20180403080953828.png)
+
+### SNS
+![](assets/markdown-img-paste-20180403081047797.png)
+SNS corodinates and manages the sending and delivery of messages to specific endpoints.
+Since it is integrated into many services natively it is very easy to set this up .
+
+SNS is broken down into 3 main parts:
+- **`Topic`** : Topic is a group of subscriptions you send the messages to.
+- **`Subscription`** : An endpoint to which the message is sent to.
+  - `HTTP`, `HTTPS`, `Email`, `Email-JSON`, `SQS`, `Mobile Apps`, `Lambda`, `SMS`
+- **`Publisher`** : Entity that triggers the sending of the event , for examle , Human, S3 Event, Cloudwatch Alarm.
+
+#### Workflow Example
+  - Create a Topic
+  ![](assets/markdown-img-paste-20180403082358366.png)
+  - Now , within the topic create a subscription
+  ![](assets/markdown-img-paste-20180403082547509.png)
+  ![](assets/markdown-img-paste-20180403082616699.png)
+  - Now click on Publish a topic
+  ![](assets/markdown-img-paste-20180403082801498.png)
+  ![](assets/markdown-img-paste-20180403082920738.png)
+  And finally publish the message to the email subscription created above
+  ![](assets/markdown-img-paste-20180403083036726.png)
+
+<br><br>
 
 
+### SQS Essentials
 
+![](assets/markdown-img-paste-20180405062412916.png)
 
+> SQS Is a fully managed service by AWS
 
+Simple Queing Service allows the creation of decoupled services. Messages between servers are retrieved through polling.
 
+There are two types of polling:
 
+1. Long polling : Long polling (1-20 seconds) , Less number of API Calls.
+2. Short polling : More frequent polling , more number of API calls.
 
+SQS can contain upto 256KB of text (in any format)
 
+Amazon SQS offers two different types of queues :
+
+1. `Standard Queue` : Does not gaurantee FIFO but tries the same . It gurantees the delivery of the message atleast once.
+2. `FIFO Queue` : For the applications where order is important , or where duplicates can not be tolerated.
 
 
 
