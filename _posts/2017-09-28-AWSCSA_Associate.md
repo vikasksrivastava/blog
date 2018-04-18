@@ -73,6 +73,9 @@ comments: true
     - [SNS](#sns)
       - [Workflow Example](#workflow-example)
     - [SQS Essentials](#sqs-essentials)
+    - [SWF , Simple Workflow Service](#swf--simple-workflow-service)
+    - [AWS API Gateway](#aws-api-gateway)
+    - [CloudWatch Essentials](#cloudwatch-essentials)
   - [Hybrid Environments](#hybrid-environments)
 - [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
@@ -827,8 +830,45 @@ Amazon SQS offers two different types of queues :
 2. `FIFO Queue` : For the applications where order is important , or where duplicates can not be tolerated.
 
 
+### SWF , Simple Workflow Service
 
+SWF is a fully managed workflow service provided by AWS.  A workflow execution can last upto 1 year.
 
+Components of SWF :
+
+ - `Workflow` : A sequence of steps required to perform a speficific task.
+ - `Activities` : A `single step` in the workflow.
+ - `Tasks`
+   - `Activity Task` : Tells the worker to perform a specific task.
+   - `Decision Task` : Tells the decider the sate of the workflow execution and allows him to take the decision on the next steps.
+ - `Worker` : Responsible for taking a task and working on it .
+
+### AWS API Gateway
+
+API Gateway is a fully managed service which allows you to create and manage your own APIs.
+
+Lets say you have an application running on Lambda Functions and EC2 .
+
+![](assets/markdown-img-paste-20180405065436505.png)
+
+You can `version` control your APIs as well.
+![](assets/markdown-img-paste-20180405065740886.png)
+
+CloudFront Edge locations are the entrypoint , which help with DDoS protection as well.
+
+API Gateway also caches the responses as well .
+
+### CloudWatch Essentials
+
+CloudWatch is used to monitor AWS Services, such as EC2,ELB and S3.
+You monitor your environment by configuring and viewing Cloudwatch metrics.
+
+![](assets/markdown-img-paste-20180405070816470.png)
+
+CloudWatch Alarms allow for you to be notfiied when a certain defined threshold is met for CloudWatch Metrics.
+
+Tuesday : 3 - 4 PM
+Thursday : 3 -
 
 
 -------
