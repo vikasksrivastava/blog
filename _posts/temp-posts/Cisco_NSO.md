@@ -1160,6 +1160,47 @@ services l2vpn CE11-to-CE31
 
 
 
+#### Creating a Custom Auth Group for "Real Cisco Devices"
+
+Get the Remote Device Ready for Connection
+
+```cisco
+enable password cisco
+username vikassri pass cisco
+
+line vty 0 4
+ password cisco
+ login local
+ transport input telnet
+!
+```
+
+
+
+1. Go to the following screen (can be done via CLI)
+   ![](assets/markdown-img-paste-20180422142653200.png)
+2. Define the Parameters and the users
+   ![](assets/markdown-img-paste-20180422143021629.png)
+3. Create a local user
+   ![](assets/markdown-img-paste-20180422142848623.png)
+4. User Parameters
+   ![](assets/markdown-img-paste-20180422142937957.png)
+
+
+CLI Way of doing the above :
+
+```sh
+admin@ncs% set devices authgroups group JUN_Auth default-map remote-name root remote-password cisco
+
+set devices device JUN1 address 10.66.77.39 port 22 authgroup JUN_Auth device-type netconf
+
+set devices device JUN1 state admin-state unlocked
+
+request devices device JUN2 connect
+
+request devices device JUN2 sync-from
+```
+
 
 
 
