@@ -31,7 +31,7 @@ Check NCS Status
 `3.4.2`
 
 NCS/NSO via the WebUI
-Type "http://127.0.0.1:8080/login.html"
+Type `http://127.0.0.1:8080/login.html`
 
 Connect to the NCS CLI
 `ncs_cli -u admin -C`
@@ -58,9 +58,9 @@ cd java && ant -q all
 BUILD SUCCESSFUL
 Total time: 0 seconds
 cd ../netsim && make all
-make[1]: Entering directory `/opt/ncs/packages/neds/cisco-ios/netsim'
-make[1]: Nothing to be done for `all'.
-make[1]: Leaving directory `/opt/ncs/packages/neds/cisco-ios/netsim'
+make[1]: Entering directory /opt/ncs/packages/neds/cisco-ios/netsim
+make[1]: Nothing to be done for all.
+make[1]: Leaving directory /opt/ncs/packages/neds/cisco-ios/netsim
 ```
 
 Do the same for IOS-XR
@@ -73,9 +73,9 @@ cd java && ant -q all
 BUILD SUCCESSFUL
 Total time: 0 seconds
 cd ../netsim && make all
-make[1]: Entering directory `/opt/ncs/packages/neds/cisco-iosxr/netsim'
-make[1]: Nothing to be done for `all'.
-make[1]: Leaving directory `/opt/ncs/packages/neds/cisco-iosxr/netsim'
+make[1]: Entering directory /opt/ncs/packages/neds/cisco-iosxr/netsim
+make[1]: Nothing to be done for all.
+make[1]: Leaving directory /opt/ncs/packages/neds/cisco-iosxr/netsim
 ```
 
 The two NEDs are now compiled and available for use but they are not available to the running instance of NSO. One of the ways to make them available to the running instance is by linking a directory in the ncs-run/packages directory to point to the location of the NEDs in the packages subdirectory in the installation directory (i.e. $NCS_DIR)
@@ -87,6 +87,7 @@ ln -s /opt/ncs/packages/neds/cisco-ios cisco-ios
 ln -s /opt/ncs/packages/neds/cisco-iosxr cisco-iosxr
 ```
 
+Login and reload the packages
 
 ```sh
 ncs_cli -C -u admin
@@ -94,7 +95,7 @@ root@ncs# packages reload
 
 >>> System upgrade is starting.
 >>> Sessions in configure mode must exit to operational mode.
->>> No configuration changes can be performed until upgrade has completed.
+>>> No configuration changes can be performed untill upgrade has completed.
 >>> System upgrade has completed successfully.
 reload-result {
     package cisco-ios
@@ -104,14 +105,11 @@ reload-result {
     package cisco-iosxr
     result true
 }
-root@ncs#
 ```
-
-See the Cisco IOS and Cisco IOS XR NEDs loaded into NSO.
 
 ![](assets/markdown-img-paste-20180420160541728.png)
 
-You can also verify this with : `show packages` as well
+You can also verify this with `show packages` as well
 
 ##### Next Objective is to Add emulated devices to the NSO and perform some intial taks like Synchornize Config , Create Device Groups , and make sure all devices share the same config.
 
@@ -223,7 +221,7 @@ PE Routers   [ PE11 PE12 PE21 PE31 ]
 
 ```
 
-- Interesting Screen Shot
+Interesting Screen Shot
 ![](assets/markdown-img-paste-20180421143918134.png)
 
 
@@ -251,6 +249,7 @@ customers customer ACME
 #### Lets now create a Device template
 
 ```sh
+
 admin@ncs# config
 admin@ncs(config)# devices template "Common Device Parameters" config
 admin@ncs(config-config)# ios:?
@@ -265,9 +264,10 @@ admin@ncs(config-config)# cisco-ios-xr:ntp server 10.0.0.1
 admin@ncs(config-server-10.0.0.1)# exit
 admin@ncs(config-config)# commit
 Commit complete.
+
 ```
 
-Verify the configuration above :
+Verify the configuration above
 
 ```sh
 
@@ -288,6 +288,7 @@ devices template "Common Device Parameters"
 admin@ncs(config)#
 
 ```
+
 Now apply the configuration above to all the routers
 
 ```sh
@@ -372,9 +373,10 @@ cli {
 admin@ncs(config)# commit
 Commit complete.
 admin@ncs(config)#
+
 ```
 
-Now that we have the configuration applied , lets check on the devices individually
+Now that we have the configuration applied, lets check on the devices individually
 
 ```sh
 admin@ncs(config)# show full-configuration devices device PE21
@@ -502,7 +504,7 @@ module l2vpn {
 
 ```
 
->  Note that you can correct the fomating of a YANG file with `pyang -f yang l2vpn.yang >> formatted_output`
+> Note that you can correct the fomating of a YANG file with `pyang -f yang l2vpn.yang >> formatted_output`
 
 Validate  your YANG file
 
@@ -920,9 +922,8 @@ Here is the file after the values are templated
     </device>
   </devices>
 </config-template>
-
-
 ```
+
 
 After saving the above file (`/opt/ncs/ncs-run/packages/l2vpn/templates`)
 perform a reload of the packages for NCS
@@ -1080,6 +1081,8 @@ Also verify the current service demployment by the following command :
 ```
 
 > You can actually connect to a Virtual Emulated router by the `ncs-netsim`
+
+
 ```sh
 root@cisco-virtual-machine:/opt/ncs/ncs-run/packages/l2vpn/templates# ssh admin@127.0.0.1 -p 10022
 admin@127.0.0.1's password:admin
@@ -1089,9 +1092,15 @@ PE11> en
 PE11#
 ```
 
-Or you can connect like this
+Or you can connect to virtual device like this:
 
-![](assets/markdown-img-paste-20180423152816876.png)
+```sh
+$ ncs-netsim cli-i c1
+c1> enable
+c1# show running-config
+```
+
+
 
 You can undeploy a service :
 
@@ -1169,13 +1178,13 @@ line vty 0 4
 
 
 
-1. Go to the following screen (can be done via CLI)
+1.Go to the following screen (can be done via CLI)
    ![](assets/markdown-img-paste-20180422142653200.png)
-2. Define the Parameters and the users
+2.Define the Parameters and the users
    ![](assets/markdown-img-paste-20180422143021629.png)
-3. Create a local user
+3.Create a local user
    ![](assets/markdown-img-paste-20180422142848623.png)
-4. User Parameters
+4.User Parameters
    ![](assets/markdown-img-paste-20180422142937957.png)
 
 
@@ -1243,11 +1252,9 @@ admin@ncs# script reload
     command:
 ```
 
-You can verify the activity by :
+You can verify the activity by
 
 ```sh
-
-
 admin@ncs# show trace file ned-cisco-ios-PE11.trace
 >> 28-Jan-2016::01:58:14.909 CLI CONNECT to PE11-127.0.0.1:10101 as admin (Trace=false)
 << 28-Jan-2016::01:58:15.178 CONNECTED 0
@@ -1291,9 +1298,9 @@ We can optimise the service model by collecting that information programmaticaly
 
 Here are some of the optimisations which we would follow:
 
-1. Place circuits in a list called `link` with a `max` and `min` elements to `2`.
-2. **Link to the devices interface** so that they can be selected instead of typed in !
-3. **Automatically retrieve** the other PE's loopback address.
+1.Place circuits in a list called `link` with a `max` and `min` elements to `2`.
+2.**Link to the devices interface** so that they can be selected instead of typed in !
+3.**Automatically retrieve** the other PE's loopback address.
 
 Alright so lets tackle the task 1 above .
 
@@ -1390,8 +1397,7 @@ optimized.l2vpn-template.xml
 ```
 
 optimized.l2vpn.yang
-
-```yang
+```json
 module l2vpn {
   namespace "http://com/example/l2vpn";
   prefix l2vpn;
@@ -1485,6 +1491,7 @@ module l2vpn {
 optimized.l2vpn.makefile
 
 ```sh
+
 all: fxs
 .PHONY: all
 
@@ -1527,12 +1534,15 @@ clean:
 
 #### Deploy your own blankent OSPF Service on Dynamips routers to make them part of an OSPF Area
 
+
+
+
 `ncs-make-package --service-skeleton template ospf_deploy`
 
 ![](assets/markdown-img-paste-20180422171844913.png)
 
 
-#### Makefile Training https://www.youtube.com/watch?v=Q1Lnp_Xx7z4
+#### Makefile Training `https://www.youtube.com/watch?v=Q1Lnp_Xx7z4`
 
 
 #### Create A Directory Structure of Where the YANG is Stored and Where is the Correcpoding  Device Template Cofiguration is stored .
@@ -1542,10 +1552,10 @@ clean:
 
 #### Put a place holder to Start documenting vMS / NFV / CSP Solution product portfolio to learn them .
 
-#### https://www.ansible.com/networks-with-cisco-nso-ansible
+#### `https://www.ansible.com/networks-with-cisco-nso-ansible`
 
 #### Supported NEDS
-https://www.cisco.com/c/en/us/products/collateral/cloud-systems-management/network-services-orchestrator/datasheet-c78-734669.html
+`https://www.cisco.com/c/en/us/products/collateral/cloud-systems-management/network-services-orchestrator/datasheet-c78-734669.html`
 
 
 
