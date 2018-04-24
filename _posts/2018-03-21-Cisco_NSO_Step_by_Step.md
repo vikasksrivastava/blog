@@ -445,7 +445,7 @@ Now edit the `l2vpn.yang` file and put in the data below
 
 
 
-```json
+```yang
 module l2vpn {
   namespace "http://com/example/l2vpn";
   prefix l2vpn;
@@ -1133,7 +1133,7 @@ Check the status
 
 In this task, you will modify the `service model` (The YANG Model) to include the assignment of service instances to customers.
 
-```json
+```yang
 leaf customer {
   tailf:info "Customer name";
   type leafref {
