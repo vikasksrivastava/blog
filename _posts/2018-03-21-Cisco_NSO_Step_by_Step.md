@@ -1,3 +1,20 @@
+---
+layout: post
+title: Cisco NSO
+description: My Notes on Cisco NSO
+comments: true
+---
+
+<!-- TOC START min:1 max:5 link:true update:true -->
+        - [NCS Installation](#ncs-installation)
+      - [Install NCS](#install-ncs)
+      - [Setup NCS](#setup-ncs)
+      - [What are the packages availaible](#what-are-the-packages-availaible)
+      - [Compile a new NED](#compile-a-new-ned)
+
+<!-- TOC END -->
+
+
 
 ##### NCS Installation
 
