@@ -662,7 +662,7 @@ Common Record types include :
 - `A` : Point to IPv4 address
 - `AAAA` : Points to IPv6 IP address
 - `CNAME` : Used to point to a hostname or other hostname.
-- `MX` : Point to a mail record.
+`MX` : Point to a mail record.
 
 #### CloudFront
 

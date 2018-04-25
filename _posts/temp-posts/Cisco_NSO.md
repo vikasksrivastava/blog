@@ -9,14 +9,14 @@ Make sure Java Installed `java -version` and `ant` are installed.
 
 #### Install NCS
 
-```sh
+```shell
 root@mininet-vm:/home/mininet# chmod +x nso-4.6.linux.x86_64.installer.bin
 root@mininet-vm:/home/mininet# ./nso-4.6.linux.x86_64.installer.bin /opt/ncs
 ```
 
 #### Setup NCS
 
-```sh
+```shell
 root@mininet-vm:/home/mininet# source /opt/ncs/ncsrc
 root@mininet-vm:/home/mininet# ncs-setup --dest $NCS_DIR/ncs-run
 root@mininet-vm:/home/mininet# cd $NCS_DIR/ncs-run
@@ -81,7 +81,7 @@ make[1]: Leaving directory /opt/ncs/packages/neds/cisco-iosxr/netsim
 The two NEDs are now compiled and available for use but they are not available to the running instance of NSO. One of the ways to make them available to the running instance is by linking a directory in the ncs-run/packages directory to point to the location of the NEDs in the packages subdirectory in the installation directory (i.e. $NCS_DIR)
 
 #### To link the newly compiled NEDS
-```sh
+```shell
 cd $HOME/ncs-run/packages
 ln -s /opt/ncs/packages/neds/cisco-ios cisco-ios
 ln -s /opt/ncs/packages/neds/cisco-iosxr cisco-iosxr
@@ -89,7 +89,7 @@ ln -s /opt/ncs/packages/neds/cisco-iosxr cisco-iosxr
 
 Login and reload the packages
 
-```sh
+```shell
 ncs_cli -C -u admin
 root@ncs# packages reload
 
@@ -121,7 +121,7 @@ Now we will neither use real or virtual devices but use emulated deives
 
 #### Create device with Net Sim
 
-```sh
+```shell
 ncs-netsim create-device cisco-ios PE11
 ncs-netsim add-device cisco-ios PE12
 ncs-netsim add-device cisco-iosxr PE21
@@ -167,7 +167,7 @@ commit
 
 Now connnec to the device and fetch the configuration from them
 
-```sh
+```shell
 devices fetch-host-keys
 devices sync-from
 end
@@ -177,7 +177,7 @@ end
 
 Now lets add the devices added above to a device group
 
-```sh
+```shell
 admin@ncs(config)# devices device-group "PE Routers"
 admin@ncs(config-device-group-PE Routers)# device-name [ PE11 PE12  PE21  PE31 ]
 admin@ncs(config-device-group-PE Routers)# top
@@ -191,7 +191,7 @@ admin@ncs(config-device-group-All Routers)# top
 
 Now lets verify the configuration and `commit` it .
 
-```sh
+```shell
 admin@ncs(config)# show configuration
 devices device-group "All Routers"
 !
@@ -211,7 +211,7 @@ admin@ncs(config)#
 
 You can verify the above by
 
-```sh
+```shell
 admin@ncs# show devices device-group member
 NAME         MEMBER
 ----------------------------------------------------------
@@ -229,7 +229,7 @@ Interesting Screen Shot
 
 Now lets create a customer
 
-```sh
+```shell
 admin@ncs(config)# customers customer ACME
 admin@ncs(config-customer-ACME)# rank 1
 admin@ncs(config-customer-ACME)# status active
@@ -248,7 +248,7 @@ customers customer ACME
 
 #### Lets now create a Device template
 
-```sh
+```shell
 
 admin@ncs# config
 admin@ncs(config)# devices template "Common Device Parameters" config
@@ -269,7 +269,7 @@ Commit complete.
 
 Verify the configuration above
 
-```sh
+```shell
 
 admin@ncs(config)# show full-configuration devices template Common\ Device\ Parameters
 devices template "Common Device Parameters"
@@ -286,12 +286,11 @@ devices template "Common Device Parameters"
  !
 !
 admin@ncs(config)#
-
 ```
 
 Now apply the configuration above to all the routers
 
-```sh
+```shell
 admin@ncs(config)# devices device-group All\ Routers apply-template template-name Common\ Device\ Parameters
 apply-template-result {
     device CE11
@@ -331,8 +330,7 @@ apply-template-result {
 Note that from the above command the configuration is still not applied on the routers unless it is commited .
 
 Lets do a dry run before comiting it
-
-```sh
+```shell
 admin@ncs(config)# commit dry-run
 cli {
     local-node {
@@ -372,7 +370,6 @@ cli {
 
 admin@ncs(config)# commit
 Commit complete.
-admin@ncs(config)#
 
 ```
 
@@ -398,7 +395,6 @@ devices device PE21
 ```
 
 #### Now Lets create a Service
-
 In this activity we will create a simple point to point Layer 2 MPLS VPN
 
 > Take a detour a learn a little bit about Layer 2 MPLS VPN , Here is the link to the `blog`
@@ -924,8 +920,7 @@ Here is the file after the values are templated
 </config-template>
 ```
 
-
-After saving the above file (`/opt/ncs/ncs-run/packages/l2vpn/templates`)
+After saving the above file (/opt/ncs/ncs-run/packages/l2vpn/templates)
 perform a reload of the packages for NCS
 
 ```sh
@@ -945,7 +940,7 @@ reload-result {
 ```
 You should now see more options in the L2VPN Service configuration
 
-```sh
+```shell
 admin@ncs(config)# services l2vpn CE11-CE21 ?
 Possible completions:
   check-sync           Check if device config is according to the service
@@ -970,7 +965,7 @@ Possible completions:
 
 Now deploy the service on the routers in the example
 
-```sh
+```shell
 admin@ncs(config)# services l2vpn CE11-CE21 pw-id 1001121 device1 PE11 intf-number1 0/9 remote-ip1 10.0.0.21 device2 PE21 intf-number2 0/0/0/9 remote-ip2 10.0.0.11
 admin@ncs(config-l2vpn-CE11-CE21)# commit dry-run
 cli {
@@ -1027,7 +1022,7 @@ cli {
 
 After the above is finally commited by a `commit` you see the actuall configuration changes on the device by the following command :
 
-```sh
+```shell
 admin@ncs(config)# show full-configuration devices device PE11
 devices device PE11
  address   127.0.0.1
@@ -1083,7 +1078,7 @@ Also verify the current service demployment by the following command :
 > You can actually connect to a Virtual Emulated router by the `ncs-netsim`
 
 
-```sh
+```shell
 root@cisco-virtual-machine:/opt/ncs/ncs-run/packages/l2vpn/templates# ssh admin@127.0.0.1 -p 10022
 admin@127.0.0.1's password:admin
 
@@ -1249,12 +1244,12 @@ And then load the above command in NSO
 ```sh
 admin@ncs# script reload
 /opt/ncs/ncs-run/scripts: ok
-    command:
+
 ```
 
 You can verify the activity by
 
-```sh
+```shell
 admin@ncs# show trace file ned-cisco-ios-PE11.trace
 >> 28-Jan-2016::01:58:14.909 CLI CONNECT to PE11-127.0.0.1:10101 as admin (Trace=false)
 << 28-Jan-2016::01:58:15.178 CONNECTED 0
@@ -1305,11 +1300,10 @@ Here are some of the optimisations which we would follow:
 Alright so lets tackle the task 1 above .
 
 
-## Start at Page 66
-
 
 Optimized L2VPN XML File for the exercise
 
+---
 optimized.l2vpn-template.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1395,9 +1389,11 @@ optimized.l2vpn-template.xml
   </config-template>
 
 ```
+---
 
 optimized.l2vpn.yang
-```json
+
+```shell
 module l2vpn {
   namespace "http://com/example/l2vpn";
   prefix l2vpn;
@@ -1459,6 +1455,7 @@ module l2vpn {
             mandatory true;
             type leafref {
               path "deref(../../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+
             }
           }
         }
@@ -1488,10 +1485,25 @@ module l2vpn {
 }
 ```
 
-optimized.l2vpn.makefile
+> Note that in the configurator above you define your Routers interface (Dynamips Based) to show up by modifying the `leaf-intf` for `container ios ` like the following, **NOTICE** the  "FastEthernet"
+
+```shell
+leaf intf-number {
+  tailf:info "FastEthernet Interface ID";
+  mandatory true;
+  type leafref {
+    path "deref(../../device)/../ncs:config/ios:interface/ios:FastEthernet/ios:name";
+  }
+```
+
+> **NOTE** the above model can be browsed here
+
+![](assets/markdown-img-paste-20180424220244950.png)
+
+---
+optimized.l2vpn.Makefile
 
 ```sh
-
 all: fxs
 .PHONY: all
 
@@ -1529,12 +1541,15 @@ $(DIRS):
 clean:
 	rm -rf $(DIRS)
 .PHONY: clean
-
 ```
+---
+
+
+
+
+
 
 #### Deploy your own blankent OSPF Service on Dynamips routers to make them part of an OSPF Area
-
-
 
 
 `ncs-make-package --service-skeleton template ospf_deploy`
