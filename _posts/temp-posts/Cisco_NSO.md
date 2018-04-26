@@ -1,4 +1,6 @@
 
+
+
 ##### NCS Installation
 
 
@@ -425,8 +427,7 @@ Now edit the `l2vpn.yang` file and put in the data below
 > More Details on the YANG file format on the other blog but for now proceed.
 
 
-
-```json
+```shell
 module l2vpn {
   namespace "http://com/example/l2vpn";
   prefix l2vpn;
@@ -713,6 +714,7 @@ In the template below we will put the config generated above for each device. Tw
 
 
 So after putting the XML Data generated as a part of Dry run in the above template the XML file now looks like this
+
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1293,9 +1295,9 @@ We can optimise the service model by collecting that information programmaticaly
 
 Here are some of the optimisations which we would follow:
 
-1.Place circuits in a list called `link` with a `max` and `min` elements to `2`.
-2.**Link to the devices interface** so that they can be selected instead of typed in !
-3.**Automatically retrieve** the other PE's loopback address.
+1. Place circuits in a list called `link` with a `max` and `min` elements to `2`.
+2. **Link to the devices interface** so that they can be selected instead of typed in !
+3. **Automatically retrieve** the other PE's loopback address.
 
 Alright so lets tackle the task 1 above .
 
@@ -1303,8 +1305,9 @@ Alright so lets tackle the task 1 above .
 
 Optimized L2VPN XML File for the exercise
 
+**`optimized.l2vpn-template.xml`**
 ---
-optimized.l2vpn-template.xml
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="l2vpn">
@@ -1389,9 +1392,9 @@ optimized.l2vpn-template.xml
   </config-template>
 
 ```
----
 
-optimized.l2vpn.yang
+**`optimized.l2vpn.yang`**
+---
 
 ```shell
 module l2vpn {
@@ -1485,7 +1488,7 @@ module l2vpn {
 }
 ```
 
-> Note that in the configurator above you define your Routers interface (Dynamips Based) to show up by modifying the `leaf-intf` for `container ios ` like the following, **NOTICE** the  "FastEthernet"
+> In the above configuration; if you are doing it with simulated routers (Dynamips Based) and if you would like to show the interfaces on the simulated router you will have to modify the  `leafref` in `intf-number` for `container ios ` like the following, **NOTICE** the  "FastEthernet"
 
 ```shell
 leaf intf-number {
@@ -1500,8 +1503,8 @@ leaf intf-number {
 
 ![](assets/markdown-img-paste-20180424220244950.png)
 
+**`optimized.l2vpn.Makefile`**
 ---
-optimized.l2vpn.Makefile
 
 ```sh
 all: fxs
@@ -1520,9 +1523,9 @@ FXS = $(SRC:yang/%.yang=../load-dir/%.fxs)
 # 	../../<pkt-name>/src/yang
 
 YANGPATH +=  /opt/ncs/packages/neds/cisco-ios/src/yang \
- 						 /opt/ncs/packages/neds/cisco-iosxr/src/yang \
-						 /opt/ncs/packages/neds/cisco-ios/src/ncsc-out/modules/yang \
-						 /opt/ncs/packages/neds/cisco-iosxr/src/ncsc-out/modules/yang
+             /opt/ncs/packages/neds/cisco-iosxr/src/yang \
+             /opt/ncs/packages/neds/cisco-ios/src/ncsc-out/modules/yang \
+             /opt/ncs/packages/neds/cisco-iosxr/src/ncsc-out/modules/yang
 
 
 NCSCPATH   = $(YANGPATH:%=--yangpath %)
