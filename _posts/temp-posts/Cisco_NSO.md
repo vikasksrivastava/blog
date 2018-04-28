@@ -1303,95 +1303,8 @@ Alright so lets tackle the task 1 above .
 
 
 
-Optimized L2VPN XML File for the exercise
+Optimized files for the exercise
 
-**`optimized.l2vpn-template.xml`**
----
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="l2vpn">
-  <devices xmlns="http://tail-f.com/ns/ncs">
-    <device tags="nocreate">
-      <name>{/link[1]/device}</name>
-      <config tags="merge">
-        <interface xmlns="urn:ios" tags="nocreate">
-          <GigabitEthernet>
-            <name>{/link[1]/ios/intf-number}</name>
-            <xconnect tags="merge">
-              <address>{/link[1]/remote-ip}</address>
-              <vcid>{/pw-id}</vcid>
-              <encapsulation>mpls</encapsulation>
-            </xconnect>
-          </GigabitEthernet>
-        </interface>
-        <l2vpn xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="merge">
-          <xconnect>
-            <group>
-              <name>GROUP</name>
-              <p2p>
-                <name>{/name}</name>
-                <interface>
-                  <name>GigabitEthernet{/link[1]/iosxr/intf-number}</name>
-                  </interface>
-                  <neighbor>
-                    <address>{/link[1]/remote-ip}</address>
-                    <pw-id>{/pw-id}</pw-id>
-                  </neighbor>
-                </p2p>
-              </group>
-            </xconnect>
-          </l2vpn>
-          <interface xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="nocreate">
-            <GigabitEthernet>
-              <id>{/link[1]/iosxr/intf-number}</id>
-              <l2transport/>
-            </GigabitEthernet>
-          </interface>
-        </config>
-      </device>
-      <device tags="nocreate">
-        <name>{/link[2]/device}</name>
-        <config tags="merge">
-          <interface xmlns="urn:ios" tags="nocreate">
-            <GigabitEthernet>
-              <name>{/link[2]/ios/intf-number}</name>
-              <xconnect tags="merge">
-                <address>{/link[2]/remote-ip}</address>
-                <vcid>{/pw-id}</vcid>
-                <encapsulation>mpls</encapsulation>
-              </xconnect>
-            </GigabitEthernet>
-          </interface>
-          <l2vpn xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="merge">
-            <xconnect>
-              <group>
-                <name>GROUP</name>
-                <p2p>
-                  <name>{/name}</name>
-                  <interface>
-                    <name>GigabitEthernet{/link[2]/iosxr/intf-number}</name>
-                  </interface>
-                  <neighbor>
-                    <address>{/link[2]/remote-ip}</address>
-                    <pw-id>{/pw-id}</pw-id>
-                  </neighbor>
-                </p2p>
-              </group>
-            </xconnect>
-          </l2vpn>
-          <interface xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="nocreate">
-            <GigabitEthernet>
-              <id>{/link[2]/iosxr/intf-number}</id>
-              <l2transport/>
-            </GigabitEthernet>
-          </interface>
-        </config>
-      </device>
-    </devices>
-  </config-template>
-
-```
 
 **`optimized.l2vpn.yang`**
 ---
@@ -1488,6 +1401,95 @@ module l2vpn {
 }
 ```
 
+**`optimized.l2vpn-template.xml`**
+---
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="l2vpn">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device tags="nocreate">
+      <name>{/link[1]/device}</name>
+      <config tags="merge">
+        <interface xmlns="urn:ios" tags="nocreate">
+          <GigabitEthernet>
+            <name>{/link[1]/ios/intf-number}</name>
+            <xconnect tags="merge">
+              <address>{/link[1]/remote-ip}</address>
+              <vcid>{/pw-id}</vcid>
+              <encapsulation>mpls</encapsulation>
+            </xconnect>
+          </GigabitEthernet>
+        </interface>
+        <l2vpn xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="merge">
+          <xconnect>
+            <group>
+              <name>GROUP</name>
+              <p2p>
+                <name>{/name}</name>
+                <interface>
+                  <name>GigabitEthernet{/link[1]/iosxr/intf-number}</name>
+                  </interface>
+                  <neighbor>
+                    <address>{/link[1]/remote-ip}</address>
+                    <pw-id>{/pw-id}</pw-id>
+                  </neighbor>
+                </p2p>
+              </group>
+            </xconnect>
+          </l2vpn>
+          <interface xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="nocreate">
+            <GigabitEthernet>
+              <id>{/link[1]/iosxr/intf-number}</id>
+              <l2transport/>
+            </GigabitEthernet>
+          </interface>
+        </config>
+      </device>
+      <device tags="nocreate">
+        <name>{/link[2]/device}</name>
+        <config tags="merge">
+          <interface xmlns="urn:ios" tags="nocreate">
+            <GigabitEthernet>
+              <name>{/link[2]/ios/intf-number}</name>
+              <xconnect tags="merge">
+                <address>{/link[2]/remote-ip}</address>
+                <vcid>{/pw-id}</vcid>
+                <encapsulation>mpls</encapsulation>
+              </xconnect>
+            </GigabitEthernet>
+          </interface>
+          <l2vpn xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="merge">
+            <xconnect>
+              <group>
+                <name>GROUP</name>
+                <p2p>
+                  <name>{/name}</name>
+                  <interface>
+                    <name>GigabitEthernet{/link[2]/iosxr/intf-number}</name>
+                  </interface>
+                  <neighbor>
+                    <address>{/link[2]/remote-ip}</address>
+                    <pw-id>{/pw-id}</pw-id>
+                  </neighbor>
+                </p2p>
+              </group>
+            </xconnect>
+          </l2vpn>
+          <interface xmlns="http://tail-f.com/ned/cisco-ios-xr" tags="nocreate">
+            <GigabitEthernet>
+              <id>{/link[2]/iosxr/intf-number}</id>
+              <l2transport/>
+            </GigabitEthernet>
+          </interface>
+        </config>
+      </device>
+    </devices>
+  </config-template>
+
+```
+
+
 > In the above configuration; if you are doing it with simulated routers (Dynamips Based) and if you would like to show the interfaces on the simulated router you will have to modify the  `leafref` in `intf-number` for `container ios ` like the following, **NOTICE** the  "FastEthernet"
 
 ```shell
@@ -1552,6 +1554,11 @@ clean:
 
 
 
+
+
+
+
+
 #### Deploy your own blankent OSPF Service on Dynamips routers to make them part of an OSPF Area
 
 
@@ -1562,6 +1569,8 @@ clean:
 
 #### Makefile Training `https://www.youtube.com/watch?v=Q1Lnp_Xx7z4`
 
+
+#### NSO Web UI (Learn a little bit)
 
 #### Create A Directory Structure of Where the YANG is Stored and Where is the Correcpoding  Device Template Cofiguration is stored .
 

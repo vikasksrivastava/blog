@@ -15,3 +15,9 @@ Opening VI target: vi://root@192.168.1.13:443/
 Deploying to VI: vi://root@192.168.1.13:443/
 Disk progress: 4%
 ```
+
+
+
+ESXi
+
+https://talesfromthedatacenter.com/2016/02/esxi-6-install-stuck-on-relocating-modules-and-starting-up-the-kernel/
