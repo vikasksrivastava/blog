@@ -134,10 +134,171 @@ leaf remote-ip {
 
 ![](assets/markdown-img-paste-20180427210037515.png)
 
+##### Grouping Statement
+
+Grouping can contain any YANG structure (leafs or containers etc) .
+In this example we group
+
+```shell
+module ospf_deploy {
+  namespace "http://com/example/ospf_deploy";
+  prefix ospf_deploy;
+
+  import "ietf-inet-types" {
+    prefix inet;
+  }
+
+  grouping target {
+    leaf address {
+      type inet:ip-address;
+      description "Target IP";
+    }
+    leaf port {
+      type inet:port-number;
+      description "Target port";
+    }
+  }
+
+    container peer {
+      container destination {
+        uses target;
+      }
+    }
+
+  }
+```
+
+Notice that when you view the actual output of the code above , it lists the container structure starting with `peer` , `destination` and then adds the `target ` group to it .
+
+```sh
+#pyang -f tree ospf_deploy.yang module: ospf_deploy
+      +--rw peer
+         +--rw destination
+            +--rw address?   inet:ip-address
+            +--rw port?      inet:port-number
+```
+
+#### Grouping Statement with Refine
+
+So with `refine`  we further take the above example and refine the grouping with some contstraints or defaults. In the example below we set the default value to 80.
+
+```sh
+grouping target {
+  leaf address {
+    type inet:ip-address;
+    description "Target IP";
+  }
+  leaf port {
+    type inet:port-number;
+    description "Target port";
+  }
+}
+
+  container peer {
+    container destination {
+      uses target {
+        refine port {
+          default 80;
+        }
+      }
+    }
+  }
+```
+
+### YANG Data Definitions
+
+#### Leaf Statement
+
+A leaf is a single item and can have multiple attributes.
+
+```sh
+leaf host-name {
+  type string;
+  mandatory true;
+  config true;
+
+}
+```
+
+![](assets/markdown-img-paste-20180428012909221.png)
 
 
+#### Container Statement
+
+A container is used to organise the leafs in a structure. It does not have type of its own.
+
+```sh
+container system {
+  containers services {
+    container ssh {
+      presence "Enables SSH"
+      description "SSH Service Specific configuration"
+    }
+  }
+}
+```
+
+#### Leaf-list Statement
+
+Its is a list of items . Do not see this as an array .
+
+```sh
+leaf-list domains-search {
+  type string;
+  ordered-by user; # How the list is ordered.
+  description "List of domain names to search";
+}
+```
 
 
+#### List Statements
+
+![](assets/markdown-img-paste-20180428013507879.png)
+
+Think of Lists as a Table of Items , `key` is the key of the data table.
+
+#### Attributes of list an leaf-lists
+
+![](assets/markdown-img-paste-20180428013616564.png)
+
+
+#### Keys
+
+The key field is used to specific which row are we reffering to .
+
+![](assets/markdown-img-paste-20180428013718752.png)
+
+
+#### Multiple Keys
+
+Notice in the example below we have the `key "ip prefix"` allowing us to select based on two keys , IP and Prefix.
+
+![](assets/markdown-img-paste-20180428014213415.png)
+
+
+### Leafref
+
+A Leafref can refer to another leaf . So basically what it means is , the only calues can be selected are the values the Leafref is poiting to .
+
+![](assets/markdown-img-paste-2018042801564567.png)
+
+
+### Multiple Key Leafref
+
+In the example below , a give set of IP and Port is to be selected from the client table.
+Now selecting the Ip Address is easy , but there are duplicate IP Addresses .
+
+Having the Xpath of `ip=current()`  helps us go back in the tree and ensure integrity by limiting the scope to the current v-ip in question .
+
+![](assets/markdown-img-paste-2018042802003507.png)
+
+#### Deref() XPATH Operator
+
+Now looking at the example above of Leafref , if the number of keys increases (v-ip , v-port .... and v-stream) it will get convuluted in the nesting of the `current` pointer .
+
+This is made easy by the `deref()` operator.
+
+![](assets/markdown-img-paste-20180428020523200.png)
 
 .
 .

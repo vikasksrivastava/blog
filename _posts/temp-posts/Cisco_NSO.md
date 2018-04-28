@@ -1550,7 +1550,13 @@ clean:
 ---
 
 
+# NEXT STEPS
 
+Make a real router lab for the following  and deploy multiple peers between PE1 to PE2 on different ports , and making the configuration changes via NSO
+
+And then start with "Task 1: Service Requirements and Service Model"
+
+![](assets/markdown-img-paste-20180428022836587.png)
 
 
 
