@@ -1,3 +1,15 @@
+### DevOps Network Engineers
+
+
+- Strong automation development skills
+- Proficient in one or more automation languages [i.e. Ansible, Jenkins, GIT, Docker, Chef, Puppet, Terraform, Python]
+- Experience in designing production environments that span application, systems, and network
+- Knowledge of DevOps practices, processes, tools and culture. Agile experience
+Deep understanding of CI/CD tools and agile development methodology
+Ability to bring structure to problems effectively and work towards practical solutions.
+Ability to lead multiple engagements with various teams. Experience leading and training teams.
+
+
 full-time full time role, in this position these Engineers will be working as part of team developing a solution that will integrate solutions with ONAP concept. � The candidate will be part of the software engineering team designing a cloud-based service platform leveraging SDN/NFV and Orchestration technologies. � As a Software Engineer, you will specialize in building high-performance, reliable front/back-end management systems and server-side APIs, creating the interconnectivity fabric of the platform and enabling the provisioning of new services for a ground-breaking communications system. Responsibilities: � Design and Develop Rest, Rpc and messaging based software infrastructure and build control and management plane controllers and APIs. � Design and develop low latency/high throughput server infrastructure components to handle large volume of transactions � Analyze requirements, design and develop code, unit test code and test tools � Present and defend architectural, design, and technical choices to internal and external audiences. � Comfortable with collaboration, open communication between different groups in different countries and time zones. If interested in the role please send updated resumes to jake.wojtowicz@rht.com !
 Solid understanding of algorithm complexity, parallel/distributed systems, advanced data structures, computer networking and operating systems
 Development expertise in building NFV, Cloud orchestration and SDN technologies at scale

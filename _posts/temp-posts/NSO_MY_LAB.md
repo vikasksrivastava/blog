@@ -1,9 +1,8 @@
+### My NSO Lab ramblings as I learn.
 
 ![](assets/markdown-img-paste-20180429205415788.png)
 
-Lab Details :
-
-PE CSR1000v and CEs does not matter for VPN Confgiration . We will only add the PEs to the
+> Lab Details : PE CSR1000v and CEs does not matter for VPN Confgiration . We will only add the PEs to the
 
 #### Lets start with configuring the CE devices to be part of NSO
 
@@ -140,9 +139,9 @@ module loopback_deploy {
 
 ```
 
-`services loopback_deploy PE11_Loopback device PE11 loopback-ip-address 1.1.1.1`
+`services loopback_deploy PE11_Loopback device PE11 loopback-ip-address 1.1.1.1``
 
-```sh
+```shell
 admin@ncs(config)# commit dry-run
 cli {
     local-node {
@@ -316,8 +315,6 @@ The XML Template will pretty much remain the same as the above configuration , t
     </device>
   </devices>
 </config-template>
-
-
 ```
 
 Now lets define the YANG
@@ -345,6 +342,82 @@ This is how you refrence DEREF()
 `path "deref(../../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
 
 Ok
+
+
+
+---
+#### How to Connect to MAAPI
+
+> Make sure you start the NCS Service
+
+```python
+import ncs
+
+with ncs.maapi.Maapi() as m:
+    with ncs.maapi.Session(m, 'admin', 'python'):
+        # The first transaction
+        with m.start_read_trans() as t:
+            address = t.get_elem('/ncs:devices/device{PE11}/address')
+            # Example to access a value with "ncs:"
+            # address = t.get_elem('/ncs:devices/device{PE11}/ncs:authgroup')
+            print("First read: Address = %s" % address)
+```
+---
+
+
+
+#### Cisco NSO to add Python logic to a service
+
+> `https://www.youtube.com/watch?v=4hCLAYbxjwE&t=817s`
+
+Step 1. Make a service which has a python file to allow premod and post modifications.
+
+```shell
+ncs-make-package --service-skeleton `python-and-template` vikassri_auto_lo0_deploy`
+```
+
+Step 2. Define the Variable in your XML which needs to updated or changes as per the Python Logic . Lets says its `VARIABLE_IP_Address`
+
+Step 3. Perform logic in the code below and when done add the final variable to for the XML file to read using `vars.add` . This the variable which will be refrenced in the XML file , e.g  {/VARIABLE_IP_Address}
+
+```python
+# ------------------------
+# SERVICE CALLBACK EXAMPLE
+# ------------------------
+class ServiceCallbacks(Service):
+
+    # The create() callback is invoked inside NCS FASTMAP and
+    # must always exist.
+    @Service.create
+    def cb_create(self, tctx, root, service, proplist):
+        self.log.info('Service create(service=', service._path, ')')
+
+        ###  MYNOTE :  PUT YOUR LOGIC HERE ....
+        modified_ip_address = regex (some_IP_Address)
+
+        vars = ncs.template.Variables()
+
+        ###  MYNOTE: Now add the value generated above to the your logic .
+        vars.add('VARIABLE_IP_Address', modified_ip_address)
+
+        template = ncs.template.Template(service)
+        template.apply('vikassri_auto_lo0_deploy-template', vars)
+
+```
+---
+
+
+
+
+
+
+
+![](assets/markdown-img-paste-20180430040349433.png)
+
+
+![](assets/markdown-img-paste-20180429002142529.png)
+
+
 
 
 
@@ -459,41 +532,6 @@ module loopback_deploy {
   }
 }
 ```
-
-
-
-
-
-
-
-![](assets/markdown-img-paste-20180429002142529.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .
 .
