@@ -250,6 +250,144 @@ admin@ncs(config)# devices device-group All\ Routers apply-template template-nam
 
 ```
 
+#### EXERCISE 3. Deploy MPLS L2 VPN configuration with `device` , `interface` and `loopback` as selective option !
+
+1. The YANG File
+
+```sh
+module new_l2vpn {
+  namespace "http://com/example/new_l2vpn";
+  prefix new_l2vpn;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs { prefix ncs; }
+  import tailf-common { prefix tailf; }
+  import tailf-ned-cisco-ios { prefix ios; }
+
+  augment "/ncs:services" {
+    list new_l2vpn {
+      key "name";
+      unique "pw-id";
+      uses ncs:service-data;
+      ncs:servicepoint "l2vpn";
+
+      leaf name {
+        tailf:info "Service Instance Name";
+        type string;
+      }
+
+      leaf pw-id {
+        tailf:info "Unique Pseudowire ID";
+        mandatory true;
+        type uint32 {
+          range "1..4294967295";
+        }
+      }
+
+      leaf device1 {
+        tailf:info "PE Router1";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      }
+
+      leaf intf-number1 {
+        tailf:info "GigabitEthernet Interface ID";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+        }
+      }
+
+      leaf remote-ip1 {
+        tailf:info "Loopback0 IP Address of Remote PE ";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
+        }
+      }
+
+      leaf device2 {
+        tailf:info "PE Router2";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      }
+
+      leaf intf-number2 {
+        tailf:info "GigabitEthernet Interface ID";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+        }
+      }
+
+      leaf remote-ip2 {
+        tailf:info "Loopback0 IP Address of Remote PE ";
+        mandatory true;
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
+        }
+      }
+
+    }
+  }
+}
+
+```
+
+ 2. The XML file
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<config-template xmlns="http://tail-f.com/ns/config/1.0"                 servicepoint="l2vpn">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <!-- DEVICE1 -->
+    <device tags="nocreate">
+      <name>{/device1}</name>
+      <config tags="merge">
+
+        <!-- DEVICE1/IOS -->
+        <interface xmlns="urn:ios">
+          <GigabitEthernet>
+            <name>{/intf-number1}</name>
+            <xconnect>
+              <address>{/remote-ip1}</address>
+              <vcid>{/pw-id}</vcid>
+              <encapsulation>mpls</encapsulation>
+            </xconnect>
+          </GigabitEthernet>
+        </interface>
+
+      </config>
+    </device>
+
+    <!-- DEVICE2 -->
+    <device tags="nocreate">
+      <name>{/device2}</name>
+      <config tags="merge">
+
+        <!-- DEVICE1/IOS -->
+        <interface xmlns="urn:ios">
+          <GigabitEthernet>
+            <name>{/intf-number2}</name>
+            <xconnect>
+              <address>{/remote-ip2}</address>
+              <vcid>{/pw-id}</vcid>
+              <encapsulation>mpls</encapsulation>
+            </xconnect>
+          </GigabitEthernet>
+        </interface>
+
+      </config>
+    </device>
+  </devices>
+</config-template>
+
+```
+
 
 #### EXERCISE 3. Now lets Deploy Xconnect configuration
 
@@ -360,6 +498,7 @@ with ncs.maapi.Maapi() as m:
             address = t.get_elem('/ncs:devices/device{PE11}/address')
             # Example to access a value with "ncs:"
             # address = t.get_elem('/ncs:devices/device{PE11}/ncs:authgroup')
+            # example ('ncs:devices/device{PE11}/ncs:config/ios:interface/ios:GigabitEthernet{1}/ios:name')
             print("First read: Address = %s" % address)
 ```
 ---
@@ -404,6 +543,41 @@ class ServiceCallbacks(Service):
         template.apply('vikassri_auto_lo0_deploy-template', vars)
 
 ```
+---
+
+---
+
+#### Should of type path-arg
+
+In this case make sure your `XPATH` does not have a hardcoded variable.
+
+```sh
+yang/new_l2vpn.yang:60: error: bad argument value "/ncs:devices/ncs:device{PE11}/ncs:config/ios:interface/ios:GigabitEthernet{1}/ios:name", should be of type path-arg
+```
+
+---
+
+#### error: the leafref refers to non-leaf and non-leaf-list node
+
+
+```sh
+yang/new_l2vpn.yang:38: error: the leafref refers to non-leaf and non-leaf-list node 'FastEthernet' in module 'tailf-ned-cisco-ios' at /opt/ncs/packages/neds/cisco-ios/src/ncsc-out/modules/yang/tailf-ned-cisco-ios.yang:34121
+
+```
+
+In this case make sure your `XPATH` points to a `list` , in this case it was `ios:name`
+
+`path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
+
+The error occurs if you leave the path untill here , expecting to list GigabitEthernet interfaces :
+
+`path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet";`
+
+Basically the key is , things like name , negotiation , descripton which is a list .
+
+![](assets/markdown-img-paste-20180502203026575.png)
+
+
 ---
 
 

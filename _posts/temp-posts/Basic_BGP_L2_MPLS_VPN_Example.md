@@ -118,3 +118,12 @@ interface Ethernet0
 
 
 ```
+
+
+Be careful with OSPF and MPLS. OSPF will ALWAYS advertise the loopback ip address as /32 even though you have a /24 configured. This will give LDP errors since there’s a mismatch in the subnet mask. 2 ways to fix this:
+
+– Make sure you configure a /32 for the IP address on the loopback interface.
+
+OR
+
+– Use the “ip ospf network” command on the loopback interface so it advertises the /24 instead of the /32.
