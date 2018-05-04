@@ -250,7 +250,7 @@ admin@ncs(config)# devices device-group All\ Routers apply-template template-nam
 
 ```
 
-#### EXERCISE 3. Deploy MPLS L2 VPN configuration with `device` , `interface` and `loopback` as selective option !
+#### EXERCISE 3. Deploy MPLS L2 VPN configuration with `device` , `interface`and `loopback` as selective option (No manual entry)!
 
 1. The YANG File
 
@@ -274,7 +274,7 @@ module new_l2vpn {
       leaf name {
         tailf:info "Service Instance Name";
         type string;
-      }
+      } //name
 
       leaf pw-id {
         tailf:info "Unique Pseudowire ID";
@@ -282,7 +282,7 @@ module new_l2vpn {
         type uint32 {
           range "1..4294967295";
         }
-      }
+      } //pw-id
 
       leaf device1 {
         tailf:info "PE Router1";
@@ -290,7 +290,7 @@ module new_l2vpn {
         type leafref {
           path "/ncs:devices/ncs:device/ncs:name";
         }
-      }
+      } //device1
 
       leaf intf-number1 {
         tailf:info "GigabitEthernet Interface ID";
@@ -298,7 +298,7 @@ module new_l2vpn {
         type leafref {
           path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
         }
-      }
+      } //int-number1
 
       leaf remote-ip1 {
         tailf:info "Loopback0 IP Address of Remote PE ";
@@ -306,7 +306,7 @@ module new_l2vpn {
         type leafref {
           path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
         }
-      }
+      } //remote-ip1
 
       leaf device2 {
         tailf:info "PE Router2";
@@ -314,7 +314,7 @@ module new_l2vpn {
         type leafref {
           path "/ncs:devices/ncs:device/ncs:name";
         }
-      }
+      } //device2
 
       leaf intf-number2 {
         tailf:info "GigabitEthernet Interface ID";
@@ -322,7 +322,7 @@ module new_l2vpn {
         type leafref {
           path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
         }
-      }
+      } //intf-number2
 
       leaf remote-ip2 {
         tailf:info "Loopback0 IP Address of Remote PE ";
@@ -330,9 +330,9 @@ module new_l2vpn {
         type leafref {
           path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
         }
-      }
+      } //remote-ip2
 
-    }
+    } //list_newl2vpn
   }
 }
 
@@ -388,105 +388,11 @@ module new_l2vpn {
 
 ```
 
-
-#### EXERCISE 3. Now lets Deploy Xconnect configuration
-
-1.Define the template
-
-
-
-
-
-
-
-
-
-
-
-
-#### * * * ON HOLD  * * * EXERCISE 2. Now Lets Automate the Loopback IP Address selection of the CE11 Routers based on the last octet of the address received on Fa0 (The loopback addressed are not required for the L3 xconnect but this is just for fun )
-
-Lets Start with Skeleton creation
-
-`ncs-make-package --service-skeleton template CE_loopback_deploy`
-
-The XML Template will pretty much remain the same as the above configuration , though the login the YANG file needs to change
-
-
-```xml
-
-<config-template xmlns="http://tail-f.com/ns/config/1.0"
-                 servicepoint="loopback_deploy">
-  <devices xmlns="http://tail-f.com/ns/ncs">
-    <device>
-      <!--
-          Select the devices from some data structure in the service
-          model. In this skeleton the devices are specified in a leaf-list.
-          Select all devices in that leaf-list:
-      -->
-      <name>{/device}</name>
-      <config>
-        <!--
-            Add device-specific parameters here.
-            In this skeleton the service has a leaf "dummy"; use that
-            to set something on the device e.g.:
-            <ip-address-on-device>{/dummy}</ip-address-on-device>
-        -->
-        <!-- DEVICE1/IOS BELOW IS THE MAIL STUFF WE NEED TO ADD -->
-        <interface xmlns="urn:ios">
-          <Loopback>
-            <name>0</name>
-            <ip>
-              <address>
-                <primary>
-                  <address>{/loopback-ip-address}</address>  <!-- Based on the variable from Yang file -->
-                  <mask>255.255.255.0</mask>
-                </primary>
-              </address>
-            </ip>
-          </Loopback>
-        </interface>
-
-
-
-      </config>
-    </device>
-  </devices>
-</config-template>
-```
-
-Now lets define the YANG
-
-Ok , remember that we need to based the last octed of the loopback based on the last octet of the Fa0 interface .
-
-This is how you find the XPATH
-
-`show running-config devices device PE11 config ios:interface GigabitEthernet | display xpath`
-
-```
-
-show running-config devices device CE21 address | display xpath
-
-/devices/device[name='CE21']/address
-
-```
-
-
-This is how you refrence DEREF()
-
-
-
-
-`path "deref(../../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
-
-Ok
-
-
-
+<br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br>
 ---
 #### How to Connect to MAAPI
 
-> Make sure you start the NCS Service
+> **Make sure you start the NCS Service**
 
 ```python
 import ncs
@@ -543,11 +449,13 @@ class ServiceCallbacks(Service):
         template.apply('vikassri_auto_lo0_deploy-template', vars)
 
 ```
----
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+#Common Error Messages and their resolution
 
 ---
 
-#### Should of type path-arg
+#### Should be of type path-arg
 
 In this case make sure your `XPATH` does not have a hardcoded variable.
 
@@ -562,28 +470,113 @@ yang/new_l2vpn.yang:60: error: bad argument value "/ncs:devices/ncs:device{PE11}
 
 ```sh
 yang/new_l2vpn.yang:38: error: the leafref refers to non-leaf and non-leaf-list node 'FastEthernet' in module 'tailf-ned-cisco-ios' at /opt/ncs/packages/neds/cisco-ios/src/ncsc-out/modules/yang/tailf-ned-cisco-ios.yang:34121
-
 ```
 
 In this case make sure your `XPATH` points to a `list` , in this case it was `ios:name`
 
-`path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
+```sh
+path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
+```
 
 The error occurs if you leave the path untill here , expecting to list GigabitEthernet interfaces :
 
-`path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet";`
-
-Basically the key is , things like name , negotiation , descripton which is a list .
+```sh
+path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet";
+```
+Basically the key is , things like `name` , `negotiation` , `descripton` which is a list .
 
 ![](assets/markdown-img-paste-20180502203026575.png)
 
+---
+
+#### XPath error: Invalid namespace prefix: ios
+
+```sh
+yang/circuit.yang:57: error: XPath error: Invalid namespace prefix: ios
+make: *** [../load-dir/circuit.fxs] Error 1
+```
+
+**Solution :**
+
+Import the required module:
+```sh
+import tailf-ned-cisco-ios {
+   prefix ios;
+}
+```
+
+And add the yang path below in Makefile.
+
+```sh
+## Uncomment and patch the line below if you have a dependency to a NED
+## or to other YANG files
+# YANGPATH += ../../<ned-name>/src/ncsc-out/modules/yang \
+#       ../../<pkt-name>/src/yang
+
+YANGPATH += ../../cisco-ios/src/ncsc-out/modules/yang
+```
+---
+
+#### Aborted: no registration found for callpoint learning_defref/service_create of type=external
+
+This message occurs when the you perform a commit or commit-dry-run . At this stage your YANG is merged with the corresponding XML Definition
+
+
+```sh
+admin@ncs(config-link-PE21)# commit dry-run
+Aborted: no registration found for callpoint learning_defref/service_create of type=external
+admin@ncs(config-link-PE21)# exit
+```
+
+**Solution :**
+
+Make sure that in the corresponding XML code , the `servicepoint` name is correct.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="learning_defref">
+```
 
 ---
 
+### Another Set of error Messages
+
+```sh
+/opt/ncs/packages/neds/cisco-iosxr/src/ncsc-out/modules/yang/tailf-ned-cisco-ios-xr.yang:17988: warning: Given dependencies are not equal to calculated: ../end-marker, ../start-marker. Consider removing tailf:dependency statements.
+/opt/ncs/packages/neds/cisco-iosxr/src/ncsc-out/modules/yang/tailf-ned-cisco-ios-xr.yang:26306: warning: when tailf:cli-drop-node-name is given, it is recommended that tailf:cli-suppress-mode is used in combination. using tailf:cli-drop-nodename in a list child without using tailf:cli-suppress-mode on the list, might lead to confusing behaviour, where the user enters the submode without being able to give further configuration.
+yang/learning_defref.yang:55: warning: Given dependencies are not equal to calculated: ../router_name, /ncs:devices/ncs:device/ncs:name, /ncs:devices/ncs:device/ncs:device-type/ncs:cli/ncs:ned-id. Consider removing tailf:dependency statements.
+yang/learning_defref.yang:68: warning: Given dependencies are not equal to calculated: ../router_name, /ncs:devices/ncs:device/ncs:name, /ncs:devices/ncs:device/ncs:device-type/ncs:cli/ncs:ned-id. Consider removing tailf:dependency statements.
+```
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 
 
 ![](assets/markdown-img-paste-20180430040349433.png)
@@ -707,17 +700,84 @@ module loopback_deploy {
 }
 ```
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
+
+
+
+
+
+#### * * * ON HOLD  * * * EXERCISE XXXX. Now Lets Automate the Loopback IP Address selection of the CE11 Routers based on the last octet of the address received on Fa0 (The loopback addressed are not required for the L3 xconnect but this is just for fun )
+
+Lets Start with Skeleton creation
+
+`ncs-make-package --service-skeleton template CE_loopback_deploy`
+
+The XML Template will pretty much remain the same as the above configuration , though the login the YANG file needs to change
+
+
+```xml
+
+<config-template xmlns="http://tail-f.com/ns/config/1.0"
+                 servicepoint="loopback_deploy">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device>
+      <!--
+          Select the devices from some data structure in the service
+          model. In this skeleton the devices are specified in a leaf-list.
+          Select all devices in that leaf-list:
+      -->
+      <name>{/device}</name>
+      <config>
+        <!--
+            Add device-specific parameters here.
+            In this skeleton the service has a leaf "dummy"; use that
+            to set something on the device e.g.:
+            <ip-address-on-device>{/dummy}</ip-address-on-device>
+        -->
+        <!-- DEVICE1/IOS BELOW IS THE MAIL STUFF WE NEED TO ADD -->
+        <interface xmlns="urn:ios">
+          <Loopback>
+            <name>0</name>
+            <ip>
+              <address>
+                <primary>
+                  <address>{/loopback-ip-address}</address>  <!-- Based on the variable from Yang file -->
+                  <mask>255.255.255.0</mask>
+                </primary>
+              </address>
+            </ip>
+          </Loopback>
+        </interface>
+
+
+
+      </config>
+    </device>
+  </devices>
+</config-template>
+```
+
+Now lets define the YANG
+
+Ok , remember that we need to based the last octed of the loopback based on the last octet of the Fa0 interface .
+
+This is how you find the XPATH
+
+`show running-config devices device PE11 config ios:interface GigabitEthernet | display xpath`
+
+```
+
+show running-config devices device CE21 address | display xpath
+
+/devices/device[name='CE21']/address
+
+```
+
+
+This is how you refrence DEREF()
+
+
+
+
+`path "deref(../../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
+
+Ok

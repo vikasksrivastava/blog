@@ -300,6 +300,46 @@ This is made easy by the `deref()` operator.
 
 ![](assets/markdown-img-paste-20180428020523200.png)
 
+`http://www.yang-central.org/twiki/pub/Main/YangTools/pyang.1.html`
+
+The deref function follows the reference defined by the first node in document order in the argument node-set, and returns the nodes it refers to.
+
+If the first argument node is an instance-identifier, the function returns a node-set that contains the single node that the instance identifier refers to, if it exists. If no such node exists, an empty node-set is returned.
+
+If the first argument node is a leafref, the function returns a node-set that contains the nodes that the leafref refers to.
+
+If the first argument node is of any other type, an empty node-set is returned.
+
+The following example shows how a leafref can be written with and without the deref function:
+
+```sh
+/* without deref */
+
+leaf my-ip {
+  type leafref {
+    path "/server/ip";
+  }
+}
+leaf my-port {
+  type leafref {
+    path "/server[ip = current()/../my-ip]/port";
+  }
+}
+
+/* with deref */
+
+leaf my-ip {
+  type leafref {
+    path "/server/ip";
+  }
+}
+leaf my-port {
+  type leafref {
+    path "deref(../my-ip)/../port";
+  }
+}
+```
+
 .
 .
 .
