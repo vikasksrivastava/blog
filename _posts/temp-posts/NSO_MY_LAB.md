@@ -548,6 +548,7 @@ yang/learning_defref.yang:55: warning: Given dependencies are not equal to calcu
 yang/learning_defref.yang:68: warning: Given dependencies are not equal to calculated: ../router_name, /ncs:devices/ncs:device/ncs:name, /ncs:devices/ncs:device/ncs:device-type/ncs:cli/ncs:ned-id. Consider removing tailf:dependency statements.
 ```
 
+Start with the learning_defref lab. And analyse the error.
 
 
 
