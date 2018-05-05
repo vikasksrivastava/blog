@@ -312,8 +312,9 @@ If the first argument node is of any other type, an empty node-set is returned.
 
 The following example shows how a leafref can be written with and without the deref function:
 
+**Without Deref**
 ```sh
-/* without deref */
+
 
 leaf my-ip {
   type leafref {
@@ -325,8 +326,11 @@ leaf my-port {
     path "/server[ip = current()/../my-ip]/port";
   }
 }
+```
 
-/* with deref */
+**After Deref**
+```sh
+
 
 leaf my-ip {
   type leafref {
@@ -340,158 +344,198 @@ leaf my-port {
 }
 ```
 
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-----
+# Another DEREF() Example
 
-**`optimized.l2vpn.yang`**
----
+![](assets/markdown-img-paste-2018050511362266.png)
 
-```shell
-module l2vpn {
-  namespace "http://com/example/l2vpn";
-  prefix l2vpn;
 
-  import ietf-inet-types {
-    prefix inet;
-  }
-  import tailf-ncs {
-    prefix ncs;
-  }
-  import tailf-common {
-    prefix tailf;
-  }
 
-  import tailf-ned-cisco-ios {
-    prefix ios;
-  }
-  import tailf-ned-cisco-ios-xr {
-    prefix cisco-ios-xr;
-  }
 
-  augment "/ncs:services" {
-    list l2vpn {
+**Without Deref**
+
+```sh
+container video {
+    leaf v-ip {
+      type leafref {
+        path "/client/ip";
+      }
+    }
+    leaf v-port {
+      type leafref {
+        path
+          "/client
+           [ip=current()/../v-ip]/port";
+      }
+    }
+    leaf v-stream {
+      type leafref {
+        path
+          "/client[ip=current()/../v-ip][port=current()/../v-port]/stream";
+      }
+    }
+  }`
+```
+
+**With Deref**
+
+```sh
+container video {
+    leaf v-ip {
+      type leafref {
+        path "/client/ip";
+      }
+    }
+    leaf v-port {
+      type leafref {
+        path "deref(../v-ip)/../port";
+      }
+    }
+    leaf v-stream {
+      type leafref {
+        path "deref(../v-port)/../stream";
+      }
+    }
+  }
+```
+
+
+
+
+
+
+
+
+
+
+# Understanding Path Expansions
+
+> It is always better to name your leafs and variables different to the system bases names and variables ensuring that their is no confusion when they are used in long XPATHS.  For example the use of `device` or `devices` in naming your leafs can cause a lot of confusion with the native systems `ncs:device` and `ncs:devices`
+
+Notice in the below example how the `../` and `../../` expresssions expand.
+
+- For example in the container ios ,  the line `../var1_router_name` goes up one level to the leaf `var1_router_name` .
+- Also , in the leaf intf-number notice how the `../../` goes two levels up just like a unix directory to `var1_router_name`
+- Finally notice the expansion of `current()` , notice how it starts from the top level hierarchy of `/ncs:service/learning_deref/......`
+
+```sh
+
+module learning_deref {
+  namespace "http://com/example/learning_deref";
+  prefix learning_deref;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs { prefix ncs; }
+  import tailf-common { prefix tailf; }
+  import tailf-ned-cisco-ios { prefix ios;}
+
+
+  augment "/ncs:services"  // AUGMENT is used to add to another data model , OR augment it. So in the example we are adding/augumenting the learning_deref to it.
+  {
+
+    list learning_deref
+    {
       key "name";
-      unique "pw-id";
       uses ncs:service-data;
-      ncs:servicepoint "l2vpn";
-      leaf name {
-        tailf:info "Service Instance Name";
+      ncs:servicepoint "learning_deref";
+
+      leaf name
+      {
         mandatory true;
         type string;
       }
-      leaf pw-id {
-        tailf:info "Unique Pseudowire ID";
-        mandatory true;
-        type uint32 {
-          range "1..4294967295";
-        }
-      }
-      list link {
-        tailf:info "Attachment Circuits";
+
+      list link
+      {
+
         min-elements 2;
-        max-elements "2";
-        key "device";
-        leaf device {
-          tailf:info "PE Router";
-          mandatory true;
-          type leafref {
-            path "/ncs:devices/ncs:device/ncs:name";
-          }
-        }
-        container ios {
-          when "/ncs:devices/ncs:device[ncs:name=current()/../device]/ncs:device-type/ncs:cli/ncs:ned-id='ios-id:cisco-ios'" {
-            tailf:dependency "../device";
-            tailf:dependency "/ncs:devices/ncs:device/ncs:device-type";
-          }
-          leaf intf-number {
-            tailf:info "GigabitEthernet Interface ID";
-            mandatory true;
-            type leafref {
-              path "deref(../../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+        max-elements 2;
+        key "var1_router_name";
 
-            }
-          }
-        }
-        container iosxr {
-          when "/ncs:devices/ncs:device[ncs:name=current()/../device]/ncs:device-type/ncs:cli/ncs:ned-id='cisco-ios-xr-id:cisco-ios-xr'" {
-            tailf:dependency "../device";
-            tailf:dependency "/ncs:devices/ncs:device/ncs:device-type";
-          }
-          leaf intf-number {
-            tailf:info "GigabitEthernet Interface ID";
-            mandatory true;
-            type leafref {
-              path "deref(../../device)/../ncs:config/cisco-ios-xr:interface/cisco-ios-xr:GigabitEthernet/cisco-ios-xr:id";
-            }
-          }
-        }
-        leaf remote-ip {
-          tailf:info "Loopback0 IP Address of Remote PE (10.0.0.X)";
-          mandatory true;
-          type inet:ipv4-address {
-            pattern "10\\.0\\.0\\.[0-9]+";
-          }
-        }
+            leaf var1_router_name
+            {
+              mandatory true;
+              type leafref
+              {
+                path "/ncs:devices/ncs:device/ncs:name";  // This path points to a list of routers , not a sepcific router
+              }
+            } //routername
+
+            container ios
+            {
+
+              //  name=current()/../var1_router_name = PE11
+              //  ncs:name=current()/../var1_router_name  EXPANDS to ncs:name=/ncs:services/learning_deref/link/var1_router_name
+              when "/ncs:devices/ncs:device[ncs:name=current()/../var1_router_name]/ncs:device-type/ncs:cli/ncs:ned-id='ios-id:cisco-ios'"
+              {
+
+                //tailf:dependency "../device";
+                //tailf:dependency "/ncs:devices/ncs:device/ncs:device-type";
+              }
+
+
+
+              leaf intf-number
+              {
+                mandatory true;
+                type leafref
+                {
+                  path "deref(../../var1_router_name)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+                }
+              } //intf-number
+
+            } //ios
+
       }
     }
   }
 }
+
+
 ```
 
 
 
 
 
-**`ospf_deploy.yang`**
----
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+# YANG Part 2
+
+![](assets/markdown-img-paste-20180504190738927.png)
+
+This is the beginning of Youtube tutorial on YANG Part 2
+
+In Part 1 , we looked at basic YANG types , modules and datatype . In thit moduel we will look more advance data models constrains unique ness and other .
 
 
-```shell
 
-module ospf_deploy {
-  namespace "http://com/example/ospf_deploy";
-  prefix ospf_deploy;
+### MUST Statement
 
-  import ietf-inet-types {
-    prefix inet;
-  }
-  import tailf-ncs {
-    prefix ncs;
-  }
+An Example of a `must` statement below . There is a `acces-timeout` and a `retry-timer` .
 
-  list ospf_deploy {
-    key name;
+In the below example we are setting by `must` that the value of `retry-time` should be **less** that the `access-timeout` .
 
-    uses ncs:service-data;
-    ncs:servicepoint "ospf_deploy";
+> In the past we had to simply put this in the code or programmign level , but here in this example we can have the same defined at the data model level.
 
-    leaf name {
-      type string;
-    }
 
-    // may replace this with other ways of refering to the devices.
-    leaf-list device {
-      type leafref {
-        path "/ncs:devices/ncs:device/ncs:name";
-      }
-    }
+The `current()` function (from XPATH) in the code below refers to the value of the current node (which is `retry-timer`).
 
-    // replace with your own stuff here
-    leaf dummy {
-      type inet:ipv4-address;
-    }
-  }
-}
-```
+**Next** The path `../` means that we go up one level to timeout and then reach `access-path` in the tree
+
+![](assets/markdown-img-paste-20180504191009827.png)
+
+The above constraint will be validated and enforced.
+
+> As a best practice you should add comment near `must` to describe what it is doing.
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
