@@ -387,6 +387,144 @@ module new_l2vpn {
 </config-template>
 
 ```
+---
+
+#### EXERCISE 4. Automatically assign PE Router Loopback Addresses
+
+> Notice that you do not need to recompile the packagaes using `make` is the change is made in `xml` file. All you need to do is `packages reload` .
+
+The purpose of this task is to unburden the operator from having to know and enter the loopback IP addresses that are used for control-plane mechanisms, such as BGP and LDP. All routers use Loopback0 for this purpose.
+
+**The Main** thing to notice in this example is the use of `deref` directly in the XML which points to the loopback IP addresses .
+
+1. The YANG File
+
+```sh
+module learning_deref2 {
+  namespace "http://com/example/learning_deref2";
+  prefix learning_deref2;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs { prefix ncs; }
+  import tailf-common { prefix tailf; }
+  import tailf-ned-cisco-ios { prefix ios;}
+
+
+  augment "/ncs:services"  // AUGMENT is used to add to another data model , OR augment it. So in the example we are adding/augumenting the learning_deref to it.
+  {
+
+    list learning_deref2
+    {
+      key "name";
+      uses ncs:service-data;
+      ncs:servicepoint "learning_deref2";
+
+      leaf name
+      {
+        mandatory true;
+        type string;
+      }
+
+      list link
+      {
+
+        min-elements 2;
+        max-elements 2;
+        key "var1_router_name";
+
+            leaf var1_router_name
+            {
+              mandatory true;
+              type leafref
+              {
+                path "/ncs:devices/ncs:device/ncs:name";  // This path points to a list of routers , not a sepcific router
+              }
+            } //routername
+
+            container ios
+            {
+
+              //  name=current()/../var1_router_name = PE11
+              //  ncs:name=current()/../var1_router_name  EXPANDS to ncs:name=/ncs:services/learning_deref/link/var1_router_name
+              when "/ncs:devices/ncs:device[ncs:name=current()/../var1_router_name]/ncs:device-type/ncs:cli/ncs:ned-id='ios-id:cisco-ios'"
+              {
+
+                //tailf:dependency "../device";
+                //tailf:dependency "/ncs:devices/ncs:device/ncs:device-type";
+              }
+
+              leaf intf-number
+              {
+                mandatory true;
+                type leafref
+                {
+                  path "deref(../../var1_router_name)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+                }
+              } //intf-number
+
+            } //ios
+
+      }
+    }
+  }
+}
+
+```
+
+1. The XML File
+
+```xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="learning_deref2">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device tags="nocreate">
+      <name>{/link[1]/var1_router_name}</name>
+      <config tags="merge">
+        <interface xmlns="urn:ios" tags="nocreate">
+          <GigabitEthernet>
+            <name>{/link[1]/ios/intf-number}</name>
+            <xconnect tags="merge">
+              <!-- Notice Below the refrencing of Loopback0 directly in XML -->
+              <address>
+                {
+                  deref(/link[1]/var1_router_name)/../config/interface/Loopback[name='0']/ip/address/primary/address |
+                  deref(/link[1]/var1_router_name)/../config/interface/Loopback[id='0']/ipv4/address/ip
+                }
+              </address>
+              <vcid>1166</vcid>
+              <encapsulation>mpls</encapsulation>
+            </xconnect>
+          </GigabitEthernet>
+        </interface>
+      </config>
+    </device>
+    <device tags="nocreate">
+      <name>{/link[2]/var1_router_name}</name>
+      <config tags="merge">
+        <interface xmlns="urn:ios" tags="nocreate">
+          <GigabitEthernet>
+            <name>{/link[2]/ios/intf-number}</name>
+            <xconnect tags="merge">
+              <address>
+                {
+                  deref(/link[2]/var1_router_name)/../config/interface/Loopback[name='0']/ip/address/primary/address |
+                  deref(/link[2]/var1_router_name)/../config/interface/Loopback[id='0']/ipv4/address/ip
+                }
+              </address>
+              <vcid>1166</vcid>
+              <encapsulation>mpls</encapsulation>
+            </xconnect>
+          </GigabitEthernet>
+        </interface>
+      </config>
+    </device>
+  </devices>
+</config-template>
+```
+
+
+
 
 <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br>
 ---

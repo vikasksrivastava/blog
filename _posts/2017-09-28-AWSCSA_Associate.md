@@ -229,7 +229,7 @@ These are the API Keys like openstack which enables programmatic access to the A
 -------
 ## AWS Networking
 
-> VPC `Virtual Private Cloud` is the networking is architected in the cloud.
+> VPC `Virtual Private Cloud` is how the networking is architected in the cloud.
 
 - Now lets take a deeper dive into VPC ad look it under the hood.
 

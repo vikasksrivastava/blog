@@ -363,8 +363,7 @@ container video {
     leaf v-port {
       type leafref {
         path
-          "/client
-           [ip=current()/../v-ip]/port";
+          "/client[ip=current()/../v-ip]/port";
       }
     }
     leaf v-stream {
@@ -464,7 +463,8 @@ module learning_deref {
             {
 
               //  name=current()/../var1_router_name = PE11
-              //  ncs:name=current()/../var1_router_name  EXPANDS to ncs:name=/ncs:services/learning_deref/link/var1_router_name
+              //  ncs:name=current()/../var1_router_name  EXPANDS to
+              //  ncs:name=/ncs:services/learning_deref/link/var1_router_name
               when "/ncs:devices/ncs:device[ncs:name=current()/../var1_router_name]/ncs:device-type/ncs:cli/ncs:ned-id='ios-id:cisco-ios'"
               {
 
@@ -518,7 +518,7 @@ In the below example we are setting by `must` that the value of `retry-time` sho
 > In the past we had to simply put this in the code or programmign level , but here in this example we can have the same defined at the data model level.
 
 
-The `current()` function (from XPATH) in the code below refers to the value of the current node (which is `retry-timer`).
+The `current()` function (from XPATH) in the code below refers to the `value` of the current node (which is `retry-timer`).
 
 **Next** The path `../` means that we go up one level to timeout and then reach `access-path` in the tree
 
