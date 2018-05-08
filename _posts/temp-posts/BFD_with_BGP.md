@@ -102,9 +102,9 @@ router bgp 1
  timers bgp 10 11 10
  neighbor 192.168.12.2 remote-as 2
  neighbor 192.168.12.2 fall-over bfd
-CSR3#
+```
 
-
+```sh
 CSR4#show running-config int gi1
 Building configuration...
 
@@ -136,6 +136,5 @@ CSR4(config-router)#
 
 
 
-> We have configured the BFD timers as 100msecs  with multiplier as 3 so that BFD session will go down if the device did not get response within 300 msecs
-For the Voice network we need to have less 200 ms delay in the network otherwise the voice communication will break.
-Please consult with your ISP to avoid the delay and let me know if you need any clarification.
+> For example if you have configured the BFD timers as 100msecs  with multiplier as 3 so that BFD session will go down if the device did not get response within 300 msecs
+For the Voice network we need to have less 200 ms delay in the network otherwise the voice communication will break. Please consult with your ISP while setting up BFD with them.
