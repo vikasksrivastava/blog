@@ -1,3 +1,10 @@
+---
+layout: post
+title: BGP with BFD on EVE-NG with CSR1000v
+description: BGP with BFD on EVE-NG with CSR1000v
+comments: true
+---
+
 ## BGP with BFD on EVE-NG with CSR1000v
 
 BFD (Bi-Directional Forwarding Detection) is a superfast protocol to detect link failures withing milliseconds or microseconds!
