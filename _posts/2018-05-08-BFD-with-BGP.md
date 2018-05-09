@@ -85,8 +85,8 @@ And becuase it has a multiplier of `3` , If it does not receive it within 3x75 m
 > So basically your min_rx is the speed your neighbor send the packets to you .
 
 
+<img src="assets/bfd.png" alt="" style="width: 800px;"/>
 
-![](assets/bfd.png)
 
 
 ```sh
