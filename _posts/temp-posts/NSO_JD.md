@@ -154,3 +154,171 @@ Knowledge of Analytics with Big Data, AI, Machine Learning algorithms is a plus
 Exposure to networking architectures including DC, WAN, Campus, Mobility, Security is a plus
 Exposure to Management tools including Provisioning, Assurance, Change Management and CRM/Billing
 Why Cisco
+
+
+Developer & Team Lead – IT Network Services
++	Abstracted traditional Network Designs into REST based programmatic interfaces via YANG data modeling and python development.
++	Extensive use of Python and YANG/NetConf for Network Automation.
++	Developed numerous network automation applications on top of Cisco NSO/ Tail-f NCS platform. Including YANG, REST APIs, Python, and Java.
++	Designed and documented development processes (Standards, Community Values and SDLC) for network automation teams.
++	Planned, created and conducted global Network Automation Platform Trainings for Network Engineers and Software Developers
++	Implemented Continuous Integration and Delivery systems
++	Conducted Early Field Trials of new Cisco Network Telemetry features
+
+
+Technical Marketing, Enterprise and Datacenter Switching
+
+Focused on Programmability and Automation across Cisco Catalyst and Nexus platforms:
+- Configuration Management Tool (Puppet, Chef, Ansible)
+- Data Models (YANG, OpenConfig, Native Models)
+- Data Formats (XML/JSON/YAML)
+- Model Driven Streaming Telemetry
+- Application Hosting on Network Devices
+- Python "on-box" (built-in compiler) and "out-box" (scripts running outside the network device)
+- Linux Containers (Docker, LXC)
+- Cisco Software and tools (DNA-Center, NSO, APIC-EM, DCNM, ...)
+- etc..
+
+Speaker at Cisco events (i.e. Cisco Live US, EMEA, LATAM) and 3rd party companies (i.e. PuppetConf, AnsibleFest, Meetups)
+
+
+
+Technical Marketing, Enterprise and Datacenter Switching
+
+Focused on Programmability and Automation across Cisco Catalyst and Nexus platforms:
+- Configuration Management Tool (Puppet, Chef, Ansible)
+- Data Models (YANG, OpenConfig, Native Models)
+- Data Formats (XML/JSON/YAML)
+- Model Driven Streaming Telemetry
+- Application Hosting on Network Devices
+- Python "on-box" (built-in compiler) and "out-box" (scripts running outside the network device)
+- Linux Containers (Docker, LXC)
+- Cisco Software and tools (DNA-Center, NSO, APIC-EM, DCNM, ...)
+- etc..
+
+Speaker at Cisco events (i.e. Cisco Live US, EMEA, LATAM) and 3rd party companies (i.e. PuppetConf, AnsibleFest, Meetups)
+
+
+This position is available in any US city.
+CLDSFT5K
+Required Technical and Professional Expertise
+8+ years’ of development experience with Go or C/C++ and with Python
+A proven track record of performing on a winning team with a demonstration of
+bringing products and services to market.
+A proven track record of system software development.
+A proven track record of developing software for extremely large scale, distributed environments.
+A deep understanding of containers and container clusters such as kubernetes.
+A deep understanding of virtual machine environment including VMware, KVM, or Xen.
+Understanding of Open Systems Interconnection Reference Model (OSI-RM), the TCP/IP stack, and development experience in L2, L3, L4.
+Familiarity with networking protocols which might include: BGP, DHCP, DNS, OSPF, IGMP, IPv4/IPv6, IS-IS, and others.
+Familiarity with Network function virtualization (NFV) functionality and network encapsulation including L4 Load Balancers, Firewalls, etc.
+Working knowledge of git and CICD tools such as Jenkins and Zuul.
+
+
+
+
+We practice Agile/Scrum methodology and program in a variety of languages such as Java, GoLang, NodeJS, Scala, or Python. We develop a variety of Software driven network services platforms built with a diverse set of technologies.
+Responsibilities
+Design and Develop REST and messaging based software infrastructure and build back-end systems and APIs
+Design and develop low latency/high throughput server infrastructure components to handle large volume of transactions
+Analyze requirements, design and develop code, unit test code and test tools
+Present and defend architectural, design, and technical choices to internal and external audiences.
+Comfortable with collaboration, open communication and reaching across Development, QA, ops and other cross functional teams
+Designs new software and web applications, supports applications under development, and customizes current applications. Develops software update process for existing applications. Assists in the roll-out of software releases.
+Consistent exercise of independent judgment and discretion in matters of significance.
+Qualifications
+Solid understanding of algorithm complexity, parallel/distributed systems, advanced data structures, computer networking and operating systems
+Solid understanding of Object Oriented Programming and Design
+Strong development experience with atleast one of Java , GoLang, Python, NodeJS and related development frameworks
+Development expertise in REST/SOAP/JSON API
+Solid working knowledge of NoSQL databases such as Cassandra, MongoDB or Couchbase, and graph databases-Neo4j or JanusGraph
+Development expertise in message and data pipeline technologies such as Apache Kafka, Kafka Streams, RabbitMQ, Apache Spark/Flink
+Strong working knowledge of cloud service platforms; at least one of - Openstack/AWS/Azure/Google Cloud.
+Understanding and experience in distributed system frameworks such as Apache Zookeeper, Etcd, Consul, Mesos/Kubernetes, Containers.
+Development expertise in building NFV, Cloud orchestration and SDN technologies, nice to have
+Development expertise in either ONAP, ONOS or OpenDaylight, nice to have
+Proficiency in Service and Network Modeling such as TOSCA, YANG, nice to have
+Prior experience working with Agile/Scrum methodologies
+2-5 years’ work experience or equivalent programming experience
+2+ years’ experience with high-scale, high performance and high availability server development
+Masters in Computer Science or Engineering or equivalent
+Comcast is an EOE/Veterans/Disabled/LGBT employer
+
+
+
+
+
+
+You’ll Need To Have
+What we’re looking for...
+Bachelor’s degree or four or more years of work experience.
+Six or more years of relevant work experience.
+Even Better If You Have
+A degree.
+Openstack certification.
+Six or more years of work experience as a systems/network engineer in a video environment.
+3+ years of related cable, satellite, and telephony transport industries knowledge.
+3+ years of experience with analog/digital video, audio and multi-channel experience.
+Proven ability to manage/administer: Networks, Video Architecture, Conditional Access systems, Ad insertion systems, Windows & Linux Servers.
+Proficiency in one or more scripting languages (Perl, Python, Shell, Ruby).
+Experience with automation tools (Ansible, Chef, Puppet).
+Experience with Linux systems in an enterprise production environment.
+Experience with SDN/NFV.
+Advanced knowledge of TCP/IP networking, load balancing, firewalls, HTTP, SSL, DNS, DHCP.
+Proven ability to manage/administer: Networks, Video Architecture, Windows Servers.
+Experience with enterprise/network/video architecture monitoring tools or applications.
+Experience with conditional access systems and digital rights management.
+Experience with Cisco, Juniper, Arris networks.
+Experience with enterprise/network/video architecture monitoring tools or applications.
+Experience with Adaptive bitrate and MPEG encoding.
+Experience with Cisco, Juniper, Arris networks.
+Demonstrated ability to troubleshoot and resolve IP network troubles in the physical, data link, and network layers and maintain configuration of devices in a network management monitoring system.
+Expert knowledge of services, network devices, knowledge base solutions, and system monitoring tools.
+Willingness to participate in 24x7 escalation and support duties including holidays and weekends.
+When you join Verizon...
+
+
+
+Who You Are
+Minimum Qualifications
+Expert knowledge in networking technologies such as Routing & Switching, TCP/IP, routing protocols, ACI, SDN, Hypervisors and security
+Expert knowledge with Cisco Data Center and Cloud portfolios including Nexus, UCS, and Cloud product lines
+Experience with storage protocols including ISCSI, Fibre Channel, NFS and the MDS Product Line
+Experienced with standard and containerized application deployments
+Solid working knowledge of the configuration, operation, and troubleshooting of Cisco products such as Routers, Switches, Data Center Switches, VMware, Hyper-V, Network Function Virtualization (NFV), network management, and security devices
+Experience with network/systems automation such as Ansible, Puppet, Chef, UCS Director
+Programming/scripting languages such as Python, Perl, Shell and markup languages such as XML, JSON, YAML
+Experience in the development of learning content as a developer, instructor or subject matter expert with the ability to design and develop learning content
+Work independently
+Desired Skills
+Instructional design
+Excellent Written, Communication and Presentation Skills
+Assessment item authoring
+Content development tools & practices
+Minimum CCNP level Cisco Certification or experience
+BA/BS or equivalent and 8 years related Networking and/or Technical Course Development experience
+
+
+What You’ll Be Doing...
+Collaboratively work on multiple large-scale projects with a high level of technical complexity that industry expertise and in-depth analysis will be required to ensure the right path is being pursued on behalf of the business units involved. The position will deploy OpenStack, assist to triage platform issues, document, coordinate, and support all escalation issues between operations and infrastructure. Additionally, will work closely with cross functional team to provide feedback and create remediations to resolve those issues. The position will advise on troubleshooting and the triage of problem reports, resolutions, and escalations as required.
+You’ll Need To Have
+What we’re looking for...
+Bachelor’s degree or four or more years of work experience.
+Four or more years of relevant work experience.
+Even Better If You Have
+A degree.
+Experience Deploying OpenStack.
+Openstack deployment technologies (TripleO, MaaS, Juju).
+Experience as support technician.
+Experience working with KVM, libvirt, VMWare, or other virtualization technology.
+Experienced Linux systems administration (prefer in Virtualized environment).
+Strong scripting skills (e.g. Python, Shell, Ruby, Perl, other).
+Knowledge of IP networking, VPN's, DNS, load balancing and firewalls.
+Experience working with solutions at scale.
+Willingness to enhance team learning environment by providing and encouraging mentorship and technical leadership.
+Experience with monitoring tools (Nagios, Icinga2).
+Experience working modern configuration management tools (Puppet, Ansible, Chef, Salt).
+Experience with distributed storage solutions (iSCSl, Ceph, Swift, other).
+Experience with networking concepts and protocols (include SDN, NFV).
+Contributions to open-source projects.
+When you join Verizon...
