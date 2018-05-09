@@ -86,11 +86,7 @@ And becuase it has a multiplier of `3` , If it does not receive it within 3x75 m
 
 
 
-
-
-
-
-![](assets/markdown-img-paste-20180331105658809.png)
+![](assets/bfd.png)
 
 
 ```sh
