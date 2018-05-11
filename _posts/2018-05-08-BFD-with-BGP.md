@@ -52,8 +52,7 @@ You can turn off echo mode (Generallt you would not) .
 So if you rely on Control Packet , you basically are taxing CPU.
 
 
-![](assets/markdown-img-paste-20180403214503969.png)
-
+<img src="assets/bfd.png" alt="" style="width: 800px;"/>
 
 Intial BFD is configured on the interface :
 
@@ -83,9 +82,6 @@ And becuase it has a multiplier of `4` , If it does not receive it within 4x200 
 And becuase it has a multiplier of `3` , If it does not receive it within 3x75 ms it will tear the relationship.
 
 > So basically your min_rx is the speed your neighbor send the packets to you .
-
-
-<img src="assets/bfd.png" alt="" style="width: 800px;"/>
 
 
 
