@@ -677,6 +677,39 @@ Make sure that in the corresponding XML code , the `servicepoint` name is correc
 
 ---
 
+#### info [l2vpn-template.xml:2 Unknown servicepoint: l2vpn]
+
+This message occurs when you have not compile the src folder with the `make` command.
+Since make isnt issued , the XML template cannot find the entrypoint.
+
+
+```sh
+reload-result {
+    package l2vpn
+    result false
+    info [l2vpn-template.xml:2 Unknown servicepoint: l2vpn]
+}
+```
+
+**Solution :**
+
+Run the `make` command in the src folder.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
 ### Another Set of error Messages
 
 ```sh

@@ -7,7 +7,7 @@
 > This lab exercise was conducted with `nso-4.6.linux.x86_64.installer.bin` It is advisable to use the same while following this document.
 
 
-Make sure Java Installed `java -version` and `ant` are installed.
+**Make sure** Java 10 **(not Open JDK)** Installed `java -version` and `ant` are installed.
 
 #### Install NCS
 
@@ -50,6 +50,11 @@ a10-acos  cisco-ios  cisco-iosxr  cisco-nx  dell-ftos  juniper-junos
 ```
 
 #### Compile a new NED
+
+> ![](assets/markdown-img-paste-20180511163522776.png)
+> **Unfortunately, the majority of existing devices in current networks do not speak NETCONF and SNMP is usually mostly used to retrieve data from devices. By far the most common way to configure network devices is through the CLI.** Management systems typically connect over SSH to the CLI of the device and issue series of CLI configuration commands. Some devices do not even have a CLI, and thus SNMP, or even worse, various proprietary protocols, are used to configure the device.
+**NSO can speak southbound not only to NETCONF-enabled devices, but through the NED architecture it can speak to an arbitrary management interface.** `nso-ned-4.6.pdf`
+
 
 Compile the Cisco IOS NED package by issuing the make command. Make sure that the compilation of the NED and netsim (the part used to emulate Cisco IOS CLI which will be used throughout this course) is successful.
 
@@ -154,6 +159,28 @@ R1    127.0.0.1  -            cisco-ios
 
 ```
 
+> You can actually connect to a Virtual Emulated router by the `ncs-netsim`
+
+
+```shell
+root@cisco-virtual-machine:/opt/ncs/ncs-run/packages/l2vpn/templates# ssh admin@127.0.0.1 -p 10022
+admin@127.0.0.1's password:admin
+
+admin connected from 127.0.0.1 using ssh on cisco-virtual-machine
+PE11> en
+PE11#
+```
+
+Or you can connect to virtual device like this:
+
+```sh
+$ ncs-netsim cli-i c1
+c1> enable
+c1# show running-config
+```
+
+
+
 
 Now connect to the your NCS CLI `ncs_cli -C -u admin` and add the device to the NCS
 
@@ -174,6 +201,8 @@ devices fetch-host-keys
 devices sync-from
 end
 ```
+
+
 
 #### Create Device Group
 
@@ -1077,25 +1106,6 @@ Also verify the current service demployment by the following command :
 
 ```
 
-> You can actually connect to a Virtual Emulated router by the `ncs-netsim`
-
-
-```shell
-root@cisco-virtual-machine:/opt/ncs/ncs-run/packages/l2vpn/templates# ssh admin@127.0.0.1 -p 10022
-admin@127.0.0.1's password:admin
-
-admin connected from 127.0.0.1 using ssh on cisco-virtual-machine
-PE11> en
-PE11#
-```
-
-Or you can connect to virtual device like this:
-
-```sh
-$ ncs-netsim cli-i c1
-c1> enable
-c1# show running-config
-```
 
 
 
@@ -1548,6 +1558,352 @@ clean:
 .PHONY: clean
 ```
 ---
+
+**`NSO 200 Base Yang`**
+---
+
+```sh
+module l3mplsvpn {
+  namespace "http://com/example/l3mplsvpn";
+  prefix l3mplsvpn;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+
+  augment "/ncs:services" {
+    leaf l3mplsvpn-id-cnt {
+      description
+        "Provides a unique 32-bit number used as VPN instance identifier";
+      type uint32;
+      default "1";
+    }
+  }
+  augment "/ncs:services" {
+    list l3mplsvpn {
+      tailf:info "Layer-3 MPLS VPN Service";
+      key "vpn-name";
+      uses ncs:service-data;
+      ncs:servicepoint "l3mplsvpn-servicepoint";
+      leaf vpn-name {
+        tailf:info "Service Instance Name";
+        type string;
+      }
+      leaf vpn-id {
+        tailf:info "Service Instance ID (1 to 65535)";
+        type uint32;
+      }
+      leaf link-id-cnt {
+        tailf:info "Provides a unique 32 bit numbers used as a site identifier";
+        default "1";
+        type uint32;
+      }
+      leaf customer {
+        tailf:info "VPN Customer";
+        type leafref {
+          path "/ncs:customers/ncs:customer/ncs:id";
+        }
+      }
+      list link {
+        tailf:info "PE-CE Attachment Point";
+        key "link-name";
+        leaf link-name {
+          tailf:info "Link Name";
+          type string;
+        }
+        leaf link-id {
+          tailf:info "Link ID (1 to 65535)";
+          type uint32;
+        }
+        leaf device {
+          tailf:info "PE Router";
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+        leaf pe-ip {
+          tailf:info "PE-CE Link IP Address";
+          type string;
+        }
+        leaf ce-ip {
+          tailf:info "CE Neighbor IP Address";
+          type string;
+        }
+        leaf interface {
+          tailf:info "Customer Facing Interface";
+          type string;
+        }
+        leaf routing-protocol {
+          tailf:info "Routing option for the PE-CE link";
+          type enumeration {
+            enum "bgp";
+            enum "rip";
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+---
+
+
+
+**< An XML Template Dedicated to CE Router >**
+
+```sh
+CE Device
+
+!
+interface Loopback0
+ no shutdown
+ ip address 1.1.1.1 255.255.255.0 <ce_device_lo0_ipaddress>
+!
+
+interface GigabitEthernet3 <ce_to_pe_facing_interface>
+ no shutdown
+ ip address 192.168.12.1 255.255.255.0 <ce_to_pe_facing_interface_ipaddress>
+!
+router eigrp 100
+ network 1.0.0.0 <ce_device_lo0_ipaddress>
+ network 192.168.12.0 <ce_to_pe_facing_interface_ipaddress>
+!
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <device>
+    <name>HQ1</name>
+    <config>
+      <interface xmlns="urn:ios">
+        <Loopback>
+          <name>0</name>
+          <ip>
+            <address>
+              <primary>
+                <address>9.9.9.9</address>
+                <mask>255.255.255.0</mask>
+              </primary>
+            </address>
+          </ip>
+        </Loopback>
+        <GigabitEthernet>
+          <name>1</name>
+          <ip>
+            <no-address>
+              <address xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"                                    nc:operation="delete"/>
+            </no-address>
+            <address>
+              <primary>
+                <address>192.168.100.1</address>
+                <mask>255.255.255.0</mask>
+              </primary>
+            </address>
+          </ip>
+          <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"                                 nc:operation="delete"/>
+        </GigabitEthernet>
+      </interface>
+      <router xmlns="urn:ios">
+        <eigrp>
+          <as-no>100</as-no>
+          <network-ip>
+            <network>
+              <ip>9.9.9.9</ip>
+            </network>
+            <network>
+              <ip>192.168.100.1</ip>
+            </network>
+          </network-ip>
+        </eigrp>
+      </router>
+    </config>
+  </device>
+</devices>
+
+```
+
+
+---
+
+**< An XML Template Dedicated to PE Router - Side A >**
+
+```sh
+PE Device - Side A
+
+!
+ip vrf CUSTOMER-A <customer_name>
+ rd 100:1  <value_x:value_y>
+ route-target both <value_y:value_x>
+!
+!
+interface GigabitEthernet4 <pe_to_ce_facing_interface>
+ no shutdown
+ ip vrf forwarding CUSTOMER-A <customer_name>
+ ip address 192.168.100.4 255.255.255.0 <ce_to_pe_facing_interface_ipaddress>
+!
+!
+router eigrp 100
+ !
+ address-family ipv4 vrf CUSTOMER-A <customer_name>
+  redistribute bgp 1 metric 1500 400 20 20 1500
+  network 192.168.100.4 <ce_to_pe_facing_interface_ipaddress>
+  autonomous-system 100
+ exit-address-family
+!
+router bgp 1
+ bgp log-neighbor-changes
+ neighbor 4.4.4.4 remote-as 1  <side_b_loopback0_ip_address>
+ neighbor 4.4.4.4 update-source Loopback0 <side_b_loopback0_ip_address>
+ !
+ address-family vpnv4
+  neighbor 4.4.4.4 activate <side_b_loopback0_ip_address>
+  neighbor 4.4.4.4 send-community both <side_b_loopback0_ip_address>
+ exit-address-family
+ !
+ address-family ipv4 vrf CUSTOMER-A <customer_name>
+  redistribute eigrp 100
+ exit-address-family
+!
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <device>
+    <name>SP1</name>
+    <config>
+      <interface xmlns="urn:ios">
+        <GigabitEthernet>
+          <name>4</name>
+          <ip-vrf>
+            <ip>
+              <vrf>
+                <forwarding>CUSTOMER-A</forwarding>
+              </vrf>
+            </ip>
+          </ip-vrf>
+          <ip>
+            <no-address>
+              <address xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"                            nc:operation="delete"/>
+            </no-address>
+            <address>
+              <primary>
+                <address>192.168.100.4</address>
+                <mask>255.255.255.0</mask>
+              </primary>
+            </address>
+          </ip>
+          <shutdown xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0"                         nc:operation="delete"/>
+        </GigabitEthernet>
+      </interface>
+      <router xmlns="urn:ios">
+        <bgp>
+          <as-no>1</as-no>
+          <neighbor-tag>
+            <neighbor>
+              <id>10.10.10.10.</id>
+              <remote-as>1</remote-as>
+            </neighbor>
+          </neighbor-tag>
+          <neighbor>
+            <id>10.10.10.10</id>
+            <update-source>
+              <Loopback>0</Loopback>
+            </update-source>
+          </neighbor>
+          <address-family>
+            <vpnv4>
+              <af>unicast</af>
+              <neighbor>
+                <id>10.10.10.10</id>
+                <activate/>
+                <send-community>
+                  <send-community-where>both</send-community-where>
+                </send-community>
+              </neighbor>
+            </vpnv4>
+          </address-family>
+        </bgp>
+        <eigrp>
+          <as-no>100</as-no>
+          <address-family>
+            <ipv4>
+              <vrf>
+                <name>CUSTOMER-A</name>
+                <network-ip>
+                  <network>
+                    <ip>192.168.100.4</ip>
+                  </network>
+                </network-ip>
+              </vrf>
+            </ipv4>
+          </address-family>
+        </eigrp>
+      </router>
+    </config>
+  </device>
+</devices>
+
+```
+
+
+---
+
+**< An XML Template Dedicated to PE Router - Side B >**
+
+```sh
+PE Device - Side B
+
+!
+ip vrf CUSTOMER-A <customer_name>
+ rd 100:1  <value_x:value_y>
+ route-target both <value_y:value_x>
+!
+interface GigabitEthernet3 <pe_to_ce_facing_interface>
+ no shutdown
+ ip vrf forwarding CUSTOMER-A <customer_name>
+ ip address 192.168.45.4 255.255.255.0 <ce_to_pe_facing_interface_ipaddress>
+!
+router eigrp 100
+ !
+ address-family ipv4 vrf CUSTOMER-A <customer_name>
+  redistribute bgp 1 metric 1500 4000 200 10 1500
+  network 192.168.45.0 <ce_to_pe_facing_interface_ipaddress>
+  autonomous-system 100
+ exit-address-family
+!
+router bgp 1
+ bgp log-neighbor-changes
+ neighbor 2.2.2.2 remote-as 1 <side_a_loopback0_ip_address>
+ neighbor 2.2.2.2 update-source Loopback0 <side_a_loopback0_ip_address>
+ !
+ address-family vpnv4
+  neighbor 2.2.2.2 activate <side_a_loopback0_ip_address>
+  neighbor 2.2.2.2 send-community both <side_a_loopback0_ip_address>
+ exit-address-family
+ !
+ address-family ipv4 vrf CUSTOMER-A  <customer_name>
+  redistribute eigrp 100
+ exit-address-family
+!
+```
+
+---
+
+
+
+
+
+
+
 
 
 # NEXT STEPS
