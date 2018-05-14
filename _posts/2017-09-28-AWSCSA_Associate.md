@@ -113,11 +113,11 @@ At a very high level AWS can be broken down into two main blocks
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
-<img src="assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
 
 An `AWS Region` has multiple `Availabilty Zones`
 
-<img src="assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
 
 Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
@@ -125,11 +125,11 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
-<img src="assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
 
 Now as we further move ahead , the `VPC` is the
 
-<img src="assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
 
 ### AWS Terminology
 
@@ -155,23 +155,23 @@ Now lets look at the `IAM` Components where you manager Users, roles and groups,
 - `IAM Password Policy`
 
 
-<img src="assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
 
 > IAM is Global and does not require a region selection.
 
 Now once you have enable IAM , you can use the link show in the picture below to login
 
-<img src="assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM Policy
 
 An IAM Policy , looks like this. Note that `Deny` will have a precedence over `Allow`.
 
-<img src="assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
 
 An example of where you can see the policy in detail and whats how it is organised
 
-<img src="assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
 
 ### IAM groups
 
@@ -189,19 +189,19 @@ So now the `policies` can be attached to the `groups` directy.
 
 > An EC2 instance can only have one role attached to it .
 
-<img src="assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
 
 #### Role Assumption
 
 Now lets say , the users below in the `DEV` group need access to the  resources in the `PROD`, then can **assume** a `Role` and be able to access the resource in `PROD`.
 
-<img src="assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
 
 **How does the above assumption happen?**
 
 An `IAM Policy` is attached to an `IAM Role` which is then assigned to the `User` or `Resource` which needs acces.
 
-<img src="assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317165340821.png" alt="Drawing" style="width: 300px;"/>
 
 Notice in the screenshot below , we have 3 different types of Roles:
 
@@ -211,7 +211,7 @@ Notice in the screenshot below , we have 3 different types of Roles:
 
 
 
-<img src="assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;"/>
+<img src="/assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;"/>
 
 #### Security Token Service
 
@@ -235,7 +235,7 @@ These are the API Keys like openstack which enables programmatic access to the A
 
   `VPC` spans `Avalaibility Zones` and `Multiple Datacenters`.
 
-  <img src="assets/markdown-img-paste-20180317171726859.png" alt="Drawing" style="width: 300px;"/>
+  <img src="/assets/markdown-img-paste-20180317171726859.png" alt="Drawing" style="width: 300px;"/>
 
   Now take a look at the picture belpw and see what the a dissection of VPC looks like internally.
 
@@ -245,14 +245,14 @@ These are the API Keys like openstack which enables programmatic access to the A
    - You can create routes between the Subnets.
    - You can also have subnet level firewalls and access rules.
 
-  <img src="assets/markdown-img-paste-20180317172222633.png" alt="Drawing" style="width: 300px;"/>
+  <img src="/assets/markdown-img-paste-20180317172222633.png" alt="Drawing" style="width: 300px;"/>
 
 
 ### Typical VPC screen
 
 - Notice on the left the different networking constructs you have to work and play with :)
 
-  <img src="assets/markdown-img-paste-20180317174000405.png" alt="Drawing" style="width: 200px;"/>
+  <img src="/assets/markdown-img-paste-20180317174000405.png" alt="Drawing" style="width: 200px;"/>
 
 ### VPC Routing Basics
 
@@ -266,11 +266,11 @@ These are the API Keys like openstack which enables programmatic access to the A
 
     Notice the attached `Internet Gateway` to the VPC in the picture below.
 
-    <img src="assets/markdown-img-paste-20180317174555203.png" alt="Drawing" style="width: 300px;"/>
+    <img src="/assets/markdown-img-paste-20180317174555203.png" alt="Drawing" style="width: 300px;"/>
 
     Now take a look at the `Route Table` in the picture below and how `0.0.0.0` is mapped to the `Internet Gateway` for all **outbound internet traffic**.
 
-    <img src="assets/markdown-img-paste-20180317174853412.png" alt="Drawing" style="width: 300px;"/>
+    <img src="/assets/markdown-img-paste-20180317174853412.png" alt="Drawing" style="width: 300px;"/>
 
   - `Subnets`: After creating VPC, you can create o**ne or more subnets** in each `Availabilty Zone`. Each **subet much reside in one Availaibilty Zone** and **cannot span** different `Availability Zone`.
 
@@ -282,13 +282,13 @@ These are the API Keys like openstack which enables programmatic access to the A
 
   `Subnet ---> Route Table ---> Internet Gateway`
 
-  <img src="assets/markdown-img-paste-20180318151727852.png" alt="Drawing" style="width: 300px;"/>
+  <img src="/assets/markdown-img-paste-20180318151727852.png" alt="Drawing" style="width: 300px;"/>
 
   `Explicit Association` is when you move the route tables from default to the one which you created.
 
   **High Level AWS Networking Internal Architecture**
 
-  <img src="assets/markdown-img-paste-20180318212412969.png" alt="Drawing" style="width: 300px;"/>
+  <img src="/assets/markdown-img-paste-20180318212412969.png" alt="Drawing" style="width: 300px;"/>
 
 
 ### VPC Security
@@ -303,19 +303,19 @@ These are the API Keys like openstack which enables programmatic access to the A
 ### VPC Workflow
 
 1. Create the `VPC` and give it a `CIDR` Block range. **Notice** that you can also define `IPv6` CIDR ranges. When `Tenancy`  is set to dedicate you are **not sharing** your servers with the other users.
-<img src="assets/markdown-img-paste-20180318160426965.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318160426965.png" alt="Drawing" style="width: 300px;"/>
 2. Create the `Internet Gateway`
-<img src="assets/markdown-img-paste-20180318160902338.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318160902338.png" alt="Drawing" style="width: 300px;"/>
 3. Attach the `Internet Gateway` to the `VPC`
-<img src="assets/markdown-img-paste-20180318161028276.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318161028276.png" alt="Drawing" style="width: 300px;"/>
 4. Next we will create **two different** `Route Tables`, one which is **connected** to the `Internet Gateway` and the other **which is not** connected.
-<img src="assets/markdown-img-paste-20180318161246639.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318161246639.png" alt="Drawing" style="width: 300px;"/>
 Now **connect** the `Route Table` created above to the `Internet Gateway`. If you leave the `Route Table` not connected to the `Internet Gateway` it becomes a private route table.
-<img src="assets/markdown-img-paste-20180318161517281.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318161517281.png" alt="Drawing" style="width: 300px;"/>
 5. Now Create a `Subnet`. Notice that you have to specifically define the `Availabilty Zone` (a subnet can only span an AZ) and the `CIDR` block range which is within the range of the VPC.
-<img src="assets/markdown-img-paste-20180318162016693.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318162016693.png" alt="Drawing" style="width: 300px;"/>
 6. Now you can create the Network ACL which is a straight forward process.
-<img src="assets/markdown-img-paste-20180318162441801.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180318162441801.png" alt="Drawing" style="width: 300px;"/>
 
 ### VPC Limits
 
@@ -333,12 +333,12 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 
 - Take a look at the default EC2 Limits :
 
-  <img src="assets/markdown-img-paste-20180318200924374.png" alt="Drawing" style="width: 300px;"/>
+  <img src="/assets/markdown-img-paste-20180318200924374.png" alt="Drawing" style="width: 300px;"/>
 
 ### EC2 Purchasing Options
 
 
-- <img src="assets/markdown-img-paste-20180318202820909.png" alt="Drawing" style="width: 300px;"/>
+- <img src="/assets/markdown-img-paste-20180318202820909.png" alt="Drawing" style="width: 300px;"/>
 
   Workflow : Choose `AMI` --> Choose `Instance Type`
 
@@ -374,11 +374,11 @@ Has the following virtual hardware components, you have to choose the right inst
 - `Network Performance`
 
   Notice in the picture below the above characteristics.
-  <img src="assets/markdown-img-paste-20180318203911238.png" alt="Drawing" style="width: 600px;"/>
+  <img src="/assets/markdown-img-paste-20180318203911238.png" alt="Drawing" style="width: 600px;"/>
 
   Different Instance types
 
-  <img src="assets/markdown-img-paste-20180318204119218.png" alt="Drawing" style="width: 600px;"/>
+  <img src="/assets/markdown-img-paste-20180318204119218.png" alt="Drawing" style="width: 600px;"/>
 
 ### EC2 Instance Metadata
 
@@ -436,7 +436,7 @@ If the instance is rebooted the data is retained.
 
   A picture says a thousand words :
 
-  <img src="assets/markdown-img-paste-20180318214149491.png" alt="Drawing" style="width: 500px;"/>
+  <img src="/assets/markdown-img-paste-20180318214149491.png" alt="Drawing" style="width: 500px;"/>
 
 
 
@@ -472,7 +472,7 @@ If the instance is rebooted the data is retained.
 
 If you notice in the picture below , we have now added a load balancer and an autoscaling group which now spans two vPCs .
 
-<img src="assets/markdown-img-paste-20180322075845612.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322075845612.png" alt="Drawing" style="width: 400px;"/>
 
 **`Elastic Loadbalancer`** : EC2 Service which loadbalances traffic to multiple EC2 instances across multiple `Availabilty Zones`.
 
@@ -502,26 +502,26 @@ It makes sense to create the Target Groups first and then the Load Balancers
 
 > In the example below we are creating the following scenario and based on the content (pictures or videos) in the URL and route based on the same.
 
-<img src="assets/markdown-img-paste-20180322112423269.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322112423269.png" alt="Drawing" style="width: 400px;"/>
 
 
-<img src="assets/markdown-img-paste-20180322112318970.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322112318970.png" alt="Drawing" style="width: 400px;"/>
 
 1. Create a Target Group
-<img src="assets/markdown-img-paste-20180322132805821.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322132805821.png" alt="Drawing" style="width: 400px;"/>
 2. Add Target (instances) to the target group
-<img src="assets/markdown-img-paste-2018032213302429.png" alt="Drawing" style="width: 400px;"/>
-<img src="assets/markdown-img-paste-20180322133049555.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-2018032213302429.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322133049555.png" alt="Drawing" style="width: 400px;"/>
 3. Configure the Load balancer
-<img src="assets/markdown-img-paste-2018032213324375.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-2018032213324375.png" alt="Drawing" style="width: 400px;"/>
 4. Add the Target group created in step 1
-<img src="assets/markdown-img-paste-20180322133338478.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322133338478.png" alt="Drawing" style="width: 400px;"/>
 5. Note that we have now the DNS name of the loadbalancer which can be accessed to access the service:
-<img src="assets/markdown-img-paste-20180322133500210.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322133500210.png" alt="Drawing" style="width: 400px;"/>
 6. Additionaly when the Load balancer is created we can edit the rules for more advanced rules and routing:
-<img src="assets/markdown-img-paste-20180322134148144.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322134148144.png" alt="Drawing" style="width: 400px;"/>
 Example is , that any time the path contains *pictures* we can forward it to the pictures target group , similary another group can be created for videos:
-<img src="assets/markdown-img-paste-20180322134322594.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322134322594.png" alt="Drawing" style="width: 400px;"/>
 
 ### Service Traffic to and from Private Web Servers
 
@@ -534,19 +534,19 @@ Example is , that any time the path contains *pictures* we can forward it to the
 
 - Loadbalancing is  not occuring in multiple `Availaibility Zones`
 Enable Cross-Zone Loadbalancing
-<img src="assets/markdown-img-paste-20180322161335110.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322161335110.png" alt="Drawing" style="width: 400px;"/>
 
 - If the Instance not coming up as health in the AWS, Check the ping protocol and make sure it is right.
-<img src="assets/markdown-img-paste-20180322161603584.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322161603584.png" alt="Drawing" style="width: 400px;"/>
 
 - Also check the security group setting of the ELB to ensure if it has the right ports allowed for the communication
-<img src="assets/markdown-img-paste-20180322162035550.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322162035550.png" alt="Drawing" style="width: 400px;"/>
 
 - Access Logs show IP Address of ELB and not the source traffic. For this to work configure the S3 Access Logs  in the picture below.
-<img src="assets/markdown-img-paste-20180322162203901.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322162203901.png" alt="Drawing" style="width: 400px;"/>
 
 - Unable to add instances from a specific subnet . In this case you need to make sure that the AZ of the instance in question should be listed in the `Edit Availabilty Zone` and then it will appear in `Edit Instances` .
-<img src="assets/markdown-img-paste-20180322162345922.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20180322162345922.png" alt="Drawing" style="width: 400px;"/>
 
 ### Auto Scaling Troubleshooting
 
@@ -560,11 +560,11 @@ This could happen if the `trigger` is too close for example CPU threshold `< 30 
 ## Storage Services
 
 Notice the Transit service which are responsible for sending data in and out of S3 and Glacier.
-![](assets/markdown-img-paste-2018032219013824.png)
+![](/assets/markdown-img-paste-2018032219013824.png)
 
 Differen components of S3
 
-![](assets/markdown-img-paste-20180322190930356.png)
+![](/assets/markdown-img-paste-20180322190930356.png)
 
 ### S3 Permissions
 
@@ -572,7 +572,7 @@ Differen components of S3
 
 `S3 Access Control List` : For Public Access or AWS authenticated user.
 
-![](assets/markdown-img-paste-20180322193909333.png)
+![](/assets/markdown-img-paste-20180322193909333.png)
 
 
 ### S3 Storage Class
@@ -602,13 +602,13 @@ Versioning can only be setup at the bucket level.
 
 In the example below , we are moving the object to Infrequent Access to Glacier.
 
-![](assets/markdown-img-paste-20180322200344251.png)
+![](/assets/markdown-img-paste-20180322200344251.png)
 
 #### S3 Event Notification
 
 Allows you to setup automated communication between S3 and other AWS services when a selected event occurs.
 Event can be sent to `SNS`, `Lambda`, `SQS Queue`
-![](assets/markdown-img-paste-20180322201116455.png)
+![](/assets/markdown-img-paste-20180322201116455.png)
 
 #### S3 Static Web Hosting
 
@@ -618,7 +618,7 @@ Mainly lets say if your servers are unreachanble , they can atleast get a page n
 #### CORS / Cross Origin Resource Sharing
 
 Sharing accross wed domains
-![](assets/markdown-img-paste-2018032220164126.png)
+![](/assets/markdown-img-paste-2018032220164126.png)
 
 To be able to share information between two different buckets for two different domains CORS have to be enabled.
 
@@ -675,7 +675,7 @@ CloudFront is a global CDN which delivers content from an `origin` location to a
 
 `Virtual Private Gateway` : It is the connector at the VPC Side , the `Customer Gateway` is the connector at the customer side.
 
-![](assets/markdown-img-paste-20180331234616674.png)
+![](/assets/markdown-img-paste-20180331234616674.png)
 
 #### AWS Direct Connnect
 
@@ -683,7 +683,7 @@ AWS Direct Connect is a service that provides a dedicated network connection bet
 
 Dedicated Private connection is like a VPN connection to your DC , it does not provide Internet .
 
-![](assets/markdown-img-paste-20180401000721669.png)
+![](/assets/markdown-img-paste-20180401000721669.png)
 
 `Private Virtual Interface` : This allows you to interface with an AWS VPC with automatic route discovery using BGP , this requires a private of a public ASN number.
 
@@ -693,16 +693,16 @@ Dedicated Private connection is like a VPN connection to your DC , it does not p
 #### VPC Peering
 
 
-![](assets/markdown-img-paste-20180401001713511.png)
+![](/assets/markdown-img-paste-20180401001713511.png)
 
 > Earlier VPC Peerign was only allowed withing the region , but with new feature VPC Peering can be done within different regions as well.
 
 
-![](assets/markdown-img-paste-20180401003523130.png)
+![](/assets/markdown-img-paste-20180401003523130.png)
 
 Notice the appearance of vpc-peer entry to point to in the route table
 
-![](assets/markdown-img-paste-2018040100361218.png)
+![](/assets/markdown-img-paste-2018040100361218.png)
 
 
 #### AWS CLI Configuration
@@ -713,7 +713,7 @@ Notice the appearance of vpc-peer entry to point to in the route table
 
 #### AWS Database
 
-![](assets/markdown-img-paste-20180403080739308.png)
+![](/assets/markdown-img-paste-20180403080739308.png)
 
 RDS is a fully managed database service , you do not have access to the instance.
 
@@ -736,7 +736,7 @@ Benefits of RDS :
 
 #### AWS RDS
 
-![](assets/markdown-img-paste-20180401013344765.png)
+![](/assets/markdown-img-paste-20180401013344765.png)
 
 `RDS Read Replica` : A DB copy which can be used for `READS` and can offload some load from the main DB .
 
@@ -745,18 +745,18 @@ Benefits of RDS :
 ### RDS Launch Demo
 
 1. First This is to create a subnet group (you do not create the subnet but just associate the subnet already created)
-![](assets/markdown-img-paste-20180402210530609.png)
+![](/assets/markdown-img-paste-20180402210530609.png)
 2. Select the instance type.
-![](assets/markdown-img-paste-20180402210745413.png)
+![](/assets/markdown-img-paste-20180402210745413.png)
 3. Provide the SB Launch Details
-![](assets/markdown-img-paste-2018040221082210.png)
-![](assets/markdown-img-paste-20180402210941830.png)
+![](/assets/markdown-img-paste-2018040221082210.png)
+![](/assets/markdown-img-paste-20180402210941830.png)
 4. View of a fully launched database
-![](assets/markdown-img-paste-20180402211024126.png)
+![](/assets/markdown-img-paste-20180402211024126.png)
 Notice the `middle tab` with lot of information
-![](assets/markdown-img-paste-20180402211135353.png)
+![](/assets/markdown-img-paste-20180402211135353.png)
 Creating `Read Replicas`
-![](assets/markdown-img-paste-20180402211953464.png)
+![](/assets/markdown-img-paste-20180402211953464.png)
 
 ### DynamoDB
 
@@ -765,7 +765,7 @@ All you need to do is define the throughput capacity. This scales automatically 
 AWS handles the backups as well.
 
 Very straight forward configuration
-![](assets/markdown-img-paste-20180403080044390.png)
+![](/assets/markdown-img-paste-20180403080044390.png)
 
 Used for storing : IoT , Gaming , Mobile
 
@@ -781,10 +781,10 @@ Amazon Redshift is a petabyte scale datawareshousing solution, fully managed and
 
 ## AWS Application Services
 
-![](assets/markdown-img-paste-20180403080953828.png)
+![](/assets/markdown-img-paste-20180403080953828.png)
 
 ### SNS
-![](assets/markdown-img-paste-20180403081047797.png)
+![](/assets/markdown-img-paste-20180403081047797.png)
 SNS corodinates and manages the sending and delivery of messages to specific endpoints.
 Since it is integrated into many services natively it is very easy to set this up .
 
@@ -796,22 +796,22 @@ SNS is broken down into 3 main parts:
 
 #### Workflow Example
   - Create a Topic
-  ![](assets/markdown-img-paste-20180403082358366.png)
+  ![](/assets/markdown-img-paste-20180403082358366.png)
   - Now , within the topic create a subscription
-  ![](assets/markdown-img-paste-20180403082547509.png)
-  ![](assets/markdown-img-paste-20180403082616699.png)
+  ![](/assets/markdown-img-paste-20180403082547509.png)
+  ![](/assets/markdown-img-paste-20180403082616699.png)
   - Now click on Publish a topic
-  ![](assets/markdown-img-paste-20180403082801498.png)
-  ![](assets/markdown-img-paste-20180403082920738.png)
+  ![](/assets/markdown-img-paste-20180403082801498.png)
+  ![](/assets/markdown-img-paste-20180403082920738.png)
   And finally publish the message to the email subscription created above
-  ![](assets/markdown-img-paste-20180403083036726.png)
+  ![](/assets/markdown-img-paste-20180403083036726.png)
 
 <br><br>
 
 
 ### SQS Essentials
 
-![](assets/markdown-img-paste-20180405062412916.png)
+![](/assets/markdown-img-paste-20180405062412916.png)
 
 > SQS Is a fully managed service by AWS
 
@@ -849,10 +849,10 @@ API Gateway is a fully managed service which allows you to create and manage you
 
 Lets say you have an application running on Lambda Functions and EC2 .
 
-![](assets/markdown-img-paste-20180405065436505.png)
+![](/assets/markdown-img-paste-20180405065436505.png)
 
 You can `version` control your APIs as well.
-![](assets/markdown-img-paste-20180405065740886.png)
+![](/assets/markdown-img-paste-20180405065740886.png)
 
 CloudFront Edge locations are the entrypoint , which help with DDoS protection as well.
 
@@ -863,7 +863,7 @@ API Gateway also caches the responses as well .
 CloudWatch is used to monitor AWS Services, such as EC2,ELB and S3.
 You monitor your environment by configuring and viewing Cloudwatch metrics.
 
-![](assets/markdown-img-paste-20180405070816470.png)
+![](/assets/markdown-img-paste-20180405070816470.png)
 
 CloudWatch Alarms allow for you to be notfiied when a certain defined threshold is met for CloudWatch Metrics.
 
