@@ -52,7 +52,7 @@ You can turn off echo mode (Generallt you would not) .
 So if you rely on Control Packet , you basically are taxing CPU.
 
 
-<img src="assets/bfd.png" alt="" style="width: 800px;"/>
+<img src="/assets/bfd.png" alt="" style="width: 800px;"/>
 
 Intial BFD is configured on the interface :
 
