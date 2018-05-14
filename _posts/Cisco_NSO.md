@@ -253,7 +253,7 @@ PE Routers   [ PE11 PE12 PE21 PE31 ]
 ```
 
 Interesting Screen Shot
-![](assets/markdown-img-paste-20180421143918134.png)
+![](/assets/markdown-img-paste-20180421143918134.png)
 
 
 #### Create Customer
@@ -430,7 +430,7 @@ In this activity we will create a simple point to point Layer 2 MPLS VPN
 
 > Take a detour a learn a little bit about Layer 2 MPLS VPN , Here is the link to the `blog`
 
-![](assets/markdown-img-paste-20180422002520606.png)
+![](/assets/markdown-img-paste-20180422002520606.png)
 
 
 
@@ -440,7 +440,7 @@ In this step a YANG file is created which is basically having the variables to c
 
 Look in the Model Below and notice how the real values on the the right map the variables
 
-![](assets/markdown-img-paste-20180422003636279.png)
+![](/assets/markdown-img-paste-20180422003636279.png)
 
 Create the skeleton
 
