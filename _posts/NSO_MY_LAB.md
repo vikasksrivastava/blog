@@ -1,6 +1,25 @@
 ### My NSO Lab ramblings as I learn.
 
-![](assets/markdown-img-paste-20180429205415788.png)
+
+<!-- TOC START min:1 max:5 link:true update:true -->
+    - [My NSO Lab ramblings as I learn.](#my-nso-lab-ramblings-as-i-learn)
+      - [Lets start with configuring the CE devices to be part of NSO](#lets-start-with-configuring-the-ce-devices-to-be-part-of-nso)
+      - [EXERCISE 1. Now lets configure loopback address with a service !](#exercise-1-now-lets-configure-loopback-address-with-a-service-)
+      - [Appendix of Exercise Above for Notes and detail annotation on code.](#appendix-of-exercise-above-for-notes-and-detail-annotation-on-code)
+      - [EXERCISE 2. Now lets Deploy OSPF Configuration using Device Templates  !](#exercise-2-now-lets-deploy-ospf-configuration-using-device-templates--)
+      - [EXERCISE 3. Deploy MPLS L2 VPN configuration with `device` , `interface`and `loopback` as selective option (No manual entry)!](#exercise-3-deploy-mpls-l2-vpn-configuration-with-device--interfaceand-loopback-as-selective-option-no-manual-entry)
+      - [EXERCISE 4. Automatically assign PE Router Loopback Addresses](#exercise-4-automatically-assign-pe-router-loopback-addresses)
+      - [EXERCISE 5. Configuring a CE device from NSO for L3MPLSVPN](#exercise-5-configuring-a-ce-device-from-nso-for-l3mplsvpn)
+      - [EXERCISE 6. Adding a SUB template file than the default generated .](#exercise-6-adding-a-sub-template-file-than-the-default-generated-)
+      - [How to Connect to MAAPI](#how-to-connect-to-maapi)
+      - [Cisco NSO to add Python logic to a service](#cisco-nso-to-add-python-logic-to-a-service)
+      - [* * * ON HOLD  * * * EXERCISE XXXX. Now Lets Automate the Loopback IP Address selection of the CE11 Routers based on the last octet of the address received on Fa0 (The loopback addressed are not required for the L3 xconnect but this is just for fun )](#---on-hold-----exercise-xxxx-now-lets-automate-the-loopback-ip-address-selection-of-the-ce11-routers-based-on-the-last-octet-of-the-address-received-on-fa0-the-loopback-addressed-are-not-required-for-the-l3-xconnect-but-this-is-just-for-fun-)
+
+<!-- TOC END -->
+
+
+
+![](/assets/markdown-img-paste-20180429205415788.png)
 
 > Lab Details : PE CSR1000v and CEs does not matter for VPN Confgiration . We will only add the PEs to the
 
@@ -173,7 +192,7 @@ cli {
 }
 ```
 
-![](assets/markdown-img-paste-2018042816445154.png)
+![](/assets/markdown-img-paste-2018042816445154.png)
 
 #### Appendix of Exercise Above for Notes and detail annotation on code.
 
@@ -522,8 +541,227 @@ module learning_deref2 {
   </devices>
 </config-template>
 ```
+---
+#### EXERCISE 5. Configuring a CE device from NSO for L3MPLSVPN
+
+YANG
+```sh
+module l3mplsvpn {
+  namespace "http://com/example/l3mplsvpn";
+  prefix l3mplsvpn;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs { prefix ncs; }
+  import tailf-common {prefix tailf;}
+
+  augment "/ncs:services"
+  {
+    list l3mplsvpn-ce-config {
+      tailf:info "Used to Configure the CE Side of the MPLSL3VPN";
+      key "vpn-name";
+      uses ncs:service-data;
+      ncs:servicepoint "l3mplsvpn-ce-servicepoint";
+
+      leaf vpn-name
+      {
+        tailf:info "Service Instance Name";
+        type string;
+      } // Key name
+
+      leaf ce_router_name
+      {
+        tailf:info "CE Router";
+        type leafref
+        {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      } // ce_router_name
+
+      leaf ce_device_lo0_ipaddress
+      {
+        tailf:info "CE Router Loopback 0 IP Address";
+        type inet:ipv4-address
+        {
+          //pattern "10\\.0\\.0\\.[0-9]+";
+        }
+
+      } //ce_device_lo0_ipaddress
+
+      leaf ce_to_pe_facing_interface_ipaddress
+      {
+        tailf:info "CE to PE Facing IP Address";
+        type inet:ipv4-address
+        {
+          //pattern "10\\.0\\.0\\.[0-9]+";
+        }
+
+      } //ce_device_lo0_ipaddress
 
 
+      leaf ce_to_pe_facing_interface_ipaddress2
+      {
+        tailf:info "CE to PE Facing IP Address";
+        type inet:ipv4-address
+        {
+          //pattern "10\\.0\\.0\\.[0-9]+";
+        }
+
+      } //ce_device_lo0_ipaddress
+
+
+  }
+}
+}
+
+
+
+
+/*
+
+
+augment "/ncs:services" {
+  list l3mplsvpn {
+    tailf:info "Layer-3 MPLS VPN Service";
+    key "vpn-name";
+    uses ncs:service-data;
+    ncs:servicepoint "l3mplsvpn-servicepoint";
+    leaf vpn-name {
+      tailf:info "Service Instance Name";
+      type string;
+    }
+    leaf vpn-id {
+      tailf:info "Service Instance ID (1 to 65535)";
+      type uint32;
+    }
+    leaf link-id-cnt {
+      tailf:info "Provides a unique 32 bit numbers used as a site identifier";
+      default "1";
+      type uint32;
+    }
+    leaf customer {
+      tailf:info "VPN Customer";
+      type leafref {
+        path "/ncs:customers/ncs:customer/ncs:id";
+      }
+    }
+    list link {
+      tailf:info "PE-CE Attachment Point";
+      key "link-name";
+      leaf link-name {
+        tailf:info "Link Name";
+        type string;
+      }
+      leaf link-id {
+        tailf:info "Link ID (1 to 65535)";
+        type uint32;
+      }
+      leaf device {
+        tailf:info "PE Router";
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      }
+      leaf pe-ip {
+        tailf:info "PE-CE Link IP Address";
+        type string;
+      }
+      leaf ce-ip {
+        tailf:info "CE Neighbor IP Address";
+        type string;
+      }
+      leaf interface {
+        tailf:info "Customer Facing Interface";
+        type string;
+      }
+      leaf routing-protocol {
+        tailf:info "Routing option for the PE-CE link";
+        type enumeration {
+          enum "bgp";
+          enum "rip";
+        }
+      }
+    }
+  }
+}
+
+*/
+
+
+```
+
+XML
+```xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="l3mplsvpn-ce-servicepoint">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device>
+      <!--          Select the devices from some data structure in the service          model. In this skeleton the devices are specified in a leaf-list.          Select all devices in that leaf-list:      -->
+      <name>{/ce_router_name}</name>
+      <config>
+        <interface xmlns="urn:ios">
+          <Loopback>
+            <name>0</name>
+            <ip>
+              <address>
+                <primary>
+                  <address>{/ce_device_lo0_ipaddress}</address>
+                  <mask>255.255.255.0</mask>
+                </primary>
+              </address>
+            </ip>
+          </Loopback>
+          <GigabitEthernet>
+            <name>1</name>
+            <ip>
+              <no-address>
+
+              </no-address>
+              <address>
+                <primary>
+                  <address>{/ce_to_pe_facing_interface_ipaddress}</address>
+                  <mask>255.255.255.0</mask>
+                </primary>
+              </address>
+            </ip>
+
+          </GigabitEthernet>
+        </interface>
+        <router xmlns="urn:ios">
+          <eigrp>
+            <as-no>100</as-no>
+            <network-ip>
+              <network>
+                <ip>{/ce_device_lo0_ipaddress}</ip>
+              </network>
+              <network>
+                <ip>{/ce_to_pe_facing_interface_ipaddress}</ip>
+              </network>
+            </network-ip>
+          </eigrp>
+        </router>
+      </config>
+    </device>
+  </devices>
+</config-template>
+```
+
+---
+
+#### EXERCISE 6. Adding a SUB template file than the default generated .
+
+For this to happen you can create a new template file and make sure that the servicepoint
+is configured and pointing to the entry point in the YANG file. See the example below.
+
+```xml
+<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="l3mplsvpn-ce-servicepoint">
+
+```
+
+---
+
+
+services l3mplsvpn-ce-config HQ1 ce_device_lo0_ipaddress_side_a 9.9.9.9 ce_router_name_side_a HQ1 ce_to_pe_facing_interface_side_a 1 ce_to_pe_facing_interface_ipaddress_side_a 192.168.100.1 pe_router_name_side_a SP1 Route_Distinguiser 1 Route_Target 100 pe_to_ce_facing_interface_side_a 4 pe_to_ce_facing_interface_ipaddress_side_a 192.168.100.4 side_b_loopback0_ip_address 2.2.2.2 vrf_Customer_name NEW_CUSTY
 
 
 <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br>
@@ -589,138 +827,6 @@ class ServiceCallbacks(Service):
 ```
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
-#Common Error Messages and their resolution
-
----
-
-#### Should be of type path-arg
-
-In this case make sure your `XPATH` does not have a hardcoded variable.
-
-```sh
-yang/new_l2vpn.yang:60: error: bad argument value "/ncs:devices/ncs:device{PE11}/ncs:config/ios:interface/ios:GigabitEthernet{1}/ios:name", should be of type path-arg
-```
-
----
-
-#### error: the leafref refers to non-leaf and non-leaf-list node
-
-
-```sh
-yang/new_l2vpn.yang:38: error: the leafref refers to non-leaf and non-leaf-list node 'FastEthernet' in module 'tailf-ned-cisco-ios' at /opt/ncs/packages/neds/cisco-ios/src/ncsc-out/modules/yang/tailf-ned-cisco-ios.yang:34121
-```
-
-In this case make sure your `XPATH` points to a `list` , in this case it was `ios:name`
-
-```sh
-path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
-```
-
-The error occurs if you leave the path untill here , expecting to list GigabitEthernet interfaces :
-
-```sh
-path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet";
-```
-Basically the key is , things like `name` , `negotiation` , `descripton` which is a list .
-
-![](assets/markdown-img-paste-20180502203026575.png)
-
----
-
-#### XPath error: Invalid namespace prefix: ios
-
-```sh
-yang/circuit.yang:57: error: XPath error: Invalid namespace prefix: ios
-make: *** [../load-dir/circuit.fxs] Error 1
-```
-
-**Solution :**
-
-Import the required module:
-```sh
-import tailf-ned-cisco-ios {
-   prefix ios;
-}
-```
-
-And add the yang path below in Makefile.
-
-```sh
-## Uncomment and patch the line below if you have a dependency to a NED
-## or to other YANG files
-# YANGPATH += ../../<ned-name>/src/ncsc-out/modules/yang \
-#       ../../<pkt-name>/src/yang
-
-YANGPATH += ../../cisco-ios/src/ncsc-out/modules/yang
-```
----
-
-#### Aborted: no registration found for callpoint learning_defref/service_create of type=external
-
-This message occurs when the you perform a commit or commit-dry-run . At this stage your YANG is merged with the corresponding XML Definition
-
-
-```sh
-admin@ncs(config-link-PE21)# commit dry-run
-Aborted: no registration found for callpoint learning_defref/service_create of type=external
-admin@ncs(config-link-PE21)# exit
-```
-
-**Solution :**
-
-Make sure that in the corresponding XML code , the `servicepoint` name is correct.
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<config-template xmlns="http://tail-f.com/ns/config/1.0" servicepoint="learning_defref">
-```
-
----
-
-#### info [l2vpn-template.xml:2 Unknown servicepoint: l2vpn]
-
-This message occurs when you have not compile the src folder with the `make` command.
-Since make isnt issued , the XML template cannot find the entrypoint.
-
-
-```sh
-reload-result {
-    package l2vpn
-    result false
-    info [l2vpn-template.xml:2 Unknown servicepoint: l2vpn]
-}
-```
-
-**Solution :**
-
-Run the `make` command in the src folder.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-### Another Set of error Messages
-
-```sh
-/opt/ncs/packages/neds/cisco-iosxr/src/ncsc-out/modules/yang/tailf-ned-cisco-ios-xr.yang:17988: warning: Given dependencies are not equal to calculated: ../end-marker, ../start-marker. Consider removing tailf:dependency statements.
-/opt/ncs/packages/neds/cisco-iosxr/src/ncsc-out/modules/yang/tailf-ned-cisco-ios-xr.yang:26306: warning: when tailf:cli-drop-node-name is given, it is recommended that tailf:cli-suppress-mode is used in combination. using tailf:cli-drop-nodename in a list child without using tailf:cli-suppress-mode on the list, might lead to confusing behaviour, where the user enters the submode without being able to give further configuration.
-yang/learning_defref.yang:55: warning: Given dependencies are not equal to calculated: ../router_name, /ncs:devices/ncs:device/ncs:name, /ncs:devices/ncs:device/ncs:device-type/ncs:cli/ncs:ned-id. Consider removing tailf:dependency statements.
-yang/learning_defref.yang:68: warning: Given dependencies are not equal to calculated: ../router_name, /ncs:devices/ncs:device/ncs:name, /ncs:devices/ncs:device/ncs:device-type/ncs:cli/ncs:ned-id. Consider removing tailf:dependency statements.
-```
-
-Start with the learning_defref lab. And analyse the error.
-
 
 
 
@@ -751,10 +857,10 @@ Start with the learning_defref lab. And analyse the error.
 <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
 
 
-![](assets/markdown-img-paste-20180430040349433.png)
+![](/assets/markdown-img-paste-20180430040349433.png)
 
 
-![](assets/markdown-img-paste-20180429002142529.png)
+![](/assets/markdown-img-paste-20180429002142529.png)
 
 
 

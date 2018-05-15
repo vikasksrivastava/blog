@@ -49,13 +49,13 @@ THe submodule is included in the parent module ,
 so paremt module can refer --> to the submodule
 but submodule cannot  refere to items in the parent module .
 
-![](assets/markdown-img-paste-20180427203352491.png)
+![](/assets/markdown-img-paste-20180427203352491.png)
 
 
 
 #### YANG Base Types
 
-![](assets/markdown-img-paste-20180427203844448.png)
+![](/assets/markdown-img-paste-20180427203844448.png)
 
 
 
@@ -132,7 +132,7 @@ leaf remote-ip {
   }
 ```
 
-![](assets/markdown-img-paste-20180427210037515.png)
+![](/assets/markdown-img-paste-20180427210037515.png)
 
 ##### Grouping Statement
 
@@ -220,7 +220,7 @@ leaf host-name {
 }
 ```
 
-![](assets/markdown-img-paste-20180428012909221.png)
+![](/assets/markdown-img-paste-20180428012909221.png)
 
 
 #### Container Statement
@@ -253,34 +253,34 @@ leaf-list domains-search {
 
 #### List Statements
 
-![](assets/markdown-img-paste-20180428013507879.png)
+![](/assets/markdown-img-paste-20180428013507879.png)
 
 Think of Lists as a Table of Items , `key` is the key of the data table.
 
 #### Attributes of list an leaf-lists
 
-![](assets/markdown-img-paste-20180428013616564.png)
+![](/assets/markdown-img-paste-20180428013616564.png)
 
 
 #### Keys
 
 The key field is used to specific which row are we reffering to .
 
-![](assets/markdown-img-paste-20180428013718752.png)
+![](/assets/markdown-img-paste-20180428013718752.png)
 
 
 #### Multiple Keys
 
 Notice in the example below we have the `key "ip prefix"` allowing us to select based on two keys , IP and Prefix.
 
-![](assets/markdown-img-paste-20180428014213415.png)
+![](/assets/markdown-img-paste-20180428014213415.png)
 
 
 ### Leafref
 
 A Leafref can refer to another leaf . So basically what it means is , the only calues can be selected are the values the Leafref is poiting to .
 
-![](assets/markdown-img-paste-2018042801564567.png)
+![](/assets/markdown-img-paste-2018042801564567.png)
 
 
 ### Multiple Key Leafref
@@ -290,7 +290,7 @@ Now selecting the Ip Address is easy , but there are duplicate IP Addresses .
 
 Having the Xpath of `ip=current()`  helps us go back in the tree and ensure integrity by limiting the scope to the current v-ip in question .
 
-![](assets/markdown-img-paste-2018042802003507.png)
+![](/assets/markdown-img-paste-2018042802003507.png)
 
 #### Deref() XPATH Operator
 
@@ -298,7 +298,7 @@ Now looking at the example above of Leafref , if the number of keys increases (v
 
 This is made easy by the `deref()` operator.
 
-![](assets/markdown-img-paste-20180428020523200.png)
+![](/assets/markdown-img-paste-20180428020523200.png)
 
 `http://www.yang-central.org/twiki/pub/Main/YangTools/pyang.1.html`
 
@@ -346,7 +346,7 @@ leaf my-port {
 
 # Another DEREF() Example
 
-![](assets/markdown-img-paste-2018050511362266.png)
+![](/assets/markdown-img-paste-2018050511362266.png)
 
 
 
@@ -501,7 +501,7 @@ module learning_deref {
 
 # YANG Part 2
 
-![](assets/markdown-img-paste-20180504190738927.png)
+![](/assets/markdown-img-paste-20180504190738927.png)
 
 This is the beginning of Youtube tutorial on YANG Part 2
 
@@ -522,7 +522,7 @@ The `current()` function (from XPATH) in the code below refers to the `value` of
 
 **Next** The path `../` means that we go up one level to timeout and then reach `access-path` in the tree
 
-![](assets/markdown-img-paste-20180504191009827.png)
+![](/assets/markdown-img-paste-20180504191009827.png)
 
 The above constraint will be validated and enforced.
 
