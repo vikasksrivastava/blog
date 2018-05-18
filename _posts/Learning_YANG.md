@@ -529,6 +529,47 @@ The above constraint will be validated and enforced.
 > As a best practice you should add comment near `must` to describe what it is doing.
 
 
+### Some Good YANG Examples
+
+`unique`  Ensure uniqueness of values
+`range` restricts the range
+`error-message` Define the error for the model
+
+
+```sh
+list l3mplsvpn-ce-config
+{
+  tailf:info "Used to Configure the CE Side of the MPLSL3VPN";
+  key "vpn-name";
+  unique vpn-id;  //
+
+
+  leaf vpn-id
+  {
+    tailf:info "Name of the VPN ID";
+    type unint32
+    {
+      range 1..10;
+      error-message "Invalid VPN ID"
+    }
+  }
+
+
+}
+```
+
+
+ 
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+# Understand the difference between `list` and `container`
 
 
 

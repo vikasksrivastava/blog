@@ -1,7 +1,7 @@
 
 
 
-![](assets/markdown-img-paste-20180421171152449.png)
+![](/assets/markdown-img-paste-20180421171152449.png)
 
 ### Step1. Configure OSPF between the SP Routers (SP and PE Routers)
 
