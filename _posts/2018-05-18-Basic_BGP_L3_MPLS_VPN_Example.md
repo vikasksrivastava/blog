@@ -1,4 +1,9 @@
-
+---
+layout: post
+title: Basic MPLS L3 VPN Configuration Example
+description: Basic MPLS L3 VPN Configuration Example
+comments: true
+---
 
 
 ![](/assets/markdown-img-paste-20180421171152449.png)
