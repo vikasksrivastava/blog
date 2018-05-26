@@ -1,4 +1,9 @@
-#Common Error Messages and their resolution
+---
+layout: post
+title: NSO Common Error Messages and their resolution
+description: NSO Common Error Messages and their resolution
+comments: true
+---
 
 ---
 

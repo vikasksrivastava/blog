@@ -1,3 +1,10 @@
+---
+layout: post
+title: Learning YANG
+description: Learning YANG
+comments: true
+---
+
 #### Modules
 
 > This file is based on the Youtube video `https://www.youtube.com/watch?v=AdIcYrz3AjU&t=1854s`
@@ -412,9 +419,9 @@ container video {
 
 Notice in the below example how the `../` and `../../` expresssions expand.
 
-- For example in the container ios ,  the line `../var1_router_name` goes up one level to the leaf `var1_router_name` .
-- Also , in the leaf intf-number notice how the `../../` goes two levels up just like a unix directory to `var1_router_name`
-- Finally notice the expansion of `current()` , notice how it starts from the top level hierarchy of `/ncs:service/learning_deref/......`
+-   For example in the container ios ,  the line `../var1_router_name` goes up one level to the leaf `var1_router_name` .
+-   Also , in the leaf intf-number notice how the `../../` goes two levels up just like a unix directory to `var1_router_name`
+-   Finally notice the expansion of `current()` , notice how it starts from the top level hierarchy of `/ncs:service/learning_deref/......`
 
 ```sh
 
@@ -529,19 +536,27 @@ The above constraint will be validated and enforced.
 > As a best practice you should add comment near `must` to describe what it is doing.
 
 
-### Some Good YANG Examples
 
-`unique`  Ensure uniqueness of values
-`range` restricts the range
-`error-message` Define the error for the model
 
+
+
+
+
+
+## Some Good YANG Examples
+
+### `unique`  Ensure uniqueness of values
+### `range` restricts the range
+### `error-message` Define the error for the model
+
+In the example below we ensure the  the value of `vpn-id` is `unique` . The `range` restricts the value and `error-message` is for the error for incorrect input .
 
 ```sh
 list l3mplsvpn-ce-config
 {
   tailf:info "Used to Configure the CE Side of the MPLSL3VPN";
   key "vpn-name";
-  unique vpn-id;  //
+  unique vpn-id;
 
 
   leaf vpn-id
@@ -553,24 +568,174 @@ list l3mplsvpn-ce-config
       error-message "Invalid VPN ID"
     }
   }
+}
+```
+
+### `count`  To count all occurrences of a xpath
+
+Example YANG
+```sh
+augment "/ncs:services"
+{
+  list l3mplsvpn
+  {
+    tailf:info "Layer-3 MPLS VPN Service";
+    key "vpn-name";
+    unique interface;
+
+    leaf vpn-name
+    {..}
+
+    leaf device
+    {..}
 
 
+    leaf interface
+    {
+      tailf:info "Customer Facing Interface";
+      type string;
+
+      # What the below expression expands to :
+      # "In NO other vpn configuration (vpn-name !=)   the current device AND its current
+      # interface should be configured" which results in the expression to be zero .
+      must "count(../../l3mplsvpn[vpn-name != current()/../vpn-name][device = current()/../device][interface=current()]) = 0"
+
+      # // must "count(../../l3mplsvpn[vpn-name != current()/../vpn-name]"+ "[device = current()/../device][interface=current()]) = 0"
+      # Notice the + in the above command , it is nothing but to ensure continuration of the entire path . It is not doign any arithmentic SUMMMATION
+
+      {
+        error-message "Interface is already used for another link.";
+      }
+    }
+  }
+}
+```
+Example Code execution
+
+```shell
+# services l3mplsvpn vpn1 device SP1 interface 0/1
+# services l3mplsvpn vpn2 device SP1 interface 0/2
+
+admin@ncs(config-l3mplsvpn-vpn2)# commit dry-run | debug xpath
+
+# Statement to be validated
+Evaluating XPath for: /services/l3mplsvpn:l3mplsvpn[vpn-name='vpn2']/interface:
+  count(../../l3mplsvpn[vpn-name != current()/../vpn-name][device = current()/../device][interface=current()]) = 0
+
+get_next(/ncs:services/l3mplsvpn) = {vpn1}
+get_elem("/ncs:services/l3mplsvpn{vpn1}/device") = SP1
+get_elem("/ncs:services/l3mplsvpn{vpn2}/device") = SP1
+get_elem("/ncs:services/l3mplsvpn{vpn1}/interface") = 0/1
+get_elem("/ncs:services/l3mplsvpn{vpn2}/interface") = 0/2
+get_next(/ncs:services/l3mplsvpn{vpn1}) = {vpn2}
+get_next(/ncs:services/l3mplsvpn{vpn2}) = false
+2018-05-25T18:40:13.758 XPath for: /services/l3mplsvpn:l3mplsvpn[vpn-name='vpn2']/interface returns true
+2018-05-25T18:40:13.759
+Evaluating XPath for: /services/l3mplsvpn:l3mplsvpn[vpn-name='vpn2']/device:
+  /ncs:devices/ncs:device/ncs:name
+get_elem("/ncs:services/l3mplsvpn{vpn2}/device") = SP1
+exists("/ncs:devices/device{SP1}") = true
+get_elem("/ncs:services/l3mplsvpn{vpn2}/device") = SP1
+2018-05-25T18:40:13.763 XPath for: /services/l3mplsvpn:l3mplsvpn[vpn-name='vpn2']/device returns true
+2018-05-25T18:40:13.766
+Evaluating XPath for: /services/l3mplsvpn:l3mplsvpn[vpn-name='vpn1']/interface:
+  count(../../l3mplsvpn[vpn-name != current()/../vpn-name][device = current()/../device][interface=current()]) = 0
+get_next(/ncs:services/l3mplsvpn) = {vpn1}
+get_next(/ncs:services/l3mplsvpn{vpn1}) = {vpn2}
+get_elem("/ncs:services/l3mplsvpn{vpn2}/device") = SP1
+get_elem("/ncs:services/l3mplsvpn{vpn1}/device") = SP1
+get_elem("/ncs:services/l3mplsvpn{vpn2}/interface") = 0/2
+get_elem("/ncs:services/l3mplsvpn{vpn1}/interface") = 0/1
+get_next(/ncs:services/l3mplsvpn{vpn2}) = false
+2018-05-25T18:40:13.768 XPath for: /services/l3mplsvpn:l3mplsvpn[vpn-name='vpn1']/interface returns true
+cli {
+    local-node {
+        data  services {
+             +    l3mplsvpn vpn2 {
+             +    }
+              }
+    }
+}
+```
+
+### `pattern` To define a pattern
+The below construct define an IP Address patterns and also the error which should be returned if its now followe.
+
+```shell
+leaf pe-ip {
+  tailf:info "PE Interface IP Address";
+  mandatory false;
+  type inet:ipv4-address {
+    pattern "172\\.([1][6-9]|[2][0-9]|3[0-1])\\..*"
+    {
+      error-message
+        "Invalid IP address. IP address should be in the 172.16.0.0/12 range.";
+    }
+  }
+}
+```
+
+### `starts-with` To define a pattern
+In the below example on the devices whose name starts with PE will be displayed in the options or be validated for.
+
+```shell
+leaf device {
+  tailf:info "PE Router";
+  mandatory true;
+  type leafref
+  {
+    path "/ncs:devices/ncs:device/ncs:name";
+  }
+  must "starts-with(current(),'PE')"
+  {
+    error-message "Only PE devices can be selected.";
+  }
+}
+```
+
+### `min-elements` statement to define the minimum number of entries in a list.
+
+
+```shell
+list link
+{
+  tailf:info "PE-CE Attachment Point";
+  key "link-name";
+  unique "link-id";
+  unique "device interface";
+  min-elements 1;
+}
+```
+
+### Using `when` to controll a leaf visibility
+
+In the example below the leaf `ce-ip` will only be visible when the `routing-protocol` is set to `bgp`
+
+```shell
+leaf ce-ip
+{
+  tailf:info "CE Interface IP Address";
+  when "../routing-protocol='bgp'";
+  mandatory false;
+  type inet:ipv4-address
+  {
+    pattern "172\\.([1][6-9]|[2][0-9]|3[0-1])\\..*"
+    {
+      error-message
+        "Invalid IP address. IP address should be in the 172.16.0.0/12 range.";
+    }
+  }
 }
 ```
 
 
- 
+
 
 
 
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-
-
-# Understand the difference between `list` and `container`
-
 
 
 
