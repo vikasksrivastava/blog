@@ -5,6 +5,44 @@ description: Learning YANG
 comments: true
 ---
 
+<!-- TOC START min:1 max:5 link:true update:true -->
+  - [Modules](#modules)
+      - [YANG Base Types](#yang-base-types)
+        - [Typedef](#typedef)
+        - [Type Restrictions](#type-restrictions)
+        - [Union Statement](#union-statement)
+        - [Common YANG types](#common-yang-types)
+        - [Grouping Statement](#grouping-statement)
+      - [Grouping Statement with Refine](#grouping-statement-with-refine)
+    - [YANG Data Definitions](#yang-data-definitions)
+      - [Leaf Statement](#leaf-statement)
+      - [Container Statement](#container-statement)
+      - [Leaf-list Statement](#leaf-list-statement)
+      - [List Statements](#list-statements)
+      - [Attributes of list an leaf-lists](#attributes-of-list-an-leaf-lists)
+      - [Keys](#keys)
+      - [Multiple Keys](#multiple-keys)
+    - [Leafref](#leafref)
+    - [Multiple Key Leafref](#multiple-key-leafref)
+      - [Deref() XPATH Operator](#deref-xpath-operator)
+- [Another DEREF() Example](#another-deref-example)
+- [YANG Part 2](#yang-part-2)
+    - [MUST Statement](#must-statement)
+  - [Some Good YANG Examples](#some-good-yang-examples)
+    - [`unique`  Ensure uniqueness of values](#unique--ensure-uniqueness-of-values)
+    - [`range` restricts the range](#range-restricts-the-range)
+    - [`error-message` Define the error for the model](#error-message-define-the-error-for-the-model)
+    - [`count`  To count all occurrences of a xpath](#count--to-count-all-occurrences-of-a-xpath)
+    - [`pattern` To define a pattern](#pattern-to-define-a-pattern)
+    - [`starts-with` To define a pattern](#starts-with-to-define-a-pattern)
+    - [`min-elements` statement to define the minimum number of entries in a list.](#min-elements-statement-to-define-the-minimum-number-of-entries-in-a-list)
+    - [Using `when` to controll a leaf visibility](#using-when-to-controll-a-leaf-visibility)
+    - [Use the `tailf:hidden` statement to hide the leaf from the northbound interfaces.](#use-the-tailfhidden-statement-to-hide-the-leaf-from-the-northbound-interfaces)
+
+<!-- TOC END -->
+
+
+
 #### Modules
 
 > This file is based on the Youtube video `https://www.youtube.com/watch?v=AdIcYrz3AjU&t=1854s`
