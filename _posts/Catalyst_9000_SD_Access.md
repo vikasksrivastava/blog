@@ -4,7 +4,7 @@
 
 The controllers foes support YANG model , but as of today it supports CLI model .
 
-![](assets/markdown-img-paste-20180328061804850.png)
+![](/assets/markdown-img-paste-20180328061804850.png)
 
 On the top of the underlay we have the overlay network.
 
@@ -12,7 +12,7 @@ The `Overlay Control Plane` also knows as `Host Tracking Database` .
 
 ### The Key Concepts
 
-![](assets/markdown-img-paste-20180328062152822.png)
+![](/assets/markdown-img-paste-20180328062152822.png)
 
 #### Control Plane
 
@@ -49,7 +49,7 @@ and the packet is sent to that VTEP.
 ### Fabric Enable Wireless LAN Controller.
 
 
-![](assets/markdown-img-paste-20180328063908782.png)
+![](/assets/markdown-img-paste-20180328063908782.png)
 
 The managment is still centralised as today , but the datapath becomes much more scalablae and high bandwidth capable. Notice in the picture above the Datapath between the WLCs.
 
@@ -63,7 +63,7 @@ The `Virtual Network` is based on VRFs. Now why do we not call it VRF is it is b
 
 In the picture below only the Fabric Border and the Edge nodes have the VRFs. Anything else between these devices is a VXLAN Forwarder.
 
-![](assets/markdown-img-paste-20180328064342979.png)
+![](/assets/markdown-img-paste-20180328064342979.png)
 
 ### Scalable Group Tag
 
@@ -75,29 +75,29 @@ SGT is carried in the VXLAN and now can tranverse devices which do not have SGT 
 
 ### A very important and good slide summarising a lot of info :
 
-![](assets/markdown-img-paste-20180328071006218.png)
+![](/assets/markdown-img-paste-20180328071006218.png)
 
 ### A light and scalable Control Plane based on LISP
 
-![](assets/markdown-img-paste-20180328072634856.png)
+![](/assets/markdown-img-paste-20180328072634856.png)
 
 Notice the Table Sizes on the routers have narrowed down and is offloaded to the Mapping Database.
 
 ### LISP Lookup Protocol
 
-![](assets/markdown-img-paste-2018032807290141.png)
+![](/assets/markdown-img-paste-2018032807290141.png)
 
-![](assets/markdown-img-paste-20180328072929191.png)
+![](/assets/markdown-img-paste-20180328072929191.png)
 
 ### The VXLAN Header
 
-![](assets/markdown-img-paste-20180328073258309.png)
+![](/assets/markdown-img-paste-20180328073258309.png)
 
 VRF is carried in the VNI and SGT is carried in the Se
 
 ### Cisco Trustsec
 
-![](assets/markdown-img-paste-20180328073504455.png)
+![](/assets/markdown-img-paste-20180328073504455.png)
 
 
 #### Cisco Trustsec TAG Assignment
@@ -106,9 +106,7 @@ VRF is carried in the VNI and SGT is carried in the Se
 
 
 
-
-
-![](assets/markdown-img-paste-20180328073904227.png)
+![](/assets/markdown-img-paste-20180328073904227.png)
 
 
 `Grapevine`  is the Assurance Part , which is a container infrastructructure whic is moving to Maglab.
@@ -118,9 +116,27 @@ APIC-EM Services has the Inventory and other servies.
 Then using the north bound APIS the GUI is created.
 
 
-![](assets/markdown-img-paste-20180328074403482.png)
+![](/assets/markdown-img-paste-20180328074403482.png)
 
 
 ### APIC EM Cluster Architecture
 
-![](assets/markdown-img-paste-20180328074752927.png)
+![](/assets/markdown-img-paste-20180328074752927.png)
+
+- Switch Support Matrix for SD Access wired and wireless
+- Campus Fabric
+- What Exactly is an Overlay 
+  - Takes the abstraction details of  out of the network
+  - Simple to Onboard Users
+  - THis is what provides your services , firewall
+- What is SGT and Trustsec Primer
+- DNA Structure
+- Anatomay of Attck
+- Trustsec Segmentation
+- DNA Device Discovery Integration
+- ISE Integration Point
+- Authentication and Authorisation ISE Policy
+
+
+
+-

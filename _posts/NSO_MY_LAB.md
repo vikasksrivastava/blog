@@ -26,16 +26,18 @@
 #### Lets start with configuring the CE devices to be part of NSO
 
 
-```cisco
-enable password cisco
-username vikassri pass cisco
+```shell
 
-line vty 0 4
- password cisco
- login local
- transport input telnet
-!
+  enable password cisco
+  username vikassri pass cisco
+
+  line vty 0 4
+   password cisco
+   login local
+   transport input telnet
+  !
 ```
+
 
 #### EXERCISE 1. Now lets configure loopback address with a service !
 
@@ -271,89 +273,89 @@ admin@ncs(config)# devices device-group All\ Routers apply-template template-nam
 
 #### EXERCISE 3. Deploy MPLS L2 VPN configuration with `device` , `interface`and `loopback` as selective option (No manual entry)!
 
-1. The YANG File
+1.  The YANG File
 
-```sh
-module new_l2vpn {
-  namespace "http://com/example/new_l2vpn";
-  prefix new_l2vpn;
+```shell
+    module new_l2vpn {
+      namespace "http://com/example/new_l2vpn";
+      prefix new_l2vpn;
 
-  import ietf-inet-types { prefix inet; }
-  import tailf-ncs { prefix ncs; }
-  import tailf-common { prefix tailf; }
-  import tailf-ned-cisco-ios { prefix ios; }
+      import ietf-inet-types { prefix inet; }
+      import tailf-ncs { prefix ncs; }
+      import tailf-common { prefix tailf; }
+      import tailf-ned-cisco-ios { prefix ios; }
 
-  augment "/ncs:services" {
-    list new_l2vpn {
-      key "name";
-      unique "pw-id";
-      uses ncs:service-data;
-      ncs:servicepoint "l2vpn";
+      augment "/ncs:services" {
+        list new_l2vpn {
+          key "name";
+          unique "pw-id";
+          uses ncs:service-data;
+          ncs:servicepoint "l2vpn";
 
-      leaf name {
-        tailf:info "Service Instance Name";
-        type string;
-      } //name
+          leaf name {
+            tailf:info "Service Instance Name";
+            type string;
+          } //name
 
-      leaf pw-id {
-        tailf:info "Unique Pseudowire ID";
-        mandatory true;
-        type uint32 {
-          range "1..4294967295";
-        }
-      } //pw-id
+          leaf pw-id {
+            tailf:info "Unique Pseudowire ID";
+            mandatory true;
+            type uint32 {
+              range "1..4294967295";
+            }
+          } //pw-id
 
-      leaf device1 {
-        tailf:info "PE Router1";
-        mandatory true;
-        type leafref {
-          path "/ncs:devices/ncs:device/ncs:name";
-        }
-      } //device1
+          leaf device1 {
+            tailf:info "PE Router1";
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:name";
+            }
+          } //device1
 
-      leaf intf-number1 {
-        tailf:info "GigabitEthernet Interface ID";
-        mandatory true;
-        type leafref {
-          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
-        }
-      } //int-number1
+          leaf intf-number1 {
+            tailf:info "GigabitEthernet Interface ID";
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+            }
+          } //int-number1
 
-      leaf remote-ip1 {
-        tailf:info "Loopback0 IP Address of Remote PE ";
-        mandatory true;
-        type leafref {
-          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
-        }
-      } //remote-ip1
+          leaf remote-ip1 {
+            tailf:info "Loopback0 IP Address of Remote PE ";
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
+            }
+          } //remote-ip1
 
-      leaf device2 {
-        tailf:info "PE Router2";
-        mandatory true;
-        type leafref {
-          path "/ncs:devices/ncs:device/ncs:name";
-        }
-      } //device2
+          leaf device2 {
+            tailf:info "PE Router2";
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:name";
+            }
+          } //device2
 
-      leaf intf-number2 {
-        tailf:info "GigabitEthernet Interface ID";
-        mandatory true;
-        type leafref {
-          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
-        }
-      } //intf-number2
+          leaf intf-number2 {
+            tailf:info "GigabitEthernet Interface ID";
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+            }
+          } //intf-number2
 
-      leaf remote-ip2 {
-        tailf:info "Loopback0 IP Address of Remote PE ";
-        mandatory true;
-        type leafref {
-          path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
-        }
-      } //remote-ip2
+          leaf remote-ip2 {
+            tailf:info "Loopback0 IP Address of Remote PE ";
+            mandatory true;
+            type leafref {
+              path "/ncs:devices/ncs:device/ncs:config/ios:interface/ios:Loopback/ios:ip/ios:address/ios:primary/ios:address";
+            }
+          } //remote-ip2
 
-    } //list_newl2vpn
-  }
-}
+        } //list_newl2vpn
+      }
+    }
 
 ```
 
@@ -1043,11 +1045,9 @@ This is how you find the XPATH
 `show running-config devices device PE11 config ios:interface GigabitEthernet | display xpath`
 
 ```
+      show running-config devices device CE21 address | display xpath
 
-show running-config devices device CE21 address | display xpath
-
-/devices/device[name='CE21']/address
-
+      /devices/device[name='CE21']/address
 ```
 
 

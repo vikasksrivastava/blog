@@ -21,3 +21,16 @@ Disk progress: 4%
 ESXi
 
 https://talesfromthedatacenter.com/2016/02/esxi-6-install-stuck-on-relocating-modules-and-starting-up-the-kernel/
+
+
+### Re-arranging iTerm
+
+Thanks to `http://azaleasays.com/2014/03/05/iterm2-merge-a-pane-back-to-window-or-tab-bar/`
+
+The secret key combination to drag a pane back to a window or to the tab bar is: `command + shift + option`, while dragging the pane body (not its header!). View the screencast below and you’ll figure it out:
+
+
+
+### Having iTerm handle the telnet:// URL
+
+![](assets/markdown-img-paste-20180528184424236.png)

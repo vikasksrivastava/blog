@@ -728,6 +728,27 @@ leaf ce-ip
 }
 ```
 
+### Use the `tailf:hidden` statement to hide the leaf from the northbound interfaces.
+
+This will remove the leaf from appreaing in CLI / Web UI . This is a precautionary step since we want to apply it programmaticaly.
+
+```sh
+augment "/ncs:services"
+{
+  leaf l3mplsvpn-id-cnt
+  {
+    description "Provides a unique 32-bit number used as VPN instance identifier";
+    tailf:hidden "Counter";
+    type uint32;
+    default "1";
+  }
+}
+```
+
+
+
+
+
 
 
 
