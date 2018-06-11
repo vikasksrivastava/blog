@@ -44,6 +44,16 @@ ovftool --noSSLVerify \
         vi://192.168.1.13/
 
 
+qemu-img convert -c -O qcow2 /opt/unetlab/tmp/0/c06281a8-161c-4aa5-aea4-4d304b13b6d4/1/megasasa.qcow2 /opt/unetlab/addons/qemu/vwlc-8.7.102/megasasa.qcow2
+
+
+qemu-img convert -c -O qcow2 /opt/unetlab/tmp/0/c06281a8-161c-4aa5-aea4-4d304b13b6d4/1/virtioa.qcow2  /opt/unetlab/addons/qemu/win-7test/virtioa.qcow2
+
+##### Downloading from Datastore to local machine
+
+wget --no-check-certificate --http-user=root --http-password=Devimaa6! 'https://192.168.1.13/folder/OS_ISOs/W10X64.1709.ENU.DEC2017.iso?dcPath=ha%2ddatacenter&dsName=datastore1'  -O  Windows.iso
+
+
 
 ESXi
 

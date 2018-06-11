@@ -1053,9 +1053,6 @@ This is how you find the XPATH
 
 This is how you refrence DEREF()
 
-
-
-
 `path "deref(../../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";`
 
 Ok
