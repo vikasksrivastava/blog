@@ -6,7 +6,8 @@ comments: true
 image: /images/seo-example.jpg
 ---
 
-Previously, I wrote about [how to make a Jekyll blog](https://nikhita.github.io/build-blog-using-github-jekyll). In this post, I'll talk about how you can make that blog SEO compatible. 
+
+Previously, I wrote about [how to make a Jekyll blog](https://nikhita.github.io/build-blog-using-github-jekyll). In this post, I'll talk about how you can make that blog SEO compatible.
 
 Jekyll blogs don't have any SEO functionality by default so I had to incorporate it myself. This led me to learn more about SEO and it turned out to be quite a fun experience!
 
@@ -35,7 +36,7 @@ keywords: keyword1, keyword2, keyword3
 
 Mentioning the title, description and keywords help you to be ranked higher. Also, if your first paragraph and the context of the whole post differ, this would turn out to immensely useful.
 
-Now that you have mentioned it in your post, you'll need to include these meta. This can be done by adding the following lines in ```head.html```. Note that the title meta is already included by default. 
+Now that you have mentioned it in your post, you'll need to include these meta. This can be done by adding the following lines in ```head.html```. Note that the title meta is already included by default.
 
 ```html
  <!-- add description and keywords for SEO -->
@@ -70,7 +71,7 @@ Wasn't that easy? Told ya!
 
 ## <a name="sitemap"></a>3. Adding sitemap.xml
 
-The sitemap is a xml file to help bots crawl your website easily. Also, it's a good idea to submit sitemaps to search engines so that they don't have to look for it in the first place. 
+The sitemap is a xml file to help bots crawl your website easily. Also, it's a good idea to submit sitemaps to search engines so that they don't have to look for it in the first place.
 
 You can use a [plugin](https://github.com/jekyll/jekyll-sitemap) for making it but I wanted my site to be more GWT-friendly (Google Webmaster Tools). GWT doesn't like relative URLs and the plugin doesn't put absolute URLs in the sitemap. But fret not! You can make it yourself too. Simply make a file called ```sitemap.xml``` in your root directory and paste the following code:
 
@@ -137,9 +138,9 @@ sitemap:
 {% endraw %}
 ```
 
-After that go ahead and [submit](https://support.google.com/sites/answer/100283?hl=en) it to Google. 
+After that go ahead and [submit](https://support.google.com/sites/answer/100283?hl=en) it to Google.
 
-Great, your website is almost SEO-ready! 
+Great, your website is almost SEO-ready!
 
 ## <a name="robots"></a>4. Adding robots.txt
 
@@ -161,16 +162,16 @@ This isn't technically SEO but it helps to grow your audience. If you'd like to 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <h3 class="share-this">Share this!</h3>
-<div id="share-box"> 
+<div id="share-box">
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook-official fa share-button"></i></a>
-       
+
         <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ site.url }}{{ page.url }}" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><i class="fa fa-twitter fa share-button"></i></a>
-       
+
         <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-google-plus fa share-button"></i></a>
-       
+
         <a href="http://www.reddit.com/submit?url={{ site.url }}{{ page.url }}" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa share-button"></i></a>
        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{{ page.url }}&title={{ page.title }}&summary={{ page.description }}&source=webjeda" onclick="window.open(this.href, 'mywin',
