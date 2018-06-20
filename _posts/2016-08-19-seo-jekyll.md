@@ -13,6 +13,7 @@ Jekyll blogs don't have any SEO functionality by default so I had to incorporate
 
 Here is a detailed tutorial on what you need to do to make your Jekyll blog SEO compatible. Note that it's **highly recommended** that you do this since your Jekyll blog isn't indexed - and Google needs your site to be indexed to be included in the search results.
 
+
 ## Table of Contents:
 
 1. [Title, description and keywords](#title-description)
