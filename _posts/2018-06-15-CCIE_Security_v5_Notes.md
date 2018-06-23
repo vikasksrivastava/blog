@@ -45,11 +45,11 @@ You need the following to secure a Tunnel :
     - Encryption
     - Hashing
 
-> Diffie Hellman is the algorith that generates a `KEY` . Lifetime of a DH key is 3600 secs (1hr).
+> **Diffie Hellman** is the algorith that generates a `KEY` . Lifetime of a DH key is 3600 secs (1hr).
 
 There are two tunnels :
-1. `PHASE 1` The first tunnel is to exchange the KEY . `ISAKMP` Internet Security Association and Key Managment Protocol is used here .
-2. `PHASE 2` The second tunnel is for Data transfer. `ESP` Encapsulation Security Payload is used in this phase .
+1. `PHASE 1` The **first tunnel** is to exchange the KEY . `ISAKMP` Internet Security Association and Key Managment Protocol is used here .
+2. `PHASE 2` The **second tunnel** is for Data transfer. `ESP` Encapsulation Security Payload is used in this phase.
 
 <img src="assets/markdown-img-paste-20180619143018242.png" alt="Drawing" style="width: 600px;"/>
 
@@ -169,7 +169,7 @@ router eigrp 10
 
 In this mode once the GRE tunnel is up , we basically apply the Crypto Map configuration as a `profile` to the tunnel interface (in this e.g IPROF )
 
-> Notice that there is not need define `match` for interesting traffic or `set-peer` as this is all taken care by the `tunnel0` interface by default as every traffic via the tunnel interface is interesting and the peer is known because of GRE. .
+> Notice that there is no need to define `match` for interesting traffic or `set-peer` as this is all taken care by the `tunnel0` interface by default as every traffic via the tunnel interface is interesting and the peer (set peer) is known because of GRE. .
 
 
 ```sh
