@@ -1,6 +1,41 @@
+---
+layout: post
+title: CCIE Security v5 Notes
+description: My Notes preparing for CCIE Security v5
+comments: true
+---
+
+
+   - [VPN (Policy based )](#vpn-policy-based-)
+			- [Key Exchange Protocol](#key-exchange-protocol)
+		- [GRE Tunnel](#gre-tunnel)
+				- [Step 1](#step-1)
+				- [Step 2](#step-2)
+		- [GRE over IPSec - Tunnel Mode](#gre-over-ipsec-tunnel-mode)
+		- [GRE / IPSec - Transport Mode](#gre-ipsec-transport-mode)
+			- [Configuration](#configuration)
+		- [Native IPSec Tunnel [S-VTI]](#native-ipsec-tunnel-s-vti)
+		- [MGRE (Multipoint GRE)](#mgre-multipoint-gre)
+			- [A Multipoint GRE Full Configuration Snippet](#a-multipoint-gre-full-configuration-snippet)
+		- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
+		- [DMVPN - EIGRP - Phases [I,II,III]](#dmvpn-eigrp-phases-iiiiii)
+		- [Redundancy [Dual-Hub DMVPN Setup]](#redundancy-dual-hub-dmvpn-setup)
+		- [Encrypting the Tunnel using IPSEC](#encrypting-the-tunnel-using-ipsec)
+		- [GETVPN](#getvpn)
+		- [VRF](#vrf)
+		- [VRF - Aware VPN )Site-to-Site](#vrf-aware-vpn-site-to-site)
+		- [VRF Aware [Get VPN]](#vrf-aware-get-vpn)
+		- [Routers as a CA Server](#routers-as-a-ca-server)
+		- [CA Based VPNs](#ca-based-vpns)
+		- [IKEv2 VPNS](#ikev2-vpns)
+			- [Troubleshooting Commands and Outputs](#troubleshooting-commands-and-outputs)
+			- [Error Messages and Resolution](#error-messages-and-resolution)
+
+
 ### VPN (Policy based )
 
 #### Key Exchange Protocol
+
 
 For two sides to encrypt or decrypt the traffic , a key needs to be shared between two endpoints.
 
@@ -371,29 +406,36 @@ R1#
 ```
 
 
-**DISADVANTAGES** In this type of NHRP Based name resolution you need to **statically** define the mapping which is not scalable and also requires all sites to have static IP Addressing.
+**DISADVANTAGES** In this type of NHRP Based name resolution you need to **statically** define the mapping which is not scalable and **also requires all sites to have static IP Addressing.**
 
 Now this disadvantage was eliminiated by the use of a **Next Hop Server** like a DNS naming server.
 
 **How does the `Next Hop Server` works ?**
 
-Under the inteface configuration on the end routers , we define the Next Hop Servers IP Address. When these interfaces come up they register their information to the Next Hope Server.
+Under the inteface configuration on the end routers , we define the Next Hop Servers IP Address. When these interfaces come up they register their information to the Next Hop Server notifying :
+
+"Hey my Tunnel address is `X.X.X.X` and my Public address is `Y.Y.Y.Y` "
+
+
+**Now the NHS Server has all the mapping of Tunnel IP and the Public IP .**
+
 
 
 ### DMVPN (Dynamic Multipoint VPN)
 
 **How does the `Next Hop Server` works ?**
 
-Under the inteface configuration on the end routers , we define the Next Hop Servers IP Address. When these interfaces come up they register their information to the Next Hope Server.
+Under the inteface configuration on the end routers , we define the Next Hop Servers IP Address. When these interfaces come up they register their information to the Next Hop Server.
 
-![](assets/markdown-img-paste-20180622101609968.png)
+![](assets/markdown-img-paste-20180622171449545.png)
 
 Step 1. Enabling the Next Hop Server
 
 ```sh
 ! R1
+
 interface tunnel0
- ip address 192.168.1.1
+ ip address 192.168.1.1 255.255.255.0
  tunnel source f0/0
  tunnel mode gre multipoint
  ip nhrp network-id 1
@@ -413,14 +455,15 @@ Step 2. Configuring the Next Hop Client
 
 ```sh
 ! R2
+
 interface tunnel0
- ip address 192.168.1.2
- tunnel source ethernet0/0
+ ip address 192.168.1.2 255.255.255.0
+ tunnel source f0/1
  tunnel mode gre multipoint
  ip nhrp network-id 1
  ip nhrp nhs 192.168.1.1
- ip nhrp map 192.168.1.1 192.1.10.1 // This for Data Path mapping
- ip nhrp map multicast 192.1.10.1 // For the EIGRP Packets
+ ip nhrp map 192.168.1.1  192.1.10.2 // How do I reach the NHS ? This line basically points every client to the Next Hop Server.
+ ip nhrp map multicast 192.1.10.2 // For the EIGRP Packets
 
  router eigrp 100
   no auto
@@ -428,34 +471,118 @@ interface tunnel0
   network 192.168.1.0
   network 172.16.0.0
 ```
+
 Repeat the above configuration for other Clients on the DMVPN.
 
+```sh
+R1#sh ip nhrp
+192.168.1.2/32 via 192.168.1.2, Tunnel0 created 00:00:12, expire 01:59:47
+  Type: dynamic, Flags: unique registered used
+  NBMA address: 192.1.20.2
+```
 
-> **Split Horizon**, dont send the update back on the same interface you learned the route on. So becuase of Split Horizon not all Spokes learn about each other. Hence it needs to be turned off.
+**This completes your DMVP Configuration.**
 
 
 
 ### DMVPN - EIGRP - Phases [I,II,III]
 
-**Phase I** - First order of operation is to turn off split-horizon on the hub.
+**Phase I** - With the default configuration of DMVPN only the neighborship is formed between `Hub` and `Spoke` routers but not between `Spoke` and `Spoke` directly.
+
+To resolve this we to turn off split-horizon on the hub.
+
+> **Split Horizon**, dont send the update back on the same interface you learned the route on.
+
 
 ```sh
 interface tunnel0
  no ip split-horizon eigrp 100
 ```
 
-**Phase II** - Second you would like the traffic to be point to point and not hoping thorough the NHS Router. For this you have to ensure that the `next-hop` isnt changed. On the HUB
+**BEFORE** (without the split-horizon configured)
+
+```sh
+R2#sh ip route eigrp
+     172.16.0.0/24 is subnetted, 2 subnets
+D       172.16.1.0 [90/297372416] via 192.168.1.1, 00:10:13, Tunnel0
+     10.0.0.0/24 is subnetted, 2 subnets
+D       10.1.1.0 [90/297372416] via 192.168.1.1, 00:10:13, Tunnel0
+```
+
+**AFTER** (after the split-horizon configured)
+
+```sh
+R2#sh ip route eigrp
+     172.16.0.0/24 is subnetted, 4 subnets
+D       172.16.4.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+D       172.16.1.0 [90/297372416] via 192.168.1.1, 00:18:44, Tunnel0
+D       172.16.3.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+     10.0.0.0/24 is subnetted, 4 subnets
+D       10.4.4.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+D       10.3.3.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+D       10.1.1.0 [90/297372416] via 192.168.1.1, 00:18:44, Tunnel0
+```
+---
+**Phase II** (Traffic from Spoke to Spoke goes direct) - Second you would like the traffic to be point to point and not hoping thorough the NHS Router (look at the putput above where all traffic is hopping through 192.168.1.1).
+
+Notice the traffic is going via 192.168.1.1
+
+```sh
+R3#traceroute 10.2.2.1
+
+Type escape sequence to abort.
+Tracing the route to 10.2.2.1
+
+  1 192.168.1.1 20 msec 20 msec 20 msec
+  2 192.168.1.2 32 msec *  48 msec
+R3#
+```
+
+The resolution of this issue is to ensure that the `next-hop` isnt changed. In the above example
+
+1. `R2` told `R1` about its routes first.
+2. Then R1 tells `R3` about its routes , here it changes the `next-hop` for addresss learned from `R2` to itself .
+
 
 ```sh
 interface tunnel0
  no ip next-hop-self eigrp 100
 ```
 
+**BEFORE**  (All traffic going via 192.168.1.1)
 
+```sh
+R2#sh ip route eigrp
+     172.16.0.0/24 is subnetted, 4 subnets
+D       172.16.4.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+D       172.16.1.0 [90/297372416] via 192.168.1.1, 00:18:44, Tunnel0
+D       172.16.3.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+     10.0.0.0/24 is subnetted, 4 subnets
+D       10.4.4.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+D       10.3.3.0 [90/310172416] via 192.168.1.1, 00:00:08, Tunnel0
+D       10.1.1.0 [90/297372416] via 192.168.1.1, 00:18:44, Tunnel0
+```
 
+**AFTER**  ( Now , all site specific traffic goes to the specific sites router **without** hopping over 192.168.1.1)
+
+```sh
+R2#sh ip route eigrp
+     172.16.0.0/24 is subnetted, 4 subnets
+D       172.16.4.0 [90/310172416] via 192.168.1.4, 00:00:30, Tunnel0
+D       172.16.1.0 [90/297372416] via 192.168.1.1, 00:00:30, Tunnel0
+D       172.16.3.0 [90/310172416] via 192.168.1.3, 00:00:30, Tunnel0
+     10.0.0.0/24 is subnetted, 4 subnets
+D       10.4.4.0 [90/310172416] via 192.168.1.4, 00:00:30, Tunnel0
+D       10.3.3.0 [90/310172416] via 192.168.1.3, 00:00:30, Tunnel0
+D       10.1.1.0 [90/297372416] via 192.168.1.1, 00:00:30, Tunnel0
+```
+
+---
 **Phase III** -
 
-Use of summarisation for addressing.
+In this phase NHRP basically redirects Spokes to reach directly out to other spokes its tryign to reach.
+
+The NHS Server points the spokes to where they are trying to reach and installs a NHRP Cache entry pointing towards that remote spoke in the requesting spoke.
 
 ```sh
 ! HUB
@@ -467,14 +594,98 @@ ip nhrp redirect
 ip nhrp shortcut
 ```
 
+So with this , only the first NHRP resolution request is sent to `R1` and the remaining data flow happens directly
+
+```sh
+R4#trace 10.3.3.1
+
+Type escape sequence to abort.
+Tracing the route to 10.3.3.1
+
+  1 192.168.1.1 28 msec 40 msec
+    192.168.1.3 24 msec
+R4#trace 10.3.3.1
+
+Type escape sequence to abort.
+Tracing the route to 10.3.3.1
+
+  1 192.168.1.3 32 msec *  40 msec
+```
 
 
 ### Redundancy [Dual-Hub DMVPN Setup]
 
-### OSPF As a routing protocol
+In this case you basically copy the configuration of the existing NHS  , make a new NHS . Point each other NHS with a MAP command and run routing protocol on both .
+
+After this you point your spokes to the additional NHS . Pretty basic stuff .
+
+
+### Encrypting the Tunnel using IPSEC
+
+```sh
+!1. Phase 1
+
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ encryption 3des
+ crypto isakmp key cisco123 address 0.0.0.0
+
+ !2. Phase 2
+
+ crypto ipsec transform-set TSET esp-3des esp-md5
+  mode transport
+  exit
+
+!3. IPSec Profile
+
+ crypto ipsec profile PROF
+  set transform-set TSET
+  exit
+
+!4. Apply the profile to the interface
+
+ interface tunnel 0
+  tunnel protection ipsec profile PROF
+
+```
+
+### GETVPN
+
+GETVPNS are used in a MPLS Private WAN type deployments as the GETVPNs packets cannot be routed over the internet.
+
+Why do we need GETVPNs when we have DMVPN : THe purpose to ket full encryption capabilities while the routing is already setup.
+
+GetVPN copies the inner header onto the outer header.
+It only works on fully routed networks. It can potentially work on the Internet but only if you are using Public addresses on the inside .
+
+A multisite IPSec VPN uses a single session key for multiple sites . It has two entities ; `Key Server` and `Group Member`
+
+![](assets/markdown-img-paste-20180623141229194.png)
+
+> Session key is exchanged in `Phase 1` and used in `Phase 2`
 
 
 
+
+
+
+
+
+
+
+
+
+### VRF
+### VRF - Aware VPN )Site-to-Site
+### VRF Aware [Get VPN]
+
+----
+###  Routers as a CA Server
+### CA Based VPNs
+### IKEv2 VPNS
+ ### Using Legacy Menthods
+ ### Using S-VTIs
 
 
 
@@ -586,3 +797,19 @@ interface: FastEthernet0/0
 *Mar  1 00:42:09.431: %CRYPTO-4-IKMP_BAD_MESSAGE: IKE message from 192.1.20.2 failed its sanity check or is malformed
 ```
 The above warrants a key mismatch .
+
+---
+
+```sh
+*Mar  1 01:34:18.575: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 100: Neighbor 192.168.1.3 (Tunnel0) is down: retry limit exceeded
+*Mar  1 01:34:21.279: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 100: Neighbor 192.168.1.3 (Tunnel0) is up: new adjacency
+*Mar  1 01:34:22.259: %DUAL-5-NBRCHANGE: IP-EIGRP(0) 100: Neighbor 192.168.1.2 (Tunnel0) is down: retry limit exceeded
+```
+
+This was caused due to the following commands missing from the DMVPN Clients
+
+
+```sh
+ip nhrp map multicast 192.1.10.2
+```
+---
