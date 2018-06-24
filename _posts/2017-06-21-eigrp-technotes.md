@@ -468,11 +468,3 @@ But John will not send any query to Jack because it knows that it is a Stub rout
 
 
 -------------------------------
-
-
-
-
-
-
-
-Finally `git commit` `git push` configuration file.

@@ -51,7 +51,7 @@ There are two tunnels :
 1. `PHASE 1` The **first tunnel** is to exchange the KEY . `ISAKMP` Internet Security Association and Key Managment Protocol is used here .
 2. `PHASE 2` The **second tunnel** is for Data transfer. `ESP` Encapsulation Security Payload is used in this phase.
 
-<img src="assets/markdown-img-paste-20180619143018242.png" alt="Drawing" style="width: 600px;"/>
+<img src="/assets/markdown-img-paste-20180619143018242.png" alt="Drawing" style="width: 600px;"/>
 
 > Though its not recommened , you can manually setup the `Phase 2` tunnel to use a manual key skipping the `Phase 1` negotiation (without using `ISAKMP`).
 
@@ -114,7 +114,7 @@ THe tunnel will stay up for :
 Phase 1  86400 sec 24 hrs
 Phase 2 3600 sec 1 hr
 
-![](assets/markdown-img-paste-20180619173443458.png)
+![](/assets/markdown-img-paste-20180619173443458.png)
 
 > In the above VPN Configuration , the interesting traffic is define by an `ACL`. Such VPNS are called Policy based VPN.
 
@@ -123,7 +123,7 @@ Phase 2 3600 sec 1 hr
 
 GRE Tunnel basically creates a virtual point to point link between two routers which traditionally were establishing VPN based on interesting traffic define by ACLs . Which was a tedious process.
 
-![](assets/markdown-img-paste-20180622062800407.png)
+![](/assets/markdown-img-paste-20180622062800407.png)
 
 Here is the sample configuration of a GRE Tunnel. It is basically a two step process
 1. Creat a virtual link between the two routers , in this example R1 and R2
@@ -165,7 +165,7 @@ router eigrp 10
 
 ### GRE over IPSec - Tunnel Mode
 
-![](assets/markdown-img-paste-20180622070147560.png)
+![](/assets/markdown-img-paste-20180622070147560.png)
 
 In this mode once the GRE tunnel is up , we basically apply the Crypto Map configuration as a `profile` to the tunnel interface (in this e.g IPROF )
 
@@ -339,7 +339,7 @@ interface tunnel0
 
 #### A Multipoint GRE Full Configuration Snippet
 
-![](assets/markdown-img-paste-20180622171449545.png)
+![](/assets/markdown-img-paste-20180622171449545.png)
 
 ```sh
 ! R1
@@ -427,9 +427,9 @@ Under the inteface configuration on the end routers , we define the Next Hop Ser
 
 Under the inteface configuration on the end routers , we define the Next Hop Servers IP Address. When these interfaces come up they register their information to the Next Hop Server.
 
-![](assets/markdown-img-paste-20180622171449545.png)
+![](/assets/markdown-img-paste-20180622171449545.png)
 
-Step 1. Enabling the Next Hop Server
+**Step 1.** Enabling the Next Hop Server
 
 ```sh
 ! R1
@@ -451,7 +451,7 @@ router eigrp 100
 
 That's all for configuring a NHS!
 
-Step 2. Configuring the Next Hop Client
+**Step 2.** Configuring the Next Hop Client
 
 ```sh
 ! R2
@@ -652,6 +652,8 @@ crypto isakmp policy 10
 
 ### GETVPN
 
+> GetVPN is a Cisco only solution
+
 GETVPNS are used in a MPLS Private WAN type deployments as the GETVPNs packets cannot be routed over the internet.
 
 Why do we need GETVPNs when we have DMVPN : THe purpose to ket full encryption capabilities while the routing is already setup.
@@ -661,14 +663,153 @@ It only works on fully routed networks. It can potentially work on the Internet 
 
 A multisite IPSec VPN uses a single session key for multiple sites . It has two entities ; `Key Server` and `Group Member`
 
-![](assets/markdown-img-paste-20180623141229194.png)
+![](/assets/markdown-img-paste-20180623141229194.png)
 
 > Session key is exchanged in `Phase 1` and used in `Phase 2`
 
+In a normal Phase 1 (ISA) , the only thing exchanges happens is the session key.
+
+**`ISAKMP`** This protocol only echanges `Session Key` . Run on UDP/500
+**`GDOI` (Group Domain of Interpretation)** : This Exchanges `Session Key` , `Interesting Traffic ACL`, `Transform Set` and is specially made for GETVPNs. Runs on UDP/848 . This protocol is like an extension for ISAKMP.
+
+**In GETVPNs ,**
+
+**`PHASE 1`** is setup between `Group Member` and `Key Server` .
+**`PHASE 2`** is setup between `Group Member` and `Group Member`
 
 
+> **Prerquisite for GETVPN** : Make sure all networks are able to reach all networks
 
+#### Configuration of a GETVPN
 
+**Step 1.** Configure the Key Server
+
+```sh
+! KEY SERVER
+
+! 1. Phase I
+
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ enc 3des
+ group 2
+
+crypto isakmp key cisco123 address 192.1.10.2
+crypto isakmp key cisco123 address 192.1.20.2
+crypto isakmp key cisco123 address 192.1.30.2
+
+! 2. Phase II
+
+crypto ipsec transform-set TSET esp-3des esp-sha-hmac
+
+! 3. Configure IPSEC Profile
+
+crypto ipsec profile IPROF
+ set transform-set TSET
+
+! 4. Configure Interesting traffic ACL
+
+access-list 101 permit ip 10.1.0.0 0.0.255.255 10.1.0.0 0.0.255.255
+
+! 5. Configure the GDOI Group Configuration
+
+crypto gdoi group SALES
+ identity number 111 ! Should match on the Group members
+ server local ! I am the key server , so local
+  sa ipsec 10
+   profile IPROF
+   match address ipv4 101
+address ipv4 192.1.40.2
+```
+
+**Step 1.** Configure the Group Members
+
+```sh
+!R1
+
+! 1. Phase I
+
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ enc 3des
+ group 2
+
+crypto isakmp key cisco123 address 192.1.40.2
+
+! 2. Configure GDOI to point to the Key Server
+
+crypto gdoi group GRP-R1
+ identity number 111 ! Should match on the Group members
+ server address ipv4 192.1.40.2 ! Point to the key server
+
+! 3. Configure a Crypto MAP
+
+crypto map CMAP 10 gdoi
+ set group GRP-R1
+
+! 4. Apply Crypto MAP to the outgoing interface
+int f0/0
+ crypto map CMAP ! As soon as you do this , the key is downloaded.
+```
+
+Once you enter the above configuration on the Group member you will see the following output on the member :
+
+```sh
+*Mar  1 01:12:10.919: %CRYPTO-5-GM_REGSTER: Start registration to KS 192.1.40.2 for group GRP-R1 using address 192.1.10.2
+*Mar  1 01:12:10.947: %CRYPTO-6-GDOI_ON_OFF: GDOI is ON
+*Mar  1 01:12:11.711: %GDOI-5-GM_REGS_COMPL: Registration to KS 192.1.40.2 complete for group GRP-R1 using address 192.1.10.2
+```
+
+**Verification Commands**
+
+```sh
+R4-KEYSERVER#show crypto gdoi ks members
+
+Group Member Information :
+
+Number of rekeys sent for group SALES : 0
+
+Group Member ID   : 192.1.10.2
+Group ID          : 111
+Group Name        : SALES
+Key Server ID     : 192.1.40.2
+
+Group Member ID   : 192.1.20.2
+Group ID          : 111
+Group Name        : SALES
+Key Server ID     : 192.1.40.2
+
+Group Member ID   : 192.1.30.2
+Group ID          : 111
+Group Name        : SALES
+Key Server ID     : 192.1.40.2
+
+R4-KEYSERVER#show crypto gdoi
+GROUP INFORMATION
+
+    Group Name               : SALES (Multicast)
+    Group Identity           : 111
+    Group Members            : 0
+    IPSec SA Direction       : Both
+    Active Group Server      : Local
+    Group Rekey Lifetime     : 86400 secs
+    Rekey Retransmit Period  : 10 secs
+    Rekey Retransmit Attempts: 2
+
+      IPSec SA Number        : 10
+      IPSec SA Rekey Lifetime: 3600 secs
+      Profile Name           : IPROF
+      Replay method          : Count Based
+      Replay Window Size     : 64
+      ACL Configured         : access-list 101
+
+    Group Server list        : Local
+
+R4-KEYSERVER#
+
+```
 
 
 
@@ -687,7 +828,7 @@ A multisite IPSec VPN uses a single session key for multiple sites . It has two 
  ### Using Legacy Menthods
  ### Using S-VTIs
 
-
+![](assets/markdown-img-paste-20180623213245289.png)
 
 
 
