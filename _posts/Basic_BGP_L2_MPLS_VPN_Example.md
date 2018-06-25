@@ -1,12 +1,12 @@
 
 
 
-![](assets/markdown-img-paste-20180422002721122.png)
+![](/assets/markdown-img-paste-20180422002721122.png)
 
 
-Step1. Configure OSPF between the SP Routers
-Step2. Setup MPLS neighborship between the SP routers.
-Step. Finnaly Configure xconnect on the Customer facing interface on PE1 and PE2 pointing towards each other.
+**Step 1.** Configure OSPF between the SP Routers
+**Step 2.** Setup MPLS neighborship between the SP routers.
+**Step 3.** Finnaly Configure xconnect on the Customer facing interface on PE1 and PE2 pointing towards each other.
 
 ```sh
 
