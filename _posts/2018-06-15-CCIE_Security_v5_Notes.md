@@ -233,11 +233,19 @@ interface tunnel0
 
 Now notice that in the plain simple GRE the packet looked like this , which totaled  **88 bytes**:
 
-`GRE | 192.1.10.1 | 192.1.20.3 | EIGRP | 192.168.1.1 | 224.0.0.10 | Data |`
+```sh
++----+------------+------------+-------+-------------+------------+------+
+|GRE | 192.1.10.1 | 192.1.20.3 | EIGRP | 192.168.1.1 | 224.0.0.10 | Data |
++----+------------+------------+-------+-------------+------------+------+
+```
 
 With IPSec enable on it (which we did in the config example above) the packet size increase to **140 bytes** because of the ESP header and now looks like this :
 
-`ESP| 192.1.10.X | 192.1.20.X| GRE | 192.1.10.1 | 192.1.20.3 | EIGRP | 192.168.1.1 | 224.0.0.10 | Data |`
+```sh
++----------------+-----------------+------------+------------+-------+-------------+------------+------+
+|ESP| 192.1.10.X | 192.1.20.X| GRE | 192.1.10.1 | 192.1.20.3 | EIGRP | 192.168.1.1 | 224.0.0.10 | Data |
++----------------+-----------------+------------+------------+-------+-------------+------------+------+
+```
 
 > In the above packet , the entire packet including GRE is just a `data` packet (encapsulated in the ESP).
 
@@ -807,17 +815,45 @@ GROUP INFORMATION
 
     Group Server list        : Local
 
-R4-KEYSERVER#
-
 ```
 
+**Re-keyeing :**
+
+The lifetime of a key is 3600s , the lifetime counter starts when the first group member registers and a key is handed over.
+
+Let's say when a Group Member G1 registers to Key Server KS , the Key K1 is handed over with a count down timer started.
+
+*After 5 minutes (300sec) another Group Member G2 registers , it will be handed over the same key as G1 but the time remaining on it will be 3600-300=3300 secs.*
+
+**OR**
+
+*You can configure RE-KEYING , which basically sends a new key to everyone when a new Group Members join . This can be done over UNICAST or MULTICAST.*
+
+
+**Re-Keyeing Configuration** (Only done on Key Server)
+
+**Step 1.** Generate a RSA Keypair on the Key Server
+
+```sh
+crypto key generate rsa modulus 1024 label GETVPN-KEY
+```
+
+**Step 2.** Configre the GDOI group for re-keyeing
+
+```sh
+crypto gdoi group SALES
+ server local
+ rekey transport unicast
+ rekey authentication mypubkey rsa GETVPN-KEY
+ rekey algorithm 3des-cbc
+ rekey lifetime seconds 3600
+```
+
+### VRF - A Quick Introduction
 
 
 
 
-
-
-### VRF
 ### VRF - Aware VPN )Site-to-Site
 ### VRF Aware [Get VPN]
 
