@@ -119,6 +119,7 @@ Phase 2 3600 sec 1 hr
 > In the above VPN Configuration , the interesting traffic is define by an `ACL`. Such VPNS are called Policy based VPN.
 
 
+
 ### GRE Tunnel
 
 GRE Tunnel basically creates a virtual point to point link between two routers which traditionally were establishing VPN based on interesting traffic define by ACLs . Which was a tedious process.

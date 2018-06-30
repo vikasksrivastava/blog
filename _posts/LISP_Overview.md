@@ -29,9 +29,9 @@ LISP has 3 main components :
 **MAP Server and MAP Resolver `MR` and `MS`** : The DNS type name resolution system for LISP.
 
 
-![](assets/markdown-img-paste-20180528105450485.png)
+![](/assets/markdown-img-paste-20180528105450485.png)
 
-![](assets/markdown-img-paste-20180527202335319.png)
+![](/assets/markdown-img-paste-20180527202335319.png)
 
 ### xTR1
 
