@@ -36,6 +36,7 @@ comments: true
 
 #### Key Exchange Protocol
 
+ip name-server
 
 For two sides to encrypt or decrypt the traffic , a key needs to be shared between two endpoints.
 
@@ -865,9 +866,182 @@ crypto gdoi group SALES
 ### VRF - A Quick Introduction
 
 
+!R1
+conf t
+ip vrf CUST-A
+exit
+ip vrf CUST-B
+exit
+
+int fa1/0
+ ip vrf forwarding CUST-A
+ ip address 10.12.12.1 255.255.255.0
+ no shut
+int fa2/0
+ ip vrf forwarding CUST-B
+ ip address 10.12.12.1 255.255.255.0
+ no shut
+int fa0/0
+ ip vrf forwarding CUST-A
+ ip address 10.10.10.1 255.255.255.0
+ no shut
+int fa0/1
+ ip vrf forwarding CUST-B
+ ip address 10.10.10.1 255.255.255.0
+ no shut
 
 
-### VRF - Aware VPN )Site-to-Site
+
+
+ !R2
+ conf t
+ hostname R2
+ ip vrf CUST-A
+ exit
+ ip vrf CUST-B
+ exit
+
+ int fa1/0
+  ip vrf forwarding CUST-A
+  ip address 10.12.12.2 255.255.255.0
+  no shut
+ int fa2/0
+  ip vrf forwarding CUST-B
+  ip address 10.12.12.2 255.255.255.0
+  no shut
+ int fa0/0
+  ip vrf forwarding CUST-A
+  ip address 10.20.20.2 255.255.255.0
+  no shut
+ int fa0/1
+  ip vrf forwarding CUST-B
+  ip address 10.20.20.2 255.255.255.0
+  no shut
+
+
+
+
+!R3
+conf t
+ hostname R3
+
+
+int fa0/0
+ ip vrf forwarding CUST-A
+ ip address 10.10.10.3 255.255.255.0
+ no shut
+
+ !R4
+ conf t
+  hostname R4
+
+
+ int fa0/0
+
+  ip address 10.20.20.4 255.255.255.0
+  no shut
+
+
+
+  !R5
+  conf t
+   hostname R5
+
+
+  int fa0/0
+
+   ip address 10.10.10.5 255.255.255.0
+   no shut
+
+   !R6
+   conf t
+    hostname R6
+
+
+   int fa0/0
+
+    ip address 10.20.20.6 255.255.255.0
+    no shut
+
+```
+    R1#ping vrf CUST-A ip 10.10.10.3
+
+    Type escape sequence to abort.
+    Sending 5, 100-byte ICMP Echos to 10.10.10.3, timeout is 2 seconds:
+    !!!!!
+    Success rate is 100 percent (5/5), round-trip min/avg/max = 12/18/24 ms
+```
+
+
+```sh
+router eigrp 1
+ auto-summary
+ !
+ address-family ipv4 vrf CUST-B
+  network 10.0.0.0
+  no auto-summary
+  autonomous-system 200
+ exit-address-family
+ !
+ address-family ipv4 vrf CUST-A
+  network 10.0.0.0
+  auto-summary
+  autonomous-system 100
+ exit-address-family
+```
+
+
+### VRF - Aware VPNs
+
+Objective R and R2 should encrypt traffic between 10.1.1.0/24 to 10.2
+
+! R1
+! 1. Phase I
+! A. ISAKMP Policies
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ enc 3des
+ group 2
+
+! B. Create the Keyring
+crypto keyring KR-1 vrf CUST-A
+ pre-shared-key address 10.12.12.2 key cisco123
+
+! C. Create an ISAKMP Profile which later on will be linked to crytpto map
+crypto isakmp profile PROF-A
+ vrf CUST-A
+ keyring KR-1
+ match identity address 10.12.12.2 255.255.255.255 CUST-A
+
+! 2. Phase II
+
+crypto ipsec transform-set TSET esp-3des esp-md5
+
+! 3. Interesting traffic
+
+access-list 101 permit ip 10.1.1.0 0.0.0.255 10.2.2.0 0.0.0.255
+
+! 4. Crpto MAP
+
+crypto map CUST_A 10 ipsec-isakmp
+ match address 101
+ set peer 10.12.12.2
+ set tranform-set TSET
+crypto map CUST-A isakmp-profile PROF-A
+
+! 5. Apply the Crypto map to the interface
+
+interface fa1/0
+ crypto map CUST-A
+
+
+
+
+
+
+
+
 ### VRF Aware [Get VPN]
 
 ----

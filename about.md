@@ -12,26 +12,28 @@ An experienced **CCIE Datacenter Engineer** having 10 plus years of experience ,
 
 **Certifications:**
 
-    - CCIE Datacenter # 42302
-    - AWS Certified Solutions Architect - Associate
-    - Mirantis Certified Openstack Administrator - Professional Level
-    - Redhat Certified Engineer (RHCE)
-    - VMware Certified Professional – Network Virtualization (VCP-NV)
-    - VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
-    - NetApp Certified Data Management Administrator (NCDA)
-    - Cisco Storage Networking Support Specialist (ICSNS)
-    - Cisco Data Center Unified Computing Support Specialist (DCUCI)
-    - CCNP Voice (CCNP-V)
-    - Cisco Certified Network Associate (CCNA)
-    - Certified Ethical Hacker (CEH)
-    - ITIL Foundation v3
+
+  - CCIE Datacenter # 42302
+  - AWS Certified Solutions Architect - Associate
+  - Mirantis Certified Openstack Administrator - Professional Level
+  - Redhat Certified Engineer (RHCE)
+  - VMware Certified Professional – Network Virtualization (VCP-NV)
+  - VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
+  - NetApp Certified Data Management Administrator (NCDA)
+  - Cisco Storage Networking Support Specialist (ICSNS)
+  - Cisco Data Center Unified Computing Support Specialist (DCUCI)
+  - CCNP Voice (CCNP-V)
+  - Cisco Certified Network Associate (CCNA)
+  - Certified Ethical Hacker (CEH)
+  - ITIL Foundation v3
+
 
 **Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches, Cisco Nexus 1000v, FC, FCoE, NetApp
 
 #### Systems Engineer
 - `Company Name ` :  **Cisco Systems**
 - `Dates Employed` : Jan 2017 – Present
-- `Employment Duration` : 1 yr 3 mos
+- `Employment Duration` : 1 yr 6 mos
 - `Location` : Columbus, Ohio Area
 
 #### Cloud Admin (Openstack) Team Lead
