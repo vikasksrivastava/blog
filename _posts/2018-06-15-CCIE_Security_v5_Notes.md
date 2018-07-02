@@ -6,7 +6,9 @@ comments: true
 ---
 
 
-   - [VPN (Policy based )](#vpn-policy-based-)
+<!-- TO depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [VPN (Policy based )](#vpn-policy-based-)
 			- [Key Exchange Protocol](#key-exchange-protocol)
 		- [GRE Tunnel](#gre-tunnel)
 				- [Step 1](#step-1)
@@ -17,21 +19,29 @@ comments: true
 		- [Native IPSec Tunnel [S-VTI]](#native-ipsec-tunnel-s-vti)
 		- [MGRE (Multipoint GRE)](#mgre-multipoint-gre)
 			- [A Multipoint GRE Full Configuration Snippet](#a-multipoint-gre-full-configuration-snippet)
-  - Advanced VPNs
 		- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
 		- [DMVPN - EIGRP - Phases [I,II,III]](#dmvpn-eigrp-phases-iiiiii)
 		- [Redundancy [Dual-Hub DMVPN Setup]](#redundancy-dual-hub-dmvpn-setup)
-		- [Encrypting the Tunnel using IPSEC](#encrypting-the-tunnel-using-ipsec)
-- [GETVPN](#getvpn)
-		- [VRF](#vrf)
-- [VRF - Aware VPN )Site-to-Site](#vrf-aware-vpn-site-to-site)
+		- [GETVPN](#getvpn)
+			- [Configuration of a GETVPN](#configuration-of-a-getvpn)
+		- [VRF - A Quick Introduction](#vrf-a-quick-introduction)
+					- [Basic VRF Configuration Example](#basic-vrf-configuration-example)
+					- [VRF Reachability test](#vrf-reachability-test)
+					- [VRF Routing configuration example](#vrf-routing-configuration-example)
+		- [VRF - Aware VPNs](#vrf-aware-vpns)
+			- [MAJOR DIFFERENCE IS IN THIS SECTION - BEGIN](#major-difference-is-in-this-section-begin)
+			- [MAJOR DIFFERENCE IS IN THIS SECTION - END](#major-difference-is-in-this-section-end)
+					- [Always ensure a `source` ping](#always-ensure-a-source-ping)
 		- [VRF Aware [Get VPN]](#vrf-aware-get-vpn)
 - [Routers as a CA Server](#routers-as-a-ca-server)
-		- [CA Based VPNs](#ca-based-vpns)
-		- [IKEv2 VPNS](#ikev2-vpns)
+	- [CA Based VPNs](#ca-based-vpns)
+- [IKEv2 VPNS](#ikev2-vpns)
+	- [IKEv3 VPN using legacy methods](#ikev3-vpn-using-legacy-methods)
+	- [IKEv2 VPN using S-VTIs](#ikev2-vpn-using-s-vtis)
 			- [Troubleshooting Commands and Outputs](#troubleshooting-commands-and-outputs)
 			- [Error Messages and Resolution](#error-messages-and-resolution)
 
+<!-- /TOC -->
 
 ### VPN (Policy based )
 
@@ -978,7 +988,7 @@ interface fa1/0
  crypto map CUST-A
 ```
 
-###### Always ensure a `source` ping
+**Always ensure a `source` ping**
 
 ```sh
 R3#ping 10.2.2.4 source 10.1.1.3
@@ -1267,17 +1277,300 @@ Digital Signature of the CA Server
 6. The identity certificate is send back to the entity .
 
 
+Certificate Relocation List : Checks for Certificates currency (How current it is)
 
 
+![](assets/markdown-img-paste-20180701212428524.png)
+
+**Step 1. CA Server Configuration**
+
+1. Sync the Clock
+
+```sh
+clock timezone EST 4
+clock set XX:XX:XX 29 Aug 2019
+```
+
+2. Generate the RSA Key pair for the CA Server , this will be used for the root cert.
+
+`crypto key generate rsa modulus 1024 label IOSCA `
+
+3. Configure your Router as a Web SERVER
+
+`ip http server`
+
+4. Configure the CA  Server Parameters
+
+```sh
+crypto pki server IOSCA
+ database url flash:
+ issuer-name CN=ABC CA Server O=ABC OU=Training L=Dubai C=IN
+ grant auto
+ no shut
+```
+
+**Step 2. Client Configuration**
+
+1. Sync the Clock
+
+```sh
+clock timezone EST 4
+clock set XX:XX:XX 29 Aug 2019
+```
+
+2. Generate the RSA Key pair for the CA Server , this will be used for the root cert.
+
+`crypto key generate rsa modulus 1024`
+
+3. Configure your Router as a Web SERVER
+
+`ip domain-name devopsimplified.com`
+`ip http server`
+
+4. Create a pointer to the CA Server
+
+crypto ca trustpoint TRUSPOINT
+ enrollment url http://10.2.2.2:80
+ revocation-check none
 
 
+5. Download the root certificate from the CA Server
 
+crypto ca authenticate TRUSTPOINT
 
+6. Enroll your public key with the CA Server and get a certificate issued. [ID Cert]
+
+(On Client)# crypto ca enroll TRUSTPOINT
+
+(client)# show crypto pki certificate
+
+**This concludes the PKI infrastructure configration on both the Server and the Client. In the next step we will confgure the VPN between the clients**
 
 ## CA Based VPNs
+
+**Step 3. IPSec LAN to LAN VPN using Certificates**
+
+```sh
+! 1. Phase I
+crypto isakmp policy 10
+ auth rsa-sig ! This is changed for the crypto based on signatures
+ hash md5
+ enc 3des
+ group 2
+
+!2. Phase II
+
+crypto ipsec transform-set TSET esp-3des esp-sha-hmac
+
+!3. Interesting Traffic
+
+acces-list 101 permit 10.1.1.0 0.0.0.255 10.3.3.0 0.0.0.255
+
+!4. Crypto Map
+
+crypto map CMAP 10 ipsec-isakmp
+ match address 101
+ set-peer 192.168.13.3
+ set transform-set TSET
+
+! 5. Apply to interface
+
+int fa0/0
+ crypto map CMAP
+```
+
+
+
+
+
+---
 # IKEv2 VPNS
- ## Using Legacy Menthods
- ## Using S-VTIs
+
+What does IKEv2 bring to the table . IKEv2 is the replacemnt for ISAKMP which was also know as IKEv1 . IKEv2 pertains to the PHASE I only.
+
+What does IKEv2 Bring to the table :
+
+**Scalability** :  Lets say in a Hub and Spoke type of VPN setup , multiple clients will could have different type of Phase I policy.  On the Hub you would have to create multiple configuration to support all the Spokes.
+
+> IKEv2 allows scalability by usnign proposals which automatically expands to different combinations of Encryption , Integrity and Hash .
+
+IKEv2 Proposal (Could use a combination of all the options below)
+
+ - Encrypt  `3DES` , `AES`
+ - Integrity `MDS5` , `SHA`
+ - Group `2`,`5`
+
+**Directional Pre-shared Keys** : Allows the use of different preshared keys for the Phase I organisation. (Earlier the Pre-shared keys used to be same , in this case in each direction the key could be different)
+
+
+**More Secure Algorithms** : More `SHA` variants availaible in IKEv2
+
+
+## IKEv3 VPN using legacy methods
+
+ ![](assets/markdown-img-paste-20180701222340205.png)
+
+
+```
+R1 lo0 10.1.1.1
+
+R2 lo0 10.2.2.2
+
+R3 lo0 10.3.3.3
+.
+.
+.
+.
+```
+
+Here are the steps you need to configure :
+
+`PHASE I` **>** `PHASE II` **>** `ACL` **>** `MAP` **>** `APPLY TO INTERFACE`
+
+Everything starting `Phase II` remains same in `IKEv2` based VPN , only changes is in the `PHASE I`
+
+```sh
+! R1
+! 1. [A] Configure an IKEv2 Proposal
+! Notice the different combinations available
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha256
+ encryption 3des aes-cbc-192
+ group 2 5  ! DH key algorothms
+
+! 1. [B] Configure a policy and call the proposal
+
+crypto ikev2 policy POLICY-1
+ proposal PROP-1
+
+! 1. [C] Configure and IKEv2 Key ring
+
+crypto ikev2 keyring KR-1
+ peer R2
+  address 192.1.20.2
+  pre-shared-key local cisco111   ! notice differen pre shared keys cisco111 and cisco 222
+  pre-shared-key remore cisco222
+
+! 1. [D] Configure an IKEv2 profile that will attach keyring to the authentication type. This will be attached to your crypto map.
+
+crypto ikev2 profile IKEv2-PROF-1
+ match identity remote address 192.1.20.2 255.255.255.255
+ authentication local pre-share
+ authentication remore pre-share
+ keyring KR-1
+
+
+! 2. PHASE II
+
+crytp map transform-set ABC esp-rdes esp-md5-hmac
+
+! 3. ACL
+
+crypto ipsec 101 permit ip 10.1.1.0 0.0.0.255 10.2.2.0 0.0.0.255
+
+!4. Crypto MAP
+
+crypto map ABC 10 ipsec-isakmp
+ match address 101
+ set peer 192.1.20.2
+ set transform-set ABC
+ set ikev2-profile IKEv2-PROF-1
+
+
+!5 . Apply the configuration
+
+int fa0/0
+ crypto map ABC
+
+
+```
+**Repeat the above of the other side**
+
+`show crypto ikev2 sa`
+
+
+## IKEv2 VPN using S-VTIs (uses GRE tunnel and the routing on it)
+
+R3
+```sh
+! R3
+! 1. [A] Configure an IKEv2 Proposal
+! Notice the different combinations available
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5  ! DH key algorothms
+
+! 1. [B] Configure a policy and call the proposal
+
+crypto ikev2 policy POLICY-1
+ proposal PROP-1
+
+! 1. [C] Configure and IKEv2 Key ring
+
+crypto ikev2 keyring KR-1
+ peer R4
+  address 192.1.40.4
+  pre-shared-key  cisco123   ! Common for local and remote
+
+
+! 1. [D] Configure an IKEv2 profile that will attach keyring to the authentication type. This will be attached to your crypto map.
+
+crypto ikev2 profile IKEv2-PROF-1
+ match identity remote address 192.1.40.4 255.255.255.255
+ authentication local pre-share
+ authentication remote pre-share
+ keyring KR-1
+
+! 2. PHASE II
+
+crytp map transform-set ABC esp-rdes esp-md5-hmac
+
+! 3. IPSec Profile
+
+crypto ipsec profile IPROF
+ set transform-set TSET
+ set ikev2 profile IKEv2-PROF-1
+
+! 4. Tunnel Interface
+
+interface tunnel0
+ ip add 192.168.1.1 255.255.255.0
+ tunnel source 192.1.30.3
+ tunnel destination 192.1.40.4
+ tunnel mode ipsec ipv4
+ tunnel protection ipsec profile IPROF
+
+! 5. Routing protocol
+
+router eigrp 100
+ no auto
+ network 192.168.1.0
+ network 10.0.0.0
+
+
+!4. Crypto MAP
+
+crypto map ABC 10 ipsec-isakmp
+ match address 101
+ set peer 192.1.20.2
+ set transform-set ABC
+ set ikev2-profile IKEv2-PROF-1
+
+
+!5 . Apply the configuration
+
+int fa0/0
+ crypto map ABC
+
+```
+
+**Repeat the above for R4**
+
+
+
 
 ![](assets/markdown-img-paste-20180623213245289.png)
 
