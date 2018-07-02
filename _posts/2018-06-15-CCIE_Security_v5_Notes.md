@@ -17,15 +17,16 @@ comments: true
 		- [Native IPSec Tunnel [S-VTI]](#native-ipsec-tunnel-s-vti)
 		- [MGRE (Multipoint GRE)](#mgre-multipoint-gre)
 			- [A Multipoint GRE Full Configuration Snippet](#a-multipoint-gre-full-configuration-snippet)
+  - Advanced VPNs
 		- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
 		- [DMVPN - EIGRP - Phases [I,II,III]](#dmvpn-eigrp-phases-iiiiii)
 		- [Redundancy [Dual-Hub DMVPN Setup]](#redundancy-dual-hub-dmvpn-setup)
 		- [Encrypting the Tunnel using IPSEC](#encrypting-the-tunnel-using-ipsec)
-		- [GETVPN](#getvpn)
+- [GETVPN](#getvpn)
 		- [VRF](#vrf)
-		- [VRF - Aware VPN )Site-to-Site](#vrf-aware-vpn-site-to-site)
+- [VRF - Aware VPN )Site-to-Site](#vrf-aware-vpn-site-to-site)
 		- [VRF Aware [Get VPN]](#vrf-aware-get-vpn)
-		- [Routers as a CA Server](#routers-as-a-ca-server)
+- [Routers as a CA Server](#routers-as-a-ca-server)
 		- [CA Based VPNs](#ca-based-vpns)
 		- [IKEv2 VPNS](#ikev2-vpns)
 			- [Troubleshooting Commands and Outputs](#troubleshooting-commands-and-outputs)
@@ -117,10 +118,10 @@ Phase 2 3600 sec 1 hr
 
 ![](/assets/markdown-img-paste-20180619173443458.png)
 
-> In the above VPN Configuration , the interesting traffic is define by an `ACL`. Such VPNS are called Policy based VPN.
+> In the above VPN Configuration , the interesting traffic is define by an `ACL`. Such VPNs are called **Policy based VPN**.
 
 
-
+---
 ### GRE Tunnel
 
 GRE Tunnel basically creates a virtual point to point link between two routers which traditionally were establishing VPN based on interesting traffic define by ACLs . Which was a tedious process.
@@ -165,6 +166,7 @@ router eigrp 10
 !
 ```
 
+---
 ### GRE over IPSec - Tunnel Mode
 
 ![](/assets/markdown-img-paste-20180622070147560.png)
@@ -334,7 +336,7 @@ to  (remove of GRE header , 8 bytes)
 
 Above changes saves **8** bytes for  you , so now your packet size becomes 124 - 8 = **116**
 
-
+---
 ### MGRE (Multipoint GRE)
 
 The point to point configuration setting above does not scale with a lot of sites , that is where MGRE comes to rescue.
@@ -441,7 +443,7 @@ Under the inteface configuration on the end routers , we define the Next Hop Ser
 
 **Now the NHS Server has all the mapping of Tunnel IP and the Public IP .**
 
-
+---
 
 ### DMVPN (Dynamic Multipoint VPN)
 
@@ -642,7 +644,7 @@ In this case you basically copy the configuration of the existing NHS  , make a 
 After this you point your spokes to the additional NHS . Pretty basic stuff .
 
 
-### Encrypting the Tunnel using IPSEC
+**Encrypting the Tunnel using IPSEC**
 
 ```sh
 !1. Phase 1
@@ -671,7 +673,7 @@ crypto isakmp policy 10
   tunnel protection ipsec profile PROF
 
 ```
-
+---
 ### GETVPN
 
 > GetVPN is a Cisco only solution
@@ -862,10 +864,13 @@ crypto gdoi group SALES
  rekey algorithm 3des-cbc
  rekey lifetime seconds 3600
 ```
-
+---
 ### VRF - A Quick Introduction
 
+![](assets/markdown-img-paste-20180630105536275.png)
 
+###### Basic VRF Configuration Example
+```sh
 !R1
 conf t
 ip vrf CUST-A
@@ -889,90 +894,19 @@ int fa0/1
  ip vrf forwarding CUST-B
  ip address 10.10.10.1 255.255.255.0
  no shut
-
-
-
-
- !R2
- conf t
- hostname R2
- ip vrf CUST-A
- exit
- ip vrf CUST-B
- exit
-
- int fa1/0
-  ip vrf forwarding CUST-A
-  ip address 10.12.12.2 255.255.255.0
-  no shut
- int fa2/0
-  ip vrf forwarding CUST-B
-  ip address 10.12.12.2 255.255.255.0
-  no shut
- int fa0/0
-  ip vrf forwarding CUST-A
-  ip address 10.20.20.2 255.255.255.0
-  no shut
- int fa0/1
-  ip vrf forwarding CUST-B
-  ip address 10.20.20.2 255.255.255.0
-  no shut
-
-
-
-
-!R3
-conf t
- hostname R3
-
-
-int fa0/0
- ip vrf forwarding CUST-A
- ip address 10.10.10.3 255.255.255.0
- no shut
-
- !R4
- conf t
-  hostname R4
-
-
- int fa0/0
-
-  ip address 10.20.20.4 255.255.255.0
-  no shut
-
-
-
-  !R5
-  conf t
-   hostname R5
-
-
-  int fa0/0
-
-   ip address 10.10.10.5 255.255.255.0
-   no shut
-
-   !R6
-   conf t
-    hostname R6
-
-
-   int fa0/0
-
-    ip address 10.20.20.6 255.255.255.0
-    no shut
-
-```
-    R1#ping vrf CUST-A ip 10.10.10.3
-
-    Type escape sequence to abort.
-    Sending 5, 100-byte ICMP Echos to 10.10.10.3, timeout is 2 seconds:
-    !!!!!
-    Success rate is 100 percent (5/5), round-trip min/avg/max = 12/18/24 ms
 ```
 
+###### VRF Reachability test
+```sh
+R1#ping vrf CUST-A ip 10.10.10.3
 
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.10.10.3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 12/18/24 ms
+```
+
+###### VRF Routing configuration example
 ```sh
 router eigrp 1
  auto-summary
@@ -990,11 +924,19 @@ router eigrp 1
  exit-address-family
 ```
 
+---
 
 ### VRF - Aware VPNs
 
-Objective R and R2 should encrypt traffic between 10.1.1.0/24 to 10.2
+![](assets/markdown-img-paste-20180630135437874.png)
 
+Now in the VRF example above the traffic between the loopback networks 10.1.1.3 to 10.2.2.4 is no encrypted. In this section we will enxrypt the data.
+
+**Objective** R1 and R2 should encrypt traffic between 10.1.1.3 to 10.2.2.4.
+
+> Only R1 Config is displayed for brevity. Replicate the config for R2 changing the IP Addresses.
+
+```sh
 ! R1
 ! 1. Phase I
 ! A. ISAKMP Policies
@@ -1004,52 +946,338 @@ crypto isakmp policy 10
  enc 3des
  group 2
 
+#### MAJOR DIFFERENCE IS IN THIS SECTION - BEGIN
+
 ! B. Create the Keyring
 crypto keyring KR-1 vrf CUST-A
- pre-shared-key address 10.12.12.2 key cisco123
+ pre-shared-key address 10.12.12.1 key cisco123
 
 ! C. Create an ISAKMP Profile which later on will be linked to crytpto map
 crypto isakmp profile PROF-A
  vrf CUST-A
  keyring KR-1
- match identity address 10.12.12.2 255.255.255.255 CUST-A
+ match identity address 10.12.12.1 255.255.255.255 CUST-A
+
+#### MAJOR DIFFERENCE IS IN THIS SECTION - END
 
 ! 2. Phase II
-
 crypto ipsec transform-set TSET esp-3des esp-md5
 
 ! 3. Interesting traffic
-
-access-list 101 permit ip 10.1.1.0 0.0.0.255 10.2.2.0 0.0.0.255
+access-list 101 permit ip 10.2.2.0 0.0.0.255 10.1.1.0 0.0.0.255
 
 ! 4. Crpto MAP
-
-crypto map CUST_A 10 ipsec-isakmp
+crypto map CUST-A 10 ipsec-isakmp
  match address 101
- set peer 10.12.12.2
- set tranform-set TSET
+ set peer 10.12.12.1
+ set transform-set TSET
 crypto map CUST-A isakmp-profile PROF-A
 
 ! 5. Apply the Crypto map to the interface
-
 interface fa1/0
  crypto map CUST-A
+```
 
+###### Always ensure a `source` ping
 
+```sh
+R3#ping 10.2.2.4 source 10.1.1.3
 
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.2.2.4, timeout is 2 seconds:
+Packet sent with a source address of 10.1.1.3
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 28/41/56 ms
+```
 
-
-
-
-
+---
 ### VRF Aware [Get VPN]
 
-----
-###  Routers as a CA Server
-### CA Based VPNs
-### IKEv2 VPNS
- ### Using Legacy Menthods
- ### Using S-VTIs
+![](assets/markdown-img-paste-20180701153254761.png)
+
+**PREFACE** :  In the above configuration the once the IP Addressing is setup , there is EIGRP neighborship configured withing a VRF in the colored areas and the interfaces (no VRF on the R1 or R3 , only on R2).
+With this , R1 and R3 cannot reach the Key Server . To enable that we have to configure the following (route-leaking) so that the networks behind R1 and R3 can reach the Key Server . The eventual goal is to encrypt traffic between `R1 and R2` and `R1 and R3` .
+
+The config below is to make R3 reach R5 (Key Server)
+
+**Step 1.** R3 ---> R2
+
+`ip route 10.45.45.5 255.255.255.255 10.20.20.2`
+
+**Step 2.** R2 ----> R4 From VRF to Global Table and pointing to R4 (Next Hop)
+
+`ip route vrf CUST-B 10.45.45.45.5 255.255.255.255 fa1/0 10.24.24.4`
+
+**Step 3.** Back from R4 to R2
+
+`ip route 10.20.20.0 255.255.255.0  10.24.24.2`
+
+**Step 4.**  From Global Routing table to VRF Routing Table for CUST-B
+
+`ip route 10.20.20.0 255.255.255.0 fa0/1`
+
+
+Now lets configure the VPN .
+
+GET VPN Configuration
+
+**On the `Key Server` for Group CUST-A[100] and Group CUST-B[200]**
+
+```sh
+! R5
+!1. PHASE I
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ group 2
+ encryption 3des
+!
+crypto isakmp key cisco123 address 10.10.10.0 255.255.255.0
+crypto isakmp key cisco123 address 10.20.20.0 255.255.255.0
+
+!2. Phase II
+
+crypto ipsec transform-set CUST-A esp-3des esp-md5-hmac
+crypto ipsec transform-set CUST-B esp-3des esp-md5-hmac
+
+!3. IPSec Profile
+
+crypto ipsec profile PROF-A
+ set transform-set CUST-A
+crypto ipsec profile PROF-B
+set transform-set CUST-B
+
+!4. Interesting traffic ACL
+
+access-list 101 permit ip 10.0.0.0 0.255.255.255 10.0.0.0 0.255.255.255
+access-list 102 permit ip 10.0.0.0 0.255.255.255 10.0.0.0 0.255.255.255
+
+!5. Configure the GDOI Groups
+
+crypto gdoi group CUST-A
+ identity number 100
+ server local
+  sa ipsec 10
+   profile PROF-A
+   match address ipv4 101
+  address ipv4 10.45.45.5
+
+crypto gdoi group CUST-B
+ identity number 200
+ server local
+  sa ipsec 10
+   profile PROF-B
+   match address ipv4 102
+  address ipv4 10.45.45.5
+```
+
+**On the Group Members R1 and R3  (non-Vrf Configuration)**
+
+```sh
+! R1
+!1. PHASE I
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ group 2
+ encryption 3des
+!
+crypto isakmp key cisco123 address 10.45.45.0 255.255.255.0
+
+
+!2. Configure GDOI Group
+
+crypto gdoi group ABC
+ identity number 100
+ server address ipv4 10.45.45.5
+
+!3. Configure the crypto map
+
+crypto map ABC 10 gdoi
+ set group ABC
+
+!4. Apply on the interface
+interface f0/0
+ crypto map ABC
+
+```
+
+```sh
+! R3
+!1. PHASE I
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ group 2
+ encryption 3des
+!
+crypto isakmp key cisco123 address 10.45.45.0 255.255.255.0
+
+
+!2. Configure GDOI Group
+
+crypto gdoi group ABC
+ identity number 200
+ server address ipv4 10.45.45.5
+
+!3. Configure the crypto map
+
+crypto map ABC 10 gdoi
+ set group ABC
+
+!4. Apply on the interface
+interface f0/0
+ crypto map ABC
+```
+
+**On the Group Members R2 (Vrf Configuration)**
+
+```sh
+! R2
+!1. PHASE I
+! A. ISAKMP Policy
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ group 2
+ encryption 3des
+!
+! B. Key Ring
+crypto keyring CUST-A vrf CUST-A
+ pre-shared-key address 10.45.45.5 key cisco123
+
+!C. ISAKMP Profile
+crypto isakmp profile CUST-A
+ match identity address 10.45.45.5 255.255.255.255 CUST-A
+ vrf CUST-A
+ keyring CUST-A
+
+
+!2. Configure GDOI Group
+
+crypto gdoi group ABC
+ identity number 100
+ server address ipv4 10.45.45.5
+
+!3. Configure the crypto map
+
+crypto map ABC 10 gdoi
+ set group ABC
+crypto map ABC isakmp-profile CUST-A
+
+!4. Apply on the interface
+interface f0/0
+ crypto map ABC
+```
+
+```sh
+! R2
+!1. PHASE I
+! A. ISAKMP Policy
+crypto isakmp policy 10
+ auth pre-share
+ hash md5
+ group 2
+ encryption 3des
+!
+! B. Key Ring
+crypto keyring CUST-B vrf CUST-B
+ pre-shared-key address 10.45.45.5 key cisco123
+
+!C. ISAKMP Profile
+crypto isakmp profile CUST-B
+ match identity address 10.45.45.5 255.255.255.255 CUST-A
+ vrf CUST-B
+ keyring CUST-B
+
+
+!2. Configure GDOI Group
+
+crypto gdoi group DEF
+ identity number 100
+ server address ipv4 10.45.45.5
+
+!3. Configure the crypto map
+
+crypto map DEF 10 gdoi
+ set group DEF
+crypto map DEF isakmp-profile CUST-A
+
+!4. Apply on the interface
+interface f0/1
+ crypto map DEF
+```
+
+#  Routers as a CA Server
+
+In this section we will take a few steps to make the `PHASE I` a bit more secure. When we talk about certificates we are talking about `PHASE I`.
+
+Again , a Key , Encryption and Hash is required in the Phase I. In the examples till now it has been the Pre-shared keys. Also know as PSK (Pre shared key)
+
+This althoug isnt bad , althoug we are are setting this same key across two devices. The same key can be bruteforced if a lot of data is collected.
+
+**So to make the above more secure , we will  replace the Preshared Key with the PKI Key**
+
+What is  PKI : PKI works on the premise of a key-pair , using a mechanism called Key-Pair (Public and Private).
+
+Public Key : Used to Encrypt the Data
+Private Key : Used to Decrypt the Data .
+
+So between the routers participating in a VPN connection (for example R1 and R2).
+
+```sh
+R1 ------- Please send me your PUB Key ----- > R2
+R1 <------ Please send me your PUB Key ------ R2
+```
+
+R1 and R2 get each other Public Key , they keep their private keys with themselves.
+
+> Anything encrypted by my `public key` can only be decrypted by the corresponding `private key` .
+
+**The problem here , is we do not know if the device requesting the Public Key is the realy device and not a masquerade attempt. This is where the CA comes in.**
+
+
+The function of a CA Server is to validate an identity. Its an authority that both R1 and R2 trust.
+
+1. You send you Public Key and your company documents to Verisign.
+2. Versign verifies and signs that for you and provides you the **`X509`** certificate.
+3. The other company who wants to talk to you , does the same.
+
+So now both companies have their own certificates (**`ID-CERT`**).
+
+
+![](assets/markdown-img-paste-20180701202633932.png)
+
+![](assets/markdown-img-paste-20180701202738132.png)
+
+
+CA Server Based Setup
+
+1. Configure your CA Server
+2. Generate the Public/Private Key on the local device.
+3. Download the Root Certificate from the CA Server.
+4. Send/Enroll your public key with the CA Server
+5. CA Server validates your credentials and issues you an ID Cert.
+
+The Entities Publick Key
+Info about the entitity
+CA Information
+Digital Signature of the CA Server
+
+6. The identity certificate is send back to the entity .
+
+
+
+
+
+
+
+
+
+## CA Based VPNs
+# IKEv2 VPNS
+ ## Using Legacy Menthods
+ ## Using S-VTIs
 
 ![](assets/markdown-img-paste-20180623213245289.png)
 
@@ -1155,6 +1383,17 @@ interface: FastEthernet0/0
      outbound pcp sas:
 ```
 
+Clearing the crypto session
+
+```sh
+R3#clear cryp
+R3#clear crypto sa
+R3#
+*Mar  1 05:13:32.002: %GDOI-4-GM_RE_REGISTER: The IPSec SA created for group ABC may have expired/been cleared, or didn not go through. Re-register to KS.
+
+```
+
+
 #### Error Messages and Resolution
 
 ```sh
@@ -1177,3 +1416,5 @@ This was caused due to the following commands missing from the DMVPN Clients
 ip nhrp map multicast 192.1.10.2
 ```
 ---
+
+Andy (azielnic )  Andy Zielnicki
