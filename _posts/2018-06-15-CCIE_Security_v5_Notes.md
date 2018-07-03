@@ -1888,7 +1888,11 @@ router eigrp 100
 
 ## Spoked to Spoke FLEX VPN
 
+![](assets/markdown-img-paste-20180703143519275.png)
 
+Here we will setup a Flex VPN between SPOKE-3 and SPOKE-4 with R1 acting as the HUB.
+
+**HUB SIDE CONFIGURATION**
 ```sh
 ! R1 - HUB
 
@@ -1901,7 +1905,7 @@ ip local pool DHCP_POOL_FLEX 192.168.134.5 192.168.134.254
 !
 crypto ikev2 authorization policy NHRP
  pool DHCP_POOL_FLEX
- route set interface
+ route set interface ! Injects the route pointing to the DHCP Server (myself) in the client.
 
 ! PHASE I
 ! A. Configure the Proposal
@@ -1927,24 +1931,331 @@ crypto ikev2 policy POL-1
 
  ! D. Configure the IKEv2 Profile
 
- crypto ikev2 profile PROF-134
-  match identity remote address 0.0.0.0 0.0.0.0  ! Could be many addresses so a wild card .
-  authentication local pre-share
-  authentication remote pre-share
-  keyring local KR-134
-	virtual-template 134
-  aaa authorization group psk list NHRP NHRP
+crypto ikev2 profile PROF-134
+ match identity remote address 0.0.0.0 0.0.0.0  ! Could be many addresses so a wild card .
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-134
+ virtual-template 134
+ aaa authorization group psk list NHRP NHRP ! Link the auth policy created above
 
 
+! 3. PHASE II
+
+! crypto ipsec transform-set TSET esp-3des esp-md5-hmac  ! This command is ommiteed as it is already there from the prev section.
+
+! 4. Configure the IPSec Profile
+
+crypto ipsec profile IPROF-134
+ set transform-set TSET
+ set ikev2-profile PROF-134
+
+
+! 5.  Configure a Virtual-template interface. [NHRP Interface]
+
+interface loopback 134
+ ip address 192.168.134.1 255.255.255.0
+!
+interface virtual-template 134 type tunnel
+ ip unnumbered loopback 134
+ tunnel source e0/0
+ ip nhrp network-id 134
+ ip nhrp redirect
+
+
+```
+
+**SPOKE SIDE CONFIGURATION**
+
+```sh
+! R3 - SPOKE
+
+! 1. Configure the AAA and policies required to propagate IP Address to the tunnel interfaces on the client.
+
+aaa new-model
+aaa authorization network default local
+!
+
+crypto ikev2 authorization policy NHRP
+ route set interface ! Injects the route pointing to the DHCP Server (myself) in the client.
+
+! PHASE I
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+### Everything above is already configured from the section before , so no need to reconfigure it.
+
+! C. Configure the Keyring
+
+ crypto ikev2 keyring KR-134
+  peer 34 ! Anthing here as we do not have a specific
+   address 0.0.0.0 ! Could be many addresses so a wild card .
+ 	pre-shared key cisco123
+
+ ! D. Configure the IKEv2 Profile
+
+crypto ikev2 profile PROF-134
+ match identity remote address 0.0.0.0 0.0.0.0  ! Could be many addresses so a wild card .
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-134
+ virtual-template 134
+ aaa authorization group psk list NHRP NHRP ! Link the auth policy created above
+
+
+! 3. PHASE II
+
+crypto ipsec transform-set TSET esp-3des esp-md5-hmac  ! This command is ommiteed as it is already there from the prev section.
+
+! 4. Configure the IPSec Profile
+
+crypto ipsec profile IPROF-134
+ set transform-set TSET
+ set ikev2-profile PROF-134
+
+
+! 5.  Configure a Virtual-template interface. [NHRP Interface]
+
+!#######################################################################
+!#### This interface is the tunnel interface between R3 and R1
+!######################################################################
+interface Tunnel134
+ ip address negotiated ! #### Gets from the DHCP Pool from R1
+ tunnel source e0/0
+ tunnel destination 192.1.10.1
+ ip nhrp network-id 134
+ ip nhrp shortcut virtual-template 134
+ tunnel protection ipsec profile IPROF-134
+!
+
+!#######################################################################
+!#### This is what would create the Spoke to Spoke Virtual Access link between R3 and R4
+!#######################################################################
+interface virtual-template 134 type tunnel
+ ip unnumbered tunnel 134
+ tunnel source e0/0
+ ip nhrp network-id 134
+ ip nhrp shortcut virtual-template 134
+ tunnel protection ipsec profile IPROF-134
+
+router eigrp
+ no auto
+ network 192.168.134.0
+
+```
+**R4** No changes required from R3 .
+
+```sh
+! R4 - SPOKE
+
+! 1. Configure the AAA and policies required to propagate IP Address to the tunnel interfaces on the client.
+
+aaa new-model
+aaa authorization network default local
+!
+
+crypto ikev2 authorization policy NHRP
+ route set interface ! Injects the route pointing to the DHCP Server (myself) in the client.
+
+! PHASE I
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+### Everything above is already configured from the section before , so no need to reconfigure it.
+
+! C. Configure the Keyring
+
+ crypto ikev2 keyring KR-134
+  peer 34 ! Anthing here as we do not have a specific
+   address 0.0.0.0 ! Could be many addresses so a wild card .
+ 	pre-shared key cisco123
+
+ ! D. Configure the IKEv2 Profile
+
+crypto ikev2 profile PROF-134
+ match identity remote address 0.0.0.0 0.0.0.0  ! Could be many addresses so a wild card .
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-134
+ virtual-template 134
+ aaa authorization group psk list NHRP NHRP ! Link the auth policy created above
+
+
+! 3. PHASE II
+
+crypto ipsec transform-set TSET esp-3des esp-md5-hmac  ! This command is ommiteed as it is already there from the prev section.
+
+! 4. Configure the IPSec Profile
+
+crypto ipsec profile IPROF-134
+ set transform-set TSET
+ set ikev2-profile PROF-134
+
+
+! 5.  Configure a Virtual-template interface. [NHRP Interface]
+
+!#######################################################################
+!#### This interface is the tunnel interface between R3 and R1
+!######################################################################
+interface Tunnel134
+ ip address negotiated ! #### Gets from the DHCP Pool from R1
+ tunnel source e0/0
+ tunnel destination 192.1.10.1
+ ip nhrp network-id 134
+ ip nhrp shortcut virtual-template 134
+ tunnel protection ipsec profile IPROF-134
+!
+
+!#######################################################################
+!#### This is what would create the Spoke to Spoke Virtual Access link between R3 and R4
+!#######################################################################
+interface virtual-template 134 type tunnel
+ ip unnumbered tunnel 134
+ tunnel source e0/0
+ ip nhrp network-id 134
+ ip nhrp shortcut virtual-template 134
+ tunnel protection ipsec profile IPROF-134
+
+router eigrp
+ no auto
+ network 192.168.134.0
+
+```
+
+
+# ASA Firewalls
+
+![](assets/markdown-img-paste-20180703154612386.png)
+
+ASA is technicaly a router acting as a firewall. `Outside` is your external network , `Inside` is your internal network and `DMZ` is things like your email , web and DNS Server.
+
+ASA though is a router , it has some different charecteristc. Traffic from one interface one iterface to other is allowed by default on a router. On an ASA though it does not allow all traffic to traverese through it.
+
+- Traffic flow through the firewalls is controlled by the **Security Levels** fof the interface. By default the security level of the interface is set to 0.
+
+- `Name of the interface` is a required parameter along with the `Security level`.
+- If you name the interface `inside` , the security level is set to `100`.
+Traffic moving from **Higher** security level to **Lower** is allowed by default. **Low** to **High** is blocked. (Default charecteristc) . Any other name on a blank interface set the security level to 0.
+
+- Traffic between same security level , the communication **would not** happen **AT ALL** (even after creatign exceptions). Now this behaviour can be changed by  `same-security-traffic permit inter-interface`  which allows all communication between the same security levels .
+
+- For traffic goign from high to low , the traffic will go through. NOTE: By default only TCP/IP is inspected , which means outgoign traffic will be allowed to go out and come in. Everythign else (Apart from TCP/IP) is not inspected by default , hence can go out but not come in.
+
+- ASA only blocks THRU traffic , traffic coming TO firewall is allowed.
+The only reason you are allowed to PING is becuase the ICMP feature is enabled by default.
+- Firewall does not allow Telnet on a Level 0 interface. It has to be specificcaly allowed based on source.
+
+## Interface Configuration
+
+
+To default an interface .
+```sh
+clear configure interface gi0
+```
+
+Shows the active connections
+```sh
+ciscoasa# show conn
+1 in use, 1 most used
+TCP Outside  192.1.20.2:23 inside  10.11.11.1:56358, idle 0:00:09, bytes 184, flags UIO
+```
+
+Typical Access List
+```sh
+access-list ABC permit tcp host 192.1.20.2 10.11.11.0 255.255.255.0 eq telnet
+access-group ABC in interface outside ! IN denotes the direction , outside is the interface on which it is applied.
+```
+
+To disable **TO** traffic to the interface of the firewall :
+
+```sh
+icmp deny any outside
+```
+
+To allow Internal to ping out :
+
+```sh
+icmp permit any echo-reply outside
+```
+
+Allow on single endpoint [192.1.20.2] to ping from Outside :
+
+```sh
+icmp permit host 192.1.20.2 echo outside
+```
+
+To enable ssh
+
+```sh
+crypto key generate rsa modulus 1024
+username admin pass cisco123
+aaa authentication ssh console LOCAL !Local Authentication
+```
+
+Checking routes on a ASA
+
+```sh
+ciscoasa# show route
+
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+C    192.1.20.0 255.255.255.0 is directly connected, Outside
+D    10.1.1.0 255.255.255.0 [90/156160] via 10.11.11.1, 0:00:12, inside
+C    10.11.11.0 255.255.255.0 is directly connected, inside
+C    192.168.1.0 255.255.255.0 is directly connected, DMZ
+```
+
+Example of EIGRP Authentication on a Router
+
+```sh
+key chain KEY_CHAIN
+ key 1
+  key-string cisco123
+!
+interface f0/0
+ ip authentication mode eigrp 100 md5
+ ip authentication key-chain eigrp 100 KEY_CHAIN
+!
+```
+
+Example of EIGRP Authentication on a ASA
+
+```sh
+interface eth2
+ authentication mode eigrp 100 md5
+ authentication key eigrp 100 cisco123 key-id 1
+!
 ```
 
 
 
 
-# ASA Firewalls
-## Interface Configuration
-## Security Levels
-## Routing [RIP , EIGRP , OSPF]
 
 ![](assets/markdown-img-paste-20180623213245289.png)
 
@@ -1952,7 +2263,9 @@ crypto ikev2 policy POL-1
 ![](assets/markdown-img-paste-20180703130517336.png)
 
 
-
+conf t
+line con 0
+ exec-time 0
 
 
 
@@ -1980,7 +2293,7 @@ crypto ikev2 policy POL-1
 
 
 
-
+Hi I am dojgn well and hope that you are fine as wll please find my letter explainign the cause of the issue and what could be required to do the same stuff . If possible apprecirate if you could send me the whole configuration .
 
 
 
@@ -1989,6 +2302,14 @@ crypto ikev2 policy POL-1
 
 #### Troubleshooting Commands and Outputs
 
+
+```sh
+R1#show crypto ikev2 sa
+```
+
+```sh
+R1#clear crypto ikev2 sa X.X.X.X
+```
 
 ```sh
 R1#show crypto isakmp sa
