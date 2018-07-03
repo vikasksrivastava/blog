@@ -6,9 +6,9 @@ comments: true
 ---
 
 
-<!-- TO depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [VPN (Policy based )](#vpn-policy-based-)
+		- [VPN (Policy based )](#vpn-policy-based-)
 			- [Key Exchange Protocol](#key-exchange-protocol)
 		- [GRE Tunnel](#gre-tunnel)
 				- [Step 1](#step-1)
@@ -31,13 +31,20 @@ comments: true
 		- [VRF - Aware VPNs](#vrf-aware-vpns)
 			- [MAJOR DIFFERENCE IS IN THIS SECTION - BEGIN](#major-difference-is-in-this-section-begin)
 			- [MAJOR DIFFERENCE IS IN THIS SECTION - END](#major-difference-is-in-this-section-end)
-					- [Always ensure a `source` ping](#always-ensure-a-source-ping)
+- [* * * Lab Remaining from here * * *](#-lab-remaining-from-here-)
 		- [VRF Aware [Get VPN]](#vrf-aware-get-vpn)
 - [Routers as a CA Server](#routers-as-a-ca-server)
 	- [CA Based VPNs](#ca-based-vpns)
 - [IKEv2 VPNS](#ikev2-vpns)
 	- [IKEv3 VPN using legacy methods](#ikev3-vpn-using-legacy-methods)
-	- [IKEv2 VPN using S-VTIs](#ikev2-vpn-using-s-vtis)
+	- [IKEv2 VPN using S-VTIs (uses GRE tunnel and the routing on it)](#ikev2-vpn-using-s-vtis-uses-gre-tunnel-and-the-routing-on-it)
+- [Flex VPN](#flex-vpn)
+	- [Site to Site VPN [D-VTI / S-VTI based ]](#site-to-site-vpn-d-vti-s-vti-based-)
+	- [Spoked to Spoke using NHRP [DMVPN Setup]](#spoked-to-spoke-using-nhrp-dmvpn-setup)
+- [ASA Firewalls](#asa-firewalls)
+	- [Interface Configuration](#interface-configuration)
+	- [Security Levels](#security-levels)
+	- [Routing [RIP , EIGRP , OSPF]](#routing-rip-eigrp-ospf)
 			- [Troubleshooting Commands and Outputs](#troubleshooting-commands-and-outputs)
 			- [Error Messages and Resolution](#error-messages-and-resolution)
 
@@ -1000,6 +1007,7 @@ Packet sent with a source address of 10.1.1.3
 Success rate is 80 percent (4/5), round-trip min/avg/max = 28/41/56 ms
 ```
 
+#  * * * Lab Remaining from here * * *
 ---
 ### VRF Aware [Get VPN]
 
@@ -1569,14 +1577,189 @@ int fa0/0
 
 **Repeat the above for R4**
 
+# Flex VPN
+## Site to Site VPN [D-VTI / S-VTI based ]
+
+![](assets/markdown-img-paste-20180703080419330.png)
+
+**FOUNDATION**
+
+In this example we are establisihisng a VPN tunnel between R1 and R2.
+In a normal S-VTI (Static Virtual Tunnel Interface) you know the `tunnel destination`  address. In this example the twist is that , what if the IP Address on R2's e0/0 is dynamic ?
+
+Here's is what a typical tunnel interface configuration looks like :
+
+```sh
+! R2
+interface tunnel 12
+ ip add 192.168.12.1 255.255.255.0
+ tunnel source e0/0
+ tunnel destination 192.1.10.1  ! ### NOTICE
+ tunnel mode ipsec ipv4
+ tunnel protection ipsec profile IPROF-12
+```
+
+Notice the destination configuration (on R2) pointing to R1's known and static address of e0/0. But what is R2's e0/0 is dynamic ?
+
+**R1 would not be able to point the same way to R2 and R2 did.**
+
+To resolve this situation , we use (on R1)  `interface Virtual-template` which has all the configuration as above interface but **does not** have the `tunnel destination` command.
+
+Once `R2` is assigned an IP Address on `e0/0` by its ISP and tries to reach out to `R1` , `R1` gets to know the public IP Address of `R2` and creates a `Virtual Interface` with the now known address as the destination address.
 
 
+
+**CONFIGURATION**
+
+
+**R2**
+
+```sh
+
+! 1. Phase I [IKEv2]
+
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+! C. Configure the Keyring
+
+crypto ikev2 keyring KR-12
+ peer R1
+  address 192.1.10.1
+	pre-shared key cisco123
+
+! D. Configure the IKEv2 Profile
+
+crypto ikev2 profile PROF-12
+ match identity remote address 192.1.10.1 255.255.255.255
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-12
+
+! 2. PHASE II
+
+crypto ipsec transform-set TSET esp-3des esp-md5-hmac
+
+! 3. Configure the IPSEC Profile
+
+crypto ipsec profile IPROF-12
+ set transform-set TSET
+ set ikev2-profile PROF-12
+
+! 4. Configure the Static Virtual Tunnel Interface [S-VTI]
+
+interface tunnel 12
+ ip add 192.168.12.1 255.255.255.0
+ tunnel source e0/0
+ tunnel destination 192.1.10.1
+ tunnel mode ipsec ipv4
+ tunnel protection ipsec profile IPROF-12
+
+! 5. Configure the routing protocol
+
+router eigrp 100
+ no auto
+ network 192.168.12.0
+ network 10.0.0.0
+
+```
+
+**R1**
+
+```sh
+
+! 1. Phase I [IKEv2]
+
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+! C. Configure the Keyring
+
+crypto ikev2 keyring KR-12
+ peer R2
+  address 192.1.20.0 255.255.255.0 ! Here we know the subnet its coming from and not the actual IP , so we define the subnet its coming from. This has to be known.
+	pre-shared key cisco123
+
+! D. Configure the IKEv2 Profile
+
+crypto ikev2 profile PROF-12
+ match identity remote address 192.1.20.0 255.255.255.0  ! Here we know the subnet its coming from and not the actual IP , so we define the subnet its coming from. This has to be known.
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-12
+ virtual-template 12  !# Notice this , if somebody logs in with the PROF-12 , we would create a virtual tunnel interface.
+
+! 2. PHASE II
+
+crypto ipsec transform-set TSET esp-3des esp-md5-hmac
+
+! 3. Configure the IPSEC Profile
+
+crypto ipsec profile IPROF-12
+ set transform-set TSET
+ set ikev2-profile PROF-12
+
+! 4. Configure the Virtual Tunnel Interface - Changes Step from the config above
+
+int lo12
+ ip address 192.168.12.1 255.255.255.0
+
+
+interface virtual-template 12 type tunnel
+ ip unnumbered lo12 ! Since in template you cannot assign a manuall address , you create loopback first and point it here .
+ tunnel source e0/0
+ !tunnel destination 192.1.10.1 !# This line is removed as we dont need this and is dynamically known when R2 tries to connect to us.
+ tunnel mode ipsec ipv4
+ tunnel protection ipsec profile IPROF-12
+
+! 5. Configure the routing protocol
+
+router eigrp 100
+ no auto
+ network 192.168.12.0
+ network 10.0.0.0
+ network 192.1.0.0 0.0.255.255
+
+```
+
+```sh
+show interface virtual-access 1
+```
+
+
+
+
+## Spoked to Spoke using NHRP [DMVPN Setup]
+
+
+
+# ASA Firewalls
+## Interface Configuration
+## Security Levels
+## Routing [RIP , EIGRP , OSPF]
 
 ![](assets/markdown-img-paste-20180623213245289.png)
 
 
-
-
+![](assets/markdown-img-paste-20180703130517336.png)
 
 
 
