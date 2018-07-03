@@ -6,9 +6,9 @@ comments: true
 ---
 
 
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TO depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-		- [VPN (Policy based )](#vpn-policy-based-)
+- [VPN (Policy based )](#vpn-policy-based-)
 			- [Key Exchange Protocol](#key-exchange-protocol)
 		- [GRE Tunnel](#gre-tunnel)
 				- [Step 1](#step-1)
@@ -40,7 +40,11 @@ comments: true
 	- [IKEv2 VPN using S-VTIs (uses GRE tunnel and the routing on it)](#ikev2-vpn-using-s-vtis-uses-gre-tunnel-and-the-routing-on-it)
 - [Flex VPN](#flex-vpn)
 	- [Site to Site VPN [D-VTI / S-VTI based ]](#site-to-site-vpn-d-vti-s-vti-based-)
-	- [Spoked to Spoke using NHRP [DMVPN Setup]](#spoked-to-spoke-using-nhrp-dmvpn-setup)
+	- [Static VTI to Static VTI Configuration](#static-vti-to-static-vti-configuration)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+	- [Spoked to Spoke FLEX VPN](#spoked-to-spoke-flex-vpn)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
 - [ASA Firewalls](#asa-firewalls)
 	- [Interface Configuration](#interface-configuration)
 	- [Security Levels](#security-levels)
@@ -1744,10 +1748,196 @@ router eigrp 100
 show interface virtual-access 1
 ```
 
+## Static VTI to Static VTI Configuration
+
+In this section we will configure the S-VTI between `R1` and `R5`.
+
+![](assets/markdown-img-paste-20180703134530541.png)
+
+**R1**
+
+```sh
+
+! 1. Phase I [IKEv2]
+
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+### Everything above is already configured from the section before , so no need to reconfigure it.
+
+! C. Configure the Keyring
+
+crypto ikev2 keyring KR-15
+ peer R5
+  address 192.1.50.5
+	pre-shared key cisco123
+
+! D. Configure the IKEv2 Profile
+
+crypto ikev2 profile PROF-15
+ match identity remote address 192.1.50.5 255.255.255.255
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-15
+
+! 2. PHASE II
+
+crypto ipsec transform-set TSET esp-3des esp-md5-hmac
+
+! 3. Configure the IPSEC Profile
+
+crypto ipsec profile IPROF-15
+ set transform-set TSET
+ set ikev2-profile PROF-15
+
+! 4. Configure the Static Virtual Tunnel Interface [S-VTI]
+
+ interface tunnel 15
+  ip add 192.168.15.1 255.255.255.0
+  tunnel source e0/0
+  tunnel destination 192.1.50.5
+  tunnel mode ipsec ipv4
+  tunnel protection ipsec profile IPROF-15
+
+! 5. Configure the routing protocol
+
+router eigrp 100
+ no auto
+ network 192.168.12.0
+ network 192.168.15.0 ! New command
+ network 10.0.0.0
+ network 192.1.0.0 0.0.255.255
+
+```
 
 
+**R5**
 
-## Spoked to Spoke using NHRP [DMVPN Setup]
+```sh
+
+! 1. Phase I [IKEv2]
+
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+### Everything above is already configured from the section before , so no need to reconfigure it.
+
+! C. Configure the Keyring
+
+crypto ikev2 keyring KR-15
+ peer R1
+  address 192.1.10.1
+	pre-shared key cisco123
+
+! D. Configure the IKEv2 Profile
+
+crypto ikev2 profile PROF-15
+ match identity remote address 192.1.10.1 255.255.255.255
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local KR-15
+
+! 2. PHASE II
+
+crypto ipsec transform-set TSET esp-3des esp-md5-hmac
+
+! 3. Configure the IPSEC Profile
+
+crypto ipsec profile IPROF-15
+ set transform-set TSET
+ set ikev2-profile PROF-15
+
+! 4. Configure the Static Virtual Tunnel Interface [S-VTI]
+
+ interface tunnel 15
+  ip add 192.168.15.5 255.255.255.0
+  tunnel source e0/0
+  tunnel destination 192.1.10.1
+  tunnel mode ipsec ipv4
+  tunnel protection ipsec profile IPROF-15
+
+! 5. Configure the routing protocol
+
+router eigrp 100
+ no auto
+ network 192.168.12.0
+ network 192.168.15.0 ! New command
+ network 10.0.0.0
+ network 192.1.0.0 0.0.255.255
+
+```
+
+
+## Spoked to Spoke FLEX VPN
+
+
+```sh
+! R1 - HUB
+
+! 1. Configure the AAA and policies required to propagate IP Address to the tunnel interfaces on the client.
+
+aaa new-model
+aaa authorization network default local
+!
+ip local pool DHCP_POOL_FLEX 192.168.134.5 192.168.134.254
+!
+crypto ikev2 authorization policy NHRP
+ pool DHCP_POOL_FLEX
+ route set interface
+
+! PHASE I
+! A. Configure the Proposal
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha1
+ encryption 3des
+ group 2 5
+
+! B. Configure the Policy
+
+crypto ikev2 policy POL-1
+ proposal PROP-1
+
+### Everything above is already configured from the section before , so no need to reconfigure it.
+
+! C. Configure the Keyring
+
+ crypto ikev2 keyring KR-134
+  peer 34 ! Anthing here as we do not have a specific
+   address 0.0.0.0 ! Could be many addresses so a wild card .
+ 	pre-shared key cisco123
+
+ ! D. Configure the IKEv2 Profile
+
+ crypto ikev2 profile PROF-134
+  match identity remote address 0.0.0.0 0.0.0.0  ! Could be many addresses so a wild card .
+  authentication local pre-share
+  authentication remote pre-share
+  keyring local KR-134
+	virtual-template 134
+  aaa authorization group psk list NHRP NHRP
+
+
+```
+
 
 
 
