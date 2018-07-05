@@ -2427,18 +2427,23 @@ access-group OUTSIDE in interface outside
 > **2. Also most of the time 99% , the first interface is higher security level (`RED`) and next is the lower security level (`BLUE`).**
 
 > ![](assets/markdown-img-paste-20180705150643228.png)
+> **`RED` works on Source Address , `BLUE` works on Destination Address**
 > **So lets say in the traffic example above , where traffic is coming from the outside to the DMZ :**
 
-> **Step 1.** Packed comes fromt he internet `X.X.X.X` to `192.1.20.5` and arrives on the `OUTSIDE` interface.
-**Step 2.** Since `OUTSIDE` looks at/ works on at the *destination address* (look at the mapping in the picture) it changes the destination address from 192.1.20.5 to 192.1.20.21.
-**Step 3.** Next the Web Server at 192.1.20.21 responds back with source as 192.1.20.5 and destination as X.X.X.X , this arrives on the DMZ interface.
-> Since `DMZ` in this case looks at the Source Address , it changes the source address to 192.1.20.5 and send the packet back on the internet.
+> **Step 1.** Packet comes fromt he internet `199.1.1.1` to `192.1.20.21` and arrives on the `OUTSIDE` interface.
+**Step 2.** Since `OUTSIDE` looks at/ works on at the *destination address of the packet* (look at the mapping in the picture) and matches the configured address `192.1.20.21` it changes the destination address from `192.1.20.21` to `192.168.1.11`. Now the packet looks like `Src 199.1.1.1 --> Dst 192.168.1.11`
+**Step 3.** Next the Web Server at `192.168.1.11` responds back with source as `192.168.1.11` and destination as `199.1.1.1`, this arrives on the DMZ interface.
+> Since `DMZ` in this case looks at the Source Address , it changes the source address from 192.168.1.11 to  192.1.20.21 and send the packet back on the internet. `Src 192.1.20.21 --> Dst 199.1.1.1`
 
 
 
 ---
 
 ## Dynamic PAT
+
+Now since all the above examples of NAT a one to one mappng between extenral and internal address is done. It wastes a lot of public addresses and is not efficient. Hence PAT is considered here.
+
+**Two Options**
 
 1. Using the Outside Interface
 
@@ -2490,13 +2495,38 @@ object network R3
 > ![](assets/markdown-img-paste-20180705134607176.png)
 **Traffic coming on 192.1.20.11 on port 2311 (from `outside`) should get translated to 192.168.1.3 port 23 (in the `dmz`)**
 
+## Twice NAT
+
+This allows you to change the Source as well as the detination in a single NAT statement. This is also known as the Manual-NAT.
+
+1. Create Object for all the addresses involved.
+
+```sh
+object network R3-D ! Address of Mainfram in the DMZ
+ host 192.168.1.3
+object network R3-O ! Address on Mainframe on Outside
+ host 192.1.20.20
+!
+object network H199-O ! Address of the internet host.
+ host 199.1.1.1
+object network H199-D
+ host 192.168.1.79
+```
+
+2. Create the Twice-Nat/Manual-NAT statement.
+
+```sh
+
+nat source static R3-D R3-O destination static destination static H199-D H199-O
+!
+! nat (dmz,outside) source static R3-D R3-O destination static destination static H199-D H199-O
+! You could do it like above (dmz,inside) to lock down to the interface level.
+
+```
+>** The above line means that If the packet is going from R3-D to H199-D , change R3-D to R3-O and change H199-D H199-O**
 
 
 
-
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 # Technotes
 
@@ -2537,24 +2567,6 @@ line con 0
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-
-
-
-<br>
 
 
 #### Troubleshooting Commands and Outputs
