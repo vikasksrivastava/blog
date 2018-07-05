@@ -2210,7 +2210,9 @@ username admin pass cisco123
 aaa authentication ssh console LOCAL !Local Authentication
 ```
 
-Checking routes on a ASA
+## Routing Configuration
+
+**Checking routes on a ASA**
 
 ```sh
 ciscoasa# show route
@@ -2231,7 +2233,7 @@ C    10.11.11.0 255.255.255.0 is directly connected, inside
 C    192.168.1.0 255.255.255.0 is directly connected, DMZ
 ```
 
-Example of EIGRP Authentication on a Router
+**Example of EIGRP Authentication on a Router**
 
 ```sh
 key chain KEY_CHAIN
@@ -2244,7 +2246,7 @@ interface f0/0
 !
 ```
 
-Example of EIGRP Authentication on a ASA
+**Example of EIGRP Authentication on a ASA**
 
 ```sh
 interface eth2
@@ -2253,14 +2255,195 @@ interface eth2
 !
 ```
 
+**Example RIP Configuration on Router and ASA**
+
+```sh
+! R3
+router rip
+ version 2
+ no auto
+ network 192.168.1.0
+ network 10.0.0.0
+
+! ASA
+router rip
+ version 2
+ no auto
+ network 192.168.1.0
+ network 10.0.0.0
+
+```
+
+**Example of RIP Authentication on a Router and a ASA**
+
+```sh
+! R3
+key chain KEY_CHAIN
+ key 1
+  key-string cisco123
+!
+interface f0/0
+ ip rip authentication mode  md5
+ ip rip authentication key-chain KEY_CHAIN
+
+! ASA
+interface eth1
+ rip authentication mode md5
+ rip authentication key cisco123 key_id 1
+!
+```
+
+**Example OSPF Configuration on Router and ASA**
+
+```sh
+! R2
+router ospf 1
+ network 192.1.20.0 0.0.0.255 area 0
+ network 199.1.1.0 0.0.0.255 area 0
+ network 200.1.1.0 0.0.0.255 area 0
+
+
+! ASA
+router ospf 1
+ network 192.1.20.0 0.0.0.255 area 0
+ network 199.1.1.0 0.0.0.255 area 0
+ network 200.1.1.0 0.0.0.255 area 0
+
+```
+
+
+**Example of OSPF Authentication on a Router and a ASA**
+
+```sh
+! R2
+key chain KEY_CHAIN
+ key 1
+  key-string cisco123
+!
+interface f0/0
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco123
+!
+! ASA
+interface f0/0
+ ip ospf authentication message-digest
+ ip ospf message-digest-key 1 md5 cisco123
+!
+```
+
+**Redistribution**
+
+```sh
+router rip
+ redistribute ospf 1 metric 1
+ redistribute eigrp 100 metric 1
+
+router eigrp 100
+ redistribute rip metric 1 1 1 1 1
+ redistribute ospf 1 metric 1 1 1 1 1
+
+router ospf 1
+ redistribute rip metric 30 subnets
+ redistribute eigrp 100 metric 30 subnets
+```
+
+# NAT
+
+
+
+![](assets/markdown-img-paste-20180704204345529.png)
+
+**FOUNDATION**
+
+**Source NAT**  If my `internal` address is gettign translated, regardless if the direction of the access, it is called `Source NAT`. Basicall if `MY` address is getting translated its `Source NAT`.
+
+**Destiation NAT** If the  External Address / Remote Address / Foreign Addresss changes , it is called `Destination NAT` . The word destination is **"THEM"** .
+
+> **99% of the time you are doing Source NAT .**
+
+**Source Dynamic NAT** Allows internal users to go out using Public address from a pool defined on the firewall. Also know as Object NAT or Auto NAT  (In the picture above , its traffic goign from R1 to R2 being natted at ASA)
+
+> It is called Dynamic becuase its on need basis when traffic arrives at the ASA
+
+```sh
+########## Source Dynamic NAT Configuration Example #############
+
+! 1. Define the pool
+
+object network POOL1 ! Pool of externally reachable IP Addresses.
+ range 192.1.20.101 192.1.20.200
+
+! 2. Specify the address that can use the pool
+
+object network INS-NET
+ subnet 10.11.11.0 255.255.255.0
+ nat (inside,outside) dynamic POOL1
+ ! This is where I link the POOL , saying traffic going from
+ ! inside to outside should be dynamically natted using the pool POOL1
+```
+
+To check the trhasnaltions of NAT table .
+
+
+```sh
+show xlate
+```
+
+**Source Static NAT**
+
+> Translates an internal address on the outside. This is done staticaly so that an entry is created on trnaslation table. You still need to allow the accesss from Low to High. Access list needs to be created.
+
+In contrast to the above Dynamic Source Nat configuration , what about the traffic coming from the internet to the the DMZ . Email , Web Servers need a static IP to be bound to so that people can reach them.
+
+This is where we would need **Static NAT**
+
+Example of Nat'ing the **Web Server** in DMZ
+
+```sh
+object network WWW1
+ host 192.168.1.11 ! Address of Web Server in DMZ
+ nat (dmz, outside) static 192.1.20.21
+ ! Means , translation of DMZ address to Ourside address of 192.1.20.21
+```
 
 
 
 
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+**ASDM Configuration**
+
+After configuring an interface as nameif managment , give it IP
+and follow the steps below
+
+```sh
+ enable pass cisco
+ username cisco password cisco
+ aaa authentication ssh console LOCAL
+ crypto key generate rsa modulus 1024
+ ssh 192.168.1.0 255.255.255.0 management
+
+ asdm image flash:/asdm- .bin
+ http server enable
+ http 192.168.1.0 255.255.255.0 management
+  ssh 192.168.1.0 255.255.255.0 management
+```
+
+ ![](assets/markdown-img-paste-2018070321543137.png)
+  ![](assets/markdown-img-paste-20180703215228370.png)
 ![](assets/markdown-img-paste-20180623213245289.png)
 
 
 ![](assets/markdown-img-paste-20180703130517336.png)
+
+
 
 
 conf t
@@ -2285,15 +2468,6 @@ line con 0
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-
-
-
-
-
-
-
-
-Hi I am dojgn well and hope that you are fine as wll please find my letter explainign the cause of the issue and what could be required to do the same stuff . If possible apprecirate if you could send me the whole configuration .
 
 
 
@@ -2403,5 +2577,3 @@ This was caused due to the following commands missing from the DMVPN Clients
 ip nhrp map multicast 192.1.10.2
 ```
 ---
-
-Andy (azielnic )  Andy Zielnicki
