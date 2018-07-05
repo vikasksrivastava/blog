@@ -2420,7 +2420,64 @@ access-list OUTSIDE permit tcp any host 192.168.1.11 eq 80
 access-group OUTSIDE in interface outside
 ```
 
+> ![](assets/markdown-img-paste-20180705130808410.png)
+**Note**:
 
+> 1. **Most of the time 99%, the flow looks like above , the traffic from the inside (`RED`) is connfigured first and then the the outside direction (`BLUE`).**
+> 2. **Also most of the time 99% , the first interface is higher security level (`RED`) and next is the lower security level (`BLUE`).**
+---
+
+## Dynamic PAT
+
+1. Using the Outside Interface
+
+```sh
+object network INS-NET
+ subnet 10.11.11.0 255.255.255.0
+ nat (inside,outside) dynamic interface
+```
+
+2. Using an IP Address
+
+```sh
+A. Create an IP Address or Pool of IPs
+
+object network POOL-A
+ host 192.1.20.5
+
+B. Create the Inside Network and specify to use the Pool for the PAT
+
+object network INS-NET
+ subnet 10.11.11.0 255.255.255.0
+ nat (ins,out) dynamic pat-pool POOL-A
+```
+
+## Static PAT - For Public Facing Servers
+
+```sh
+object network WWW1
+ host 192.168.1.11
+ nat (dmz,outside) static 192.1.20.11 service tcp 80 80
+!
+object network EMAIL1
+ host 192.168.1.12
+ nat (dmz,outside) static 192.1.20.11 service tcp 25 25
+!
+object network DNS1
+ host 192.168.1.12
+ nat (dmz,outside) static 192.1.20.11 service tcp 53 53
+!
+!
+object network R3
+ host 192.168.1.3 
+ nat (dmz,outside) static 192.1.20.11 service tcp 23 2311
+ ! Traffic coming on 192.1.20.11 on port 2311
+ ! should get translated to 192.168.1.3 port 23
+```
+
+**Example**
+> ![](assets/markdown-img-paste-20180705134607176.png)
+**Traffic coming on 192.1.20.11 on port 2311 (from `outside`) should get translated to 192.168.1.3 port 23 (in the `dmz`)**
 
 
 
@@ -2430,40 +2487,42 @@ access-group OUTSIDE in interface outside
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
+# Technotes
+
+
 **ASDM Configuration**
 
 After configuring an interface as nameif managment , give it IP
 and follow the steps below
 
 ```sh
- enable pass cisco
- username cisco password cisco
- aaa authentication ssh console LOCAL
- crypto key generate rsa modulus 1024
- ssh 192.168.1.0 255.255.255.0 management
+enable pass cisco
+username cisco password cisco
+aaa authentication ssh console LOCAL
+crypto key generate rsa modulus 1024
+ssh 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
 
- asdm image flash:/asdm- .bin
- http server enable
- http 192.168.1.0 255.255.255.0 management
-  ssh 192.168.1.0 255.255.255.0 management
+asdm image flash:/asdm- .bin
+http server enable
+http 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
+ssh 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
 ```
 
- ![](/assets/markdown-img-paste-2018070321543137.png)
-  ![](/assets/markdown-img-paste-20180703215228370.png)
-![](/assets/markdown-img-paste-20180623213245289.png)
 
+**ASA in Eve-NG**
 
 ![](/assets/markdown-img-paste-20180703130517336.png)
 
 
 
-
+**General Router Default Config**
+```sh
 conf t
 logging synchronous
 line con 0
  exec-time 0
+```
 
-![](/assets/markdown-img-paste-20180704210712525.png)
 
 
 
