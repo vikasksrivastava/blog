@@ -888,7 +888,7 @@ crypto gdoi group SALES
 ---
 ### VRF - A Quick Introduction
 
-![](assets/markdown-img-paste-20180630105536275.png)
+![](/assets/markdown-img-paste-20180630105536275.png)
 
 ###### Basic VRF Configuration Example
 ```sh
@@ -949,7 +949,7 @@ router eigrp 1
 
 ### VRF - Aware VPNs
 
-![](assets/markdown-img-paste-20180630135437874.png)
+![](/assets/markdown-img-paste-20180630135437874.png)
 
 Now in the VRF example above the traffic between the loopback networks 10.1.1.3 to 10.2.2.4 is no encrypted. In this section we will enxrypt the data.
 
@@ -1015,7 +1015,7 @@ Success rate is 80 percent (4/5), round-trip min/avg/max = 28/41/56 ms
 ---
 ### VRF Aware [Get VPN]
 
-![](assets/markdown-img-paste-20180701153254761.png)
+![](/assets/markdown-img-paste-20180701153254761.png)
 
 **PREFACE** :  In the above configuration the once the IP Addressing is setup , there is EIGRP neighborship configured withing a VRF in the colored areas and the interfaces (no VRF on the R1 or R3 , only on R2).
 With this , R1 and R3 cannot reach the Key Server . To enable that we have to configure the following (route-leaking) so that the networks behind R1 and R3 can reach the Key Server . The eventual goal is to encrypt traffic between `R1 and R2` and `R1 and R3` .
@@ -1268,9 +1268,9 @@ The function of a CA Server is to validate an identity. Its an authority that bo
 So now both companies have their own certificates (**`ID-CERT`**).
 
 
-![](assets/markdown-img-paste-20180701202633932.png)
+![](/assets/markdown-img-paste-20180701202633932.png)
 
-![](assets/markdown-img-paste-20180701202738132.png)
+![](/assets/markdown-img-paste-20180701202738132.png)
 
 
 CA Server Based Setup
@@ -1292,7 +1292,7 @@ Digital Signature of the CA Server
 Certificate Relocation List : Checks for Certificates currency (How current it is)
 
 
-![](assets/markdown-img-paste-20180701212428524.png)
+![](/assets/markdown-img-paste-20180701212428524.png)
 
 **Step 1. CA Server Configuration**
 
@@ -1420,7 +1420,7 @@ IKEv2 Proposal (Could use a combination of all the options below)
 
 ## IKEv3 VPN using legacy methods
 
- ![](assets/markdown-img-paste-20180701222340205.png)
+ ![](/assets/markdown-img-paste-20180701222340205.png)
 
 
 ```
@@ -1584,7 +1584,7 @@ int fa0/0
 # Flex VPN
 ## Site to Site VPN [D-VTI / S-VTI based ]
 
-![](assets/markdown-img-paste-20180703080419330.png)
+![](/assets/markdown-img-paste-20180703080419330.png)
 
 **FOUNDATION**
 
@@ -1752,7 +1752,7 @@ show interface virtual-access 1
 
 In this section we will configure the S-VTI between `R1` and `R5`.
 
-![](assets/markdown-img-paste-20180703134530541.png)
+![](/assets/markdown-img-paste-20180703134530541.png)
 
 **R1**
 
@@ -1888,7 +1888,7 @@ router eigrp 100
 
 ## Spoked to Spoke FLEX VPN
 
-![](assets/markdown-img-paste-20180703143519275.png)
+![](/assets/markdown-img-paste-20180703143519275.png)
 
 Here we will setup a Flex VPN between SPOKE-3 and SPOKE-4 with R1 acting as the HUB.
 
@@ -2143,7 +2143,7 @@ router eigrp
 
 # ASA Firewalls
 
-![](assets/markdown-img-paste-20180703154612386.png)
+![](/assets/markdown-img-paste-20180703154612386.png)
 
 ASA is technicaly a router acting as a firewall. `Outside` is your external network , `Inside` is your internal network and `DMZ` is things like your email , web and DNS Server.
 
@@ -2351,7 +2351,7 @@ router ospf 1
 
 
 
-![](assets/markdown-img-paste-20180704204345529.png)
+![](/assets/markdown-img-paste-20180704204345529.png)
 
 **FOUNDATION**
 
@@ -2363,7 +2363,7 @@ router ospf 1
 
 **Source Dynamic NAT** Allows internal users to go out using Public address from a pool defined on the firewall. Also know as Object NAT or Auto NAT  (In the picture above , its traffic goign from R1 to R2 being natted at ASA)
 
-![](assets/markdown-img-paste-20180704210146346.png)
+![](/assets/markdown-img-paste-20180704210146346.png)
 
 > It is called Dynamic becuase its on need basis when traffic arrives at the ASA
 
@@ -2401,7 +2401,7 @@ In contrast to the above Dynamic Source Nat configuration , what about the traff
 
 This is where we would need **Static NAT**
 
-![](assets/markdown-img-paste-20180704210457844.png)
+![](/assets/markdown-img-paste-20180704210457844.png)
 Example of Nat'ing the **Web Server** in DMZ
 
 ```sh
@@ -2448,12 +2448,12 @@ and follow the steps below
   ssh 192.168.1.0 255.255.255.0 management
 ```
 
- ![](assets/markdown-img-paste-2018070321543137.png)
-  ![](assets/markdown-img-paste-20180703215228370.png)
-![](assets/markdown-img-paste-20180623213245289.png)
+ ![](/assets/markdown-img-paste-2018070321543137.png)
+  ![](/assets/markdown-img-paste-20180703215228370.png)
+![](/assets/markdown-img-paste-20180623213245289.png)
 
 
-![](assets/markdown-img-paste-20180703130517336.png)
+![](/assets/markdown-img-paste-20180703130517336.png)
 
 
 
@@ -2463,7 +2463,7 @@ logging synchronous
 line con 0
  exec-time 0
 
-![](assets/markdown-img-paste-20180704210712525.png)
+![](/assets/markdown-img-paste-20180704210712525.png)
 
 
 
