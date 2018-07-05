@@ -2363,6 +2363,8 @@ router ospf 1
 
 **Source Dynamic NAT** Allows internal users to go out using Public address from a pool defined on the firewall. Also know as Object NAT or Auto NAT  (In the picture above , its traffic goign from R1 to R2 being natted at ASA)
 
+![](assets/markdown-img-paste-20180704210146346.png)
+
 > It is called Dynamic becuase its on need basis when traffic arrives at the ASA
 
 ```sh
@@ -2391,22 +2393,32 @@ show xlate
 
 **Source Static NAT**
 
-> Translates an internal address on the outside. This is done staticaly so that an entry is created on trnaslation table. You still need to allow the accesss from Low to High. Access list needs to be created.
+> Translates an internal address on the outside. This is done staticaly so that an entry is created on trnaslation table.
+
+> You still need to allow the accesss from Low to High. **Access list needs to be created**.
 
 In contrast to the above Dynamic Source Nat configuration , what about the traffic coming from the internet to the the DMZ . Email , Web Servers need a static IP to be bound to so that people can reach them.
 
 This is where we would need **Static NAT**
 
+![](assets/markdown-img-paste-20180704210457844.png)
 Example of Nat'ing the **Web Server** in DMZ
 
 ```sh
+! Creation of NAT Entry
 object network WWW1
  host 192.168.1.11 ! Address of Web Server in DMZ
  nat (dmz, outside) static 192.1.20.21
  ! Means , translation of DMZ address to Ourside address of 192.1.20.21
 ```
 
-
+```sh
+! Creation of Access list
+access-list OUTSIDE permit tcp any host 192.168.1.11 eq 80
+access-list OUTSIDE permit tcp any host 192.168.1.11 eq 80
+!
+access-group OUTSIDE in interface outside
+```
 
 
 
@@ -2447,10 +2459,11 @@ and follow the steps below
 
 
 conf t
+logging synchronous
 line con 0
  exec-time 0
 
-
+![](assets/markdown-img-paste-20180704210712525.png)
 
 
 
