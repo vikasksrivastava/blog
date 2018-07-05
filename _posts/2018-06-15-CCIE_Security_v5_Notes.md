@@ -2423,8 +2423,19 @@ access-group OUTSIDE in interface outside
 > ![](assets/markdown-img-paste-20180705130808410.png)
 **Note**:
 
-> 1. **Most of the time 99%, the flow looks like above , the traffic from the inside (`RED`) is connfigured first and then the the outside direction (`BLUE`).**
-> 2. **Also most of the time 99% , the first interface is higher security level (`RED`) and next is the lower security level (`BLUE`).**
+> **1. Most of the time 99%, the flow looks like above , the traffic from the inside (`RED`) is connfigured first and then the the outside direction (`BLUE`).**
+> **2. Also most of the time 99% , the first interface is higher security level (`RED`) and next is the lower security level (`BLUE`).**
+
+> ![](assets/markdown-img-paste-20180705150643228.png)
+> **So lets say in the traffic example above , where traffic is coming from the outside to the DMZ :**
+
+> **Step 1.** Packed comes fromt he internet `X.X.X.X` to `192.1.20.5` and arrives on the `OUTSIDE` interface.
+**Step 2.** Since `OUTSIDE` looks at/ works on at the *destination address* (look at the mapping in the picture) it changes the destination address from 192.1.20.5 to 192.1.20.21.
+**Step 3.** Next the Web Server at 192.1.20.21 responds back with source as 192.1.20.5 and destination as X.X.X.X , this arrives on the DMZ interface.
+> Since `DMZ` in this case looks at the Source Address , it changes the source address to 192.1.20.5 and send the packet back on the internet.
+
+
+
 ---
 
 ## Dynamic PAT
@@ -2469,7 +2480,7 @@ object network DNS1
 !
 !
 object network R3
- host 192.168.1.3 
+ host 192.168.1.3
  nat (dmz,outside) static 192.1.20.11 service tcp 23 2311
  ! Traffic coming on 192.1.20.11 on port 2311
  ! should get translated to 192.168.1.3 port 23
@@ -2649,3 +2660,7 @@ This was caused due to the following commands missing from the DMVPN Clients
 ip nhrp map multicast 192.1.10.2
 ```
 ---
+
+![](assets/markdown-img-paste-20180705130808410.png)
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
