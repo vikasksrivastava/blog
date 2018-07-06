@@ -14,13 +14,8 @@ Password: *********
 Opening VI target: vi://root@192.168.1.13:443/
 Deploying to VI: vi://root@192.168.1.13:443/
 Disk progress: 4%
-```
-
-
 
 ovftool --name="KISE"  --acceptAllEulas -ds="datastore1" --net:"GigabitEthernet1"="VM Network"  --net:"GigabitEthernet2"="VM Network" --net:"GigabitEthernet3"="VM Network"  /filepath/csr1000v-universalk9.16.03.06\ \(1\)\ copy.ova vi://192.168.1.13/
-
-
 
 Opening OVA source: /filepath/Downloads/csr1000v-universalk9.16.03.06 (1) copy.ova
 The manifest validates
@@ -33,7 +28,7 @@ Disk progress: 4%
 ```
 
 
-
+```sh
 ovftool --noSSLVerify \
         --name="KISE"  \
         --acceptAllEulas \
@@ -48,6 +43,7 @@ qemu-img convert -c -O qcow2 /opt/unetlab/tmp/0/c06281a8-161c-4aa5-aea4-4d304b13
 
 
 qemu-img convert -c -O qcow2 /opt/unetlab/tmp/0/c06281a8-161c-4aa5-aea4-4d304b13b6d4/1/virtioa.qcow2  /opt/unetlab/addons/qemu/win-7test/virtioa.qcow2
+```
 
 ##### Downloading from Datastore to local machine
 
@@ -67,7 +63,11 @@ Thanks to `http://azaleasays.com/2014/03/05/iterm2-merge-a-pane-back-to-window-o
 The secret key combination to drag a pane back to a window or to the tab bar is: `command + shift + option`, while dragging the pane body (not its header!). View the screencast below and you’ll figure it out:
 
 
-
 ### Having iTerm handle the telnet:// URL
 
-![](assets/markdown-img-paste-20180528184424236.png)
+![](/assets/markdown-img-paste-20180528184424236.png)
+
+
+**ASA in Eve-NG**
+
+![](/assets/markdown-img-paste-20180703130517336.png)

@@ -2499,6 +2499,8 @@ object network R3
 
 This allows you to change the Source as well as the detination in a single NAT statement. This is also known as the Manual-NAT.
 
+![](assets/markdown-img-paste-20180705182234157.png)
+
 1. Create Object for all the addresses involved.
 
 ```sh
@@ -2523,9 +2525,115 @@ nat source static R3-D R3-O destination static destination static H199-D H199-O
 ! You could do it like above (dmz,inside) to lock down to the interface level.
 
 ```
->** The above line means that If the packet is going from R3-D to H199-D , change R3-D to R3-O and change H199-D H199-O**
+>**The above line means that If the packet is going from R3-D to H199-D , change R3-D to R3-O and change H199-D H199-O**
+
+---
+
+# Transparent Firewall
 
 
+![](assets/markdown-img-paste-20180705204955741.png)
+
+**CONFIGURATION**
+
+1. Configuring the firewall as transparent
+
+`firewall transparent`
+
+2. Configure the interface to be part of the same Bridge-group
+
+```sh
+interface e0
+ nameif inside
+ security-level 100
+ bridge-group 5
+ no shut
+
+interface e1
+ nameif outside
+ security-level 0
+ bridge-group 5
+ no shut
+```
+
+3. Enable the IP Address on bridge group to forward traffic
+
+```sh
+interface bvi 5
+ ip address 192.1.10.10
+```
+
+Once the above is done , everthing else is managed as the standard firewall.
+
+```sh
+acces-list OUTSIDE permit tcp host 192.1.10.3 host 192.1.10.1 eq telnet
+access-group OUTSIDE in interface inside/outside
+```
+
+**Ethertype ACLs**
+```sh
+access-list ABC ethertype permit 0x2133
+access-group ABC permit in
+```
+---
+# ASA Redundancy
+
+## Redundant Interfaces (Failover , Only one active)
+
+![](assets/markdown-img-paste-2018070521365204.png)
+
+```sh
+ciscoasa# show running-config interface redundant 1
+!
+interface Redundant1
+ member-interface Ethernet1
+ member-interface Ethernet2
+ nameif inside
+ security-level 100
+ ip address 10.11.11.10 255.255.255.0
+ciscoasa#
+
+ciscoasa# show interface Redundant 1
+Interface Redundant1 "inside", is up, line protocol is up
+  Hardware is i82559, BW 100 Mbps, DLY 100 usec
+	Auto-Duplex(Full-duplex), Auto-Speed(100 Mbps)
+	Input flow control is unsupported, output flow control is unsupported
+	MAC address 5000.0002.0001, MTU 1500
+  Redundancy Information:
+	Member Ethernet1(Active), Ethernet2
+	Last switchover at 01:23:14 UTC Jul 6 2018
+
+```
+
+## Redundant Interfaces (Port Channel , both interfaces active)
+
+![](assets/markdown-img-paste-20180705214712417.png)
+
+```sh
+! SW
+!
+interface Port-channel10
+ switchport access vlan 10
+ switchport mode access
+!
+interface range e0/1 - 1
+ channel-group 10 mode active
+!
+! ASA
+interface e1
+ channel-group 10 mode active
+interface e2
+ channel-group 10 mode active
+interface port-channel 10
+ nameif inside
+ ip address 10.11.11.10 255.255.255.0
+ no shut
+!
+```
+
+## Security Contexts [Virtual Firewalls]
+
+Day 7 , 2:11:53
 
 
 # Technotes
@@ -2550,9 +2658,6 @@ ssh 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
 ```
 
 
-**ASA in Eve-NG**
-
-![](/assets/markdown-img-paste-20180703130517336.png)
 
 
 
@@ -2673,6 +2778,52 @@ ip nhrp map multicast 192.1.10.2
 ```
 ---
 
-![](assets/markdown-img-paste-20180705130808410.png)
+```sh
+packet-tracer input INSIDE tcp [SRC_HOST] [SRC_PORT] [DST_HOST] [DST_PORT]
+
+asa-fw# packet-tracer input INSIDE tcp 172.16.1.5 1024 4.2.2.2 9000
+
+!!! output truncated
+
+Phase: 4
+Type: ACCESS-LIST
+Subtype: log
+Result: DROP                                            <---- ASA Dropped the traffic
+Config:
+access-group INSIDE_in in interface INSIDE
+access-list INSIDE_in extended deny ip any4 any4 log    <---- This rule denied the traffic
+Additional Information:
+
+Result:
+input-interface: INSIDE
+input-status: up
+input-line-status: up
+output-interface: OUTSIDE
+output-status: up
+output-line-status: up
+Action: drop
+Drop-reason: (acl-drop) Flow is denied by configured rule   <----
+
+```
+
+```sh
+
+asa-fw# capture DENY type asp-drop all buffer 500000 match tcp host 172.16.1.5 host 4.2.2.2 eq 9000
+
+
+asa-fw# sh capture DENY trace
+
+1 packet captured
+1: 06:13:43.434761       802.1Q vlan#200 P0 172.16.1.5.33489 > 4.2.2.2.9000: S
+   884023774:884023774(0) win 14600 <mss 1460,sackOK,timestamp 67442169 0,nop,wscale 7>
+   Drop-reason: (acl-drop) Flow is denied by configured rule
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1 packet shown
+asa-fw# no capture DENY
+
+```
+
+
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
