@@ -3,8 +3,6 @@ layout: post
 title: CCIE Security v5 Notes
 description: My Notes preparing for CCIE Security v5
 comments: true
----
-
 
 <!-- TO depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
@@ -2162,6 +2160,7 @@ Traffic moving from **Higher** security level to **Lower** is allowed by default
 - ASA only blocks THRU traffic , traffic coming TO firewall is allowed.
 The only reason you are allowed to PING is becuase the ICMP feature is enabled by default.
 - Firewall does not allow Telnet on a Level 0 interface. It has to be specificcaly allowed based on source.
+- If a connection is allowed `in` to an ASA, then it will automatically be allowed `out`, as ASAs are stateful. This means you do not need to write an `in` and an `out` ACL, just an `in`.
 
 ## Interface Configuration
 
@@ -2633,7 +2632,137 @@ interface port-channel 10
 
 ## Security Contexts [Virtual Firewalls]
 
-Day 7 , 2:11:53
+
+```sh
+mode multiple ! Requires a reboot
+
+show mode
+
+show context
+
+! Unshut all the interfaces
+
+int eth0
+ no shut
+int eth1
+ no shut
+int eth2
+ no shut
+
+context admin
+ allocate-interface Management0/0
+
+context SALES
+ allocate-interface gig0/0
+ allocate-interface gig0/1
+ config-url flash:SALES.cfg
+
+context FINANCE
+ allocate-interface gig0/2
+ allocate-interface gig0/3
+ config-url flash:FINANCE.cfg
+
+changeto context SALES  ! And after this NORMAL Configuration
+
+admin-context SALES ! Will change the SALES context as admin context.
+! You can change from Admin context to system context
+changeto context
+```
+
+You can also define the amount of resources a particular context gets by the use of `Class`
+
+
+```sh
+! Class Creation and Limitation configuration
+class CLASS_GOLD
+ limit-resource conns 100000 ! A Zero means no limit
+ limit-resource xlate 5000
+class CLASS_SILVER
+ limit-resource conns 1000
+ limit-resource xlate 1000
+
+! Applying the Class on the Context
+context FINANCE
+ member CLASS_SILVER
+context SALES
+ member CLASS_GOLD
+```
+
+```sh
+ciscoasa(config)# class GOLD
+ciscoasa(config-class)# limit-resource ?
+class mode commands/options:
+  rate           Enter this keyword to specify a rate/sec
+Following resources available:
+  ASDM           ASDM Connections
+  All            All Resources
+  Conns          Connections
+  Hosts          Hosts
+  Mac-addresses  MAC Address table entries
+  Routes         Routing Table Entries
+  SSH            SSH Sessions
+  Telnet         Telnet Sessions
+  VPN            VPN resources
+  Xlates         XLATE Objects
+
+```
+
+## Failover
+
+Failover is redundancy at the device level .
+
+### Active / Standby
+
+Active - The box which is in the forwarding mode. All configurations are done on the Active Box .
+
+Standby - The box that is not forwarding but has all the configurations limited .
+
+Primary - Secondary is defined in configuration. When the ASA pair boots for the firt time the ASA defines as Primary becomes Active and the one defined as Secondary becomes Standby.
+
+> The definition of Primary/Seconday does not change in case of falilue. These are Roles. During failover the device moves from Active to Standby and vice versa.
+
+
+
+
+```sh
+! ACTIVE  ASA6
+failover lan interface FAILOVER eth2
+failover interface ip FAILOVER 10.100.100.1 255.255.255.0 standby 10.100.100.2
+failover lan unit primary
+failover key cisco123
+failover
+!
+! STANDBY ASA7
+failover lan interface FAILOVER eth2
+failover interface ip FAILOVER 10.100.100.1 255.255.255.0 standby 10.100.100.2
+failover lan unit secondary
+failover key cisco123
+failover
+!
+```
+
+```sh
+
+ASA7(config)# ..
+
+	Detected an Active mate
+Beginning configuration replication from mate.
+ERROR: Password recovery was not changed, unable to access
+the configuration register.
+Crashinfo is NOT enabled on Full Distribution Environment
+End configuration replication from mate.
+
+```
+
+
+### Active / Active
+
+## Clustering
+### Spanned Mode
+### Individual Interface Mode
+
+
+
 
 
 # Technotes
