@@ -3,56 +3,9 @@ layout: post
 title: CCIE Security v5 Notes
 description: My Notes preparing for CCIE Security v5
 comments: true
+---
 
-<!-- TO depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [VPN (Policy based )](#vpn-policy-based-)
-			- [Key Exchange Protocol](#key-exchange-protocol)
-		- [GRE Tunnel](#gre-tunnel)
-				- [Step 1](#step-1)
-				- [Step 2](#step-2)
-		- [GRE over IPSec - Tunnel Mode](#gre-over-ipsec-tunnel-mode)
-		- [GRE / IPSec - Transport Mode](#gre-ipsec-transport-mode)
-			- [Configuration](#configuration)
-		- [Native IPSec Tunnel [S-VTI]](#native-ipsec-tunnel-s-vti)
-		- [MGRE (Multipoint GRE)](#mgre-multipoint-gre)
-			- [A Multipoint GRE Full Configuration Snippet](#a-multipoint-gre-full-configuration-snippet)
-		- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
-		- [DMVPN - EIGRP - Phases [I,II,III]](#dmvpn-eigrp-phases-iiiiii)
-		- [Redundancy [Dual-Hub DMVPN Setup]](#redundancy-dual-hub-dmvpn-setup)
-		- [GETVPN](#getvpn)
-			- [Configuration of a GETVPN](#configuration-of-a-getvpn)
-		- [VRF - A Quick Introduction](#vrf-a-quick-introduction)
-					- [Basic VRF Configuration Example](#basic-vrf-configuration-example)
-					- [VRF Reachability test](#vrf-reachability-test)
-					- [VRF Routing configuration example](#vrf-routing-configuration-example)
-		- [VRF - Aware VPNs](#vrf-aware-vpns)
-			- [MAJOR DIFFERENCE IS IN THIS SECTION - BEGIN](#major-difference-is-in-this-section-begin)
-			- [MAJOR DIFFERENCE IS IN THIS SECTION - END](#major-difference-is-in-this-section-end)
-- [* * * Lab Remaining from here * * *](#-lab-remaining-from-here-)
-		- [VRF Aware [Get VPN]](#vrf-aware-get-vpn)
-- [Routers as a CA Server](#routers-as-a-ca-server)
-	- [CA Based VPNs](#ca-based-vpns)
-- [IKEv2 VPNS](#ikev2-vpns)
-	- [IKEv3 VPN using legacy methods](#ikev3-vpn-using-legacy-methods)
-	- [IKEv2 VPN using S-VTIs (uses GRE tunnel and the routing on it)](#ikev2-vpn-using-s-vtis-uses-gre-tunnel-and-the-routing-on-it)
-- [Flex VPN](#flex-vpn)
-	- [Site to Site VPN [D-VTI / S-VTI based ]](#site-to-site-vpn-d-vti-s-vti-based-)
-	- [Static VTI to Static VTI Configuration](#static-vti-to-static-vti-configuration)
-		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
-		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
-	- [Spoked to Spoke FLEX VPN](#spoked-to-spoke-flex-vpn)
-		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
-- [ASA Firewalls](#asa-firewalls)
-	- [Interface Configuration](#interface-configuration)
-	- [Security Levels](#security-levels)
-	- [Routing [RIP , EIGRP , OSPF]](#routing-rip-eigrp-ospf)
-			- [Troubleshooting Commands and Outputs](#troubleshooting-commands-and-outputs)
-			- [Error Messages and Resolution](#error-messages-and-resolution)
-
-<!-- /TOC -->
-
-### VPN (Policy based )
+### VPN (Policy based)
 
 #### Key Exchange Protocol
 
@@ -139,8 +92,6 @@ Phase 2 3600 sec 1 hr
 
 > In the above VPN Configuration , the interesting traffic is define by an `ACL`. Such VPNs are called **Policy based VPN**.
 
-
----
 ### GRE Tunnel
 
 GRE Tunnel basically creates a virtual point to point link between two routers which traditionally were establishing VPN based on interesting traffic define by ACLs . Which was a tedious process.
@@ -2707,29 +2658,33 @@ Following resources available:
 
 ```
 
+> **You can have subinterfaces from a the same interface part of 2 different virtual contexts.**
+
 ## Failover
 
 Failover is redundancy at the device level .
 
-### Active / Standby
+### Active / Standby (Stateless)
 
 Active - The box which is in the forwarding mode. All configurations are done on the Active Box .
 
 Standby - The box that is not forwarding but has all the configurations limited .
 
+> **The active box will respond to the ARP request from the clients**
+
 Primary - Secondary is defined in configuration. When the ASA pair boots for the firt time the ASA defines as Primary becomes Active and the one defined as Secondary becomes Standby.
 
 > The definition of Primary/Seconday does not change in case of falilue. These are Roles. During failover the device moves from Active to Standby and vice versa.
 
-
-
+![](assets/markdown-img-paste-20180708134758390.png)
 
 ```sh
 ! ACTIVE  ASA6
 failover lan interface FAILOVER eth2
 failover interface ip FAILOVER 10.100.100.1 255.255.255.0 standby 10.100.100.2
+! The first IP is for ACTIVE and the second for STANDBY.
 failover lan unit primary
-failover key cisco123
+failover key cisco123 ! For securing communication
 failover
 !
 ! STANDBY ASA7
@@ -2740,6 +2695,8 @@ failover key cisco123
 failover
 !
 ```
+
+The one configured above is a Stateless failover , where the end user isnt replicated for both the firewalls
 
 ```sh
 
@@ -2754,8 +2711,36 @@ End configuration replication from mate.
 
 ```
 
+> **To display the current state of ASA in CLI use `prompt hostname state`**
 
-### Active / Active
+
+
+***The one configured above is a `Stateless failover` , where the end user isnt replicated for both the firewalls , with that we move into the next topic of `Active/Standby` with `Statefull` firewalls***
+
+
+### Active / Standby (Statefull)
+
+![](assets/markdown-img-paste-20180708140539316.png)
+
+To configure active active failover for ASA , you have to configure another failover link :
+
+```sh
+
+! Using separate link for Active/Active config
+interface eth3
+failover link Stateful_Failover eth3
+failover interface ip Stateful_Failover 10.200.200.1 255.255.255.0 standby 10.200.200.2
+!
+```
+
+OR use the same link used for active/standby config .
+
+```sh
+ASA6(config)# failover link FAILOVER eth2
+```
+
+### Active / Active (Statefull)
+
 
 ## Clustering
 ### Spanned Mode
@@ -2787,9 +2772,6 @@ ssh 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
 ```
 
 
-
-
-
 **General Router Default Config**
 ```sh
 conf t
@@ -2797,9 +2779,6 @@ logging synchronous
 line con 0
  exec-time 0
 ```
-
-
-
 
 
 
@@ -2952,7 +2931,3 @@ asa-fw# sh capture DENY trace
 asa-fw# no capture DENY
 
 ```
-
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
