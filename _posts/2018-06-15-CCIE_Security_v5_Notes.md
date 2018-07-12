@@ -2741,6 +2741,90 @@ ASA6(config)# failover link FAILOVER eth2
 
 ### Active / Active (Statefull)
 
+In active/active failover , one of each context is `ACTIVE` in different ASA and the other is `PASSIVE`.
+
+![](assets/markdown-img-paste-20180710064903498.png)
+
+> In case of a box failure , the Active Context on the failed box will move to the other active ASA.
+
+```sh
+! ASA1
+failover lan interface FAILOVER eth2
+failover interface ip FAILOVER 10.100.100.1 255.255.255.0 standby 10.100.100.2
+failover lan unit primary
+failover key cisco123
+!
+failover group 1
+ preempt
+ primary
+failover group 2
+ preempt
+ secondary
+!
+context SALES
+ join-failover-group 1 ! Making Sales active on Primary
+!
+context FINANCE
+ join-failover-group 2 ! Making Finance active on Secondary
+!
+failover link FAILOVER eth2 ! for active state replication .
+!
+failover
+```
+
+```sh
+! ASA2
+failover lan interface FAILOVER eth2
+failover interface ip FAILOVER 10.100.100.1 255.255.255.0 standby 10.100.100.2
+failover lan unit secondary
+failover key cisco123
+!
+failover
+```
+
+```sh
+wr mem all ! Saves all config
+```
+
+
+## ASA VPN Configuration (NAT-T)
+
+> An example of a VPN tunnel traversin the Firewall
+
+![](assets/markdown-img-paste-20180712023617644.png)
+
+In the above picture `R3` and `R2` are establishing VPN tunnel in the standard way pointing to each other peer ip address **which is directly reachable on the internet without the need of NAT** .
+
+`UDP 500 (ISAKMP) and ESP Traffic` needs to be permiited through the firewall . like following :
+
+```sh
+access-list OUTSIDE permit udp host x.x.x.x host x.x.x.x eq 500
+access-list OUTSIDE permit esp host x.x.x.x host x.x.x.x
+
+access-group OUTSIDE in interface outside
+```
+
+**Now above configuration is OK , but what if you have to establish VPN between `R1` *which has a non publically routable IP* and `R3` ?**
+
+![](assets/markdown-img-paste-20180712025911915.png)
+In this case you basically will map a Public IP Address to R1's address.
+So R3 points to the publically NAT'ed IP of R1 and R1 points directly to R3.
+
+> Routers have a special charesctersistic called **NAT Detection** , this is an inbuilt feature of IPSEC which always takes place . This is basically becuase in the intial negotiation the ipsec devices send their local ip to the remote ipsec endpoint. THe remote endpoint can then do the necessary accomodation as per NAT-T .
+
+In this case on the ASA you have to allow IPSEC and ESP
+
+```sh
+access-list OUTSIDE permit udp host x.x.x.x host x.x.x.x eq 500
+access-list OUTSIDE permit esp host x.x.x.x host x.x.x.x eq 4500
+!
+access-group OUTSIDE in interface outside
+```
+
+
+
+
+---
 
 ## Clustering
 ### Spanned Mode
@@ -2758,17 +2842,22 @@ ASA6(config)# failover link FAILOVER eth2
 After configuring an interface as nameif managment , give it IP
 and follow the steps below
 
+> For `asdm-782-151.bin` use 32 bit , `Java to 7 update 45` . Always refer the ASDM version guide on cisco.com to check for Java Dependencies than google :)
+
+> JNLP URL for ASDM is `https://X.X.X.X/admin/public/asdm.jnlp `
+
 ```sh
 enable pass cisco
 username cisco password cisco
 aaa authentication ssh console LOCAL
 crypto key generate rsa modulus 1024
-ssh 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
 
-asdm image flash:/asdm- .bin
+asdm image flash:/asdm-782-151.bin .bin
 http server enable
-http 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
-ssh 192.168.1.0 255.255.255.0 management !  Enable Source Traffic
+!  Enable Source Traffic
+http 192.168.1.0 255.255.255.0 management
+!  Enable Source Traffic
+ssh 192.168.1.0 255.255.255.0 management
 ```
 
 
@@ -2931,3 +3020,12 @@ asa-fw# sh capture DENY trace
 asa-fw# no capture DENY
 
 ```
+
+### Eve-NG Docker IP Address Configuration  (in the Starup config of the docker )
+
+```sh
+ip addr add 192.168.1.20/24 dev eth0
+ip route add default via 192.168.1.1
+```
+
+![](assets/markdown-img-paste-20180711234610360.png)
