@@ -2481,6 +2481,7 @@ nat source static R3-D R3-O destination static destination static H199-D H199-O
 
 # Transparent Firewall
 
+Notice the same IP Subnet `192.1.10.0` is divided in two VLANs (10, 20)
 
 ![](assets/markdown-img-paste-20180705204955741.png)
 
@@ -2827,8 +2828,192 @@ access-group OUTSIDE in interface outside
 ---
 
 ## Clustering
+
+Combining the multiple firewalls together to make a more powerfull version.
+8 to 16 Boxes can be part of the cluster dependign ont he software level.
+
 ### Spanned Mode
+
+![](assets/markdown-img-paste-20180712032823321.png)
+
+```sh
+
+! ASA 1
+! 1. Set the Cluster Mode
+cluster interface-mode spanned force
+! 2. Configure the Cluster Configuration
+cluster group CCIESECv5
+ local-unit PRI
+ cluster-interface eth2 ip 10.100.100.1 255.255.255.0
+ priority 1
+ key cisco123
+ enable noconfirm
+
+! ASA 2
+! 1. Set the Cluster Mode
+cluster interface-mode spanned force
+! 2. Configure the Cluster Configuration
+cluster group CCIESECv5
+ local-unit SEC
+ cluster-interface eth2 ip 10.100.100.2 255.255.255.0
+ priority 2
+ key cisco123
+ enable noconfirm
+
+#######################################################
+
+ciscoasa(cfg-cluster)# show cluster info
+Cluster CCIESECv5: On
+    Interface mode: spanned
+    This is "PRI" in state MASTER
+        ID        : 0
+        Version   : 9.1(5)16
+        Serial No.: JMX1203L0NN
+        CCL IP    : 10.100.100.1
+        CCL MAC   : 5000.0002.0002
+        Last join : 21:59:37 UTC Jul 12 2018
+        Last leave: N/A
+Other members in the cluster:
+    Unit "SEC" in state SLAVE_BULK_SYNC
+        ID        : 1
+        Version   : 9.1(5)16
+        Serial No.: JMX1203L0NN
+        CCL IP    : 10.100.100.2
+        CCL MAC   : 5000.0001.0002
+        Last join : 21:59:57 UTC Jul 12 2018
+        Last leave: N/A
+
+```
+
+#### Configuring the port channel ont he ASAs now :
+
+Now the configuration below , thouh will be done on the master will configured the same (replicated) on the other ASAs as well.
+
+```sh
+!
+interface eth1
+ channel-group 10 mode active
+ no shut
+!
+interface port-channel 10
+ port-channel span-cluster ! Tell that the port is a part of a spanned configuration
+ nameif inside
+ ip address 10.11.11.10 255.255.255.0
+ no shut
+!
+
+```
+
+---
 ### Individual Interface Mode
+
+The this mode , the ports are **not** in a port channel and are Individual interfaces with IP address configured to them via the Master ASA.
+
+The Routers do the logic of Equal Cost Load Balancing to send the traffic IN or OUT side to the ASA as they peer with the ASA as `EIGRP`.
+
+![](assets/markdown-img-paste-20180712184923883.png)
+
+```sh
+ip local pool OUTSIDE 192.1.20.11 - 192.1.20.15
+
+interface eth1
+ nameif outside
+ ip address 192.1.20.10 255.255.255.0 cluster-pool OUTSIDE
+ ! Set .10 as the eth1 ip and get the IP for others from the pool to set.
+```
+
+---
+
+## IKEv1 Site-to-Site on ASA (ASA to Router)
+
+**In this example we will be setting up the VPN tunnel between a IOS Router `R3` and ASA  `ASA-1`**
+
+![](assets/markdown-img-paste-20180717081026959.png)
+
+**R3**
+```sh
+! R3
+! 1. PHASE 1
+crypto isakmp policy 10
+ auth pre-share
+ encryption 3des
+ hash sha
+ group 2
+!
+crypto isakmp key cisco123 address 192.1.20.1
+
+! 2. Phase II
+
+crypto ipsec transform-set TSET esp-aes esp-sha-hmac
+
+! 3. ACL
+
+! Define interesting traffic ; Routers have inverse mark
+access-list 101 permit ip 10.3.3.0 0.0.0.255 10.11.11.0 0.0.0.255
+
+! 4. Crypto MAP
+
+crypto map CMAP 10 ipsec-isakmp
+ match address 101
+ set peer 192.1.20.1
+ set transform-set TSET
+
+! 5. Apply to the outgoing interface
+
+interface f0/0
+ crypto map CMAP
+
+```
+
+**ASA-1** (Output from `vpnsetup` Command and modifications)
+
+```sh
+
+1. Configure ISAKMP policy
+
+! Change isakmp to ikev1
+crypto ikev1 policy 10
+ authentication pre-share
+ encryption 3des
+ hash sha
+ group 2 ! Required in ikev1
+
+2. Configure transform-set
+
+crypto ipsec transform-set TSET esp-aes esp-sha-hmac
+
+3. Configure ACL
+
+access-list 101  permit ip 10.11.11.0 255.255.255.0 10.3.3.0 255.255.255.0
+
+4. Configure Tunnel group
+
+tunnel-group 192.1.23.3 type ipsec-l2l
+tunnel-group 192.1.23.3 ipsec-attributes
+ ikev1 pre-shared-key cisco123 ! Added `ikev1` here .
+
+5. Configure crypto map and attach to interface
+
+crypto map mymap 10 match address 101
+crypto map mymap 10 set peer 192.1.23.3
+crypto map mymap 10 set transform-set TSET
+!crypto map mymap 10 set reverse-route
+crypto map mymap interface outside
+
+6. Enable isakmp on interface
+
+crypto  ikev1 enable outside
+! Change isakmp to ikev1
+```
+
+
+
+
+
+
+
+## IKEv2 Site-to-Site on ASA
+## Clientless WebVPN on ASA
 
 
 
