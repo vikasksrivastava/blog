@@ -1367,7 +1367,7 @@ IKEv2 Proposal (Could use a combination of all the options below)
 **More Secure Algorithms** : More `SHA` variants availaible in IKEv2
 
 
-## IKEv3 VPN using legacy methods
+## IKEv2 VPN using legacy methods
 
  ![](/assets/markdown-img-paste-20180701222340205.png)
 
@@ -3007,13 +3007,186 @@ crypto  ikev1 enable outside
 ```
 
 
+## IKEv2 Site-to-Site (Between ASA and IOS)
+
+![](assets/markdown-img-paste-20180717081026959.png)
+
+**R5** (R5 towards ASA)
+```sh
+! R5
+! 1. [A] Configure an IKEv2 Proposal
+! Notice the different combinations available
+
+crypto ikev2 proposal PROP-1
+ integrity md5 sha256
+ encryption 3des aes-cbc-192
+ group 2 5  ! DH key algorothms
+
+! 1. [B] Configure a policy and call the proposal
+
+crypto ikev2 policy POLICY-1
+ proposal PROP-1
+
+! 1. [C] Configure and IKEv2 Key ring
+
+crypto ikev2 keyring KR-1
+ peer R2
+  address 192.1.20.2
+  pre-shared-key local cisco111   ! notice differen pre shared keys cisco111 and cisco 222
+  pre-shared-key remore cisco222
+
+! 1. [D] Configure an IKEv2 profile that will attach keyring to the authentication type. This will be attached to your crypto map.
+
+crypto ikev2 profile IKEv2-PROF-1
+ match identity remote address 192.1.20.2 255.255.255.255
+ authentication local pre-share
+ authentication remore pre-share
+ keyring KR-1
 
 
+! 2. PHASE II
+
+crytp map transform-set ABC esp-rdes esp-md5-hmac
+
+! 3. ACL
+
+crypto ipsec 101 permit ip 10.1.1.0 0.0.0.255 10.2.2.0 0.0.0.255
+
+!4. Crypto MAP
+
+crypto map ABC 10 ipsec-isakmp
+ match address 101
+ set peer 192.1.20.2
+ set transform-set ABC
+ set ikev2-profile IKEv2-PROF-1
 
 
+!5 . Apply the configuration
 
-## IKEv2 Site-to-Site on ASA
+int fa0/0
+ crypto map ABC
+
+```
+
+**ASA-2** (ASA towards R5)
+
+```sh
+
+1. Configure ISAKMP policy
+
+! Change isakmp to ikev2
+crypto ikev2 policy 10
+ integrity md5 sha256
+ encryption 3des aes-cbc-192
+ group 2 5  ! DH key algorothms
+
+2. Configure transform-set
+
+crypto ipsec ikev2 ipsec-proposal PROP-1
+ protocol esp encryption 3des
+ integrity md5
+
+3. Configure ACL
+
+access-list 101  permit ip 10.11.11.0 255.255.255.0 10.3.3.0 255.255.255.0
+
+4. Configure Tunnel group
+
+tunnel-group 192.1.23.3 type ipsec-l2l
+tunnel-group 192.1.23.3 ipsec-attributes
+ ikev2 local-authentication pre-shared-key cisco123
+ ikev2 remote-authentication pre-shared-key cisco123
+
+5. Configure crypto map and attach to interface
+
+crypto map ABC 10 match address 101
+crypto map mymap 10 set peer 192.1.23.3
+crypto map mymap 10 set ikev2 ipsec-proposal PROP-1
+crypto map mymap interface outside
+
+6. Enable isakmp on interface
+
+crypto  ikev2 enable outside
+! Change isakmp to ikev2
+
+```
+
+34:18 @ Remaining
+
+
 ## Clientless WebVPN on ASA
+
+**WebVPN to ASA1**
+
+![](assets/markdown-img-paste-20180720074132885.png)
+
+```sh
+
+! ASA 1
+
+! 1. Enable WebVPN on the outside interface and disable anyconnect-essentials
+
+webvpn
+ enable outside
+ no anyconnect-essentials
+
+! 2. Configure a Group Policy to specific the anyconnect client
+
+group-policy SALES internal
+group-policy SALES attributes
+ banner value "Ony Auth Personnel"
+ vpn-tunnel-protocol ssl-clientless
+
+! 3. Configur ea user and make it part of the group policy
+
+username cisco6 password cisco123
+username cisco6 attributes
+ vpn-group-policy SALES
+
+! 4. Configure the Port-forwarding for Non-Native applications
+
+webvpn
+ port-forward SALES 29001 10.11.11.4 1421
+ port-forward SALES 29002 10.11.11.11 23
+!
+group-policy SALES attribute
+ webvpn
+  port-forward value SALES
+!
+
+```
+
+You can then browse to the external page
+
+![](assets/markdown-img-paste-20180720073742112.png)
+
+
+# Firepower and FTD
+
+> Firepower is the IPS Only , FTD is Firewall Code + IPS .
+
+You can add SSD to the ASA and install the FTD OS on it .
+
+To configure IP Address on FMC
+```sh
+sudo su
+configure-network ! Shell script
+```
+
+```sh
+! Point the FTD towards FMC
+configure manager add 192.168.1.66 cisco123
+```
+
+![](assets/markdown-img-paste-20180723073910775.png)
+
+`Access Control Policy` : Is the default Firewall behaviour , Block All traffic , Allow all traffic etc .
+
+![](assets/markdown-img-paste-20180723074246812.png)
+
+After you make changes on FMC , the changes arent depolyed untill you manually push it from the FMC (Using the Deploy Button) .
+
+![](assets/markdown-img-paste-20180723075229802.png)
 
 
 
@@ -3053,7 +3226,6 @@ logging synchronous
 line con 0
  exec-time 0
 ```
-
 
 
 #### Troubleshooting Commands and Outputs

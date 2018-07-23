@@ -28,14 +28,14 @@ This by no means is a deep-dive on the topice but a way to get started quick and
 
 ## Lab Topology
 
-I used EVE-NG to build this lab out with Nexus 9000v running n9000-i-bin.boot and 2 vCPU and 12GB RAM per instance. The code I am running is 7.0(3)I7(3). Note that the end device are VPCs (Virtual PCs) and not Routers as I had issues with them.
+I have used EVE-NG to build this lab out with Nexus 9000v running n9000-i-bin.boot and 2 vCPU and 12GB RAM per instance. The code I am running is 7.0(3)I7(3). Note that the end device are VPCs (Virtual PCs) and not Routers as I had issues with them.
 
 <img src="/assets/markdown-img-paste-20180321163632812.png" alt="" style="width: 800px;"/>
 
 
 ## Methodology
 
-Here's my approach on how I built our the configuration in a layered approach
+Here's my approach on how I built our the configuration in a layered fashion.
 
 - Build the basic connectivity out (Interfaces,IP Addressing, Routing Protocol Configuration)
 - Test basic reachability in the Underlay.
