@@ -3260,6 +3260,8 @@ To log RPF packets , create a log ACL and add it to the RPF command (like the ex
 The above is an example of strict RPF check denoted by `rx` .
 If you change the `rx` to `any` it means that as long as the reverse path is in the routing table its allowed. (Not confinign it to the interface it came in from)
 
+```ip verify unicast source reachable-via any ```
+
 
 
 
