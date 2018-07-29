@@ -3115,8 +3115,6 @@ crypto  ikev2 enable outside
 
 ```
 
-34:18 @ Remaining
-
 
 ## Clientless WebVPN on ASA
 
@@ -3261,6 +3259,136 @@ The above is an example of strict RPF check denoted by `rx` .
 If you change the `rx` to `any` it means that as long as the reverse path is in the routing table its allowed. (Not confinign it to the interface it came in from)
 
 ```ip verify unicast source reachable-via any ```
+
+## Switchport port security
+
+Switch port security commands
+
+The command below manually assigns an MAC Address
+
+`switchport port-security mac XXXX.XXXX.XXXX `
+
+The command below  assigns an sticky MAC Address , which means the first MAC is allowed and others are not.
+
+`switchport port-security mac sticky `
+
+The command below will limit the maximum amount of MAC addresses which can be learned on an interface.
+
+`switchport port-security max 5 `
+
+Once a switch is put in the error disable mode , you can set the recovery time like the following :
+
+```sh
+errdisable recovery cause psecure-violation
+errdisable recovery interval 180 ! Time after which recovery can happen.
+```
+
+## DHCP Snooping
+
+DHCP Snopping is to make sure that only a valid DHCP Server is used to respond to the DHCP request and any rogue DHCP Server cannot offer the DHCP OFFER.
+
+```sh
+ip dhcp snooping ! Turn the feature on
+ip dhcp snooping vlan 10 ! Enable for the appropriate VLAN.
+```
+
+The above command will basically stop DHCP on the entire VLAN 10 untill you enable / trust the port to which the DHCP server is connected.
+
+```sh
+int gi0/3 ! Port to which the DHCP Server is connected.
+ ip dhcp snooping trust
+```
+
+> In case of switch connected to the other switch on which the DHCP Server is connected , the **trunk port would be configured as the trusted** port.
+
+As a result of DHCP Configuration , the switch maintains a DHCP Snooping table of assigned IP Addresses and ports.
+
+## ARP Inspection
+
+ARP Inspection is to save from ARP Poisining **(MITM)** type attacks.
+
+ARP inspection basically uses the DB built by DHCP snooping to match the right MAC adresses on the switch port .
+
+```sh
+ip dhcp snooping ! Turn the feature on
+ip dhcp snooping vlan 10 ! Enable for the appropriate VLAN.
+ip arp inspection vlan 10
+```
+
+```sh
+int gi0/3 ! Port to which the DHCP Server is connected.
+ ip dhcp snooping trust
+ ip arp inspection trust
+```
+
+
+## Source Gaurd
+
+Source gaurd combines the capabilities of `port security` and `arp inspection`.
+
+```sh
+int gi0/3 ! Port to which the Sourcegaud is to be enabled.
+ ip verify source
+```
+
+This will ensure the port is checked for MAC , IP , VLAN and Port against the DHCP Snooping DB.
+
+## VLAN ACL
+
+Allows you to control traffic withing the VLAN , going in and out of a VLAN.
+
+```sh
+1. Classify the traffic
+
+access-list 100 permit icmp any any
+access-list 100 permit udp eq .... whatever
+
+
+2. Create the ACL
+
+vlan access-map VMAP 10
+ match ip address 100
+ action drop
+vlan access-map VMAP 20
+ action forward
+
+3. Apply the VLAN ACL to the appropriate VLAN
+
+vlan filter VMAP vlan-list 10,20
+```
+
+# WSA (Web Security Agent)
+
+Web Filtering and Caching (Adult,Gambling,News,Sports,Social Networks etc)
+
+There are two modes
+
+1. Inline mode
+2. Transparent Mode
+
+In inline mode the browsers/end computes know about the WSA , in transparent mode the end devices are pointing to the default gateway which in turn talks to the WSA via WCCP .
+
+
+
+# ESA (Email Security Agent)
+
+ SMTP is for sendign  emails. This is mainly where WSA is used.
+
+ POP or IMAP is used to download/receive the mails by the clients.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
