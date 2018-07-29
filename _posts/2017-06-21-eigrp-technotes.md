@@ -201,6 +201,8 @@ P 10.0.0.1/32, 1 successors, FD is 128256
 
 ### EIGRP Metrics
 
+> ![](assets/markdown-img-paste-2018072411275439.png)
+
  `EIGRP Metric = 256*((K1*Bw) + (K2*Bw)/(256-Load) + K3*Delay)*(K5/(Reliability + K4)))`
 
  **Don’t worry** it is not used as is . The values of interest are K1,K2 ,K3,K4,K5
@@ -212,6 +214,7 @@ P 10.0.0.1/32, 1 successors, FD is 128256
  - MTU (`K5`)
 
  The `K1,K2` etc values **are not mapped** to correspoding data , for example `K1` is not 1:1 mapped with the `bandwidth`. The K values are only numbers to **scale numbers**
+
 
 ```sh
  R2#show ip protocols
@@ -298,6 +301,11 @@ Which further expands to:
   `> Metric = (107 / slowest link bandwidth) * 256 + (sum of delays of the path) * 256`
 
   > The metrics in EIGRP are a pain to work with since the values are so LARGE! If you want to practice with EIGRP you can try to disable all the K-values except K3. This will make EIGRP only use delay as metric.
+
+Good Documentation on EIGRP Metric Calculation
+
+https://www.cisco.com/c/en/us/products/collateral/ios-nx-os-software/enhanced-interior-gateway-routing-protocol-eigrp/whitepaper_C11-720525.html
+
 
 
 ### EIGRP Scalability Issues

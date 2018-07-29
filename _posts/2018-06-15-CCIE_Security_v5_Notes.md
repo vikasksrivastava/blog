@@ -2299,7 +2299,7 @@ router ospf 1
 
 # NAT
 
-
+Good Link https://www.practicalnetworking.net/stand-alone/cisco-asa-nat/#asa-identity-nat
 
 ![](/assets/markdown-img-paste-20180704204345529.png)
 
@@ -2310,6 +2310,10 @@ router ospf 1
 **Destiation NAT** If the  External Address / Remote Address / Foreign Addresss changes , it is called `Destination NAT` . The word destination is **"THEM"** .
 
 > **99% of the time you are doing Source NAT .**
+
+
+
+
 
 **Source Dynamic NAT** Allows internal users to go out using Public address from a pool defined on the firewall. Also know as Object NAT or Auto NAT  (In the picture above , its traffic goign from R1 to R2 being natted at ASA)
 
@@ -3188,6 +3192,73 @@ After you make changes on FMC , the changes arent depolyed untill you manually p
 
 ![](assets/markdown-img-paste-20180723075229802.png)
 
+> Notice the "Show Rule Conflict" ; It tells you if a rule conflicts with other and help you do the ordering of the rules.
+![](assets/markdown-img-paste-20180723080906140.png)
+
+
+Things to Do :
+
+1. CREATE Access Control Policy
+2. Add Rule : INT TO OUT : Allow from Inside Zone to Outside Zone
+3. Add Rule : In to Out : Block FB , Using the Applications Tab .
+4. Drag Rule 2 above Rule 1
+5. Enable R1 to telnet and ping into R3 .  (Outside to DMZ) . For PING you may need to create the port manually .
+6. Configure Static Routing on the FTD .
+    - Create a Loopback network on a connected Router
+    - Point to the Loopback Network from the FTD , via the Interface on the FTD , poining to the nexthop.
+    - Also create a static router , like Source 2.2.2.2 going to Router Next hop or 3.3.3.3
+7. Create an OSPF Neighborship with an external Router .
+    - Keep it simple on How would you run the OSPF on the router.
+8. Create a RIP Routing like step 7 and do a re-distribution between the OSPF and RIP
+9. Create NAT Scenario to do Object NAT . Both Static and Dynamic .
+10. Do a Port Translation as Well , say SimpleHTTPServer 80 : 8080
+
+11. Try doing Twice NAT
+
+
+12. Do a Face Block by ACL for internal users .
+13. Create an Intrusion POlicy and try sending an threat . FOR604 virus .
+14. Stop people to be able to upload a document or PPT File .
+
+![](assets/markdown-img-paste-2018072522354150.png)
+
+![](assets/markdown-img-paste-20180725223946377.png)
+
+
+15. Configure a Site to Site VPN between to FTD connected to the same FMC
+      -  Create the VPN
+      - Create the access list on eact ftd to define the interesting traffic
+
+
+
+---
+
+## Anti-Spoofing ACLs
+
+To stop spoofed IP Address , you can use ACLs on an interface and define what IP you would like to block which are sourced from your network (but does not logically come from that interface)
+
+uRPF Reverse Path Forwarding Check
+
+Using uRPF instead of creating an ACL for every network you can use this technology to do it automatically for you .
+
+It checks the source of a packet agains the routing table and if the return path of the packet is same as the source , it is allowed .
+
+
+uRPF Configuration
+
+```sh
+ip verify unicast source reachable-via rx allow-default
+! allow-default means check the default gateway of the source packet , and if: its pointing in the right direction let it go.
+```
+
+There could be case where the packet is coming in from one interface but is exiting out from another interface (typical in case of multiple ISP links to a router) . In this case uRPF migh block this genuine flow and an exception would have to be made . The same can be defined by the use of ACLs (ACL 150 in this example).
+
+```ip verify unicast source reachable-via rx allow-default 150 ```
+
+To log RPF packets , create a log ACL and add it to the RPF command (like the example above)
+
+The above is an example of strict RPF check denoted by `rx` .
+If you change the `rx` to `any` it means that as long as the reverse path is in the routing table its allowed. (Not confinign it to the interface it came in from)
 
 
 
