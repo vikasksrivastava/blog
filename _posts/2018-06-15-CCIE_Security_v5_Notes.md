@@ -19,6 +19,8 @@ You need the following to secure a Tunnel :
     - Encryption
     - Hashing
 
+
+
 > **Diffie Hellman** is the algorith that generates a `KEY` . Lifetime of a DH key is 3600 secs (1hr).
 
 There are two tunnels :
@@ -3359,7 +3361,9 @@ vlan filter VMAP vlan-list 10,20
 
 # WSA (Web Security Agent)
 
+
 Web Filtering and Caching (Adult,Gambling,News,Sports,Social Networks etc)
+WSA has Proxy ports apart from managment labbeled as P1 / P2 .
 
 There are two modes
 
@@ -3367,6 +3371,99 @@ There are two modes
 2. Transparent Mode
 
 In inline mode the browsers/end computes know about the WSA , in transparent mode the end devices are pointing to the default gateway which in turn talks to the WSA via WCCP .
+
+GUACAMOLE Ctrl+C Ctrl+V  [CTRL+ALT+SHIFT]
+
+> Username : admin Password : ironport
+
+![](assets/markdown-img-paste-2018072903294480.png)
+
+Please run System Setup Wizard at http://192.168.1.130:8080
+ironport.example.com>
+
+```sh
+Please run System Setup Wizard at http://192.168.1.130:8080
+ironport.example.com> se
+setntlmsecuritymode, setgateway, sethostname, settime, settz
+ironport.example.com> in
+interfaceconfig, intrelay
+```
+
+> If you are stuck at the login page with nothing happening when you hit the login button you my be hitting a defect . Try installing the Tampermonekey script
+https://www.cisco.com/c/en/us/support/docs/security/email-security-appliance/211583-Cisco-ESA-WSA-SMA-Login-Workaround.html
+
+
+![](assets/markdown-img-paste-20180729044512892.png)
+
+WSA Licensing
+
+Enable FTP on the system and commit the changes . Copy the license file in the `configuration` folder.
+
+![](assets/markdown-img-paste-20180731062901369.png)
+
+https://slexui.cloudapps.cisco.com/SWIFT/LicensingUI/Quickstart#
+
+**Configuring WCCP on ASA**
+
+```sh
+1. Configure the IP Address of the WSA in an ACL
+
+access-list WSA_ACL permit ip host 192.168.1.10 any ! IP Address of the WSA
+
+2. Configure the ACL that specifies what traffic needs to be redirected
+
+access-list 101 permit tcp any any eq 80
+access-list 101 permit tcp any any eq 8080
+
+3. Setup a Tunnel between the redirectign device (in this Scenario a Switch) and the WCCP Server.
+
+> The tag needs to match on the Switch and the WCCP Server
+
+wccp 99 group-list WSA_ACL redirect-list REDIRECT ! It means that and traffic matching the REDIRECT ACL should be sent to the WSA (WSA_ACL)
+with a service tag of 99
+
+4. Apply the WCCP Redirection to the interface (of the device doing redirection)
+
+wccp 99 redirect in interface inside
+
+```
+
+**Configuring WCCP on Router**
+
+> On a **switch** you need to configure `sdm prefer routing` and reload.
+
+```sh
+
+Enable WCCP
+
+ip wccp ver 2
+
+1. Configure the IP Address of the WSA in an ACL
+
+access-list 101 permit host 192.168.1.10 ! IP Address of the WSA
+
+2. Configure the ACL that specifies what traffic needs to be redirected
+
+access-list 102 permit tcp any any eq 80
+access-list 102 permit tcp any any eq 8080
+
+3. Setup a Tunnel between the redirectign device (in this case a Switch) and the WCCP Server.
+
+> The tag needs to match on the Switch and the WCCP Server
+
+ip wccp 99 group-list 101 redirect-list 102 ! It means that and traffic matching the REDIRECT ACL should be sent to the WSA (WSA_ACL)
+with a service tag of 99
+
+4. Apply the WCCP Redirection to the interface (of the device doing redirection)
+
+interface f0/1
+ ip wccp 99 redirect in
+
+```
+
+show ip wccp 99 view
+
+
 
 
 
