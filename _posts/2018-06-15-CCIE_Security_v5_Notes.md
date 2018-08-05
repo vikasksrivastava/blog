@@ -3403,6 +3403,10 @@ Enable FTP on the system and commit the changes . Copy the license file in the `
 
 https://slexui.cloudapps.cisco.com/SWIFT/LicensingUI/Quickstart#
 
+To enable WCCP on WSA
+
+![](assets/markdown-img-paste-20180803022116122.png)
+
 **Configuring WCCP on ASA**
 
 ```sh
@@ -3430,6 +3434,9 @@ wccp 99 redirect in interface inside
 
 **Configuring WCCP on Router**
 
+
+![](assets/markdown-img-paste-20180805020822970.png)
+
 > On a **switch** you need to configure `sdm prefer routing` and reload.
 
 ```sh
@@ -3440,14 +3447,14 @@ ip wccp ver 2
 
 1. Configure the IP Address of the WSA in an ACL
 
-access-list 101 permit host 192.168.1.10 ! IP Address of the WSA
+access-list 101 permit ip host 10.10.10.10 any! IP Address of the WSA
 
 2. Configure the ACL that specifies what traffic needs to be redirected
 
 access-list 102 permit tcp any any eq 80
 access-list 102 permit tcp any any eq 8080
 
-3. Setup a Tunnel between the redirectign device (in this case a Switch) and the WCCP Server.
+3. Setup a Tunnel between the redirectign device  and the WCCP Server.
 
 > The tag needs to match on the Switch and the WCCP Server
 
@@ -3463,9 +3470,57 @@ interface f0/1
 
 show ip wccp 99 view
 
+**Configuring the WSA Side**
+
+1. Change the Mode to WCCP
+![](assets/markdown-img-paste-20180805012741862.png)
 
 
+![](assets/markdown-img-paste-20180805013132415.png)
 
+Dont forget to commit chnages .
+
+After commiting the changes  you will see the following happen on the router
+
+```sh
+Router#sh ip wccp 99 view
+*Aug  5 05:32:45.617: %WCCP-5-SERVICEFOUND: Service 99 acquired on WCCP client 10.10.10.10
+    WCCP Routers Informed of:
+	192.168.1.106
+
+    WCCP Clients Visible:
+	10.10.10.10
+```
+**At this stage a session between the router and the WSA is established**
+
+2. Now go to the Web proxy Settings and add any no 80 ports to the proxy settings.
+
+
+![](assets/markdown-img-paste-20180805013434129.png)
+
+**Now you will set your policies**
+
+Now to set and define your internet access policies you have to first define the end users in groups . This can be based on their IP Address or Group information received from AD (WSA intergrates with AD)
+
+Go to `Identification Profiles`
+
+![](assets/markdown-img-paste-20180805014149446.png)
+
+Define / Create the EXEC and SALES policies
+
+![](assets/markdown-img-paste-20180805014554975.png)
+
+Now create the `Access Policy`
+
+
+![](assets/markdown-img-paste-2018080501475864.png)
+
+This is where you block the categories and applications
+
+
+![](assets/markdown-img-paste-20180805015829855.png)
+
+![](assets/markdown-img-paste-20180805015750257.png)
 
 # ESA (Email Security Agent)
 
