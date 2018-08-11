@@ -22,8 +22,6 @@ comments: true
   - Make s Easy to Consume and not require lot of effort to operate and manage.
 
 
-
-
 #### SD-WAN Solution Elements
 
 ![](/assets/markdown-img-paste-20180810194553352.png)
