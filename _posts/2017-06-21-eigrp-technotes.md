@@ -201,7 +201,7 @@ P 10.0.0.1/32, 1 successors, FD is 128256
 
 ### EIGRP Metrics
 
-> ![](assets/markdown-img-paste-2018072411275439.png)
+> ![](/assets/markdown-img-paste-2018072411275439.png)
 
  `EIGRP Metric = 256*((K1*Bw) + (K2*Bw)/(256-Load) + K3*Delay)*(K5/(Reliability + K4)))`
 

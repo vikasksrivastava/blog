@@ -67,7 +67,7 @@ In the picture below only the Fabric Border and the Edge nodes have the VRFs. An
 
 ### Scalable Group Tag
 
-![](assets/markdown-img-paste-20180328064612236.png)
+![](/assets/markdown-img-paste-20180328064612236.png)
 
 SGT is carried in the VXLAN and now can tranverse devices which do not have SGT Capability. Unlike hostorically where SGT was a hop by hop protocol.
 
@@ -102,7 +102,7 @@ VRF is carried in the VNI and SGT is carried in the Se
 
 #### Cisco Trustsec TAG Assignment
 
-![](assets/markdown-img-paste-20180328073634552.png)
+![](/assets/markdown-img-paste-20180328073634552.png)
 
 
 

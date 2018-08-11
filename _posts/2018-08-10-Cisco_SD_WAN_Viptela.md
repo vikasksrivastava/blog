@@ -10,7 +10,7 @@ comments: true
 ### Cisco SD WAN Pillars
 
 
-![](assets/markdown-img-paste-20180810193849584.png)
+![](/assets/markdown-img-paste-20180810193849584.png)
 
 - #### Secure Elastic Connectivity
   - Provide Secure and Easy to manage connectivity between sites.
@@ -26,7 +26,7 @@ comments: true
 
 #### SD-WAN Solution Elements
 
-![](assets/markdown-img-paste-20180810194553352.png)
+![](/assets/markdown-img-paste-20180810194553352.png)
 
 - **Edge** : The Edge router is the only component that goes to the site. Everything else (Control Plane) is on the cloud. The Control Plane can be hosted privately , publically or at Viptela Managed Cloud.
 - **vSmart Controller** : The vSmart controller is the brains of the Viptela control plane. It maintains a centralized routing table and the routing policies to program the forwarding behavior of the data plane. The controller effects control by maintaining a direct TLS/DTLS control plane connection to each vEdge router. The vSmart controller provisions, maintains, and secures the entire overlay network.
@@ -63,13 +63,13 @@ comments: true
 
 
 > IKE has been the biggest inhibitor in  wider VPN deployment turning into a `n square` problem.
-![](assets/markdown-img-paste-20180810202246637.png)
+![](/assets/markdown-img-paste-20180810202246637.png)
 
 
 ### Policy Orchestration
 
 
-![](assets/markdown-img-paste-20180811103120870.png)
+![](/assets/markdown-img-paste-20180811103120870.png)
 
 
 

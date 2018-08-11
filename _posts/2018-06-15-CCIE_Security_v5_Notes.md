@@ -2376,13 +2376,13 @@ access-list OUTSIDE permit tcp any host 192.168.1.11 eq 80
 access-group OUTSIDE in interface outside
 ```
 
-> ![](assets/markdown-img-paste-20180705130808410.png)
+> ![](/assets/markdown-img-paste-20180705130808410.png)
 **Note**:
 
 > **1. Most of the time 99%, the flow looks like above , the traffic from the inside (`RED`) is connfigured first and then the the outside direction (`BLUE`).**
 > **2. Also most of the time 99% , the first interface is higher security level (`RED`) and next is the lower security level (`BLUE`).**
 
-> ![](assets/markdown-img-paste-20180705150643228.png)
+> ![](/assets/markdown-img-paste-20180705150643228.png)
 > **`RED` works on Source Address , `BLUE` works on Destination Address**
 > **So lets say in the traffic example above , where traffic is coming from the outside to the DMZ :**
 
@@ -2448,14 +2448,14 @@ object network R3
 ```
 
 **Example**
-> ![](assets/markdown-img-paste-20180705134607176.png)
+> ![](/assets/markdown-img-paste-20180705134607176.png)
 **Traffic coming on 192.1.20.11 on port 2311 (from `outside`) should get translated to 192.168.1.3 port 23 (in the `dmz`)**
 
 ## Twice NAT
 
 This allows you to change the Source as well as the detination in a single NAT statement. This is also known as the Manual-NAT.
 
-![](assets/markdown-img-paste-20180705182234157.png)
+![](/assets/markdown-img-paste-20180705182234157.png)
 
 1. Create Object for all the addresses involved.
 
@@ -2489,7 +2489,7 @@ nat source static R3-D R3-O destination static destination static H199-D H199-O
 
 Notice the same IP Subnet `192.1.10.0` is divided in two VLANs (10, 20)
 
-![](assets/markdown-img-paste-20180705204955741.png)
+![](/assets/markdown-img-paste-20180705204955741.png)
 
 **CONFIGURATION**
 
@@ -2537,7 +2537,7 @@ access-group ABC permit in
 
 ## Redundant Interfaces (Failover , Only one active)
 
-![](assets/markdown-img-paste-2018070521365204.png)
+![](/assets/markdown-img-paste-2018070521365204.png)
 
 ```sh
 ciscoasa# show running-config interface redundant 1
@@ -2564,7 +2564,7 @@ Interface Redundant1 "inside", is up, line protocol is up
 
 ## Redundant Interfaces (Port Channel , both interfaces active)
 
-![](assets/markdown-img-paste-20180705214712417.png)
+![](/assets/markdown-img-paste-20180705214712417.png)
 
 ```sh
 ! SW
@@ -2683,7 +2683,7 @@ Primary - Secondary is defined in configuration. When the ASA pair boots for the
 
 > The definition of Primary/Seconday does not change in case of falilue. These are Roles. During failover the device moves from Active to Standby and vice versa.
 
-![](assets/markdown-img-paste-20180708134758390.png)
+![](/assets/markdown-img-paste-20180708134758390.png)
 
 ```sh
 ! ACTIVE  ASA6
@@ -2727,7 +2727,7 @@ End configuration replication from mate.
 
 ### Active / Standby (Statefull)
 
-![](assets/markdown-img-paste-20180708140539316.png)
+![](/assets/markdown-img-paste-20180708140539316.png)
 
 To configure active active failover for ASA , you have to configure another failover link :
 
@@ -2750,7 +2750,7 @@ ASA6(config)# failover link FAILOVER eth2
 
 In active/active failover , one of each context is `ACTIVE` in different ASA and the other is `PASSIVE`.
 
-![](assets/markdown-img-paste-20180710064903498.png)
+![](/assets/markdown-img-paste-20180710064903498.png)
 
 > In case of a box failure , the Active Context on the failed box will move to the other active ASA.
 
@@ -2798,7 +2798,7 @@ wr mem all ! Saves all config
 
 > An example of a VPN tunnel traversin the Firewall
 
-![](assets/markdown-img-paste-20180712023617644.png)
+![](/assets/markdown-img-paste-20180712023617644.png)
 
 In the above picture `R3` and `R2` are establishing VPN tunnel in the standard way pointing to each other peer ip address **which is directly reachable on the internet without the need of NAT** .
 
@@ -2813,7 +2813,7 @@ access-group OUTSIDE in interface outside
 
 **Now above configuration is OK , but what if you have to establish VPN between `R1` *which has a non publically routable IP* and `R3` ?**
 
-![](assets/markdown-img-paste-20180712025911915.png)
+![](/assets/markdown-img-paste-20180712025911915.png)
 In this case you basically will map a Public IP Address to R1's address.
 So R3 points to the publically NAT'ed IP of R1 and R1 points directly to R3.
 
@@ -2840,7 +2840,7 @@ Combining the multiple firewalls together to make a more powerfull version.
 
 ### Spanned Mode
 
-![](assets/markdown-img-paste-20180712032823321.png)
+![](/assets/markdown-img-paste-20180712032823321.png)
 
 ```sh
 
@@ -2917,7 +2917,7 @@ The this mode , the ports are **not** in a port channel and are Individual inter
 
 The Routers do the logic of Equal Cost Load Balancing to send the traffic IN or OUT side to the ASA as they peer with the ASA as `EIGRP`.
 
-![](assets/markdown-img-paste-20180712184923883.png)
+![](/assets/markdown-img-paste-20180712184923883.png)
 
 ```sh
 ip local pool OUTSIDE 192.1.20.11 - 192.1.20.15
@@ -2934,7 +2934,7 @@ interface eth1
 
 **In this example we will be setting up the VPN tunnel between a IOS Router `R3` and ASA  `ASA-1`**
 
-![](assets/markdown-img-paste-20180717081026959.png)
+![](/assets/markdown-img-paste-20180717081026959.png)
 
 **R3**
 ```sh
@@ -3015,7 +3015,7 @@ crypto  ikev1 enable outside
 
 ## IKEv2 Site-to-Site (Between ASA and IOS)
 
-![](assets/markdown-img-paste-20180717081026959.png)
+![](/assets/markdown-img-paste-20180717081026959.png)
 
 **R5** (R5 towards ASA)
 ```sh
@@ -3122,7 +3122,7 @@ crypto  ikev2 enable outside
 
 **WebVPN to ASA1**
 
-![](assets/markdown-img-paste-20180720074132885.png)
+![](/assets/markdown-img-paste-20180720074132885.png)
 
 ```sh
 
@@ -3162,7 +3162,7 @@ group-policy SALES attribute
 
 You can then browse to the external page
 
-![](assets/markdown-img-paste-20180720073742112.png)
+![](/assets/markdown-img-paste-20180720073742112.png)
 
 
 # Firepower and FTD
@@ -3182,18 +3182,18 @@ configure-network ! Shell script
 configure manager add 192.168.1.66 cisco123
 ```
 
-![](assets/markdown-img-paste-20180723073910775.png)
+![](/assets/markdown-img-paste-20180723073910775.png)
 
 `Access Control Policy` : Is the default Firewall behaviour , Block All traffic , Allow all traffic etc .
 
-![](assets/markdown-img-paste-20180723074246812.png)
+![](/assets/markdown-img-paste-20180723074246812.png)
 
 After you make changes on FMC , the changes arent depolyed untill you manually push it from the FMC (Using the Deploy Button) .
 
-![](assets/markdown-img-paste-20180723075229802.png)
+![](/assets/markdown-img-paste-20180723075229802.png)
 
 > Notice the "Show Rule Conflict" ; It tells you if a rule conflicts with other and help you do the ordering of the rules.
-![](assets/markdown-img-paste-20180723080906140.png)
+![](/assets/markdown-img-paste-20180723080906140.png)
 
 
 Things to Do :
@@ -3220,9 +3220,9 @@ Things to Do :
 13. Create an Intrusion POlicy and try sending an threat . FOR604 virus .
 14. Stop people to be able to upload a document or PPT File .
 
-![](assets/markdown-img-paste-2018072522354150.png)
+![](/assets/markdown-img-paste-2018072522354150.png)
 
-![](assets/markdown-img-paste-20180725223946377.png)
+![](/assets/markdown-img-paste-20180725223946377.png)
 
 
 15. Configure a Site to Site VPN between to FTD connected to the same FMC
@@ -3376,7 +3376,7 @@ GUACAMOLE Ctrl+C Ctrl+V  [CTRL+ALT+SHIFT]
 
 > Username : admin Password : ironport
 
-![](assets/markdown-img-paste-2018072903294480.png)
+![](/assets/markdown-img-paste-2018072903294480.png)
 
 Please run System Setup Wizard at http://192.168.1.130:8080
 ironport.example.com>
@@ -3393,19 +3393,19 @@ interfaceconfig, intrelay
 https://www.cisco.com/c/en/us/support/docs/security/email-security-appliance/211583-Cisco-ESA-WSA-SMA-Login-Workaround.html
 
 
-![](assets/markdown-img-paste-20180729044512892.png)
+![](/assets/markdown-img-paste-20180729044512892.png)
 
 WSA Licensing
 
 Enable FTP on the system and commit the changes . Copy the license file in the `configuration` folder.
 
-![](assets/markdown-img-paste-20180731062901369.png)
+![](/assets/markdown-img-paste-20180731062901369.png)
 
 https://slexui.cloudapps.cisco.com/SWIFT/LicensingUI/Quickstart#
 
 To enable WCCP on WSA
 
-![](assets/markdown-img-paste-20180803022116122.png)
+![](/assets/markdown-img-paste-20180803022116122.png)
 
 **Configuring WCCP on ASA**
 
@@ -3435,7 +3435,7 @@ wccp 99 redirect in interface inside
 **Configuring WCCP on Router**
 
 
-![](assets/markdown-img-paste-20180805020822970.png)
+![](/assets/markdown-img-paste-20180805020822970.png)
 
 > On a **switch** you need to configure `sdm prefer routing` and reload.
 
@@ -3473,10 +3473,10 @@ show ip wccp 99 view
 **Configuring the WSA Side**
 
 1. Change the Mode to WCCP
-![](assets/markdown-img-paste-20180805012741862.png)
+![](/assets/markdown-img-paste-20180805012741862.png)
 
 
-![](assets/markdown-img-paste-20180805013132415.png)
+![](/assets/markdown-img-paste-20180805013132415.png)
 
 Dont forget to commit chnages .
 
@@ -3496,7 +3496,7 @@ Router#sh ip wccp 99 view
 2. Now go to the Web proxy Settings and add any no 80 ports to the proxy settings.
 
 
-![](assets/markdown-img-paste-20180805013434129.png)
+![](/assets/markdown-img-paste-20180805013434129.png)
 
 **Now you will set your policies**
 
@@ -3504,23 +3504,23 @@ Now to set and define your internet access policies you have to first define the
 
 Go to `Identification Profiles`
 
-![](assets/markdown-img-paste-20180805014149446.png)
+![](/assets/markdown-img-paste-20180805014149446.png)
 
 Define / Create the EXEC and SALES policies
 
-![](assets/markdown-img-paste-20180805014554975.png)
+![](/assets/markdown-img-paste-20180805014554975.png)
 
 Now create the `Access Policy`
 
 
-![](assets/markdown-img-paste-2018080501475864.png)
+![](/assets/markdown-img-paste-2018080501475864.png)
 
 This is where you block the categories and applications
 
 
-![](assets/markdown-img-paste-20180805015829855.png)
+![](/assets/markdown-img-paste-20180805015829855.png)
 
-![](assets/markdown-img-paste-20180805015750257.png)
+![](/assets/markdown-img-paste-20180805015750257.png)
 
 # ESA (Email Security Agent)
 
@@ -3737,4 +3737,4 @@ ip addr add 192.168.1.20/24 dev eth0
 ip route add default via 192.168.1.1
 ```
 
-![](assets/markdown-img-paste-20180711234610360.png)
+![](/assets/markdown-img-paste-20180711234610360.png)

@@ -1,6 +1,6 @@
 [DRAFT]
 
-![](assets/markdown-img-paste-20180422005114652.png)
+![](/assets/markdown-img-paste-20180422005114652.png)
 
 YANG Contains the Data Model , the variables
 
