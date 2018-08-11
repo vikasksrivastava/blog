@@ -3528,10 +3528,9 @@ This is where you block the categories and applications
 
  POP or IMAP is used to download/receive the mails by the clients.
 
+# Cisco ASA with Anyconnect VPN using SSL or IKEv1/v2
 
-
-
-
+Clientless VPNs are limited and convoluted to access WEB , FTP and CIFS.
 
 
 
