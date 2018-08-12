@@ -66,9 +66,46 @@ comments: true
 
 ### Policy Orchestration
 
-
 ![](/assets/markdown-img-paste-20180811103120870.png)
 
+- The **vManage** *sends* Policy updates (Centralized Policy) to the **vSmart Controllers** which is then distributed to the vEdge devices.
+
+- The **vManage** *sends* Locallized policy updates to the **vEdge** devices directly.
+
+### SD WAN Fabric Communication
+
+The following shows a summary of all the flow types possible with SD WAN .
+
+Also show in the other half is the type of fabric which cab ne formed between the vEdges.
+
+![](assets/markdown-img-paste-20180811122648566.png)
+
+
+### SD WAN VPNs and Security Zoning
+
+![](assets/markdown-img-paste-20180811122941663.png)
+
+
+### End to End Segmentation
+
+Control Policies can be defined in a way that it changes the VPN topology formed between the vEdges.
+
+![](assets/markdown-img-paste-20180811205650921.png)
+
+
+
+### Enforicing Security Policies
+
+**Figure 1** shows that If needed a a firewall can be deployed at the LAN side of the vEdge to help with security.
+
+vEdge also has the capability to do ACLs and allow/deny traffic based on build in application filters. Though it may not be as powerfull as the firewall.
+
+
+| Fig 1   | Fig 2  |
+|---|---|
+| ![](assets/markdown-img-paste-20180811210137990.png)  | ![](assets/markdown-img-paste-20180811210857139.png)
+
+**Figure 2** shows a more interesting option with service chaining. The traffic being sent to the firewalls for inspection.
 
 
 

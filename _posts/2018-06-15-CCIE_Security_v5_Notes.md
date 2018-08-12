@@ -3528,6 +3528,17 @@ This is where you block the categories and applications
 
  POP or IMAP is used to download/receive the mails by the clients.
 
+Start @00:44:00
+
+1. Cretae the DNS Entries on DNS Server
+ 2. Check Resolution of IMAP and SMTP Hostnames . Smatp.servername.com
+ 3. Configure the Hmail Server and Add Accounts
+ 4. Test email sendign between the same servers
+ 5. Test Email Server between the domains (No WSA YET)
+
+
+ 
+
 # Cisco ASA with Anyconnect VPN using SSL or IKEv1/v2
 
 Clientless VPNs are limited and convoluted to access WEB , FTP and CIFS.
