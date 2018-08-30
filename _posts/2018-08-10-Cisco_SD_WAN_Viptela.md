@@ -107,6 +107,6 @@ vEdge also has the capability to do ACLs and allow/deny traffic based on build i
 
 **Figure 2** shows a more interesting option with service chaining. The traffic being sent to the firewalls for inspection.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/q3hONNn4UwM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
