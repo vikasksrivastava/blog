@@ -78,12 +78,12 @@ The following shows a summary of all the flow types possible with SD WAN .
 
 Also show in the other half is the type of fabric which cab ne formed between the vEdges.
 
-![](assets/markdown-img-paste-20180811122648566.png)
+![](/assets/markdown-img-paste-20180811122648566.png)
 
 
 ### SD WAN VPNs and Security Zoning
 
-![](assets/markdown-img-paste-20180811122941663.png)
+![](/assets/markdown-img-paste-20180811122941663.png)
 
 
 ### End to End Segmentation
@@ -103,7 +103,7 @@ vEdge also has the capability to do ACLs and allow/deny traffic based on build i
 
 | Fig 1   | Fig 2  |
 |---|---|
-| ![](assets/markdown-img-paste-20180811210137990.png)  | ![](assets/markdown-img-paste-20180811210857139.png)
+| ![](/assets/markdown-img-paste-20180811210137990.png)  | ![](/assets/markdown-img-paste-20180811210857139.png)
 
 **Figure 2** shows a more interesting option with service chaining. The traffic being sent to the firewalls for inspection.
 
