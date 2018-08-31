@@ -90,7 +90,7 @@ Also show in the other half is the type of fabric which cab ne formed between th
 
 Control Policies can be defined in a way that it changes the VPN topology formed between the vEdges.
 
-![](assets/markdown-img-paste-20180811205650921.png)
+![](/assets/markdown-img-paste-20180811205650921.png)
 
 
 
