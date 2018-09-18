@@ -9,8 +9,6 @@ comments: true
 
 #### Key Exchange Protocol
 
-ip name-server
-
 For two sides to encrypt or decrypt the traffic , a key needs to be shared between two endpoints.
 
 You need the following to secure a Tunnel :
@@ -18,8 +16,6 @@ You need the following to secure a Tunnel :
     - Key
     - Encryption
     - Hashing
-
-
 
 > **Diffie Hellman** is the algorith that generates a `KEY` . Lifetime of a DH key is 3600 secs (1hr).
 
@@ -3537,7 +3533,7 @@ Start @00:44:00
  5. Test Email Server between the domains (No WSA YET)
 
 
- 
+
 
 # Cisco ASA with Anyconnect VPN using SSL or IKEv1/v2
 
