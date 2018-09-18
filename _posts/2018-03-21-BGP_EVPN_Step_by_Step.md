@@ -24,7 +24,7 @@ comments: true
 
 In this post I would like to introduce you the concepts of BGP EVPN from a 100ft view and give you some understanding of what it is and how to get it up and running quickly.
 
-This by no means is a deep-dive on the topice but a way to get started quick and build upon it . I will refer different documents and notes which which I took when I first started learnign this topic. Hope that helps you too.
+This by no means is a deep-dive on the topic but a way to get started quick and build upon it . I will refer different documents and notes which which I took when I first started learnign this topic. Hope that helps you too.
 
 ## Lab Topology
 
