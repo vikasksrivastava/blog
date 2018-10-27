@@ -1690,8 +1690,6 @@ router eigrp 100
  network 192.1.0.0 0.0.255.255
 
 ```
-ssd
-
 
 ```sh
 show interface virtual-access 1
