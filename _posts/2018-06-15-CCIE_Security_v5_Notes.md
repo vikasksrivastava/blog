@@ -3554,6 +3554,12 @@ Clientless VPNs are limited and convoluted to access WEB , FTP and CIFS.
 # Technotes
 
 
+**vWLC Troubleshooting**
+
+(Cisco Controller) >show network summary
+
+By Default you should access the WLC via the HTTPs interface. HTTP is disabled by default.
+
 **ASDM Configuration**
 
 After configuring an interface as nameif managment , give it IP
