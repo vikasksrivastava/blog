@@ -1887,6 +1887,8 @@ crypto ikev2 profile PROF-134
  aaa authorization group psk list NHRP NHRP ! Link the auth policy created above
 
 
+
+
 ! 3. PHASE II
 
 ! crypto ipsec transform-set TSET esp-3des esp-md5-hmac  ! This command is ommiteed as it is already there from the prev section.
