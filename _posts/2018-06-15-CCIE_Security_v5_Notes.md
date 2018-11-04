@@ -3542,14 +3542,183 @@ Start @00:44:00
 Clientless VPNs are limited and convoluted to access WEB , FTP and CIFS.
 
 
+# Wireless
+
+- APs job is to only talk to the WLC , so it can be an Access Port
+- AP Gets the IPAddress ont he Access port and also the option 43 pointing to WLC.
+- It then tries to register to the WLC.
 
 
 
 
+debug mac addr 1c:6a:7a:5a:73:90
+debug client 1c:6a:7a:5a:73:90
+debug capwap events enable
+debug capwap errors enable
+debug pm pki enable
+
+*Oct 28 03:51:52.000: %CAPWAP-5-DTLSREQSEND: DTLS connection request sent peer_ip: 10.10.10.3 peer_port: 5246
+*Oct 28 03:51:52.247: %CAPWAP-5-DTLSREQSUCC: DTLS connection created sucessfully peer_ip: 10.10.10.3 peer_port: 5246
+*Oct 28 03:51:52.247: %CAPWAP-5-SENDJOIN: sending Join Request to 10.10.10.3perform archive download capwap:/ap3g2 tar file
+*Oct 28 03:51:52.699: %CAPWAP-6-AP_IMG_DWNLD: Required image not found on AP. Downloading image from Controller.
+*Oct 28 03:51:52.703: Loading file /ap3g2...
 
 
 
+(Cisco Controller) >show ap bundle all
 
+
+Primary AP ImageSizeSupported AP's
+--------------------------------
+ap1g113560AP700
+ap1g315392AP1530
+ap1g430268AP1850/1810
+ap1g530476AP1815,1540
+ap1g626552AP2900
+ap3g347444AP2800,3800,4800,1560
+c157013060AP1570
+c370014380AP1700,2700,3700
+
+Secondary AP ImageSizeSupported AP's
+----------------------------------
+ap1g113560AP700
+ap1g315392AP1530
+ap1g430268AP1850/1810
+ap1g530476AP1815,1540
+ap1g626552AP2900
+ap3g347444AP2800,3800,4800,1560
+c157013060AP1570
+
+--More-- or (q)uit
+c370014380AP1700,2700,3700
+
+
+**Reset the AP **
+
+1. Remove Power
+2. Press and hold mode button and insert power
+3.  you must continue to hold the MODE button until the light indicator on top of AP is solid red!
+4. Leave the MODE button .
+5. YOu should be the "ap:" mode
+6.
+ap: dir flash:
+ap: delete flash:private-multiple-fs
+ap: reset
+
+Username: Cisco
+Password: ! here we type Cisco
+
+Username: Cisco
+Password: ! here we type Cisco
+
+AP78da.6ee0.2655>
+AP78da.6ee0.2655>en
+Password: ! this is also Cisco
+AP78da.6ee0.2655#
+
+
+
+Now we can reinstall our vWLC and connect our APs back to it. On our APs we may also do:
+
+AP78da.6ee0.2655#
+AP78da.6ee0.2655#clear capwap private-config
+AP78da.6ee0.2655#
+AP78da.6ee0.2655#reload
+Proceed with reload? [confirm]
+
+---
+
+AP1c6a.7a5a.7390>
+AP1c6a.7a5a.7390>
+Translating "CISCO-CAPWAP-CONTROLLER"...domain server (192.168.1.1)
+
+*Mar  1 00:01:03.063: %CAPWAP-3-ERRORLOG: Did not get log server settings from DHCP.
+*Mar  1 00:01:03.067: %CAPWAP-3-ERRORLOG: Could Not resolve CISCO-CAPWAP-CONTROLLER
+AP1c6a.7a5a.7390>
+*Mar  1 00:01:13.067: %CAPWAP-3-ERRORLOG: Go join a capwap controller
+*Oct 28 04:10:16.000: %CAPWAP-5-DTLSREQSEND: DTLS connection request sent peer_ip: 10.10.10.3 peer_port: 5246
+examining image...
+*Oct 28 04:10:18.303: %CAPWAP-5-DTLSREQSUCC: DTLS connection created sucessfully peer_ip: 10.10.10.3 peer_port: 5246
+*Oct 28 04:10:18.303: %CAPWAP-5-SENDJOIN: sending Join Request to 10.10.10.3perform archive download capwap:/ap3g2 tar file
+*Oct 28 04:10:18.431: %CAPWAP-6-AP_IMG_DWNLD: Required image not found on AP. Downloading image from Controller.
+*Oct 28 04:10:18.435: Loading file /ap3g2...
+set_radio_pwr_mode: bad radio unit# 0
+set_radio_pwr_mode: bad radio unit# 1
+
+*Oct 28 04:10:49.287: %CDP_PD-4-POWER_OK: Full power - NEGOTIATED inline power source
+., 1)28 04:11:06.435: %CAPWAP-3-ERRORLOG: Retransmission count for packet exceeded max(CAPWAP_ECHO_REQUEST
+%Error opening flash:/update/info (No such file or directory)
+ERROR: Image is not a valid IOS image archive.
+Download image failed, notify controller!!! From:7.6.1.118 to 0.0.0.0, FailureCode:3
+
+archive download: takes 53 seconds
+
+*Oct 28 04:11:11.435: %SYS-3-MGDTIMER: Uninitialized timer, timer stop, timer = 3AFC900. -Process= "CAPWAP CLIENT", ipl= 0, pid= 73
+-Traceback= 119AF80z 12A89C8z 12AA11Cz 16F32C8z 1762360z 16FD224z 1725FFCz 17278A4z 171E070z 1728184z 171E374z 17305D8z 173C56Cz 1728250z 176052Cz 172E614z
+*Oct 28 04:11:11.435: %LWAPP-3-CLIENTERRORLOG: LWAPP LED Init: incorrect led state 255
+*Oct 28 04:11:11.435: %LWAPP-3-CLIENTERRORLOG: Config load from flash failed. Initialising Cfg
+
+
+Unable to create temp dir "flash:/update"
+Download image failed, notify controller!!! From:7.6.1.118 to 0.0.0.0, FailureCode:7
+
+Look at the AP Consoloe Logs
+
+**Finnaly Loading the Right Code on The AP Resolved the issue"
+
+archive download-sw /force-reload /overwrite tftp://10.10.10.1/c1140-rcvk9w8-tar.124-25d.JA.tar
+
+k9w8- Lightwiehgt Mode
+k9w7 - Autonmous mode
+
+Helpfull lInks
+
+https://www.speaknetworks.com/converting-cisco-wireless-access-point-lightweight-mode-autonomous-mode-vice-versa/
+https://blog.it-playground.eu/lightweight-ap-manual-firmware-upgrade/
+https://community.cisco.com/t5/wireless-and-mobility/downgrading-software-on-lightweight-access-point/td-p/3025985
+https://mrncciew.com/2012/10/20/lightweight-to-autonomous-conversion/
+
+
+If your configured SSIDs are not showing up , make sure tha your AP mode is set to FlexConnect
+
+![](assets/markdown-img-paste-20181028015705199.png)
+
+All SSID Getting IP from Managment VLANs
+
+
+![](assets/markdown-img-paste-20181028030450790.png)
+
+Next Step to make WLC Managment IP in a specific VLAN and rest in other VLANs.
+
+--
+
+**Difference Between Flexconnect and Local**
+
+In local mode, an AP creates two CAPWAP tunnels to the WLC.  One is for management, the other is data traffic.  This behavior is known as "centrally switched" because the data traffic is switched(bridged) from the ap to the controller where it is then routed by some routing device.
+
+
+
+Flex Connect also known as HREAP by the old timers, allows data traffic to be switched locally and not go back to the controller.  It basically causes the AP to behave like an autonomous AP, but be managed by the WLC.  In this mode, the AP can still function even if it looses connection with the controller.
+
+**Centrally Switched VLANs**
+
+Make sure the VLANs are centrally switched when using a virtual WLC
+
+![](assets/markdown-img-paste-20181028185400430.png)
+
+Make sure central switching is disabled
+
+
+![](assets/markdown-img-paste-20181028185439870.png)
+
+ip dhcp pool VIRTUAL_NET_30_DHCP_POOL
+ network 10.10.30.0 255.255.255.0
+ default-router 10.10.30.1
+ dns-server 192.168.1.1
+ option 43 ip 10.10.10.3
+ ip address dhcp
+
+--
 
 
 
