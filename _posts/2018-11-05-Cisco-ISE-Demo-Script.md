@@ -28,7 +28,7 @@ The `dot1.x` configuration flow consists of configuring three main sections.
 
 
 > In the topology below we will configure the **Switch** , **ISE** and the **Win** devices. Very basic connectivity is already setup as show int the topology.
-![](assets/markdown-img-paste-2018110420170354.png)
+![](/assets/markdown-img-paste-2018110420170354.png)
 
 # Lets start with the Switch
 ---
@@ -174,13 +174,13 @@ authentication host-mode single-host
 ---
 
 **OPTIONAL Set the ISE Password to be less restrictive**
-![](assets/markdown-img-paste-20181104205150657.png)
+![](/assets/markdown-img-paste-20181104205150657.png)
 
 **Add the User**
-![](assets/markdown-img-paste-20181104205619430.png)
+![](/assets/markdown-img-paste-20181104205619430.png)
 
 **Add the Switch** This basically lest the switch to communication via RADIUS to ISE
-![](assets/markdown-img-paste-20181104205545490.png)
+![](/assets/markdown-img-paste-20181104205545490.png)
 
 **Test Authentication**
 
@@ -192,8 +192,8 @@ test aaa group ISE-group bob cisco123 new-code
 # Finally lets enable the PC to do DOT1.X
 ---
 
-![](assets/markdown-img-paste-20181104220926256.png)
-![](assets/markdown-img-paste-20181104221039835.png)
+![](/assets/markdown-img-paste-20181104220926256.png)
+![](/assets/markdown-img-paste-20181104221039835.png)
 
 # **Troubleshooting Commands**
 
