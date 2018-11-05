@@ -170,7 +170,7 @@ no authentication open
 authentication host-mode single-host
 ```
 
-# Lets configure the ISE now
+# Lets configure ISE now
 ---
 
 **OPTIONAL Set the ISE Password to be less restrictive**
@@ -212,3 +212,5 @@ test aaa group ISE-group bob cisco123 new-code
 show authentication sessions interface gi1/2
 
 ```
+
+# **To be continued...**
