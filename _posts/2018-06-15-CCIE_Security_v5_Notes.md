@@ -5,6 +5,94 @@ description: My Notes preparing for CCIE Security v5
 comments: true
 ---
 
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+		- [VPN (Policy based)](#vpn-policy-based)
+			- [Key Exchange Protocol](#key-exchange-protocol)
+		- [GRE Tunnel](#gre-tunnel)
+				- [Step 1](#step-1)
+				- [Step 2](#step-2)
+		- [GRE over IPSec - Tunnel Mode](#gre-over-ipsec-tunnel-mode)
+		- [GRE / IPSec - Transport Mode](#gre-ipsec-transport-mode)
+			- [Configuration](#configuration)
+		- [Native IPSec Tunnel [S-VTI]](#native-ipsec-tunnel-s-vti)
+		- [MGRE (Multipoint GRE)](#mgre-multipoint-gre)
+			- [A Multipoint GRE Full Configuration Snippet](#a-multipoint-gre-full-configuration-snippet)
+		- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
+		- [DMVPN - EIGRP - Phases [I,II,III]](#dmvpn-eigrp-phases-iiiiii)
+		- [Redundancy [Dual-Hub DMVPN Setup]](#redundancy-dual-hub-dmvpn-setup)
+		- [GETVPN](#getvpn)
+			- [Configuration of a GETVPN](#configuration-of-a-getvpn)
+		- [VRF - A Quick Introduction](#vrf-a-quick-introduction)
+					- [Basic VRF Configuration Example](#basic-vrf-configuration-example)
+					- [VRF Reachability test](#vrf-reachability-test)
+					- [VRF Routing configuration example](#vrf-routing-configuration-example)
+		- [VRF - Aware VPNs](#vrf-aware-vpns)
+			- [MAJOR DIFFERENCE IS IN THIS SECTION - BEGIN](#major-difference-is-in-this-section-begin)
+			- [MAJOR DIFFERENCE IS IN THIS SECTION - END](#major-difference-is-in-this-section-end)
+- [* * * Lab Remaining from here * * *](#-lab-remaining-from-here-)
+		- [VRF Aware [Get VPN]](#vrf-aware-get-vpn)
+- [Routers as a CA Server](#routers-as-a-ca-server)
+	- [CA Based VPNs](#ca-based-vpns)
+- [IKEv2 VPNS](#ikev2-vpns)
+	- [IKEv2 VPN using legacy methods](#ikev2-vpn-using-legacy-methods)
+	- [IKEv2 VPN using S-VTIs (uses GRE tunnel and the routing on it)](#ikev2-vpn-using-s-vtis-uses-gre-tunnel-and-the-routing-on-it)
+- [Flex VPN](#flex-vpn)
+	- [Site to Site VPN [D-VTI / S-VTI based ]](#site-to-site-vpn-d-vti-s-vti-based-)
+	- [Static VTI to Static VTI Configuration](#static-vti-to-static-vti-configuration)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+	- [Spoked to Spoke FLEX VPN](#spoked-to-spoke-flex-vpn)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+		- [Everything above is already configured from the section before , so no need to reconfigure it.](#everything-above-is-already-configured-from-the-section-before-so-no-need-to-reconfigure-it)
+- [ASA Firewalls](#asa-firewalls)
+	- [Interface Configuration](#interface-configuration)
+	- [Routing Configuration](#routing-configuration)
+- [NAT](#nat)
+					- [#### Source Dynamic NAT Configuration Example #############](#-source-dynamic-nat-configuration-example-)
+	- [Dynamic PAT](#dynamic-pat)
+	- [Static PAT - For Public Facing Servers](#static-pat-for-public-facing-servers)
+	- [Twice NAT](#twice-nat)
+- [Transparent Firewall](#transparent-firewall)
+- [ASA Redundancy](#asa-redundancy)
+	- [Redundant Interfaces (Failover , Only one active)](#redundant-interfaces-failover-only-one-active)
+	- [Redundant Interfaces (Port Channel , both interfaces active)](#redundant-interfaces-port-channel-both-interfaces-active)
+	- [Security Contexts [Virtual Firewalls]](#security-contexts-virtual-firewalls)
+	- [Failover](#failover)
+		- [Active / Standby (Stateless)](#active-standby-stateless)
+		- [Active / Standby (Statefull)](#active-standby-statefull)
+		- [Active / Active (Statefull)](#active-active-statefull)
+	- [ASA VPN Configuration (NAT-T)](#asa-vpn-configuration-nat-t)
+	- [Clustering](#clustering)
+		- [Spanned Mode](#spanned-mode)
+					- [#################################################](#)
+			- [Configuring the port channel ont he ASAs now :](#configuring-the-port-channel-ont-he-asas-now-)
+		- [Individual Interface Mode](#individual-interface-mode)
+	- [IKEv1 Site-to-Site on ASA (ASA to Router)](#ikev1-site-to-site-on-asa-asa-to-router)
+	- [IKEv2 Site-to-Site (Between ASA and IOS)](#ikev2-site-to-site-between-asa-and-ios)
+	- [Clientless WebVPN on ASA](#clientless-webvpn-on-asa)
+- [Firepower and FTD](#firepower-and-ftd)
+	- [Anti-Spoofing ACLs](#anti-spoofing-acls)
+	- [Switchport port security](#switchport-port-security)
+	- [DHCP Snooping](#dhcp-snooping)
+	- [ARP Inspection](#arp-inspection)
+	- [Source Gaurd](#source-gaurd)
+	- [VLAN ACL](#vlan-acl)
+- [WSA (Web Security Agent)](#wsa-web-security-agent)
+- [ESA (Email Security Agent)](#esa-email-security-agent)
+- [Cisco ASA with Anyconnect VPN using SSL or IKEv1/v2](#cisco-asa-with-anyconnect-vpn-using-ssl-or-ikev1v2)
+- [Cisco ISE](#cisco-ise)
+	- [Device Profiling](#device-profiling)
+- [Wireless](#wireless)
+- [Technotes](#technotes)
+			- [Troubleshooting Commands and Outputs](#troubleshooting-commands-and-outputs)
+			- [Error Messages and Resolution](#error-messages-and-resolution)
+		- [Eve-NG Docker IP Address Configuration  (in the Starup config of the docker )](#eve-ng-docker-ip-address-configuration-in-the-starup-config-of-the-docker-)
+
+<!-- /TOC -->
+
+
 ### VPN (Policy based)
 
 #### Key Exchange Protocol
@@ -3540,6 +3628,65 @@ Start @00:44:00
 # Cisco ASA with Anyconnect VPN using SSL or IKEv1/v2
 
 Clientless VPNs are limited and convoluted to access WEB , FTP and CIFS.
+
+
+# Cisco ISE
+
+## Device Profiling
+
+**Profilinig is performed by policy services node.**
+
+In a typical open network any device can get an IP address and more often then not it is all access.
+
+From a network admin perspective you would like to know whats connected to your network and also limit access based on device type.
+
+There are various probes which can help which can help gather as much details as possible.
+
+Profiling enables ISE to recognise the device and understand what it is. It enables ISE to know the type of client endpoint.
+
+Profiling is made up to two components :
+
+Probes: Probes Allows ISE to collect different device attributes.
+Profiling Policies : ISE Allows to match these device attribute to further define which policies does it map to .
+
+
+![](assets/markdown-img-paste-20181103212358192.png)
+
+DHCP :  Setup via Helper Address / DHCP Relay
+
+HTTP : Browser type , OS Type in the User Agent Attribute (When URL Redirect Happens)
+
+RADIUS : Attributed coming in via Dot1.X
+
+DNS : ISE to be able to reverse lookup and get hostname.
+
+**AAA Switch configuration**
+
+```sh
+
+aaa authentication login default local
+aaa authentication login NOAUTH none
+aaa authentication  dot1x default group radius
+aaa authorization network default group radius
+aaa accounting update newinfo periodic 3
+aaa accounting indentity default start-stop group radius
+aaa acciunting system default start-stop group radius
+
+device-sensor notify all-changes ! Allows switch to gather info and send it to ise.
+
+logging host X.X.X.X transport udp port 20514 ! Allows Switch log messages to be sent to ISE
+ip helper-address X.X.X.X on the VLAN of the devices pointing to the ISE Server.
+
+
+
+
+```
+
+
+
+
+
+
 
 
 # Wireless
