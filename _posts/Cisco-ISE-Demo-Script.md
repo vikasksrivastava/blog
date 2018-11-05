@@ -173,17 +173,9 @@ Windows :
 
 services.msc --> Wired Auto Config --> Start
 
+![](assets/markdown-img-paste-20181104220926256.png)
 
-![](assets/markdown-img-paste-20181104203803548.png)
-
-
-![](assets/markdown-img-paste-20181104203821142.png)
-
-
-![](assets/markdown-img-paste-2018110420383568.png)
-
-
-![](assets/markdown-img-paste-2018110420385246.png)
+![](assets/markdown-img-paste-20181104221039835.png)
 
 > Some content here
 
