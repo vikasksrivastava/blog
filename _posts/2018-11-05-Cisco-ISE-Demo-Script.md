@@ -40,8 +40,11 @@ The `dot1.x` configuration flow consists of configuring three main sections.
 **Different types of Host Authentication Modes**
 
 **single-host**  - Exactly one MAC Address
+
 **multi-host** -   One MAC Address opens the door , and rest (other VMs on the Host)  can get in easily without authentication.
+
 **multi-domain** -  Has nothing to do with AD Domain , its about multiple VLANs like voice and data vlan.
+
 **multi-auth**  -  Every single MAC Address has to be authenticated . Even the VMs has to be authenticated .
 
 
