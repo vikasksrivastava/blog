@@ -13,12 +13,16 @@ We will cover the following in the order below. Please note that the some sectio
 
 > At some point I will upload the configs based on each sections. Please feel free to reach out to me meanwhile.
 
-- ##### Wired DOT1.X  Authentication
+- ##### Basic Wired DOT1.X  Authentication (Allow access to deny completely)
+- ##### Basic Wired DOT1.X  Authentication with Change of VLAN
 - ##### Profiling
 - ##### Posture
 
 
-## Wired DOT1.X  Authentication
+## Basic Wired DOT1.X  Authentication (Allow access to network or deny completely)
+
+In this lab setup the switchport either authorsises the devices if the right credential is provided or completely denies access and the devices gets APIPA IP .
+
 
 The `dot1.x` configuration flow consists of configuring three main sections.
 
@@ -212,5 +216,42 @@ test aaa group ISE-group bob cisco123 new-code
 show authentication sessions interface gi1/2
 
 ```
+
+
+## Basic Wired DOT1.X  Authentication with Change of VLAN
+
+> **No Additional switch configuration is required for the change of VLAN**
+
+
+This builds upon the lab above. Instead of blatenlty denying network access to the user , we put in on a separate VLAN.
+
+1. **Make sure the user is moved under a user group**
+![](/assets/markdown-img-paste-20181105230403658.png)
+
+
+2. **Create and Authorization Profile to set the VLAN to 30 or whatever**
+![](/assets/markdown-img-paste-20181105230500743.png)
+
+3. **Set the Policy set (Authorization Policy)**
+![](/assets/markdown-img-paste-2018110523072321.png)
+
+
+### **And that is it!**
+Now let the user `bob` login and the switchport vlan should change to the desired VLAN.
+
+
+![](/assets/markdown-img-paste-20181105232047938.png)
+
+![](/assets/markdown-img-paste-20181105231114865.png)
+
+
+![](/assets/markdown-img-paste-20181105232236124.png)
+
+
+![](/assets/markdown-img-paste-20181105232306747.png)
+
+
+
+
 
 # **To be continued...**
