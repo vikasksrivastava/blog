@@ -1455,9 +1455,6 @@ IKEv2 Proposal (Could use a combination of all the options below)
 
 ## IKEv2 VPN using legacy methods
 
- ![](/assets/markdown-img-paste-20180701222340205.png)
-
-
 ```
 R1 lo0 10.1.1.1
 
