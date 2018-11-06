@@ -13,8 +13,8 @@ We will cover the following in the order below. Please note that the some sectio
 
 > At some point I will upload the configs based on each sections. Please feel free to reach out to me meanwhile.
 
-- ##### Basic Wired DOT1.X  Authentication (Allow access to deny completely)
-- ##### Basic Wired DOT1.X  Authentication with Change of VLAN
+- ##### Basic Wired DOT1.X Authentication (Allow access to deny completely)
+- ##### Basic Wired DOT1.X Authentication with Change of VLAN/DACL
 - ##### Profiling
 - ##### Posture
 
@@ -220,7 +220,7 @@ show authentication sessions interface gi1/2
 
 ## Basic Wired DOT1.X  Authentication with Change of VLAN
 
-> **No Additional switch configuration is required for the change of VLAN**
+> **No Additional switch configuration is required for the change of VLAN/DACL**
 
 
 This builds upon the lab above. Instead of blatenlty denying network access to the user , we put in on a separate VLAN.
@@ -239,19 +239,17 @@ This builds upon the lab above. Instead of blatenlty denying network access to t
 ### **And that is it!**
 Now let the user `bob` login and the switchport vlan should change to the desired VLAN.
 
+## Configuring DACL is pretty much the same as the VLAN change above.
 
+1. **Make the DACL**
 ![](/assets/markdown-img-paste-20181105232047938.png)
-
+2. **Add the DACL to the Authorization to the Profiles**
 ![](/assets/markdown-img-paste-20181105231114865.png)
-
-
+3. **Now re-authenticate the PC and you should see new ACLs on the switch (show ip access-list)**
+> Notice the deny to 8.8.8.8
 ![](/assets/markdown-img-paste-20181105232236124.png)
-
-
+4. **Now check the ping front the PC and you should not be able to ping 8.8.8.8 anymore**
 ![](/assets/markdown-img-paste-20181105232306747.png)
-
-
-
 
 
 # **To be continued...**
