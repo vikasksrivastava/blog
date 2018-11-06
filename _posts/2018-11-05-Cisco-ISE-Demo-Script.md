@@ -248,6 +248,40 @@ Now let the user `bob` login and the switchport vlan should change to the desire
 3. **Now re-authenticate the PC and you should see new ACLs on the switch (show ip access-list)**
 > Notice the deny to 8.8.8.8
 ![](/assets/markdown-img-paste-20181105232236124.png)
+```sh
+Switch# sh authentication sessions interface gigabitEthernet 2/0/1 details
+
+            Interface:  GigabitEthernet2/0/1
+          MAC Address:  9457.a5b0.0ade
+         IPv6 Address:  Unknown
+         IPv4 Address:  Unknown
+            User-Name:  94-57-A5-B0-0A-DE
+               Status:  Authorized
+               Domain:  DATA
+       Oper host mode:  multi-auth
+     Oper control dir:  both
+      Session timeout:  N/A
+    Common Session ID:  0A0000640000012B75977C34
+      Acct Session ID:  0x00000039
+               Handle:  0xE7000033
+       Current Policy:  POLICY_Gi2/0/1
+
+Local Policies:
+
+        Service Template: DEFAULT_LINKSEC_POLICY_SHOULD_SECURE (priority 150)
+
+Server Policies:
+
+        ACS ACL:  xACSACLx-IP-PERMIT_ALL_TRAFFIC-57452910
+
+Method status list:
+
+       Method           State
+       dot1x            Stopped
+       mab              Authc Success
+
+```
+
 4. **Now check the ping front the PC and you should not be able to ping 8.8.8.8 anymore**
 ![](/assets/markdown-img-paste-20181105232306747.png)
 
