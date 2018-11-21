@@ -13,10 +13,15 @@ We will cover the following in the order below. Please note that the some sectio
 
 > At some point I will upload the configs based on each sections. Please feel free to reach out to me meanwhile.
 
+
 - ##### Basic Wired DOT1.X Authentication (Allow access to deny completely)
 - ##### Basic Wired DOT1.X Authentication with Change of VLAN/DACL
 - ##### Profiling
 - ##### Posture
+
+
+> **NOTE** that 802.1X Works at the Layer 2 level and there is no IP communication at this level.
+Good review of the process here : https://en.wikipedia.org/wiki/IEEE_802.1X
 
 
 ## Basic Wired DOT1.X  Authentication (Allow access to network or deny completely)
@@ -290,3 +295,14 @@ Method status list:
 
 
 # **To be continued...**
+
+
+> SNMP Trap
+```sh
+snmp-server community snmp_ro RO
+snmp-server trap-source Vlan10
+snmp-server source-interface informs Vlan10
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps
+snmp-server host 10.10.10.4 version 2c snmp_ro
+```

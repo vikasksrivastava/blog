@@ -155,7 +155,7 @@ Now lets look at the `IAM` Components where you manager Users, roles and groups,
 - `IAM Password Policy`
 
 
-<img src="/assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 500px;"/>
 
 > IAM is Global and does not require a region selection.
 
@@ -167,11 +167,11 @@ Now once you have enable IAM , you can use the link show in the picture below to
 
 An IAM Policy , looks like this. Note that `Deny` will have a precedence over `Allow`.
 
-<img src="/assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 500px;"/>
 
 An example of where you can see the policy in detail and whats how it is organised
 
-<img src="/assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 500px;"/>
 
 ### IAM groups
 
