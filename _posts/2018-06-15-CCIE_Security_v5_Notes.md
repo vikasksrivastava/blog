@@ -3868,6 +3868,11 @@ ip dhcp pool VIRTUAL_NET_30_DHCP_POOL
 
 # Technotes
 
+**FMC Setup ***
+
+sudo /usr/local/sf/bin/configure-network
+
+
 
 **vWLC Troubleshooting**
 
