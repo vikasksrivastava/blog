@@ -38,6 +38,16 @@ ovftool --noSSLVerify \
         /opt/unetlab/original-images/ESXi_ISE-2.1.0.474-mini.ova \
         vi://192.168.1.13/
 
+./ovftool --noSSLVerify \
+          --name="KISE"  \
+          --acceptAllEulas \
+          -ds="datastore1" \
+          --diskMode=thin \
+          --network="VM Network"  \
+          /Users/vikassri/Downloads/Cisco_Firepower_Management_Center_Virtual_VMware-6.2.3-83/Cisco_Firepower_Management_Center_Virtual_VMware-ESXi-6.2.3-83.ovf \
+          vi://192.168.1.13/
+
+
 
 qemu-img convert -c -O qcow2 /opt/unetlab/tmp/0/c06281a8-161c-4aa5-aea4-4d304b13b6d4/1/megasasa.qcow2 /opt/unetlab/addons/qemu/vwlc-8.7.102/megasasa.qcow2
 
