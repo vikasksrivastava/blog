@@ -5,6 +5,7 @@ description: ACI Learning
 comments: true
 ---
 
+**Learning notes from BRKACI-3545 Ciscolive Session**
 
 ## Endpoint
 
@@ -139,10 +140,20 @@ or Endpoints assigned on those leafs.
 
 **Why are we doing the above exchange of routes ?**
 
+This is the key to understand how the ACI is doing **Spine-Proxy**
+**Why does ACI push pervasive routes to other LEAFs after a contract?**
+Pervasive routes are required for Spine-Proxy
+
+Let's understand it better :
+
+  **What is a Spine Proxy** 
 
 
+  ![](assets/markdown-img-paste-20190127111918562.png)
 
+A leaf switch has two types of endpoints: `local endpoints` and `remote endpoints`. Local endpoints for LEAF1 reside directly on LEAF1 (For example, directly attached), whereas remote endpoints for LEAF1 reside on other leaf endpoints (picture above).
 
+Although both local and remote endpoints are learned from the data plane, remote endpoints are merely a cache, local to each leaf. Local endpoints are the main source of endpoint information for the entire Cisco ACI fabric. **Each leaf is responsible for reporting its local endpoints to the Council Of Oracle Protocol (COOP) database, located on each spine switch**, which implies that all endpoint information in the Cisco ACI fabric is stored in the spine COOP database. **Because this database is accessible, each leaf does not need to know about all the remote endpoints to forward packets to the remote leaf endpoints**. Instead, **a leaf can forward packets to spine switches, even if the leaf does not know about a particular remote endpoint. This forwarding behavior is called `S P I N E - P R O X Y`.**
 
 
 
