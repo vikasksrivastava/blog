@@ -110,7 +110,7 @@ LEAF1#
 
 ![](assets/markdown-img-paste-20190126132101604.png)
 
-### **How is pervasive GW deployed?**
+### **How is pervasive GW deployed? (When no contracts associated)**
 
 - PI-VLAN for BD is used to represent a pervasive GW SVI
 
@@ -127,8 +127,17 @@ or Endpoints assigned on those leafs.
 3. Leaf 4 does not have any EPs , hence no SVIs
 4. EP-E and EP-F are only on 5th Leaf hence the SVIs are only there.
 
+### **How is pervasive GW deployed? (When a contract is associated)**
 
 
+![](assets/markdown-img-paste-20190127105901652.png)
+
+
+1. When a contract is associated , the pervasive routes are exchanged.
+2. In the above example since the contract are between Endpoint-C and Endpoint-E the Pervasive routes of the Bridge Domain are exchanged between the BD1 and BD2.
+3. In this example , the pervasive route `5.0.0.254` is shared to the BD1 and same from BD1 (192.168.0.254 and 192.168.1.254) is shared to the BD2.
+
+**Why are we doing the above exchange of routes ?**
 
 
 
