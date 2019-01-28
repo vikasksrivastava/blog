@@ -65,7 +65,7 @@ If its L3 , its the VRF.
 
 **GUI**
 
-![](assets/markdown-img-paste-20190125222843824.png)
+![](/assets/markdown-img-paste-20190125222843824.png)
 
 **CLI**
 
@@ -122,10 +122,10 @@ LEAF1#
 
  - To represent subnets (IP ranges) for a BD.
 
-![](assets/markdown-img-paste-20190126131548327.png)
+![](/assets/markdown-img-paste-20190126131548327.png)
 
 
-![](assets/markdown-img-paste-20190126132101604.png)
+![](/assets/markdown-img-paste-20190126132101604.png)
 
 ### **How is pervasive GW deployed? (When no contracts associated)**
 
@@ -135,7 +135,7 @@ LEAF1#
 the same BD
 
 
-![](assets/markdown-img-paste-20190126141415767.png)
+![](/assets/markdown-img-paste-20190126141415767.png)
 
 
 1. In the above picture Bridge Domain has multiple EPGs in it.
@@ -147,7 +147,7 @@ or Endpoints assigned on those leafs.
 ### **How is pervasive GW deployed? (When a contract is associated)**
 
 
-![](assets/markdown-img-paste-20190127105901652.png)
+![](/assets/markdown-img-paste-20190127105901652.png)
 
 
 1. When a contract is associated , the pervasive routes are exchanged.
@@ -165,7 +165,7 @@ Let's understand it better :
   **What is a Spine Proxy**
 
 
-  ![](assets/markdown-img-paste-20190127111918562.png)
+  ![](/assets/markdown-img-paste-20190127111918562.png)
 
 A leaf switch has two types of endpoints: `local endpoints` and `remote endpoints`. Local endpoints for LEAF1 reside directly on LEAF1 (For example, directly attached), whereas remote endpoints for LEAF1 reside on other leaf endpoints (picture above).
 
@@ -180,11 +180,11 @@ Now coming back to the question of **Why does ACI push pervasive routes to other
 | WITHOUT Pervasive Route | WITH Pervasive Route   |
 |---|---|
 | In the below example since there is no pervasive route the communication will not happen with EP-E from EP-C | In this case with the SPINE Proxy route EP-C can send the traffice to SPINE since it knows the path is via SPINE   |
-| ![](assets/markdown-img-paste-20190127200651588.png)  | ![](assets/markdown-img-paste-20190127200903325.png)  |
+| ![](/assets/markdown-img-paste-20190127200651588.png)  | ![](/assets/markdown-img-paste-20190127200903325.png)  |
 
 
 ###This is what the outputs looks like in CLI when the contract is applied:
-![](assets/markdown-img-paste-20190127201314289.png)
+![](/assets/markdown-img-paste-20190127201314289.png)
 
 
 
@@ -194,7 +194,7 @@ Now coming back to the question of **Why does ACI push pervasive routes to other
 
 This is one of the best slides showing the communication scenarios and whether its switched or routed. Look at the detailed explanation below:
 
-![](assets/markdown-img-paste-20190127210611239.png)
+![](/assets/markdown-img-paste-20190127210611239.png)
 
 1. `EP-A talking to EP-B` : In this scenario , since both EPGs are in the same subnet and same L2 domain the traffic is Layer 2 Switched.
 2. `EP-A talking to EP-C` : Same Bridge domain but differen EPG , and has a contract , still L2 switched.
