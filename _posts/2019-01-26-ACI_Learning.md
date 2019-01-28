@@ -5,10 +5,15 @@ description: ACI Learning
 comments: true
 ---
 
-**Learning notes from BRKACI-3545 Ciscolive Session**
 
+# Write an overall learning summary and path here.
+
+1. **Learning notes from BRKACI-3545 Ciscolive Session**
+2. Read `https://www.cisco.com/c/en/us/solutions/collateral/data-center-virtualization/application-centric-infrastructure/white-paper-c11-739989.html`
+
+---
 ## Endpoint
-
+---
 **What is an endpoint ?**
 
 It's a combination of MAC address and IP Address.
@@ -38,7 +43,11 @@ Exception is L3 Out , If we use the same mechanism of learnign all the IP Addres
 - Second : RIB (`show ip route`)
 
 
+![](assets/markdown-img-paste-20190127215307387.png)
+
+---
 ## End Point Group
+---
 
 Endpoint Group is a logical grouping of hosts (EPs). Each EPG belongs to a bridge domain (BD)
 
@@ -91,14 +100,21 @@ LEAF1# show vlan id 16,31 extended
 LEAF1#
 ```
 
-
+---
 ## VLAN types in ACI
-
-## Endpoint Type
-
 ---
 
-## Pervasive Gateway
+---
+## Endpoint Type
+---
+
+
+<BR><BR>
+
+---
+## PERVASIVE GATEWAY
+---
+
 
 ### **What is pervasive GW for?**
  - **To be a default GW for EPs in the Fabric** , All EPs can have consistent
@@ -146,7 +162,7 @@ Pervasive routes are required for Spine-Proxy
 
 Let's understand it better :
 
-  **What is a Spine Proxy** 
+  **What is a Spine Proxy**
 
 
   ![](assets/markdown-img-paste-20190127111918562.png)
@@ -155,18 +171,41 @@ A leaf switch has two types of endpoints: `local endpoints` and `remote endpoint
 
 Although both local and remote endpoints are learned from the data plane, remote endpoints are merely a cache, local to each leaf. Local endpoints are the main source of endpoint information for the entire Cisco ACI fabric. **Each leaf is responsible for reporting its local endpoints to the Council Of Oracle Protocol (COOP) database, located on each spine switch**, which implies that all endpoint information in the Cisco ACI fabric is stored in the spine COOP database. **Because this database is accessible, each leaf does not need to know about all the remote endpoints to forward packets to the remote leaf endpoints**. Instead, **a leaf can forward packets to spine switches, even if the leaf does not know about a particular remote endpoint. This forwarding behavior is called `S P I N E - P R O X Y`.**
 
+Now coming back to the question of **Why does ACI push pervasive routes to other LEAFs after a contract?**
+
+###Without the pervasive route:
 
 
 
+| WITHOUT Pervasive Route | WITH Pervasive Route   |
+|---|---|
+| In the below example since there is no pervasive route the communication will not happen with EP-E from EP-C | In this case with the SPINE Proxy route EP-C can send the traffice to SPINE since it knows the path is via SPINE   |
+| ![](assets/markdown-img-paste-20190127200651588.png)  | ![](assets/markdown-img-paste-20190127200903325.png)  |
+
+
+###This is what the outputs looks like in CLI when the contract is applied:
+![](assets/markdown-img-paste-20190127201314289.png)
 
 
 
+---
+## ACI Forwarding Scope Concepts
+---
 
+This is one of the best slides showing the communication scenarios and whether its switched or routed. Look at the detailed explanation below:
 
+![](assets/markdown-img-paste-20190127210611239.png)
 
-
+1. `EP-A talking to EP-B` : In this scenario , since both EPGs are in the same subnet and same L2 domain the traffic is Layer 2 Switched.
+2. `EP-A talking to EP-C` : Same Bridge domain but differen EPG , and has a contract , still L2 switched.
+3. `EP-A talking to EP-D` : Same BD , but different subnet ; hence L3 routed.
+4. `EP-A talking to EP-E` : Different BD and different network hence L3 switched.
+5. `EP-A talking to EP-F` : Differen VRF , unless route leaking is implemented no traffic communication happens.
 
 
 
 
 <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+---
+END
+---
