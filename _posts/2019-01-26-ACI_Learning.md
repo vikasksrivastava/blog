@@ -10,6 +10,10 @@ comments: true
 
 1. **Learning notes from BRKACI-3545 Ciscolive Session**
 2. Read `https://www.cisco.com/c/en/us/solutions/collateral/data-center-virtualization/application-centric-infrastructure/white-paper-c11-739989.html`
+EMEAR DCV PVT - ACI troubleshooting with TAC experts
+3. Udemy Course
+4. INE Course
+
 
 ---
 ## Endpoint
