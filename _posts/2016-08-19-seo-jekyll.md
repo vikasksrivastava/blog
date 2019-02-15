@@ -176,8 +176,8 @@ This isn't technically SEO but it helps to grow your audience. If you'd like to 
         <a href="http://www.reddit.com/submit?url={{ site.url }}{{ page.url }}" onclick="window.open(this.href, 'mywin',
 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-reddit fa share-button"></i></a>
        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{{ page.url }}&title={{ page.title }}&summary={{ page.description }}&source=webjeda" onclick="window.open(this.href, 'mywin',
-'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa share-linkedin fa-linkedin fa share-button"></i></a>                         
-        <a href="mailto:?subject={{ page.title }}&amp;body=Check out this site {{ site.url }}{{ page.url }}"><i class="fa fa-envelope fa share-button"></i></a>                                  
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa share-linkedin fa-linkedin fa share-button"></i></a>
+        <a href="mailto:?subject={{ page.title }}&amp;body=Check out this site {{ site.url }}{{ page.url }}"><i class="fa fa-envelope fa share-button"></i></a>
 </div>
 {% endraw %}
 ```
