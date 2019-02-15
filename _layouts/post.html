@@ -135,7 +135,21 @@ layout: default
   </script>
   <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
+
+        <!--- NEW COMMENT SYSTEM BEGINE --->
+
+          <div id="comments"></div>
+          <script>
+          window.rpc_host = 'https://rpc.dyuproject.com';
+          window.comments_max_depth = 10; // max: 127
+          window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
+          </script>
+          <script src="https://netlify-comments.dyuproject.com/dist/build.js"></script>
+          <link rel="stylesheet" href="https://netlify-comments.dyuproject.com/dist/build.css" />
+
+          <!--- NEW COMMENT SYSTEM END --->
+
+/section>
 
 
 
