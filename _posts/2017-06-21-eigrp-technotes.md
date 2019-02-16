@@ -22,6 +22,7 @@ comments: true
 
 <!-- TOC END -->
 
+
 > **Link State Protocol :** Link State knows **every thing** about the network.
 **Distance Vector Protocol :** Distance Vector is what the neighbor router has told it.
 
