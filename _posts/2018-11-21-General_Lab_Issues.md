@@ -86,3 +86,9 @@ The secret key combination to drag a pane back to a window or to the tab bar is:
 **ASA in Eve-NG**
 
 ![](/assets/markdown-img-paste-20180703130517336.png)
+
+
+**Java Issues**
+
+On MAC Look for JavaAppletPlugin.plugin , Open in Atom and In tree view do the following:
+Comment “jdk.jar.disabledAlgorithms” in the file of”lib/security/java.security”
