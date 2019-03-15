@@ -29,13 +29,13 @@ Disk progress: 4%
 
 
 ```sh
-ovftool --noSSLVerify \
+./ovftool --noSSLVerify \
         --name="KISE"  \
         --acceptAllEulas \
         -ds="datastore1" \
-        --diskMode=thin \
+        --diskMode=thick \
         --network="VM Network"  \
-        /opt/unetlab/original-images/ESXi_ISE-2.1.0.474-mini.ova \
+        /Users/vikassri/Downloads/ISE-2.1.0.474-mini.ova \
         vi://192.168.1.13/
 
 ./ovftool --noSSLVerify \
