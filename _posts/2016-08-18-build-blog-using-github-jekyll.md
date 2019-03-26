@@ -6,6 +6,13 @@ comments: true
 ---
 UPDATE: I redesigned this blog using [Centrarium](https://github.com/bencentra/centrarium). Though my blog does not reflect the steps in this post, this tutorial helped me to rebuild my blog. I hope this helps you too!
 
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/MUQfKFzIOeU"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
+
+
 I built this blog using Github pages, [Jekyll](http://jekyllrb.com) and the [Lanyon](http://lanyon.getpoole.com/) theme. The most amazing part is that it's free, minimalist, uses Markdown and you can get it running in no time! Also, it does not feel bloated like Wordpress, etc.
 
 Here's a short tutorial on how I made this blog. Ready to learn? Let's get started!
@@ -84,11 +91,11 @@ $ jekyll build
 $ jekyll serve
 ```
 
-Open up your browser and go to: http://localhost:4000 and voila, the website is hosted locally on your system and is ready to be tweaked! 
+Open up your browser and go to: http://localhost:4000 and voila, the website is hosted locally on your system and is ready to be tweaked!
 
 ## <a name="dir-struct"></a>3. Exploring the directory structure
 
-Before we go ahead and make customizations, let's have a look at the files in your folder. Once we learn the design, we can go ahead and make changes confidently! 
+Before we go ahead and make customizations, let's have a look at the files in your folder. Once we learn the design, we can go ahead and make changes confidently!
 
 ```shell
 .
@@ -119,29 +126,29 @@ Before we go ahead and make customizations, let's have a look at the files in yo
 `-- README.md
 ```
 
-Here is a brief explanation of what you see: 
+Here is a brief explanation of what you see:
 
 * When you run Jekyll, it creates a folder called _site with the static website inside it. Every file or folder in the repo will get copied into the _site folder unless it begins with an underscore.
 * _config.yml is the configuration file, which is the first file we are going to change.
 * index.html is your front page and about.md is a static page. You can add other static pages by creating markdown files (which we will be doing further). 404.html is pretty self-explanatory.
 * atom.xml is for the RSS reader.
-* _includes and _layouts folders contain the boilerplate HTML required to build the site. 
-* _posts include the posts that you'll be...well...posting. They are Markdown files. 
-* public contains [favicon](https://en.wikipedia.org/wiki/Favicon) information and CSS files. 
+* _includes and _layouts folders contain the boilerplate HTML required to build the site.
+* _posts include the posts that you'll be...well...posting. They are Markdown files.
+* public contains [favicon](https://en.wikipedia.org/wiki/Favicon) information and CSS files.
 
 Still with me? Let's do some tweaking! :)
 
 ## <a name="config"></a>4. Modifying configuration file
 
-The first thing you want to do is change the ```_config.yml``` file. Open it in your favorite text editor and edit the sections in _Setup_  and _About/contact_ according to your preferences. 
+The first thing you want to do is change the ```_config.yml``` file. Open it in your favorite text editor and edit the sections in _Setup_  and _About/contact_ according to your preferences.
 
-You can add other details as well. Have a look at [my _config.yml](https://github.com/nikhita/nikhita.github.io/blob/master/_config.yml) for reference. 
+You can add other details as well. Have a look at [my _config.yml](https://github.com/nikhita/nikhita.github.io/blob/master/_config.yml) for reference.
 
 Lanyon is built on Poole and Poole does not support Jekyll 3 yet. You can check [this issue](https://github.com/poole/lanyon/issues/124). For this, you'll need to add:
 
 {% highlight yaml %}
 gems: [jekyll-paginate]
-paginate_path: "page:num" 
+paginate_path: "page:num"
 {% endhighlight %}
 
 and comment out: ```relative_permalinks: true```.
@@ -151,7 +158,7 @@ Now we are good to go!
 
 ## <a name="archive"></a>5. Adding an archive page
 
-Lanyon, by default, does not provide an archive page. So let's make one. In your root folder, create an ```archive.md``` file and add the following contents to it. 
+Lanyon, by default, does not provide an archive page. So let's make one. In your root folder, create an ```archive.md``` file and add the following contents to it.
 
 ```ruby
 {% raw %}
@@ -176,7 +183,7 @@ $ jekyll serve
 
 ## <a name="disqus"></a>6. Integrating Disqus comments
 
-Obviously you'll need a Disqus account for this. Head to the website, create an account and it'll ask you if you want to "Add Disqus to your site". If you already have an account, click on the gear icon on the top right corner and select the option. Follow the steps until it gives you a _shortname_ for your website. 
+Obviously you'll need a Disqus account for this. Head to the website, create an account and it'll ask you if you want to "Add Disqus to your site". If you already have an account, click on the gear icon on the top right corner and select the option. Follow the steps until it gives you a _shortname_ for your website.
 
 Now open the ```_layouts/default.html``` file and add the line as shown:
 
@@ -203,7 +210,7 @@ Now that you have included ```comments.html```, let's create it! Create a file c
     var disqus_shortname = 'your-shortname-here';
     /* change the above line to include your real shortname */
     var disqus_identifier = "{{ site.disqusid }}{{ page.url | replace:'index.html','' }}";
-    
+
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -249,7 +256,7 @@ Again, you'll need a GA account for this. In the Admin tab, you'll find _Trackin
 
 Create a file called ```google_analytics.html``` in the ```_includes``` folder and add the the code GA gave you. Do not paste the code I posted above - you'll mess up my stats! :(
 
-Now add the following line in ```default.html``` inside the ```_layouts``` folder. 
+Now add the following line in ```default.html``` inside the ```_layouts``` folder.
 
 ```html
 {% raw %}
@@ -263,9 +270,9 @@ Save it and you are good to go!
 
 ## <a name="favicon"></a>8. Adding a custom favicon
 
-You can create a [favicon](https://en.wikipedia.org/wiki/Favicon) using GIMP or you can use an easy online [option](http://faviconit.com/en). I rolled the online way. 
+You can create a [favicon](https://en.wikipedia.org/wiki/Favicon) using GIMP or you can use an easy online [option](http://faviconit.com/en). I rolled the online way.
 
-If you plan to use the online method, extract the files to the ```public``` folder (which should have a placeholder ```favicon.ico```). 
+If you plan to use the online method, extract the files to the ```public``` folder (which should have a placeholder ```favicon.ico```).
 
 Go to ```head.html``` in _includes and add the following line:
 
@@ -274,7 +281,7 @@ Go to ```head.html``` in _includes and add the following line:
 <link rel="icon" sizes="16x16 32x32 64x64" href="{{ site.baseurl }}/public/favicon.ico">
 ```
 
-Note: If you used the link that I provided, you'll have many other images. Have a look at the readme file provided after extraction and change the href link to include ```{% raw %} {{ site.baseurl }}/public/ {% endraw %}```. Look at my [head.html](https://github.com/nikhita/nikhita.github.io/blob/master/_includes/head.html) to understand it better. 
+Note: If you used the link that I provided, you'll have many other images. Have a look at the readme file provided after extraction and change the href link to include ```{% raw %} {{ site.baseurl }}/public/ {% endraw %}```. Look at my [head.html](https://github.com/nikhita/nikhita.github.io/blob/master/_includes/head.html) to understand it better.
 
 Cool, now we have got our custom favicon in action!
 
@@ -311,7 +318,7 @@ To make your photo look good on the sidebar, create a ```custom.css``` file in `
 .sidebar-logo {
       padding: 1.5rem;
 }
-  
+
 .sidebar-logo img {
       border-radius: 50%;
       -moz-border-radius: 50%;
@@ -337,7 +344,7 @@ In your ```sidebar.html``` setup a div container for all these icons to go in:
 
 ```html
 <div id="contact-list" style="text-align:center">
-<!-- contact icons go here --> 
+<!-- contact icons go here -->
 </div>
 ```
 
@@ -363,7 +370,7 @@ Awesome, our social media buttons are ready for action!
 Personally, I didn't like the default Lanyon font. Head over to [Google Fonts](https://fonts.google.com/?authuser=1) and choose a font that you love. Google will provide you with a stylesheet link. Something like this:
 
 ```html
-<link href="https://fonts.googleapis.com/css?family=Average" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Average" rel="stylesheet">
 ```
 
 Add this line to ```head.html``` in the list of CSS links. Now, go to ```public/css/lanyon.css``` and your font to the ```font-family```.
