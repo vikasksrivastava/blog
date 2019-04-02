@@ -6,7 +6,7 @@ comments: true
 ---
 UPDATE: I redesigned this blog using [Centrarium](https://github.com/bencentra/centrarium). Though my blog does not reflect the steps in this post, this tutorial helped me to rebuild my blog. I hope this helps you too!
 
-<iframe width="560" height="315"
+<iframe width="700" height="315"
 src="https://www.youtube.com/embed/MUQfKFzIOeU"
 frameborder="0"
 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
