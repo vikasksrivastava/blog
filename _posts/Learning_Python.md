@@ -72,6 +72,8 @@ message = "Happy" + str(age) + "birthday"
 
 **Python List**
 
+List position index starts at `0` not `1`
+
 ```py
 vegetables = [`tomato`, `brocolli`, `carrot`]
 print(vegetables)
@@ -91,3 +93,5 @@ print(vegetables[2])
 ```
 
 Prints `carrot`
+
+**Changing, adding, and removing elements** PAGE 73
