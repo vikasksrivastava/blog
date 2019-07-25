@@ -94,6 +94,16 @@ comments: true
 
 ## AWS Organisation
 
+### WELL Oriented Architecture
+
+The well oriented architecture consist of the following `5` Pillars ; any by following a process of **evaluating your architecture against each pillar**.
+
+- **`Operation Excellence`** : How will you implement monitoring and logging and redesign your architecture based on the information from the monitoring system.
+- **`Reliability`** : Recover from Failure and mitigate disruptions.
+- **`Security`** : Protect and Monitor systems.
+- **`Performance Efficiency`** : Use computing resource efficiently
+- **`Cost Optimization`** : Avoid or Limit expense.
+
 ### AWS Account and Physical Organisation
 
 This represents how how you manage multiple services and account managment.
@@ -117,7 +127,7 @@ At a very high level AWS can be broken down into two main blocks
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
-<img src="assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
+<img src="/assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
 
 An `AWS Region` has multiple `Availabilty Zones`
 
@@ -130,6 +140,52 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
 <img src="/assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
+
+**AWS has 19 Regions and 57 AZs within those 19 regions.**
+
+![](assets/markdown-img-paste-20190725061715368.png)
+
+
+![](assets/markdown-img-paste-20190725071537652.png)
+
+-------
+
+### AWS Region
+
+>**AWS re:Invent 2014: AWS Innovation at Scale with James Hamilton**
+>https://www.youtube.com/watch?v=JIQETrFC_SQ
+
+Let look into one of the Regions: US East
+Each region has at least 2 availaibility zones. Instead of a DC being a region, AWS has an AZ as a Region. There are two transit centers which connect to customers.
+
+The AZs are quite apart (few miles). The speed between AZs are extremely high. 25Tbps.
+
+> Transit
+
+![](assets/markdown-img-paste-20190725072213950.png)
+
+![](assets/markdown-img-paste-20190725073401480.png)
+
+- If an AZ you can commit synchronously to your Data with a 1ms delay rather than 74ms delay (above) . This is empowering and great for the applications.
+- Failover between AZs is **SUPERFAST** , compare this to a Intra Region failover which would be much slower.
+
+
+Going further , lets look into Availability Zones
+
+![](assets/markdown-img-paste-20190725090416853.png)
+![](assets/markdown-img-paste-20190725090810986.png)
+![](assets/markdown-img-paste-20190725090954823.png)
+
+---
+
+
+![](assets/markdown-img-paste-20190725094118435.png)
+
+
+![](assets/markdown-img-paste-20190725094202242.png)
+
+
+
 
 Now as we further move ahead , the `VPC` is the
 
