@@ -7,7 +7,6 @@ comments: true
 
 
 
-
 <!-- TOC START min:1 max:5 link:true update:true -->
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
@@ -127,11 +126,11 @@ At a very high level AWS can be broken down into two main blocks
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
-<img src="/assets/markdown-img-paste-20180317155925901.png" alt="Drawing" style="width: 300px;"/>
+
 
 An `AWS Region` has multiple `Availabilty Zones`
 
-<img src="/assets/markdown-img-paste-20180317160605765.png" alt="Drawing" style="width: 300px;"/>
+
 
 Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
@@ -139,7 +138,6 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
-<img src="/assets/markdown-img-paste-20180317160708670.png" alt="Drawing" style="width: 300px;"/>
 
 **AWS has 19 Regions and 57 AZs within those 19 regions.**
 
@@ -160,7 +158,7 @@ Each region has at least 2 availaibility zones. Instead of a DC being a region, 
 
 The AZs are quite apart (few miles). The speed between AZs are extremely high. 25Tbps.
 
-> Transit
+> **Transit points allow conectivity with other Regions and Customer Peering Points.**
 
 ![](assets/markdown-img-paste-20190725072213950.png)
 
@@ -184,10 +182,26 @@ Going further , lets look into Availability Zones
 
 ![](assets/markdown-img-paste-20190725094202242.png)
 
+> https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
+
+
+Now as we further move ahead , the `VPC` :
+
+
+![](assets/markdown-img-paste-20190725103828635.png)
+
+>  - **The VPC is a Logical Construct with little significance to actual networking.**
+>  - **A Large IP Space is define while creating a VPC , but eventually smaller subnets are to be created specific to the AZs.**
+>  - **A subnet spans only the AZ**
+> - **When an Instance is created with a Subnet Specified -- The instance gets created in the same AZ as the subnet (Obviously :))**
+> - **Dual Interfaces can reside in a single subnet only** (As per the lab)
+
+
+> **Security Groups are State Full , once you allow a traffic inbount , there is no need to create an outbout rule for the same.**
+> **NACLs are not statefull , both INBOUND and OUTBOUND rules need to be created**
 
 
 
-Now as we further move ahead , the `VPC` is the
 
 <img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
 
