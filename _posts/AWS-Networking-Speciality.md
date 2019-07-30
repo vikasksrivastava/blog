@@ -88,6 +88,8 @@ Helpful Series of Numbers for Subnetting
 
 
 
-![](assets/markdown-img-paste-20190727203012328.png)
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+![](assets/markdown-img-paste-20190727203734908.png)
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
