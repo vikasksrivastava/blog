@@ -5,6 +5,10 @@ description: My Notes on AWS Network Speciality
 comments: true
 ---
 
+### To be done
+
+> - Labbing VGW with Ubiquiti
+> - Labbing NAT-G vs IGW (@ host in the same subnet with one host havin a Floating IP so that we can SSH in and then ssh to the other host to test.) . TO check if a Host can access internet without NAT-G
 
 ## Foundational Concepts
 
