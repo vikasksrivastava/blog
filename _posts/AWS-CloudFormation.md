@@ -1,26 +1,30 @@
 ---
 layout: post
-title: BGP with BFD on EVE-NG with CSR1000v
-description: BGP with BFD on EVE-NG with CSR1000v
+title: Learning CloudFormation
+description: First steps with CloudFormation
 comments: true
 ---
 
 #### 1:33 Speed / kcfnuser / D
+
+> **Good link for CFN  IDE Tips**
+> https://hodgkins.io/up-your-cloudformation-game-with-vscode
 
 A wordpress stack typically consists of the following:
 
 
 ![](assets/markdown-img-paste-20190730204655360.png)
 
-JSON stands for "JavaScript Object Notation"
-Used heavility within the AWS Product set
-JSON is constructd of name/value pair
-Data is seperated by commas
-Value can be strin,number,boolean,object,array or null
-[] Square brackets holds arrays
-Cury Braces {} Holds JSON
+### JSON
+- JSON stands for "JavaScript Object Notation"
+- Used heavility within the AWS Product set
+- JSON is constructd of name/value pair
+- Data is seperated by commas
+- Value can be strin,number,boolean,object,array or null
+- `[]` Square brackets holds arrays
+- Cury Braces {} Holds JSON
 
-Null in its purest form is not used in CloudFormation.
+`Null` in its purest form is not used in CloudFormation.
 
 > In the example below notice that the `ProductID` variable is used twice , which is fine since it is under two different JSON objects (Curly Brackets)
 **Same variable cannot be used at the same JSON depth**
@@ -162,3 +166,107 @@ Resources:
 
 - **In the above Code Template we used `Mapping` tables to reuse variables and make the template more dynamic**
 - **The `!FindInMap` references the Table and looks for the value there in the table**
+
+----
+
+In the code example below , take a look at the following :
+
+- `Fn::Base64"` : Allows to put in `cloud-init` data
+- `Sub` : Function for string substitution
+- `$Variables` : Used below in the `sed` line to make the `cloud-init` dynamic.
+
+> `Keypair below "AdvancedCFN" is used to reference an already created SSH key.`
+
+```yaml
+  EC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMALINUX] # Dynamic mapping + Pseudo Parameter
+      InstanceType: !FindInMap [InstanceSize, !Ref EnvironmentSize, EC2]
+      KeyName: AdvancedCFN
+      UserData:
+        "Fn::Base64":
+          !Sub |
+            #!/bin/bash
+            yum install httpd php mysql php-mysql -y
+            yum update -y
+            chkconfig httpd on
+            service httpd start
+            cd /var/www/html
+            wget https://wordpress.org/latest.tar.gz
+            tar -zxvf latest.tar.gz --strip 1
+            rm latest.tar.gz
+            cp wp-config-sample.php wp-config.php
+            sed -i 's/database_name_here/${DatabaseName}/g' wp-config.php
+            sed -i 's/localhost/${DB.Endpoint.Address}/g' wp-config.php
+            sed -i 's/username_here/${DatabaseUser}/g' wp-config.php
+            sed -i 's/password_here/${DatabasePassword}/g' wp-config.php
+```
+
+***What the above means in simple terms***
+
+![](assets/markdown-img-paste-20190731204841465.png)
+
+> **Note that in above example we have the `DB.Endpoint.Address` is required to be created `before` the `EC2` instance can be created. Hence CloudFormation creates the DB first and then the EC2**
+
+> **The above is done automatically by the AWS systems**
+
+
+As a best practice , we should declare the dependency manually using the `DependsOn` attribute. Notice in the example below under EC2 , we say `DependsOn: DB` which basically means that EC2 would have to wait for the DB to done first before the EC2 is created.
+
+```yaml
+Resources:
+  DB:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      AllocatedStorage: 5
+      StorageType: gp2
+      DBName: wordpress
+  EC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      DependsOn: DB
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMALINUX]
+      InstanceType: !FindInMap [InstanceSize, !Ref EnvironmentSize, EC2]
+  ```
+
+### CloudFormationInit
+
+**Benefits**
+- `cfn-init` is OS independent
+- `cfn-init` is a desired state engine. Like Ansible you define that you need `http` server ; you dont have to install , start the service etc . !!
+
+
+Example CloudFormation Init Template
+
+```yaml
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          packages:
+            :
+          groups:
+            :
+          users:
+            :
+          sources:
+            :
+          files:
+            :
+          commands:
+            :
+          services:
+```
+
+- The `Metadata` tag is at the same level as the Instance Type tag
+- The CloudFormation::Init starts by default with `config` if not `configsets` are defined
+- `packages` : Define the packages to be installed
+- `groups` : user groups be present
+- `users` : users to be present
+- `sources` : Ensures to allow certain files stored on the instance
+- `file` : Create , Modify , delete and control file content.
+- `commands` : Allows you to run commands .
+- `services` : Enables service declarations. service restart stop etc.
