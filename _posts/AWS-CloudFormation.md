@@ -270,3 +270,23 @@ Resources:
 - `file` : Create , Modify , delete and control file content.
 - `commands` : Allows you to run commands .
 - `services` : Enables service declarations. service restart stop etc.
+
+
+```yaml
+  EC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMALINUX] # Dynamic mapping + Pseudo Parameter
+      InstanceType: !FindInMap [InstanceSize, !Ref EnvironmentSize, EC2]
+      KeyName: AdvancedCFN
+      UserData:
+        "Fn::Base64":
+          !Sub |
+            #!/bin/bash
+            yum update -y aws-cfn-bootstrap # good practice - always do this.
+            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource EC2 --configsets wordpress --region ${AWS::Region}
+            yum -y update
+```
+
+
+CFN Hup is a sister utility for CFN Init. It listens for a change on the meta data for the instance. When the metadat changes , CFN Hup can update the instances based on the updated Metadata.
