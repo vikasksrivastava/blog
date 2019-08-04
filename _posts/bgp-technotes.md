@@ -8,6 +8,17 @@ comments: true
 
 
 
+- [About BGP](#about-bgp)
+		- [Why do we call BGP a path-vector routing protocol?](#why-do-we-call-bgp-a-path-vector-routing-protocol)
+
+	- [BGP States during Connection](#bgp-states-during-connection)
+- [What is ebgp-multihop](#what-is-ebgp-multihop)
+
+- [Why do we need Internal BGP (iBGP) !](#why-do-we-need-internal-bgp-ibgp)
+	- [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
+
+
+
 
 > `RIP`, `OSPF` and `EIGRP` are all different but they have one thing in common; they want to find the shortest path to the destination
 > There is only one routing protocol we currently use on the Internet which is BGP.
@@ -60,12 +71,12 @@ Lets look at another example below ; we are on again `R3` and looking at the rou
 ![](assets/markdown-img-paste-20190804141431396.png)
 
 ```sh
-# R1
+#R1
 router bgp 1
  neighbor 192.168.1.2 remote-as 2 # First you configure the Remote AS
  network 1.1.1.1 mask 255.255.255.255 # Second you adverstise the Route into BGP
 
-# R2
+#R2
 router bgp 2
  bgp log-neighbor-changes
  neighbor 192.168.1.1 remote-as 1
