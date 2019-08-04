@@ -1,50 +1,127 @@
 ---
 layout: post
-title: EIGRP Tech Notes
-description: My Notes on EIGRP
+title: BGP Tech Notes
+description: My Notes on BGP
 comments: true
 ---
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-  - [About EIGRP](#about-eigrp)
-  - [Path Selection](#path-selection)
-  - [Loop Free Logic](#loop-free-logic)
-  - [Successor / Feasible Successor Selection](#successor--feasible-successor-selection)
-  - [Load Balancing](#load-balancing)
-  - [Auto Summarisation](#auto-summarisation)
-  - [Passive Interface](#passive-interface)
-    - [EIGRP Metrics](#eigrp-metrics)
-    - [EIGRP Scalability Issues](#eigrp-scalability-issues)
-  - [Stub Router](#stub-router)
-    - [How to see if a router is Stub or not](#how-to-see-if-a-router-is-stub-or-not)
-    - [Name EIGRP Instance Example](#name-eigrp-instance-example)
-    - [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
 
-<!-- TOC END -->
-
-
-
-> **Link State Protocol :** Link State knows **every thing** about the network.
-**Distance Vector Protocol :** Distance Vector is what the neighbor router has told it.
+ - [About BGP](#about-bgp)
+	- [Path Selection](#path-selection)
+	- [Loop Free Logic](#loop-free-logic)
+	- [Successor / Feasible Successor Selection](#successor-feasible-successor-selection)
+	- [Load Balancing](#load-balancing)
+	- [Auto Summarisation](#auto-summarisation)
+	- [Passive Interface](#passive-interface)
+		- [EIGRP Metrics](#eigrp-metrics)
+			- [Bandwidth (K1)](#bandwidth-k1)
+			- [Load (K2)](#load-k2)
+			- [Delay (K3)](#delay-k3)
+			- [Reliability (K4)](#reliability-k4)
+			- [MTU (K5)](#mtu-k5)
+		- [EIGRP Scalability Issues](#eigrp-scalability-issues)
+	- [Stub Router](#stub-router)
+		- [How to see if a router is Stub or not](#how-to-see-if-a-router-is-stub-or-not)
+		- [Name EIGRP Instance Example](#name-eigrp-instance-example)
+		- [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
 
 
-  > **RIP** is a true distance vector routing protocol and very simple:
-        - No neighbor discovery. `Compare this with Hello Packets`
-        - Periodic updates.
-        - Vulnerable to loops. `Compare it with EIGRPs loop free logic  `
-        - Simple metric (hop count). `Compare it with EIGRP K Values`
 
-Cisco added **some of the features from link-state routing protocols to EIGRP** which makes it far more advanced than a true distance vector routing protocol like RIP. This is why (probably the marketing department) calls **EIGRP an advanced distance vector or hybrid routing protocol**.
 
-> - EIGRP does not use broadcast packets to send information to other neighbors but will use multicast or unicast.
-> - Besides IPv4 you can also use EIGRP to route IPv6 or even some older network layer protocols like IPX or AppleTalk.
-> - EIGRP is **100% loop-free** and I'm going to show you why this is true.
 
-## About EIGRP
+> `RIP`, `OSPF` and `EIGRP` are all different but they have one thing in common; they want to find the shortest path to the destination
+> There is only one routing protocol we currently use on the Internet which is BGP.
 
-EIGRP Protocol Number is `88`, EIGRP runs **directly on top of the IP header**. If you look at the picture above you see we have a frame header (for example an Ethernet Frame), an IP Header (we are using IPv4) and inside the IP packet you'll find EIGRP.
 
-EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver EIGRP packets between neighbors in a reliable and ordered way. Reliability means that there is **acknowledgement for an operation , which makes it a reliable protocol**.
+  > **`BGP` unlike other protocols , is about how the world reaches out to us.**
+
+Take a look at the picture below.
+![](assets/markdown-img-paste-20190804122804780.png)
+
+**Lets say we `CUSTOMER` has a few Web servers which are accessible on Public IP Addresses.**
+- This Public IP Address if allocated by `ISP1` will make the traffic always come via `ISP1`
+- The above holds true for `ISP2`
+- We have no control on how people on the internet come to us.
+
+**This is where we have our `OWN IP Address` space allocated a `BGP` ASN which can be `advertised` to both ISPs**
+
+
+
+## About BGP
+
+
+An `AS` is a collection of networks under a **single administrative** domain. The Internet is nothing more but a bunch of autonomous systems that are connected to each other. Within an autonomous system we use an IGP like OSPF or EIGRP. For routing between the different autonomous systems we use an EGP (external gateway protocol). The only EGP we use nowadays is BGP.
+
+> `Autonomous system` numbers are 16-bit which means we have AS 1 up to 65535. There’s also a **private range (64512 – 65535)** you can use for non-internet usage. Since January 2009 we can also use 32-bit numbers for autonomous systems.
+
+`BGP` has two flavors:
+- **`External BGP`**: between autonomous systems
+- **`Internal BGP`**: within the autonomous system.
+External BGP is to exchange routing information between the different autonomous
+
+Again , in the above picture ; the ISPs (ISP1 and ISP2) can provide us one of the following :
+
+- `Default Route`: A default route to the customer pointing it to the ISP router. In this case customer network has zero visibility of what's on the internet and cannot take intelligent routing decisions itself.
+- `Default Route and Partial Routing Table` : A default route along with the the networks know to the ISP are advertised to the `Customer`. THis case is better than the `Default Route` only option as we know little more than before.
+- `Full Routing Table`: This is the best case option , but know that this requires a lot of CPU and power on the customer router.
+
+### Why do we call BGP a path-vector routing protocol?
+
+In the BGP routing table , instead of just the next hop for a specific network like other protocol (EIGRP, OSPF) we have the path (denoted by AS numbers).
+
+Lets take a look at what the above statement means :
+
+In the example below ; we are on `R3` and looking at the routing table on how to reach `1.1.1.1` which is on `R1`. As you can see the `PATH` on `R3` lists out the `AS` numbers in sequence it is going through for `1.1.1.1`
+
+![](assets/markdown-img-paste-20190804141400889.png)
+
+Lets look at another example below ; we are on again `R3` and looking at the routing table on how to reach `5.5.5.5` which is on `R5`. As you can see the `PATH` on `R3` lists out the `AS` numbers in sequence it is going through for `5.5.5.5`
+
+![](assets/markdown-img-paste-20190804141431396.png)
+
+```sh
+# R1
+router bgp 1
+ neighbor 192.168.1.2 remote-as 2 # First you configure the Remote AS
+ network 1.1.1.1 mask 255.255.255.255 # Second you adverstise the Route into BGP
+
+# R2
+router bgp 2
+ bgp log-neighbor-changes
+ neighbor 192.168.1.1 remote-as 1
+ neighbor 192.168.2.3 remote-as 3
+ neighbor 192.168.3.4 remote-as 4
+
+...
+
+```
+
+
+> BGP uses TCP port 179
+
+
+### BGP States during Connection
+Here are all the **BGP states** that we have:
+
+- `Idle`: BGP process has been shutdown or it is waiting for the next retry.
+- `Connect`: BGP is waiting for the TCP connection to complete.
+- `Active`: TCP connection is ready but no BGP messages have been sent yet.
+- `Opensent`: Open message has been sent but we didn’t receive one yet from the
+neighbor.
+- `Openconfirm`: Open message has been sent and received from the other side.
+- `Established`: All parameters match, we have a working BGP peering and we can
+exchange update messages with routing information.
+
+
+### What is ebgp-multihop
+
+
+![](assets/markdown-img-paste-2019080414391877.png)
+
+
+
+### Why do we need Internal BGP (iBGP)!
+
 
 **EIGRP has 3 tables** :
 

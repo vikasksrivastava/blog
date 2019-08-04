@@ -7,18 +7,18 @@ comments: true
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-		- [VPN (Policy based)](#vpn-policy-based)
+- [VPN (Policy based)](#vpn-policy-based)
 			- [Key Exchange Protocol](#key-exchange-protocol)
-		- [GRE Tunnel](#gre-tunnel)
+- [GRE Tunnel](#gre-tunnel)
 				- [Step 1](#step-1)
 				- [Step 2](#step-2)
-		- [GRE over IPSec - Tunnel Mode](#gre-over-ipsec-tunnel-mode)
-		- [GRE / IPSec - Transport Mode](#gre-ipsec-transport-mode)
+- [GRE over IPSec - Tunnel Mode](#gre-over-ipsec-tunnel-mode)
+- [GRE / IPSec - Transport Mode](#gre-ipsec-transport-mode)
 			- [Configuration](#configuration)
 		- [Native IPSec Tunnel [S-VTI]](#native-ipsec-tunnel-s-vti)
 		- [MGRE (Multipoint GRE)](#mgre-multipoint-gre)
 			- [A Multipoint GRE Full Configuration Snippet](#a-multipoint-gre-full-configuration-snippet)
-		- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
+- [DMVPN (Dynamic Multipoint VPN)](#dmvpn-dynamic-multipoint-vpn)
 		- [DMVPN - EIGRP - Phases [I,II,III]](#dmvpn-eigrp-phases-iiiiii)
 		- [Redundancy [Dual-Hub DMVPN Setup]](#redundancy-dual-hub-dmvpn-setup)
 		- [GETVPN](#getvpn)
