@@ -115,8 +115,52 @@ exchange update messages with routing information.
 
 ### What is ebgp-multihop
 
+| Direct Peering   |  EBGP Multihop Peering |
+|---|---|
+|   ![](assets/markdown-img-paste-20190804145117107.png)   |   ![](assets/markdown-img-paste-20190804145139645.png) |
 
-![](assets/markdown-img-paste-2019080414391877.png)
+> BGP by defauly has a TTL of 1 becuase of which we have to increase it when the number of hops increase. **Notice that the increase in TTL is only required in `eBGP` and not required in `iBGP`**
+
+You know from the above exercises that peering between `R1` and `R2` can be directly done with the following:
+
+```sh
+# R1
+router bgp 1
+ neighbor 192.168.1.2 remote-as 2 # First you configure the Remote AS
+ network 1.1.1.1 mask 255.255.255.255 # Second you adverstise the Route into BGP
+
+# R2
+router bgp 2
+ neighbor 192.168.1.1 remote-as 1
+...
+
+```
+
+**But instead of using the directly connected interface IP address for neighbors , you can alternatively use the loopback address of the router** as the neighbor address. Lets see in the below example how.
+
+```sh
+# R1
+
+ip route 2.2.2.2 255.255.255.255 192.168.1.2 # First point how to reach to 2.2.2.2
+
+router bgp 1
+ neighbor 2.2.2.2 remote-as 2 # Second you configure the Remote AS
+ neighbor 2.2.2.2 update-source loopback 0 # Third you define the source interface where the packets would originate from
+ neighbor 2.2.2.2 ebgp-multihp 2 # Fourth you increase the TTL to 2
+ network 1.1.1.1 mask 255.255.255.255 # FInally you adverstise the Route into BGP
+
+# R2
+
+ip route 1.1.1.1 255.255.255.255 192.168.1.1 # First point how to reach to 1.1.1.1
+
+
+router bgp 2
+ neighbor 1.1.1.1 remote-as 2 # Second you configure the Remote AS
+ neighbor 1.1.1.1 update-source loopback 0 # Third you define the source interface where the packets would originate from
+ neighbor 1.1.1.1 ebgp-multihp 2 # Fourth you increase the TTL to 2
+...
+
+```
 
 
 
