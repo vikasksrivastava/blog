@@ -5,9 +5,6 @@ description: My Notes on BGP
 comments: true
 ---
 
-
-
-
 - [About BGP](#about-bgp)
 		- [Why do we call BGP a path-vector routing protocol?](#why-do-we-call-bgp-a-path-vector-routing-protocol)
 
@@ -158,7 +155,115 @@ router bgp 2
 ### Why do we need Internal BGP (iBGP)!
 
 
+![](assets/markdown-img-paste-2019080708204756.png)
 
+**Step 1.** eBGP (Between two different AS) is configured between `AS1 and AS2`  AND `AS3 and AS2`.
+
+**Step 2.** A local route 6.6.6.6 is created on R6 and the goal is for this route to show up in R1's routing table.
+
+**Step 3.** For that we need to configure iBGP between R5 and R2.
+
+**Step 4.** Cant configure direct iBGP neighbourship between R5 and R2 as they can reach each other yet (no routing)
+
+**Step 5.** OSPF between R2 , R3 , R4 , R5 is configured to get the path set between R5 and R2.
+
+**Step 6.** Now instead of BGP peering on physical interfaces we create loopback interfaces on R5 and R2 for peering.
+
+- **Step a.** When we do the above it look like the following:
+  Notice the **`BGP AS number`** and the **`remote-as`** are same! (iBGP!)
+	```sh
+	R2(config)#router bgp 2
+	R2(config-router)#neighbor 5.5.5.5 remote-as 2
+
+	R5(config)#router bgp 2
+	R5(config-router)#neighbor 2.2.2.2 remote-as 2
+	```
+
+- **Step b.** Configure the main settings when you source bgp via a loopback interface
+
+	```sh
+	 neighbor x.x.x.x update-source loopback 0 # You define the source interface where the packets would originate from
+	```
+
+- **Step 7.** After Step 6 is completed the path of 6.6.6.6 is visible in the BGP table of R2 **BUT** it cannot reach it. Notice the difference below with `* i` and `*>`
+
+	- **`* i`** Mean's that BGP is aware of the route but it is not installed in the routing table ; so it cann't be reached. In R2's case look that the next-hop its `192.168.56.6` , R2 does not know the path to `192.168.56.6` (The OSPF we configure earlier wasn't for this anyway)
+
+	- **`*>`** Means's that the route is known and it is installed in the routing table and CAN be reached ! R5 knows about `192.168.56.6` as its was advertised via the prior eBGP configuration .
+
+	```sh
+	R2#sh ip bgp
+	BGP table version is 1, local router ID is 2.2.2.2
+	     Network          Next Hop            Metric LocPrf Weight Path
+	 * i  6.6.6.6/32       192.168.56.6             0    100      0 3 i
+	```
+
+	```sh
+	R5#sh ip bgp
+	BGP table version is 2, local router ID is 5.5.5.5
+	     Network          Next Hop            Metric LocPrf Weight Path
+	 *>   6.6.6.6/32       192.168.56.6             0             0 3 i
+	```
+
+- **Step 8.** Now we will add the networks `192.168.56.6` and `192.168.12.0` in to the BGP for AS2
+
+	```sh
+	R2(config)#router bgp 2
+	R2(config-router)#network 192.168.12.0 mask 255.255.255.0
+
+	R5(config)#router bgp 2
+	R5(config-router)#network 192.168.56.0 mask 255.255.255.0
+	```
+
+- **Step 9.** Righ after we configure the above the route to 6.6.6.6 becomes active on R2!
+
+	```sh
+	R2#sh ip bgp
+	BGP table version is 7, local router ID is 2.2.2.2
+	Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+	              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+	              x best-external, a additional-path, c RIB-compressed,
+	              t secondary path,
+	Origin codes: i - IGP, e - EGP, ? - incomplete
+	RPKI validation codes: V valid, I invalid, N Not found
+
+	     Network          Next Hop            Metric LocPrf Weight Path
+	 *>i  6.6.6.6/32       192.168.56.6             0    100      0 3 i
+	 *>   192.168.12.0     0.0.0.0                  0         32768 i
+	 *>i  192.168.56.0     5.5.5.5                  0    100      0 i
+	```
+
+- **Step 10.** Now , at this stage the output says that `6.6.6.6` can be reached via the next hop `192.168.56.6` ; so how do we reach `192.168.56.6` ?
+
+	```sh
+	R2#sh ip route  | inc 56.0
+	B     192.168.56.0/24 [200/0] via 5.5.5.5, 00:04:29
+	R2#sh ip route 5.5.5.5
+	Routing entry for 5.5.5.5/32
+	  Known via "ospf 1", distance 110, metric 21, type intra area
+	  Last update from 192.168.23.4 on Ethernet0/2, 00:54:34 ago
+	  Routing Descriptor Blocks:
+	  * 192.168.24.3, from 5.5.5.5, 00:54:34 ago, via Ethernet0/1
+	      Route metric is 21, traffic share count is 1
+	    192.168.23.4, from 5.5.5.5, 00:54:34 ago, via Ethernet0/2
+	      Route metric is 21, traffic share count is 1
+	```
+
+- **Step 11.** As we can see in the above output the path to reach 6.6.6.6 is via R3 or R4 . Now lets say the packet reaches R3 or R4 ; do R3 or R4 know about the destination `6.6.6.6`.
+
+	```sh
+	R3#sh ip route 6.6.6.6
+	% Network not in table
+	```
+
+	```sh
+	R4#sh ip route 6.6.6.6
+	% Network not in table
+	```
+
+> **Key Learning Objective with this : Even if the path is known and is in the routing table its NOT reachable , this is unlike other routing protocols!**
+
+Some Markdown text with <span style="color:blue">some *blue* text</span>.
 
 ### How to Debug Interesting Packet :
 
