@@ -15,10 +15,8 @@ comments: true
 	- [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
 
 
-
-
 > `RIP`, `OSPF` and `EIGRP` are all different but they have one thing in common; they want to find the shortest path to the destination
-> There is only one routing protocol we currently use on the Internet which is BGP.
+> <span style="color:blue">There is only one routing protocol we currently use on the Internet which is BGP.
 
 
   > **`BGP` unlike other protocols , is about how the world reaches out to us.**
@@ -31,7 +29,7 @@ Take a look at the picture below.
 - The above holds true for `ISP2`
 - We have no control on how people on the internet come to us.
 
-**This is where we have our `OWN IP Address` space allocated a `BGP` ASN which can be `advertised` to both ISPs**
+>**This is where we have our `OWN IP Address` space allocated a `BGP` ASN which can be `advertised` to both ISPs**
 
 
 
@@ -45,17 +43,18 @@ An `AS` is a collection of networks under a **single administrative** domain. Th
 `BGP` has two flavors:
 - **`External BGP`**: between autonomous systems
 - **`Internal BGP`**: within the autonomous system.
+
 External BGP is to exchange routing information between the different autonomous
 
-Again , in the above picture ; the ISPs (ISP1 and ISP2) can provide us one of the following :
+Again, in the above picture ; the ISPs (ISP1 and ISP2) can provide us one of the following :
 
 - `Default Route`: A default route to the customer pointing it to the ISP router. In this case customer network has zero visibility of what's on the internet and cannot take intelligent routing decisions itself.
-- `Default Route and Partial Routing Table` : A default route along with the the networks know to the ISP are advertised to the `Customer`. THis case is better than the `Default Route` only option as we know little more than before.
+- `Default Route and Partial Routing Table` : A default route along with the the networks know to the ISP are advertised to the `Customer`. This case is better than the `Default Route` only option as we know little more than before.
 - `Full Routing Table`: This is the best case option , but know that this requires a lot of CPU and power on the customer router.
 
 ### Why do we call BGP a path-vector routing protocol?
 
-In the BGP routing table , instead of just the next hop for a specific network like other protocol (EIGRP, OSPF) we have the path (denoted by AS numbers).
+<span style="color:blue">In the BGP routing table , instead of just the next hop for a specific network like other protocol (EIGRP, OSPF) we have the path (denoted by AS numbers).
 
 Lets take a look at what the above statement means :
 
@@ -107,7 +106,7 @@ exchange update messages with routing information.
 |---|---|
 |   ![](assets/markdown-img-paste-20190804145117107.png)   |   ![](assets/markdown-img-paste-20190804145139645.png) |
 
-> BGP by defauly has a TTL of 1 becuase of which we have to increase it when the number of hops increase. **Notice that the increase in TTL is only required in `eBGP` and not required in `iBGP`**
+> BGP by defauly has a TTL of 1 becuase of which we have to increase it when the number of hops increase. **<span style="color:blue">Notice that the increase in TTL is only required in `eBGP` and NOT required in `iBGP`**
 
 You know from the above exercises that peering between `R1` and `R2` can be directly done with the following:
 
@@ -263,7 +262,88 @@ router bgp 2
 
 > **Key Learning Objective with this : Even if the path is known and is in the routing table its NOT reachable , this is unlike other routing protocols!**
 
-Some Markdown text with <span style="color:blue">some *blue* text</span>.
+---
+### BGP Loop Prevention
+**`BGP Loop Prevention`** : *<span style="color:blue">If you see your own AS number in the AS path you don’t accept it since <span style="color:red">it means there is a loop.*
+
+Ok so ; with the **above logic** how would loop be prevented in case of `iBGP` **?**
+
+```sh
+R2(config)#router bgp 2
+R2(config-router)#neighbor 5.5.5.5 remote-as 2
+```
+
+**We have all the routers in the the same AS!** The solution is simple:
+
+> <span style="color:blue">When a BGP router receives an update from another internal BGP router **<span style="color:red">it will not forward this information to another internal BGP router**. This is called BGP **<span style="color:blue">`split-horizon`**.
+
+---
+
+
+![](assets/markdown-img-paste-20190809061254951.png)
+
+**Continuing the topic of loop prevention** , lets understand the same in our example :
+
+1. `R5` knows about the network `6.6.6.6` as it learned it from eBGP ( between two different AS)
+2. An `iBGP` session was set between `R2` and `R5` so that network behind `R2` can reach `6.6.6.6`
+3. `R2` learn about `6.6.6.6` , but never installs it in the routing table as th next hop `192.168.56.0` network isn't reachable (no distributed in the OSPF area intentionally)
+4. Now if we set `iBGP` relationship between `R2` - `R3` OR `R2` -`R4` .  Neither `R3` nor `R4` will learn the `6.6.6.6` route from `R2` and `R2` is not going to advertise it to them [Becuase of split-horizon]
+
+**<span style="color:blue">So, basically a full mesh have to be configured in iBGP peers</span>**
+
+---
+
+### next-hop-self
+
+The default next hop behavior of BGP is different than any IGP. **Internal BGP does not change the next hop IP address.**
+
+In the above example for `R5` , 6.6.6.6 is reachable via 192.168.56.6 ; **Now when `R5` advertises this route to `R3` ; it <span style="color:red">DOES NOT</span> change the next hop!**
+
+As long as `R5` knows about the path to the advertised next-hop in this case 192.168.56.6 ; its fine.
+
+**But** , if you would like to change this behaviour ; you use the command :
+
+```sh
+R5(config)#router bgp 2
+R5(config-router)#neighbor 4.4.4.4 next-hop-self
+R5(config-router)#neighbor 3.3.3.3 next-hop-self
+```
+With the above configuration
+
+```sh
+R3#show ip route bgp | include 6.6.6.0
+B 6.6.6.0 [200/0] via 5.5.5.5, 00:00:37
+```
+
+Notice how the next hop has changed to R5 itself ; which looked like the following before the change:
+
+```sh
+R3#show ip route bgp | include 6.6.6.0
+B 6.6.6.0 [200/0] via 192.168.56.6, 00:00:37
+```
+
+### BGP Attribute and Path Selection
+
+In the BGP table we see multiple path to the same destination.
+
+> In the example below we have multiple paths to the 6.6.6.6 network shown
+
+
+	R2#sh ip bgp
+	BGP table version is 7, local router ID is 2.2.2.2
+	Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+	              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+	              x best-external, a additional-path, c RIB-compressed,
+	              t secondary path,
+	Origin codes: i - IGP, e - EGP, ? - incomplete
+	RPKI validation codes: V valid, I invalid, N Not found
+
+	     Network          Next Hop            Metric LocPrf Weight Path
+	 *>i  6.6.6.6/32       192.168.56.6             0    100      0 3 i
+	 *>   		       192.168.12.0             0         32768 i
+	 *>i       	       192.168.56.0             0    100      0 i
+
+
 
 ### How to Debug Interesting Packet :
 
@@ -274,7 +354,6 @@ Some Markdown text with <span style="color:blue">some *blue* text</span>.
  IP packet debugging is on for access list 100
 ```
 
-
-
+614 764 5926 Thomas
 
 -------------------------------
