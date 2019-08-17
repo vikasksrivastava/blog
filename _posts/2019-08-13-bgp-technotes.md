@@ -358,11 +358,71 @@ Why did BGP select the above path as the the best one :
 | 7  | `Paths (External preffered over internal)`  |
 | 8 |  `Router ID` |
 
-#### Weight 
+### Weight
 
 In the example below , we configure different weights on the router `7.7.7.7` to the path `2.2.2.2` reachable via 2 different paths.  The path via `9.9.9.9` is choosed becase the weight toward this neighbor is set to `500` which more than the other link :
 
 ![](assets/markdown-img-paste-20190813201852374.png)
+
+```sh
+router bgp 1
+ neighbor 9.9.9.9 weight 500
+```
+
+#### route-maps
+
+Now in the above example lets say with 2.2.2.2 network there were more networks behind AS2 , example 3.3.3.3 or 4.4.4.4.
+How do we selectively increase choose the path for a specific network prefix ?
+
+```sh
+router bgp 1
+ no neighbor 9.9.9.9 weight 500
+```
+
+```sh
+
+!Create route-map to selectively set the weight for interested traffic
+
+route-map SETWEIGHT permit 10
+ match ip address 10
+ set weight 400
+ exit
+route-map SETWEIGHT permit 20
+ set weight 0
+ exit
+access-list 10 permit 3.3.3.3 0.0.0.255
+
+!BGP Config
+router bgp 1
+ neightbor 9.9.9.9 route-map SETWEIGHT in
+```
+
+### Local Preference
+
+A  `local-prefrence` is respected within an AS (iBGP)
+It is exhnaged between all iBGP routers.
+
+In the example below for the path from R4 to 2.2.2.2 we chnages the local-preference on R3 , which increase its local preference from a default of 100 to 600 and hence the path via it is preffered.
+
+
+![](assets/markdown-img-paste-20190816210027716.png)
+
+
+A local preference can be set at the BGP level
+
+
+Or slectively via route-maps
+```sh
+route-map SETWEIGHT permit 10
+ match ip address 10
+ set local-preference 600
+ exit
+```
+
+
+
+
+
 
 
 -------------------------------
