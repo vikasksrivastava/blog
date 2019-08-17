@@ -409,7 +409,10 @@ In the example below for the path from R4 to 2.2.2.2 we chnages the local-prefer
 
 
 A local preference can be set at the BGP level
-
+```sh
+router bgp 1
+ bgp default local-preference 600
+```
 
 Or slectively via route-maps
 ```sh
@@ -420,9 +423,115 @@ route-map SETWEIGHT permit 10
 ```
 
 
+### Originate
+
+The meaning of this paramater is that the BGP router will prefer a router if its locally originated ; means the next hop IP Address is 0.0.0.0
+
+### AS Path Prepend
+
+BGP preferes the path with the shorter number of hops (AS Path)
+The AS Path can be increased for a given prefix (by adding our own AS number multiple times) which makes path longer and less preffered over the other availaible path.
+
+> **AS Path Prepend is advertised to the remote AS , faking the path as longer towards the AS , causing the remote AS to choose another path.**
+
+![](assets/markdown-img-paste-20190816215342190.png)
+
+Since you are **Sending** this to your neighbor ; in the route-map it should be applied as `out`
+
+```sh
+!Set the AS Path
+route-map PREPEND permit 10
+set as-path prepend 1 1 1 1 1
+exit
+
+!Configure it in BGP
+router bgp 1
+ neighbor 192.168.12.2 route-map PREPEND out
+```
+
+### Origin Code
+
+**How the route originated in the BGP network in the first place.**
+
+For example , when you spin up a BGP process on a router ; after defining the neighbor ; you configure the network which needs to be advertised on the BGP Process . e.g:
+
+```sh
+R5(config)#router bgp 2
+R5(config-router)#network 192.168.56.0 mask 255.255.255.0
+```
+
+In the above example we advertise the network `192.168.56.0` in the BGP Process. In the BGP table this network will be shown as ``"i"``
+
+If a you do the following (`redistribute-connected`) you are not being specific and hence the route will be treated as a ``"?"``
+
+```sh
+R5(config)#router bgp 2
+R5(config-router)#redistribute connected
+```
+
+	R2#sh ip bgp
+	BGP table version is 7, local router ID is 2.2.2.2
+	Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+	              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+	              x best-external, a additional-path, c RIB-compressed,
+	              t secondary path,
+	Origin codes: i - IGP, e - EGP, ? - incomplete
+	RPKI validation codes: V valid, I invalid, N Not found
+
+	     Network          Next Hop            Metric LocPrf Weight Path
+	 *i  6.6.6.6/32        192.168.56.6             0    100      0 3 i
+	 *   1.1.1.1	       192.168.12.0             0    32768        ?
+
+
+### MED Attribute
+
+- `MED` (Metric) is advertised to your neighbor on how they should enter your AS.
+
+- `Local Preference` is used for **outbound** traffic , `MED` is used for **inbound** traffic.
+
+- MED is exchnaged between autonomous systems
+- Lowest MED is the preffered.
+- MED is propagated to all routers in the neighbor AS , but is not passed out to other AS
+
+
+![](assets/markdown-img-paste-2019081716470814.png)
+
+```sh
+!Set the MED
+route-map MED permit 10
+set metric 100
+exit
+
+!Configure it in BGP
+router bgp 1
+ neighbor 192.168.12.2 route-map MED out
+```
+
+### PATHs
+
+BGP will prefer external paths (external BGP) over internal paths (internal BGP).
+
+### Router ID
+
+The last BGP attribute is router ID. If everything is the same then the router ID will be the decision maker. The router with the lowest router ID will be used for the path.
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+### BGP Practice Questions
 
 -------------------------------
