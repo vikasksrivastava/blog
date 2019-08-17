@@ -8,12 +8,13 @@ permalink: /about/
 
 ## Vikas Srivastava
 
-An experienced **CCIE Datacenter Engineer** having 10 plus years of experience , with recognized strength in implementing and supporting advanced **Enterprise Datacenters, cloud solutions** and applications. Ability to design, troubleshoot and optimize legacy and new datacenter designs. Keen in learning new technologies on my own, current interests include cloud solutions like **OpenStack, AWS and SDN, OpenFlow**. Successfully maintain complete professionalism and personal commitment with excellent communication and people skills and the ability to train, motivate and supervise a team.
+An experienced **CCIE Datacenter and Security Engineer** having 10 plus years of experience , with recognized strength in implementing and supporting advanced **Enterprise Datacenters, cloud solutions** and applications. Ability to design, troubleshoot and optimize legacy and new datacenter designs. Keen in learning new technologies on my own, current interests include cloud solutions like **OpenStack, AWS and SDN, OpenFlow**. Successfully maintain complete professionalism and personal commitment with excellent communication and people skills and the ability to train, motivate and supervise a team.
 
 **Certifications:**
 
 
   - CCIE Datacenter # 42302
+  - CCIE Security # 42302
   - AWS Certified Solutions Architect - Associate
   - Mirantis Certified Openstack Administrator - Professional Level
   - Redhat Certified Engineer (RHCE)

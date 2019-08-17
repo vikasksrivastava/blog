@@ -339,21 +339,30 @@ In the BGP table we see multiple path to the same destination.
 	RPKI validation codes: V valid, I invalid, N Not found
 
 	     Network          Next Hop            Metric LocPrf Weight Path
-	 *>i  6.6.6.6/32       192.168.56.6             0    100      0 3 i
-	 *>   		       192.168.12.0             0         32768 i
+	 *i  6.6.6.6/32        192.168.56.6             0    100      0 3 i
+	 *   		       192.168.12.0             0         32768 i
 	 *>i       	       192.168.56.0             0    100      0 i
 
+As a reminder **only the path with the `>` is entered in the routing table**. As per BGP that is the best path. Other routes staty in the BGP table.
 
+Why did BGP select the above path as the the best one :
 
-### How to Debug Interesting Packet :
+|  **Priority** | **Attrribute**   |
+|---|---|
+| 1  |  `Weight (highest)` |
+| 2  |  `Local Preference (Highest)` |
+| 3 | `Originate (Local Originate)`  |
+| 4  | `AS Path (shortest)`  |
+| 5  | `Origin Code (IGP < EGP < Incomplete)`  |
+| 6  | `MED (lowest)`  |
+| 7  | `Paths (External preffered over internal)`  |
+| 8 |  `Router ID` |
 
-```sh
- Jack(config)# access-list 100 permit ip any 192.168.200.20 0.0.0.0
- Jack(config)#exit
- Jack# debug ip packet 100
- IP packet debugging is on for access list 100
-```
+#### Weight 
 
-614 764 5926 Thomas
+In the example below , we configure different weights on the router `7.7.7.7` to the path `2.2.2.2` reachable via 2 different paths.  The path via `9.9.9.9` is choosed becase the weight toward this neighbor is set to `500` which more than the other link :
+
+![](assets/markdown-img-paste-20190813201852374.png)
+
 
 -------------------------------
