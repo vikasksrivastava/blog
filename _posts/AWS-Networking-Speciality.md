@@ -90,9 +90,89 @@ Helpful Series of Numbers for Subnetting
 
 ![](assets/markdown-img-paste-20190727183626821.png)
 
+### DNS Basics
+
+
+![](assets/markdown-img-paste-20190818161605696.png)
+
+---
+
+![](assets/markdown-img-paste-20190818161623299.png)
+
+> **The 13 Anycast IP Address are operated by 12 Organisations**
+
+> **Why there are only 13 root servers?**
+At the time the DNS was designed, the IP address in use was IPv4, which contains 32 bits. For efficient networking and better performance, these IP addresses should fit into a single packet (using UDP, the DNS’s default protocol). Using IPv4, the DNS data that can fit into a single packet is limited to 512 bytes. **As each IPv4 address requires 32 bytes, having 13 servers uses 416 bytes, leaving up to 96 bytes for the remaining protocol information.**
+
+As an IPv6 address is not limited by these constraints, it is possible new root servers may be established in the future.
+
+----
+
+### DNS History
+
+Before DNS , there was a large HOSTS.TXT which has a mapping of all the ARPANETs hosts.
+
+This file was managed and distrubuted by a single organisation (SRI-NIC) and hence the host name `sri-nic`
+
+Here's what it looked like :
+
+
+![](assets/markdown-img-paste-20190820111620251.png)
+
+> <span style="color:red"> It was extremely difficult to manage and update hosts with this approach. Lookup on the file was seqeuntial , updates were slow and new host addition tool a lot of time.
+
+### The Domain Name System
+
+![](assets/markdown-img-paste-20190823163342645.png)
+
+### Domains, Delegation and Zones
+
+#### Domains
+
+Domains are group of related nodes , thy are subtree of the the namespace they are in.
+
+
+---
+
+### Delegation
+
+Delegation is a process allocation Sub-Domains to different companies for their management , MACD and upkeep.
+
+<br><br>
+
+![](assets/markdown-img-paste-20190823181703527.png)
+
+### Internationalised Domain Names
+
+Look at the example below , it shows how .gove is writtent in chinese , Google in Japanese and site in Arabic .
+
+
+>![](assets/markdown-img-paste-2019082318205192.png)
+
+Since DNS Native canot support such characters , enter the world of Punnycodes .
+
+#### Punnycode
+
+A punnycode is a mapping of the foreign language character to the DNS naming system. A punny code always starts with xn-- and the mapping is locally done from foreign language to punnycode in the browser before sending the query out to the DNS server.
+
+> ![](assets/markdown-img-paste-20190823182124419.png)
+
+---
+
+###  Name Servers , Zones and Authority
+
+#### Name Server
+A name server has the database of the names (DNS to IP Mappings).
+Name servers load data in `zones` , the administrative units in DNS.
+
+A name server may load thousands of zones , but anever loads the  entire namespace.
+
+**<span style="color:blue">A name server that loads an `entire zone` is AUTHORITATIVE for that zone; which means this name server can answer any quesry about any domain name in the zone**
 
 
 
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 ![](assets/markdown-img-paste-20190727203734908.png)
 
 

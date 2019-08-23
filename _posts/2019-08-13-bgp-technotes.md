@@ -516,17 +516,7 @@ BGP will prefer external paths (external BGP) over internal paths (internal BGP)
 The last BGP attribute is router ID. If everything is the same then the router ID will be the decision maker. The router with the lowest router ID will be used for the path.
 
 
-
-
-
-
-
-
-
-
-
-
-
+### BGP Prefix List / Route Filtering
 
 
 
