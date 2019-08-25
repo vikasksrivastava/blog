@@ -90,6 +90,10 @@ Helpful Series of Numbers for Subnetting
 
 ![](assets/markdown-img-paste-20190727183626821.png)
 
+
+![](assets/markdown-img-paste-20190727203734908.png)
+
+
 ### DNS Basics
 
 
@@ -162,18 +166,95 @@ A punnycode is a mapping of the foreign language character to the DNS naming sys
 ###  Name Servers , Zones and Authority
 
 #### Name Server
-A name server has the database of the names (DNS to IP Mappings).
+A `name server` has the database of the names (DNS to IP Mappings).
 Name servers load data in `zones` , the administrative units in DNS.
 
 A name server may load thousands of zones , but anever loads the  entire namespace.
 
 **<span style="color:blue">A name server that loads an `entire zone` is AUTHORITATIVE for that zone; which means this name server can answer any quesry about any domain name in the zone**
 
+Se below on how a typical DNS query looks like .
+
+1. Recursive query is sent by client for `linux1.cisco.com`
+2. The Name server in the middle (the companies local name server) does not know the answer and reaches out to the `root` name server
+3. The `root` name servers send a `REFFERAL` to the `com` server since it does not know the answer
+4. The `com` server sends a `REFERRAL` to the `cisco` zone since it does not know the answer
+5. `cisco` replies back with the answer.
+
+Notice above the amound of the work the server in the middle has to do with processing the `REFFERALS` and **recursing** through the DNS tree. It means this server has **recursion enabled**.
+
+The name servers in the middle accepted a `recursive` query from the resolver. Accepting a recursive query obliges the name server to do all the work and retun the name.
+
+Most resolvers send recursive name queries as they are not smart engough to follow refferals.
+
+Most name servers are smart enough to follow refferals and send non recursive queries by default. It gives the name server and option to reply back with refferal. Its beneficial to receive refferals as it contains valuable information.
+
+
+![](assets/markdown-img-paste-20190823200617518.png)
+
+
+### DNS Query and Responses
+
+DNS used UDP , the QUERY and RESPONSE are the same format.
+
+![](assets/markdown-img-paste-20190823201624968.png)
+
+The HEADER and the QUESTION section are always present! Even on the RESPONSE packet.
+
+Whether the other sections above are present are not are dependedent on the type of response , depending on whenter its and ANSWER or REFFERAL.
+
+**HEADER contains**
+
+- **OPCODE** : `QUERY` (its the same for QUERY and RESPONSE)
+- **qr bit** : `0` for query ; `1` response
+- **rd bit** : `1` for recursive and `0` non-recursive
+
+**QUESTION contains**
+
+ - **Domain Name** : Domain which we are interested in .
+ - **Class** : `IN` (Almost always IN for internet)
+ - **TYPE** : Type of data record the queries is interested in , like `MX` .
+
+**ANSWER , AUTHORITY and ADITIONAL**
+
+Just to carry data in form of Resorce Records
+
+> **`TTL` is how long the record is cached in the name server before it needs to be asked again**
+
+> **Server Selection algorithm** is how the name server to be queries is choosen. BIND ( a variant of name server) chooses based on the response time.
+
+### Authoritative , Recursive and Caching Name Servers
+
+As we understood each concepts above about Authorty , Recursiveness and Caching ; lets look at the servers of these types.
+
+**Authoritative Server** : A name server whose primary function is to answer non-recursive queries for data in its authoritative zones.
+
+**Recursive Server** : A recursive name servers is the one who is willing to do all the work to resolve the  hostname doing multiple level of recursion. A recursive name server also caches the responses.
+
+Authoritative name servers come into two categories :
+
+- Primaries
+- Secondaries
+
+
+ **GOOD LINKS**
+ - [X] https://engineering.purdue.edu/kak/compsec/NewLectures/Lecture17.pdf
+ - [X] http://wiki.netkit.org/netkit-labs/netkit-labs_application-level/netkit-lab_dns/netkit-lab_dns.pdf
+
+ - [X] https://seedsecuritylabs.org/Labs_16.04/PDF/DNS_Remote.pdf
+ - [X] http://www.cis.syr.edu/~wedu/seed/Labs_12.04/Networking/DNS_Remote/DNS_Remote.pdf
 
 
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-![](assets/markdown-img-paste-20190727203734908.png)
+
+
+
+
+
+
+
+
+
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
