@@ -121,13 +121,13 @@ This file was managed and distrubuted by a single organisation (SRI-NIC) and hen
 Here's what it looked like :
 
 
-![](assets/markdown-img-paste-20190820111620251.png)
+![](/assets/markdown-img-paste-20190820111620251.png)
 
 > <span style="color:red"> It was extremely difficult to manage and update hosts with this approach. Lookup on the file was seqeuntial , updates were slow and new host addition tool a lot of time.
 
 ### The Domain Name System
 
-![](assets/markdown-img-paste-20190823163342645.png)
+![](/assets/markdown-img-paste-20190823163342645.png)
 
 ### Domains, Delegation and Zones
 
@@ -144,14 +144,14 @@ Delegation is a process allocation Sub-Domains to different companies for their 
 
 <br><br>
 
-![](assets/markdown-img-paste-20190823181703527.png)
+![](/assets/markdown-img-paste-20190823181703527.png)
 
 ### Internationalised Domain Names
 
 Look at the example below , it shows how .gove is writtent in chinese , Google in Japanese and site in Arabic .
 
 
->![](assets/markdown-img-paste-2019082318205192.png)
+> ![](/assets/markdown-img-paste-2019082318205192.png)
 
 Since DNS Native canot support such characters , enter the world of Punnycodes .
 
@@ -159,7 +159,7 @@ Since DNS Native canot support such characters , enter the world of Punnycodes .
 
 A punnycode is a mapping of the foreign language character to the DNS naming system. A punny code always starts with xn-- and the mapping is locally done from foreign language to punnycode in the browser before sending the query out to the DNS server.
 
-> ![](assets/markdown-img-paste-20190823182124419.png)
+> ![](/assets/markdown-img-paste-20190823182124419.png)
 
 ---
 
@@ -190,14 +190,14 @@ Most resolvers send recursive name queries as they are not smart engough to foll
 Most name servers are smart enough to follow refferals and send non recursive queries by default. It gives the name server and option to reply back with refferal. Its beneficial to receive refferals as it contains valuable information.
 
 
-![](assets/markdown-img-paste-20190823200617518.png)
+![](/assets/markdown-img-paste-20190823200617518.png)
 
 
 ### DNS Query and Responses
 
 DNS used UDP , the QUERY and RESPONSE are the same format.
 
-![](assets/markdown-img-paste-20190823201624968.png)
+![](/assets/markdown-img-paste-20190823201624968.png)
 
 The HEADER and the QUESTION section are always present! Even on the RESPONSE packet.
 
