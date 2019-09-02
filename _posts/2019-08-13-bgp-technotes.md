@@ -22,7 +22,7 @@ comments: true
   > **`BGP` unlike other protocols , is about how the world reaches out to us.**
 
 Take a look at the picture below.
-![](assets/markdown-img-paste-20190804122804780.png)
+![](//assets/markdown-img-paste-20190804122804780.png)
 
 **Lets say we `CUSTOMER` has a few Web servers which are accessible on Public IP Addresses.**
 - This Public IP Address if allocated by `ISP1` will make the traffic always come via `ISP1`
@@ -60,11 +60,11 @@ Lets take a look at what the above statement means :
 
 In the example below ; we are on `R3` and looking at the routing table on how to reach `1.1.1.1` which is on `R1`. As you can see the `PATH` on `R3` lists out the `AS` numbers in sequence it is going through for `1.1.1.1`
 
-![](assets/markdown-img-paste-20190804141400889.png)
+![](/assets/markdown-img-paste-20190804141400889.png)
 
 Lets look at another example below ; we are on again `R3` and looking at the routing table on how to reach `5.5.5.5` which is on `R5`. As you can see the `PATH` on `R3` lists out the `AS` numbers in sequence it is going through for `5.5.5.5`
 
-![](assets/markdown-img-paste-20190804141431396.png)
+![](/assets/markdown-img-paste-20190804141431396.png)
 
 ```sh
 #R1
@@ -104,7 +104,7 @@ exchange update messages with routing information.
 
 | Direct Peering   |  EBGP Multihop Peering |
 |---|---|
-|   ![](assets/markdown-img-paste-20190804145117107.png)   |   ![](assets/markdown-img-paste-20190804145139645.png) |
+|   ![](/assets/markdown-img-paste-20190804145117107.png)   |   ![](/assets/markdown-img-paste-20190804145139645.png) |
 
 > BGP by defauly has a TTL of 1 becuase of which we have to increase it when the number of hops increase. **<span style="color:blue">Notice that the increase in TTL is only required in `eBGP` and NOT required in `iBGP`**
 
@@ -154,7 +154,7 @@ router bgp 2
 ### Why do we need Internal BGP (iBGP)!
 
 
-![](assets/markdown-img-paste-2019080708204756.png)
+![](/assets/markdown-img-paste-2019080708204756.png)
 
 **Step 1.** eBGP (Between two different AS) is configured between `AS1 and AS2`  AND `AS3 and AS2`.
 
@@ -280,7 +280,7 @@ R2(config-router)#neighbor 5.5.5.5 remote-as 2
 ---
 
 
-![](assets/markdown-img-paste-20190809061254951.png)
+![](/assets/markdown-img-paste-20190809061254951.png)
 
 **Continuing the topic of loop prevention** , lets understand the same in our example :
 
@@ -362,7 +362,7 @@ Why did BGP select the above path as the the best one :
 
 In the example below , we configure different weights on the router `7.7.7.7` to the path `2.2.2.2` reachable via 2 different paths.  The path via `9.9.9.9` is choosed becase the weight toward this neighbor is set to `500` which more than the other link :
 
-![](assets/markdown-img-paste-20190813201852374.png)
+![](/assets/markdown-img-paste-20190813201852374.png)
 
 ```sh
 router bgp 1
@@ -405,7 +405,7 @@ It is exhnaged between all iBGP routers.
 In the example below for the path from R4 to 2.2.2.2 we chnages the local-preference on R3 , which increase its local preference from a default of 100 to 600 and hence the path via it is preffered.
 
 
-![](assets/markdown-img-paste-20190816210027716.png)
+![](/assets/markdown-img-paste-20190816210027716.png)
 
 
 A local preference can be set at the BGP level
@@ -434,7 +434,7 @@ The AS Path can be increased for a given prefix (by adding our own AS number mul
 
 > **AS Path Prepend is advertised to the remote AS , faking the path as longer towards the AS , causing the remote AS to choose another path.**
 
-![](assets/markdown-img-paste-20190816215342190.png)
+![](/assets/markdown-img-paste-20190816215342190.png)
 
 Since you are **Sending** this to your neighbor ; in the route-map it should be applied as `out`
 
@@ -494,7 +494,7 @@ R5(config-router)#redistribute connected
 - MED is propagated to all routers in the neighbor AS , but is not passed out to other AS
 
 
-![](assets/markdown-img-paste-2019081716470814.png)
+![](/assets/markdown-img-paste-2019081716470814.png)
 
 ```sh
 !Set the MED
