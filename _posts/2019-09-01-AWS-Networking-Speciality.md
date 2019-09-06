@@ -14,7 +14,7 @@ comments: true
 
 **This is a seven-layer model, which we show in Figure 1.14, along with the `approximate mapping` to the Internet protocol suite.**
 
-![](assets/markdown-img-paste-20190727135403543.png)
+![](/assets/markdown-img-paste-20190727135403543.png)
 
 ### IPv4 Subnetting
 
@@ -39,9 +39,9 @@ Helpful Series of Numbers for Subnetting
 ## Memorize the following
 **Powers of 2**
 
-![](assets/markdown-img-paste-20190727165622171.png)
+![](/assets/markdown-img-paste-20190727165622171.png)
 --
-![](assets/markdown-img-paste-20190727173837434.png)
+![](/assets/markdown-img-paste-20190727173837434.png)
 --
 ## Practice Examples
 
@@ -84,24 +84,24 @@ Helpful Series of Numbers for Subnetting
 
 
 > **Notes**
-![](assets/markdown-img-paste-20190727173103222.png)
+![](/assets/markdown-img-paste-20190727173103222.png)
 
 
 
-![](assets/markdown-img-paste-20190727183626821.png)
+![](/assets/markdown-img-paste-20190727183626821.png)
 
 
-![](assets/markdown-img-paste-20190727203734908.png)
+![](/assets/markdown-img-paste-20190727203734908.png)
 
 
 ### DNS Basics
 
 
-![](assets/markdown-img-paste-20190818161605696.png)
+![](/assets/markdown-img-paste-20190818161605696.png)
 
 ---
 
-![](assets/markdown-img-paste-20190818161623299.png)
+![](/assets/markdown-img-paste-20190818161623299.png)
 
 > **The 13 Anycast IP Address are operated by 12 Organisations**
 
@@ -225,17 +225,101 @@ Just to carry data in form of Resorce Records
 
 ### Authoritative , Recursive and Caching Name Servers
 
-As we understood each concepts above about Authorty , Recursiveness and Caching ; lets look at the servers of these types.
+As we understood each concepts above about Authority , Recursiveness and Caching ; lets look at the servers of these types.
 
-**Authoritative Server** : A name server whose primary function is to answer non-recursive queries for data in its authoritative zones.
+**Authoritative Server** : A name server whose primary function is to answer **non-recursive queries for data in its authoritative zones**.
 
 **Recursive Server** : A recursive name servers is the one who is willing to do all the work to resolve the  hostname doing multiple level of recursion. A recursive name server also caches the responses.
 
-Authoritative name servers come into two categories :
+Authoritative name servers **come into two categories** :
 
-- Primaries
-- Secondaries
+- **Primary** : A primary reads the data from the local "Zone Data file" hosted on the server.
+- **Secondary** : The Secondary takes the zone data information from the primary. This process is known as the "Zone Transfer"
 
+
+![](assets/markdown-img-paste-20190906062727758.png)
+
+### Serial Numbers and Zone Data Transfer
+
+
+![](assets/markdown-img-paste-20190906064539206.png)
+
+1. When the `SECONDARY` is first setup , it sends an AXFR request to the primary to copy the zone data file.
+2. The PRIMARY sends the zone information to the secondary.
+3. The Secondary preriodically sends the SOA query to the primary the response of which also contains the serial number for the zone data file.
+4. If the serial number on the Primary is higher than the serial number on secondary , a zone transfer is intiated again with step 5. and 6.
+
+
+### Forwarding and Forwarders
+
+A forwarder does not forward queries.
+A forwarder receives queries that are FORWARDED to it by other name server.
+
+Its a way to build a rich in house name server. All the name servers internally in a company point to the Forwarder which in turn goes to the internet for queries. This also simplifies firewall tasks.
+
+In the example below the Resolver sends the recursive query to the "name server" which forwards the query to the "forwarder" ; which in turn does the recursive name lookup.
+
+![](assets/markdown-img-paste-20190906065502266.png)
+
+#### Resource Records
+
+These are the units of data stored in the DNS namespace.
+
+
+> ![](assets/markdown-img-paste-2019090607014381.png)
+
+- `TTL` : How long this entry should be cached
+- `IN` : Internet
+- `TYPE of record` : `A` or `MX` etc
+- `RDATA` : The actual data for the entry , also the type of this data (IPv4 Address or Name) is dependent on the `TYPE`. For example for an `A` record it would be an IP Address.
+
+#### The A Record and the AAAA Record
+
+These are the IPv4 Address records.
+IPv6 A record is called `AAAA` Record. It has 4 A's since its 4 times the 8bits IPv4 Address.
+
+> If both A and AAAA records are available for a Host, some clients will prefer the IPv6 over IPv4 record ; and some will connect to both AND use the one which is faster. This algorithm is call the HAPPY EYEBALLS.
+
+ #### PTR Records
+
+ This is used for Reverse Lookups.
+
+ Why do we need another record for IP to Name lookup , why cant we use the A / AAAA record for the same. Well we could but it does not allow exhaustive tiered lookup for the IP Address.
+
+192.168.1.3 becomes 3.1.168.192.cisco.com
+
+IPv4 and IPV6 PTR example
+
+![](assets/markdown-img-paste-20190906071553752.png)
+
+ #### PTR Records
+
+A CNAME Record is an alias in DNS. When a DNS Server does not have a A record for the query , it responds back with the CNAME record if it has it to the querier. THe queries then restarts the lookup process with this new name provide to with the CNAME field.
+
+ #### MX Records
+
+For email records.
+
+
+![](assets/markdown-img-paste-20190906073450522.png)
+
+#### SRV Record (Service Record)
+
+SRV, or service record. It's like a general purpose MX record that can work with any service. The syntax of the SRV record is a little more complicated than the MX record.
+
+
+![](assets/markdown-img-paste-20190906073720952.png)
+
+- First field is the name of the service and the protocol it runs over.
+
+#### TXT Record
+
+The TXT, or text record, can be used to attach comments or almost anything else to domain names in the name space.
+
+
+![](assets/markdown-img-paste-20190906074017497.png)
+
+#### Infrastructure Record
 
  **GOOD LINKS**
  - [X] https://engineering.purdue.edu/kak/compsec/NewLectures/Lecture17.pdf
