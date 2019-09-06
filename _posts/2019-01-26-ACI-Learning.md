@@ -5,7 +5,6 @@ description: ACI Learning
 comments: true
 ---
 
-
 # Write an overall learning summary and path here.
 
 1. **Learning notes from BRKACI-3545 Ciscolive Session**
@@ -13,6 +12,72 @@ comments: true
 EMEAR DCV PVT - ACI troubleshooting with TAC experts
 3. Udemy Course
 4. INE Course
+5. Look at the Youtube Video : VXLAN | Part 6 - BGP EVPN Configuration on Nexus 9000
+
+**Learn VLXLAN which lays the foundations right**
+![](assets/markdown-img-paste-20190906061610747.png)
+
+![](assets/markdown-img-paste-2019090606163971.png)
+
+----
+
+![](assets/markdown-img-paste-20190906055619781.png)
+
+1. In the local statiion table the IP address , MAC Address and port number is learned on the Leaf .
+
+```
+Local Station LEAF 1
+
+10.1.1.1      MAC-A  Eth1/1
+10.1.2.1      MAC-B  Eth1/2
+```
+
+2. The Leaf sends this information to the Spines using multicast , so that it can send it to multiple spines at the same time.  The SPINEs build up a PROXY table which has informations on the IP Address and Corresponding VTEP.
+
+```
+Proxy Table
+
+IP            VTEP1
+10.1.1.1      192.168.1.1 (Leaf 1 VTEP)
+10.1.2.1      192.168.1.2 )Leaf 2 VTEP)
+```
+
+3. When PC1 wants to talk to PC3 , a lookup is done in SPINE's DB and the destination (PC3) location is learned (which is on another VTEP2)
+
+```
+Global Stattion Table
+
+IP            VTEP1
+10.1.1.3      192.168.1.2 (Leaf 2 VTEP)
+```
+
+Now once the packet is send from Leaf1 to Leaf2 ; the packet will be encapsulated as source of Leaf1 and Destination of Leaf2 for VXLAN .
+
+
+
+
+![](assets/markdown-img-paste-20190906055602822.png)
+
+
+Since the two PCs above are in different Subnets , Routing would take place when they need to talk to each other.
+
+The default gateways for the same are configured on the leafs.
+- `10.1.1.254`
+- `10.1.2.254`
+
+> All these  subnets are defined on the Bridge Domain
+> Bridge Domain is your VXLAN
+
+For communications  for the devices on the same Leaf the Leaf responds to local ARP queries.
+
+
+
+
+
+
+
+
+
 
 
 ---
@@ -187,7 +252,7 @@ Now coming back to the question of **Why does ACI push pervasive routes to other
 | ![](/assets/markdown-img-paste-20190127200651588.png)  | ![](/assets/markdown-img-paste-20190127200903325.png)  |
 
 
-###This is what the outputs looks like in CLI when the contract is applied:
+### This is what the outputs looks like in CLI when the contract is applied:
 ![](/assets/markdown-img-paste-20190127201314289.png)
 
 
