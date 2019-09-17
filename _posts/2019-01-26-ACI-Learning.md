@@ -51,7 +51,7 @@ IP            VTEP1
 10.1.1.3      192.168.1.2 (Leaf 2 VTEP)
 ```
 
-Now once the packet is send from Leaf1 to Leaf2 ; the packet will be encapsulated as source of Leaf1 and Destination of Leaf2 for VXLAN .
+Now once the packet is sent from Leaf1 to Leaf2 ; the packet will be encapsulated as source of Leaf1 and Destination of Leaf2 for VXLAN .
 
 
 
@@ -69,6 +69,8 @@ The default gateways for the same are configured on the leafs.
 > Bridge Domain is your VXLAN
 
 For communications  for the devices on the same Leaf the Leaf responds to local ARP queries.
+
+> The VLANs in ACI are not significant within the ACI fabric ; The VLANs are still significant for backward compatibility with L2 Out Networks.
 
 
 
