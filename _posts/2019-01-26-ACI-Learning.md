@@ -304,7 +304,7 @@ The picture below illustrates what's explained above in more details. Look at ho
 
 The **Switch Policy Group** is tied to the **Switch Profile** which in turn is called-in in the **Interface Profile** .
 
-The **Interface Profile** is then tied to the **<span style="color:blue">Interface Policy Group**
+The **Interface Profile** is then tied to the <span style="color:blue">**Interface Policy Group**
 
 > Definitions of the Interface Policy Groups are key part of the ACI Configuration **<span style="color:blue">Notice that in the top half of the picture the main components is the the `Interface Policy Group`**
 
