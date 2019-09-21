@@ -16,13 +16,13 @@ EMEAR DCV PVT - ACI troubleshooting with TAC experts
 6. Look at the videos here : https://www.youtube.com/watch?v=EHoAtPaW3oo
 
 **Learn VLXLAN which lays the foundations right**
-![](assets/markdown-img-paste-20190906061610747.png)
+![](/assets/markdown-img-paste-20190906061610747.png)
 
-![](assets/markdown-img-paste-2019090606163971.png)
+![](/assets/markdown-img-paste-2019090606163971.png)
 
 ----
 
-![](assets/markdown-img-paste-20190906055619781.png)
+![](/assets/markdown-img-paste-20190906055619781.png)
 
 1. In the local statiion table the IP address , MAC Address and port number is learned on the Leaf .
 
@@ -57,7 +57,7 @@ Now once the packet is sent from Leaf1 to Leaf2 ; the packet will be encapsulate
 
 
 
-![](assets/markdown-img-paste-20190906055602822.png)
+![](/assets/markdown-img-paste-20190906055602822.png)
 
 
 Since the two PCs above are in different Subnets , Routing would take place when they need to talk to each other.
@@ -115,7 +115,7 @@ Exception is L3 Out , If we use the same mechanism of learnign all the IP Addres
 - Second : RIB (`show ip route`)
 
 
-![](assets/markdown-img-paste-20190127215307387.png)
+![](/assets/markdown-img-paste-20190127215307387.png)
 
 ---
 ## End Point Group
@@ -284,7 +284,7 @@ The following diagram illustrates what make a ACI Switch defined. Just like in U
 
 Joining the Interface Profile and Switch Profile together makes the whole Switch .
 
-![](assets/markdown-img-paste-20190921141719258.png)
+![](/assets/markdown-img-paste-20190921141719258.png)
 <br>
 **After the step above** ; as a next step we start defining what are the VLANs that could be allowed on the port. Remember that these VLANs still are not assigned to the port. They are just the vlans which are being allowed to be configured/used on the port.
 
@@ -295,7 +295,7 @@ Joining the Interface Profile and Switch Profile together makes the whole Switch
 
 The External Domain and the allowed VLANs are now added to the Port Profile using AAEP ; which ties them together.
 
-![](assets/markdown-img-paste-20190921142524262.png)
+![](/assets/markdown-img-paste-20190921142524262.png)
 
 <br><br>
 
@@ -308,7 +308,7 @@ The **Interface Profile** is then tied to the **<span style="color:blue">Interfa
 
 > Definitions of the Interface Policy Groups are key part of the ACI Configuration **<span style="color:blue">Notice that in the top half of the picture the main components is the the `Interface Policy Group`**
 
-![](assets/markdown-img-paste-20190921143425584.png)
+![](/assets/markdown-img-paste-20190921143425584.png)
 
 <br>
 
@@ -326,8 +326,8 @@ After that the **Application Network Profile** is created under which the **EPG*
 
 <br>
 
-![](assets/markdown-img-paste-20190921144745594.png)
+![](/assets/markdown-img-paste-20190921144745594.png)
 
 
 
-![](assets/markdown-img-paste-20190921150906323.png)
+![](/assets/markdown-img-paste-20190921150906323.png)
