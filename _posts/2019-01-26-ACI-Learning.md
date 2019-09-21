@@ -10,9 +10,10 @@ comments: true
 1. **Learning notes from BRKACI-3545 Ciscolive Session**
 2. Read `https://www.cisco.com/c/en/us/solutions/collateral/data-center-virtualization/application-centric-infrastructure/white-paper-c11-739989.html`
 EMEAR DCV PVT - ACI troubleshooting with TAC experts
-3. Udemy Course
+3. LiveLessons Course
 4. INE Course
 5. Look at the Youtube Video : VXLAN | Part 6 - BGP EVPN Configuration on Nexus 9000
+6. Look at the videos here : https://www.youtube.com/watch?v=EHoAtPaW3oo
 
 **Learn VLXLAN which lays the foundations right**
 ![](assets/markdown-img-paste-20190906061610747.png)
@@ -274,9 +275,59 @@ This is one of the best slides showing the communication scenarios and whether i
 5. `EP-A talking to EP-F` : Differen VRF , unless route leaking is implemented no traffic communication happens.
 
 
+-------
+
+## ACI Lab Use Cases Walk Through
+-------
+
+The following diagram illustrates what make a ACI Switch defined. Just like in UCS we define the Service Profile; In the Profile creating with ACI; the **Interface Profile** defines the characteristics of the Interfaces while the **Switch Profile** defines the characteristics of the Switch itself .
+
+Joining the Interface Profile and Switch Profile together makes the whole Switch .
+
+![](assets/markdown-img-paste-20190921141719258.png)
+<br>
+**After the step above** ; as a next step we start defining what are the VLANs that could be allowed on the port. Remember that these VLANs still are not assigned to the port. They are just the vlans which are being allowed to be configured/used on the port.
+
+- The Physical Domain is for ACI Based devices (Devices Residing on ACI)
+
+- External Bridge Domain is for L2Out
+- External Routed Domain is for L3Out
+
+The External Domain and the allowed VLANs are now added to the Port Profile using AAEP ; which ties them together.
+
+![](assets/markdown-img-paste-20190921142524262.png)
+
+<br><br>
+
+The picture below illustrates what's explained above in more details. Look at how the different components are called and tied to each other .
 
 
-<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
----
-END
----
+The **Switch Policy Group** is tied to the **Switch Profile** which in turn is called-in in the **Interface Profile** .
+
+The **Interface Profile** is then tied to the **<span style="color:blue">Interface Policy Group**
+
+> Definitions of the Interface Policy Groups are key part of the ACI Configuration **<span style="color:blue">Notice that in the top half of the picture the main components is the the `Interface Policy Group`**
+
+![](assets/markdown-img-paste-20190921143425584.png)
+
+<br>
+
+**Now as a next step of progressing on the workflow above** ; we create the Tenant under which the EPG is created and tied to the port which is the actual networking construct in ACI and completes the whole picture .
+
+The picture illustrates that the Tenant is created ; under which the VRF and the Bridge Domains are created.
+
+After that the **Application Network Profile** is created under which the **EPG** is defined.
+
+> **<span style="color:blue">This EPG is in the end tied to the the Bridge Domain completing the whole workflow.**
+
+<br>
+
+> **<span style="color:red">Notice that there is no explicit  mapping between the Switch Profile / Interface Profile configs and the Tenant Config (EPG) ; so do not confuse**
+
+<br>
+
+![](assets/markdown-img-paste-20190921144745594.png)
+
+
+
+![](assets/markdown-img-paste-20190921150906323.png)
