@@ -318,7 +318,7 @@ The picture illustrates that the Tenant is created ; under which the VRF and the
 
 After that the **Application Network Profile** is created under which the **EPG** is defined.
 
- ><span style="color:blue">**This EPG is in the end tied to the the Bridge Domain completing the whole workflow.**
+ > <span style="color:blue">**This EPG is in the end tied to the the Bridge Domain completing the whole workflow.**
 
 <br>
 
