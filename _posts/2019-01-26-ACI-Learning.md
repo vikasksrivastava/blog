@@ -352,7 +352,9 @@ After that the **Application Network Profile** is created under which the **EPG*
 
 ![](assets/markdown-img-paste-2019092120235489.png)
 
-#### Lets start by configuring the <span style="color:blue"> Interface Profile Group <span style="color:black">and <span style="color:maroon"> Interface Profile
+### Part 1: Interface Policy Group and Interface Profile Configuration
+---
+#### Lets start by configuring the <span style="color:blue"> Interface Policy Group <span style="color:black">and <span style="color:maroon"> Interface Profile
 
 - IPG-ENG-USERS
 - IPG-ENG-WEB-SERVERS
@@ -367,8 +369,20 @@ After that the **Application Network Profile** is created under which the **EPG*
 
 > Show where you see the port-channels once they are created.
 
-##### Now Lets configure the Interface Profiles
+##### Now Lets configure the <span style="color:maroon">Interface Profiles
 
 - Create the Interface Profile for Each Switches
  SW1-INT-PROFILE
  SW2-INT-PROFILE
+
+<br>
+
+**Notice in the picture below** , the interface profile is switch specific . It makes sense so that It can be tied to a specific switch profile.
+
+![](assets/markdown-img-paste-20190922003316536.png)
+
+### VIDEO HERE OF THE ABOVE INTEFACE CONFIGURATIONS
+
+
+### Part 2: Switch Policy Group and Switch Profile Configuration
+---
