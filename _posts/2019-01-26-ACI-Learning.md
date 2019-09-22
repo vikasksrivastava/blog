@@ -330,4 +330,45 @@ After that the **Application Network Profile** is created under which the **EPG*
 
 <br><br>
 
+---
+### What we cover
+- Basic Setup [Fabric Setup]
+- Tenant Setup  [Tenant , VRF , Bridge Domain , Subnets]
+- Creation of the EPGs
+- Contracts
+- L2OUT using standard port channel
+- L2Out using  VPC
+- EPGs for L2 Out
+- L3 Out Using OSPF
+- EPGs for L3 Outs
+- L3 Out for EIGRP
+- Transit Routing
+---
+<br>
+
 ![](/assets/markdown-img-paste-20190921150906323.png)
+
+#### In the above topology we configure the following topics:
+
+![](assets/markdown-img-paste-2019092120235489.png)
+
+#### Lets start by configuring the <span style="color:blue"> Interface Profile Group <span style="color:black">and <span style="color:maroon"> Interface Profile
+
+- IPG-ENG-USERS
+- IPG-ENG-WEB-SERVERS
+- IPG-ENG-DB-SERVERS
+- IPG-ROUTER-1-OSPF
+- IPG-ROUTER-2-EIGRP
+
+> Notice how the port channels are differently created for Regular Port Channel and vPC based port-channel.
+
+- IPG-PORT-CHANNEL-REGULAR
+- IPG-VPC-PORT-CHANNEL-LEAF1-LEAF2
+
+> Show where you see the port-channels once they are created.
+
+##### Now Lets configure the Interface Profiles
+
+- Create the Interface Profile for Each Switches
+ SW1-INT-PROFILE
+ SW2-INT-PROFILE
