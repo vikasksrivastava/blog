@@ -350,7 +350,7 @@ After that the **Application Network Profile** is created under which the **EPG*
 
 #### In the above topology we configure the following topics:
 
-![](assets/markdown-img-paste-2019092120235489.png)
+![](/assets/markdown-img-paste-2019092120235489.png)
 
 ### Part 1: Interface Policy Group and Interface Profile Configuration
 ---
@@ -379,7 +379,7 @@ After that the **Application Network Profile** is created under which the **EPG*
 
 **Notice in the picture below** , the interface profile is switch specific . It makes sense so that It can be tied to a specific switch profile.
 
-![](assets/markdown-img-paste-20190922003316536.png)
+![](/assets/markdown-img-paste-20190922003316536.png)
 
 ### VIDEO HERE OF THE ABOVE INTEFACE CONFIGURATIONS
 
