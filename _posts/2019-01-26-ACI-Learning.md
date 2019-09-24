@@ -362,7 +362,6 @@ After that the **Application Network Profile** is created under which the **EPG*
 - IPG-ROUTER-1-OSPF
 - IPG-ROUTER-2-EIGRP
 
-![](/assets/markdown-img-paste-2019092120235489.png)
 
 > Notice how the port channels are differently created for Regular Port Channel and vPC based port-channel.
 
