@@ -13,7 +13,7 @@ comments: true
 A wordpress stack typically consists of the following:
 
 
-![](assets/markdown-img-paste-20190730204655360.png)
+![](/assets/markdown-img-paste-20190730204655360.png)
 
 ### JSON
 - JSON stands for "JavaScript Object Notation"
@@ -108,7 +108,7 @@ Thats a good start up template but lets look at the challenges in `re-use` of th
 > - The instance type is specific to a region and the CloudFormation template is not portable across regions.
 > - Also the S3 bucket is static , so the name would conflict.
 
-![](assets/markdown-img-paste-20190731194304617.png)
+![](/assets/markdown-img-paste-20190731194304617.png)
 
 The way we fix the above issues is with the following script :
 
@@ -162,7 +162,7 @@ Resources:
     Type: "AWS::S3::Bucket"
 ```
 
-![](assets/markdown-img-paste-20190731200352803.png)
+![](/assets/markdown-img-paste-20190731200352803.png)
 
 - **In the above Code Template we used `Mapping` tables to reuse variables and make the template more dynamic**
 - **The `!FindInMap` references the Table and looks for the value there in the table**
@@ -205,7 +205,7 @@ In the code example below , take a look at the following :
 
 ***What the above means in simple terms***
 
-![](assets/markdown-img-paste-20190731204841465.png)
+![](/assets/markdown-img-paste-20190731204841465.png)
 
 > **Note that in above example we have the `DB.Endpoint.Address` is required to be created `before` the `EC2` instance can be created. Hence CloudFormation creates the DB first and then the EC2**
 
