@@ -20,6 +20,26 @@ EMEAR DCV PVT - ACI troubleshooting with TAC experts
 
 ![](/assets/markdown-img-paste-2019090606163971.png)
 
+Reference Videos
+
+BRKACI-2008 - A Technical Introduction into ACI
+
+BRKACI-2004 - How to setup an ACI fabric from scratch
+
+BRKACI-2102 - ACI Troubleshooting
+
+BRKACI-2003 - Deployment Options for Interconnecting Multiple ACI Fabrics
+
+BRKACI-3503 - Extending ACI to Multiple Sites - Dual Site Deployment Deep Dive
+
+BRKACI-2020 - Understanding Cisco ACI Architecture and Scalable Layer-3 DCI / WAN integration with OPFLEX
+
+BRKACI-2001 - Integration and Interoperation of Existing Nexus Networks into an ACI Architecture
+
+BRKACI-2121 - Making the best of Services Automation with ACI Service Graph and Python
+
+BRKSEC-3004 - Deep Dive on Cisco Security in ACI
+
 ----
 
 ![](/assets/markdown-img-paste-20190906055619781.png)
