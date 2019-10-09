@@ -132,7 +132,7 @@ aaa session-id common
 **Copy Paste Snippet (Modify Here)**
 
 ```sh
-enable secret 5 $1$AGpH$kIw79LdzMFQ395d/
+enable secret cisco123!
 aaa new-model
 !
 aaa group server radius ISE-group
@@ -140,7 +140,7 @@ aaa group server radius ISE-group
 !
 radius server ISE
  address ipv4 X.X.X.X auth-port 1812 acct-port 1813
- key **yourpassword here**
+ key cisco123!
 !
 aaa authentication login default enable
 aaa authentication dot1x default group radius
@@ -153,10 +153,17 @@ dot1x system-auth-control
 !
 default interface GigabitEthernetX/X
 !
-!
+! # In this example we will notice , that if authentication does not
+! # success , the port is not able to get into VLAN1 and hence no
+! # IP Address is received .
+! # show authentication port ..... ... ...
+! #
+! # Once the right password is supplied , the device gets into VLAN1
+! # gets the  IP Address
+! #
 interface GigabitEthernetX/X
  switchport mode access
- switchport access vlan 10
+ switchport access vlan 1
  spanning-tree portfast
  authentication open
  authentication host-mode multi-auth
@@ -178,8 +185,10 @@ aaa session-id common
 **Finally**
 
 ```sh
-no authentication open
-authentication host-mode single-host
+! # Here we actually lock the port down. with "no auth open"
+interface GigabitEthernet0/0
+ no authentication open
+ authentication host-mode single-host
 ```
 
 # Lets configure ISE now
@@ -188,17 +197,18 @@ authentication host-mode single-host
 **OPTIONAL Set the ISE Password to be less restrictive**
 ![](/assets/markdown-img-paste-20181104205150657.png)
 
-**Add the User**
+**Add the User "bob" with password "cisco"**
 ![](/assets/markdown-img-paste-20181104205619430.png)
 
-**Add the Switch** This basically lest the switch to communication via RADIUS to ISE
+**Add the Switch SW1 with RADIUS "cisco123!"**
+This basically lest the switch to communication via RADIUS to ISE
 ![](/assets/markdown-img-paste-20181104205545490.png)
 
 **Test Authentication**
 
 ```sh
 debug aaa
-test aaa group ISE-group bob cisco123 new-code
+test aaa group ISE-group bob cisco new-code
 ```
 
 # Finally lets enable the PC to do DOT1.X
@@ -219,7 +229,7 @@ do debug radius authentication
 show dot1x all
 
 debug aaa
-test aaa group ISE-group bob cisco123 new-code
+test aaa group ISE-group bob cisco new-code
 
 show authentication sessions interface gi1/2
 
