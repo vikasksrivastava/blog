@@ -132,6 +132,7 @@ aaa session-id common
 **Copy Paste Snippet (Modify Here)**
 
 ```sh
+hostname SW1
 enable secret cisco123!
 aaa new-model
 !
@@ -139,7 +140,7 @@ aaa group server radius ISE-group
  server name ISE
 !
 radius server ISE
- address ipv4 X.X.X.X auth-port 1812 acct-port 1813
+ address ipv4 150.1.7.212 auth-port 1812 acct-port 1813
  key cisco123!
 !
 aaa authentication login default enable
@@ -175,7 +176,8 @@ interface GigabitEthernetX/X
 
 ! Make sure connectivity to ISE
 interface Vlan1
- ip address X.X.X.X 255.255.255.0
+ ip address 150.1.7.222 255.255.255.0
+ no shut
 !
 !
 aaa session-id common
@@ -197,7 +199,7 @@ interface GigabitEthernet0/0
 **OPTIONAL Set the ISE Password to be less restrictive**
 ![](/assets/markdown-img-paste-20181104205150657.png)
 
-**Add the User "bob" with password "cisco"**
+**Add the User "bob" with password "cisco123!"**
 ![](/assets/markdown-img-paste-20181104205619430.png)
 
 **Add the Switch SW1 with RADIUS "cisco123!"**
@@ -208,7 +210,7 @@ This basically lest the switch to communication via RADIUS to ISE
 
 ```sh
 debug aaa
-test aaa group ISE-group bob cisco new-code
+test aaa group ISE-group bob cisco123! new-code
 ```
 
 # Finally lets enable the PC to do DOT1.X
@@ -229,7 +231,7 @@ do debug radius authentication
 show dot1x all
 
 debug aaa
-test aaa group ISE-group bob cisco new-code
+test aaa group ISE-group bob cisco123! new-code
 
 show authentication sessions interface gi1/2
 
@@ -303,6 +305,44 @@ Method status list:
 4. **Now check the ping front the PC and you should not be able to ping 8.8.8.8 anymore**
 ![](/assets/markdown-img-paste-20181105232306747.png)
 
+
+# Lets enable SSH Auth via ISE for a IOS Router
+
+```sh
+ip domain-name cisco.com
+crypto key generate rsa modulus 1024
+
+aaa new-model
+!
+aaa authentication login NOAUTH  none
+!
+line con 0
+ login authentication NOAUTH
+
+!
+radius server lab_ise
+ address ipv4 X.X.X.X auth-port 1645 acct-port 1646
+ key cisco123!
+!
+aaa group server radius ISE
+ server name lab_ise
+!
+aaa authentication login FOR_SSH group ISE
+aaa authorization exec FOR_SSH group ISE if-authenticated
+!
+line vty 0 4
+ authorization exec FOR_SSH
+ login authentication FOR_SSH
+ transport input ssh
+ session-timeout 1440
+ exec-timeout 0
+```
+
+
+![](assets/markdown-img-paste-20191010045756905.png)
+
+
+![](assets/markdown-img-paste-20191010045918416.png)
 
 # **To be continued...**
 
