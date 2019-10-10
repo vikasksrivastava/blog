@@ -14,11 +14,22 @@ We will cover the following in the order below. Please note that the some sectio
 > At some point I will upload the configs based on each sections. Please feel free to reach out to me meanwhile.
 
 
+- ##### Profiling
 - ##### Basic Wired DOT1.X Authentication (Allow access to deny completely)
 - ##### Basic Wired DOT1.X Authentication with Change of VLAN/DACL
-- ##### Profiling
 - ##### Posture
 
+
+## Basic Discovery and Profiling Example with Switch sending Data to ISE
+
+```sh
+snmp-server community snmp_ro RO
+snmp-server trap-source Vlan1
+snmp-server source-interface informs vlan1
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps
+snmp-server host 150.1.7.212 version 2c snmp_ro
+```
 
 > **NOTE** that 802.1X Works at the Layer 2 level and there is no IP communication at this level.
 Good review of the process here : https://en.wikipedia.org/wiki/IEEE_802.1X
@@ -344,15 +355,16 @@ line vty 0 4
 
 ![](assets/markdown-img-paste-20191010045918416.png)
 
-# **To be continued...**
+# POSTURE **
 
+Define Condition
+![](assets/markdown-img-paste-20191010054838588.png)
 
-> SNMP Trap
-```sh
-snmp-server community snmp_ro RO
-snmp-server trap-source Vlan10
-snmp-server source-interface informs Vlan10
-snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
-snmp-server enable traps
-snmp-server host 10.10.10.4 version 2c snmp_ro
-```
+Define Action
+![](assets/markdown-img-paste-20191010055233727.png)
+
+Client Provisioning
+![](assets/markdown-img-paste-20191010061007435.png)
+
+Posture Policy
+![](assets/markdown-img-paste-20191010061236396.png)
