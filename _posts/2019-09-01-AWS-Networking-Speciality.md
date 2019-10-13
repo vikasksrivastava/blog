@@ -10,6 +10,38 @@ comments: true
 > - Labbing VGW with Ubiquiti
 > - Labbing NAT-G vs IGW (@ host in the same subnet with one host havin a Floating IP so that we can SSH in and then ssh to the other host to test.) . TO check if a Host can access internet without NAT-G
 
+
+<!-- TOC -->
+
+- [To be done](#to-be-done)
+- [Foundational Concepts](#foundational-concepts)
+  - [IPv4 Subnetting](#ipv4-subnetting)
+    - [How to Calculate Binary (Divide Method)](#how-to-calculate-binary-divide-method)
+- [Memorize the following](#memorize-the-following)
+- [Practice Examples](#practice-examples)
+  - [DNS Basics](#dns-basics)
+  - [DNS History](#dns-history)
+  - [The Domain Name System](#the-domain-name-system)
+  - [Domains, Delegation and Zones](#domains-delegation-and-zones)
+    - [Domains](#domains)
+  - [Delegation](#delegation)
+  - [Internationalised Domain Names](#internationalised-domain-names)
+    - [Punnycode](#punnycode)
+  - [Name Servers , Zones and Authority](#name-servers--zones-and-authority)
+    - [Name Server](#name-server)
+  - [DNS Query and Responses](#dns-query-and-responses)
+  - [Authoritative , Recursive and Caching Name Servers](#authoritative--recursive-and-caching-name-servers)
+  - [Serial Numbers and Zone Data Transfer](#serial-numbers-and-zone-data-transfer)
+  - [Forwarding and Forwarders](#forwarding-and-forwarders)
+    - [Resource Records](#resource-records)
+    - [The A Record and the AAAA Record](#the-a-record-and-the-aaaa-record)
+    - [SRV Record (Service Record)](#srv-record-service-record)
+    - [TXT Record](#txt-record)
+    - [Infrastructure Record](#infrastructure-record)
+- [IPSEC VPN](#ipsec-vpn)
+
+<!-- /TOC -->
+
 ## Foundational Concepts
 
 **This is a seven-layer model, which we show in Figure 1.14, along with the `approximate mapping` to the Internet protocol suite.**
@@ -328,10 +360,17 @@ The TXT, or text record, can be used to attach comments or almost anything else 
  - [X] https://seedsecuritylabs.org/Labs_16.04/PDF/DNS_Remote.pdf
  - [X] http://www.cis.syr.edu/~wedu/seed/Labs_12.04/Networking/DNS_Remote/DNS_Remote.pdf
 
-# IPSEC VPN 
+# IPSEC VPN
 
-Step 1. Interesting Traffic is selected
-Step 2. IKE Phase 1
+> **Diffie Hellman** is the algorith that generates a `KEY` . Lifetime of a DH key is 3600 secs (1hr).
+
+There are two tunnels :
+1. `PHASE 1` The **first tunnel** is to exchange the KEY . `ISAKMP` Internet Security Association and Key Managment Protocol is used here .
+2. `PHASE 2` The **second tunnel** is for Data transfer. `ESP` Encapsulation Security Payload is used in this phase.
+
+<img src="/assets/markdown-img-paste-20180619143018242.png" alt="Drawing" style="width: 600px;"/>
+
+> Though its not recommened , you can manually setup the `Phase 2` tunnel to use a manual key skipping the `Phase 1` negotiation (without using `ISAKMP`).
 
 
 
