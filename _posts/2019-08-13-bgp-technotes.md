@@ -5,15 +5,29 @@ description: My Notes on BGP
 comments: true
 ---
 
+<!-- TOC -->
+
 - [About BGP](#about-bgp)
-		- [Why do we call BGP a path-vector routing protocol?](#why-do-we-call-bgp-a-path-vector-routing-protocol)
-
+	- [Why do we call BGP a path-vector routing protocol?](#why-do-we-call-bgp-a-path-vector-routing-protocol)
 	- [BGP States during Connection](#bgp-states-during-connection)
-- [What is ebgp-multihop](#what-is-ebgp-multihop)
+	- [What is ebgp-multihop](#what-is-ebgp-multihop)
+	- [Why do we need Internal BGP (iBGP)!](#why-do-we-need-internal-bgp-ibgp)
+	- [BGP Loop Prevention](#bgp-loop-prevention)
+	- [next-hop-self](#next-hop-self)
+	- [BGP Attribute and Path Selection](#bgp-attribute-and-path-selection)
+	- [Weight](#weight)
+		- [route-maps](#route-maps)
+	- [Local Preference](#local-preference)
+	- [Originate](#originate)
+	- [AS Path Prepend](#as-path-prepend)
+	- [Origin Code](#origin-code)
+	- [MED Attribute](#med-attribute)
+	- [PATHs](#paths)
+	- [Router ID](#router-id)
+	- [BGP Prefix List / Route Filtering](#bgp-prefix-list--route-filtering)
+	- [BGP Practice Questions](#bgp-practice-questions)
 
-- [Why do we need Internal BGP (iBGP) !](#why-do-we-need-internal-bgp-ibgp)
-	- [How to Debug Interesting Packet :](#how-to-debug-interesting-packet-)
-
+<!-- /TOC -->
 
 > `RIP`, `OSPF` and `EIGRP` are all different but they have one thing in common; they want to find the shortest path to the destination
 > <span style="color:blue">There is only one routing protocol we currently use on the Internet which is BGP.

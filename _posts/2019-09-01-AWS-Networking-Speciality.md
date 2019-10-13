@@ -237,12 +237,12 @@ Authoritative name servers **come into two categories** :
 - **Secondary** : The Secondary takes the zone data information from the primary. This process is known as the "Zone Transfer"
 
 
-![](assets/markdown-img-paste-20190906062727758.png)
+![](/assets/markdown-img-paste-20190906062727758.png)
 
 ### Serial Numbers and Zone Data Transfer
 
 
-![](assets/markdown-img-paste-20190906064539206.png)
+![](/assets/markdown-img-paste-20190906064539206.png)
 
 1. When the `SECONDARY` is first setup , it sends an AXFR request to the primary to copy the zone data file.
 2. The PRIMARY sends the zone information to the secondary.
@@ -259,14 +259,14 @@ Its a way to build a rich in house name server. All the name servers internally 
 
 In the example below the Resolver sends the recursive query to the "name server" which forwards the query to the "forwarder" ; which in turn does the recursive name lookup.
 
-![](assets/markdown-img-paste-20190906065502266.png)
+![](/assets/markdown-img-paste-20190906065502266.png)
 
 #### Resource Records
 
 These are the units of data stored in the DNS namespace.
 
 
-> ![](assets/markdown-img-paste-2019090607014381.png)
+> ![](/assets/markdown-img-paste-2019090607014381.png)
 
 - `TTL` : How long this entry should be cached
 - `IN` : Internet
@@ -290,7 +290,7 @@ IPv6 A record is called `AAAA` Record. It has 4 A's since its 4 times the 8bits 
 
 IPv4 and IPV6 PTR example
 
-![](assets/markdown-img-paste-20190906071553752.png)
+![](/assets/markdown-img-paste-20190906071553752.png)
 
  #### PTR Records
 
@@ -301,14 +301,14 @@ A CNAME Record is an alias in DNS. When a DNS Server does not have a A record fo
 For email records.
 
 
-![](assets/markdown-img-paste-20190906073450522.png)
+![](/assets/markdown-img-paste-20190906073450522.png)
 
 #### SRV Record (Service Record)
 
 SRV, or service record. It's like a general purpose MX record that can work with any service. The syntax of the SRV record is a little more complicated than the MX record.
 
 
-![](assets/markdown-img-paste-20190906073720952.png)
+![](/assets/markdown-img-paste-20190906073720952.png)
 
 - First field is the name of the service and the protocol it runs over.
 
@@ -317,7 +317,7 @@ SRV, or service record. It's like a general purpose MX record that can work with
 The TXT, or text record, can be used to attach comments or almost anything else to domain names in the name space.
 
 
-![](assets/markdown-img-paste-20190906074017497.png)
+![](/assets/markdown-img-paste-20190906074017497.png)
 
 #### Infrastructure Record
 
@@ -328,7 +328,10 @@ The TXT, or text record, can be used to attach comments or almost anything else 
  - [X] https://seedsecuritylabs.org/Labs_16.04/PDF/DNS_Remote.pdf
  - [X] http://www.cis.syr.edu/~wedu/seed/Labs_12.04/Networking/DNS_Remote/DNS_Remote.pdf
 
+# IPSEC VPN 
 
+Step 1. Interesting Traffic is selected
+Step 2. IKE Phase 1
 
 
 

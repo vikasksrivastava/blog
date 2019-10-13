@@ -141,10 +141,10 @@ Now within each `Availabilty Zone` there can be multiple `Datacenters`
 
 **AWS has 19 Regions and 57 AZs within those 19 regions.**
 
-![](assets/markdown-img-paste-20190725061715368.png)
+![](/assets/markdown-img-paste-20190725061715368.png)
 
 
-![](assets/markdown-img-paste-20190725071537652.png)
+![](/assets/markdown-img-paste-20190725071537652.png)
 
 -------
 
@@ -160,9 +160,9 @@ The AZs are quite apart (few miles). The speed between AZs are extremely high. 2
 
 > **Transit points allow conectivity with other Regions and Customer Peering Points.**
 
-![](assets/markdown-img-paste-20190725072213950.png)
+![](/assets/markdown-img-paste-20190725072213950.png)
 
-![](assets/markdown-img-paste-20190725073401480.png)
+![](/assets/markdown-img-paste-20190725073401480.png)
 
 - If an AZ you can commit synchronously to your Data with a 1ms delay rather than 74ms delay (above) . This is empowering and great for the applications.
 - Failover between AZs is **SUPERFAST** , compare this to a Intra Region failover which would be much slower.
@@ -170,17 +170,17 @@ The AZs are quite apart (few miles). The speed between AZs are extremely high. 2
 
 Going further , lets look into Availability Zones
 
-![](assets/markdown-img-paste-20190725090416853.png)
-![](assets/markdown-img-paste-20190725090810986.png)
-![](assets/markdown-img-paste-20190725090954823.png)
+![](/assets/markdown-img-paste-20190725090416853.png)
+![](/assets/markdown-img-paste-20190725090810986.png)
+![](/assets/markdown-img-paste-20190725090954823.png)
 
 ---
 
 
-![](assets/markdown-img-paste-20190725094118435.png)
+![](/assets/markdown-img-paste-20190725094118435.png)
 
 
-![](assets/markdown-img-paste-20190725094202242.png)
+![](/assets/markdown-img-paste-20190725094202242.png)
 
 > https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
 
@@ -188,7 +188,7 @@ Going further , lets look into Availability Zones
 Now as we further move ahead , the `VPC` :
 
 
-![](assets/markdown-img-paste-20190725103828635.png)
+![](/assets/markdown-img-paste-20190725103828635.png)
 
 >  - **The VPC is a Logical Construct with little significance to actual networking.**
 >  - **A Large IP Space is define while creating a VPC , but eventually smaller subnets are to be created specific to the AZs.**
@@ -636,7 +636,7 @@ This could happen if the `trigger` is too close for example CPU threshold `< 30 
 Notice the Transit service which are responsible for sending data in and out of S3 and Glacier.
 ![](/assets/markdown-img-paste-2018032219013824.png)
 
-Differen components of S3
+Different components of S3
 
 ![](/assets/markdown-img-paste-20180322190930356.png)
 
