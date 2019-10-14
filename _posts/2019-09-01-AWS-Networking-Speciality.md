@@ -10,7 +10,6 @@ comments: true
 > - Labbing VGW with Ubiquiti
 > - Labbing NAT-G vs IGW (@ host in the same subnet with one host havin a Floating IP so that we can SSH in and then ssh to the other host to test.) . TO check if a Host can access internet without NAT-G
 
-
 <!-- TOC -->
 
 - [To be done](#to-be-done)
@@ -38,7 +37,10 @@ comments: true
     - [SRV Record (Service Record)](#srv-record-service-record)
     - [TXT Record](#txt-record)
     - [Infrastructure Record](#infrastructure-record)
-- [IPSEC VPN](#ipsec-vpn)
+- [IPSEC VPN (from CCIE Notes)](#ipsec-vpn-from-ccie-notes)
+  - [MED Attribute (from BGP Technotes )](#med-attribute-from-bgp-technotes-)
+  - [Physical Organisation](#physical-organisation)
+  - [AWS Region](#aws-region)
 
 <!-- /TOC -->
 
@@ -360,7 +362,8 @@ The TXT, or text record, can be used to attach comments or almost anything else 
  - [X] https://seedsecuritylabs.org/Labs_16.04/PDF/DNS_Remote.pdf
  - [X] http://www.cis.syr.edu/~wedu/seed/Labs_12.04/Networking/DNS_Remote/DNS_Remote.pdf
 
-# IPSEC VPN
+
+# IPSEC VPN (from CCIE Notes)
 
 > **Diffie Hellman** is the algorith that generates a `KEY` . Lifetime of a DH key is 3600 secs (1hr).
 
@@ -373,9 +376,119 @@ There are two tunnels :
 > Though its not recommened , you can manually setup the `Phase 2` tunnel to use a manual key skipping the `Phase 1` negotiation (without using `ISAKMP`).
 
 
+### MED Attribute (from BGP Technotes )
+
+- `MED` (Metric) is advertised to your neighbor on how they should enter your AS.
+
+- `Local Preference` is used for **outbound** traffic , `MED` is used for **inbound** traffic.
+
+- MED is exchnaged between autonomous systems
+- Lowest MED is the preffered.
+- MED is propagated to all routers in the neighbor AS , but is not passed out to other AS
+
+
+![](/assets/markdown-img-paste-2019081716470814.png)
+
+```sh
+!Set the MED
+route-map MED permit 10
+set metric 100
+exit
+
+!Configure it in BGP
+router bgp 1
+ neighbor 192.168.12.2 route-map MED out
+```
+
+# Physical Organisation
+
+At a very high level AWS can be broken down into two main blocks
+
+- **`AWS Regions`** : These are grouping of independenly separated datacenters in a specific geographic regions know as `Availabilty Zones`.
+
+- **`AWS Edge Location`** : It is a Datacenter which does not contain any AWS Services ; Instead it is used to deliver contents to parts of the world. `CloudFront`
+
+> Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
 
 
+An `AWS Region` has multiple `Availabilty Zones`
+
+
+
+Now within each `Availabilty Zone` there can be multiple `Datacenters`
+
+`Availabilty Zones` are **phyically sperated** to each other but **have high speed connection between them** to provide **Fault Tolerance**
+
+> So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
+
+
+**AWS has 19 Regions and 57 AZs within those 19 regions.**
+
+![](/assets/markdown-img-paste-20190725061715368.png)
+
+
+![](/assets/markdown-img-paste-20190725071537652.png)
+
+-------
+
+## AWS Region
+
+>**AWS re:Invent 2014: AWS Innovation at Scale with James Hamilton**
+>https://www.youtube.com/watch?v=JIQETrFC_SQ
+
+Let look into one of the Regions: US East
+Each region has at least 2 availaibility zones. Instead of a DC being a region, AWS has an AZ as a Region. There are two transit centers which connect to customers.
+
+The AZs are quite apart (few miles). The speed between AZs are extremely high. 25Tbps.
+
+> **Transit points allow conectivity with other Regions and Customer Peering Points.**
+
+![](/assets/markdown-img-paste-20190725072213950.png)
+
+![](/assets/markdown-img-paste-20190725073401480.png)
+
+- If an AZ you can commit synchronously to your Data with a 1ms delay rather than 74ms delay (above) . This is empowering and great for the applications.
+- Failover between AZs is **SUPERFAST** , compare this to a Intra Region failover which would be much slower.
+
+
+Going further , lets look into Availability Zones
+
+![](/assets/markdown-img-paste-20190725090416853.png)
+![](/assets/markdown-img-paste-20190725090810986.png)
+![](/assets/markdown-img-paste-20190725090954823.png)
+
+---
+
+
+![](/assets/markdown-img-paste-20190725094118435.png)
+
+
+![](/assets/markdown-img-paste-20190725094202242.png)
+
+> https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
+
+
+Now as we further move ahead , the `VPC` :
+
+
+![](/assets/markdown-img-paste-20190725103828635.png)
+
+>  - **The VPC is a Logical Construct with little significance to actual networking.**
+> - **A VPC is specific to a Region**
+>  - **A Large IP Space is define while creating a VPC , but eventually smaller subnets are to be created specific to the AZs.**
+>  - **A subnet spans only the AZ**
+> - **When an Instance is created with a Subnet Specified -- The instance gets created in the same AZ as the subnet (Obviously :))**
+> - **Dual Interfaces can reside in a single subnet only** (As per the lab)
+
+
+> **Security Groups are State Full , once you allow a traffic inbount , there is no need to create an outbout rule for the same.**
+> **NACLs are not statefull , both INBOUND and OUTBOUND rules need to be created**
+
+
+
+
+<img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
 
 
 
