@@ -489,10 +489,11 @@ permit icmp any any
 
 ```sh
 !ACL_REDIRECT
-
+! # Will no redirect DNS/DHCP or ISE Connections
 deny udp any eq bootpc and eq bootps
 deny udp any any eq domain
 deny ip any host 150.1.7.212
+! # But will redirect HTTP/HTTP Traffic
 permit tcp any any eq www
 permit tcp any any eq 443
 ```
@@ -531,5 +532,52 @@ permit tcp any any eq 443
 - AUTHZ_RULE_COMPLIANT
 
 
-
 ![](assets/markdown-img-paste-20191014082200779.png)
+
+
+1.
+ip access-list extended ISE-POSTURE-REDIRECT
+ deny   icmp any any
+ deny   udp any any eq domain
+ deny   udp any eq bootpc any eq bootps
+ remark ISE
+ deny   ip any host 10.104.99.103
+ deny   ip any host 10.103.2.105
+ deny tcp any any eq 8905
+ remark PROXY
+ deny    ip any host 10.104.164.235
+  deny    ip any host 10.104.164.236
+ permit tcp any any eq 443
+permit tcp any any eq 8080
+permit tcp any any eq www
+ deny ip any any
+
+DACL
+permit ip any host 10.104.99.103
+permit ip any host 10.104.99.204
+permit ip any host 10.104.164.203
+permit ip any host 10.104.164.102
+permit ip any host 10.103.2.105
+permit icmp any any
+permit udp any any eq domain
+deny ip any any
+
+
+ip http port 8080
+
+·         ip port-map http port 8080
+
+
+
+
+ip access-list extended ACL-POSTURE-REDIRECT
+ deny   ip any host 10.24.218.254
+ deny   ip any 10.75.250.228 0.0.0.3
+ deny   ip any host 194.3.27.88
+ deny   ip any host 13.107.4.52
+ deny   ip any host 104.86.189.82
+ deny   ip any host 88.221.113.75
+ deny   ip any host 23.55.38.81
+ deny   ip any host 23.206.242.17
+ permit tcp any any eq www
+ permit tcp any any eq 443
