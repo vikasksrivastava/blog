@@ -1,10 +1,54 @@
 
+> https://www.hackingdream.net/2019/02/what-is-stealthwatch-components-uses-advantages-netflow-analysis-ipfix.html
 
-*** Very interesting Packet Capture ***
+**Flow Sensor in StealthWatch**
+
+It **is a Hardware Device/ Appliance/ Virtual Device which Creates flow data in environments in which NetFlow is not enabled**, Flow Sensors delivers performance analysis and deep packet inspection. All the flow data collected by the Flow Sensors is sent to the flow collector.
+
+Note: The Environments in which NetFlow is enabled by default, need not implement Flow Sensors.
+
+Flow Sensors Connects into existing Infrastructure via one of the following
+          1) Switch port Analyzer (SPAN)
+          2) Mirror Port
+          3) Ethernet Test Access Port (TAP)
+
+
+**Flow Collector in StealthWatch:**
+
+- Flow collector aggregates flow data from multiple networks or network components
+- collects and analyses data for further retrieval and analysis
+- Flow Collector of StealthWatch send and analyzes data sent from the SMC
+- Send an alarm if any unusual activity occurred or detected.
+- Flow collector can either be a Virtual Applicance/ Hardware Device.
+
+**UDP Director/ Flow Replicator:**
+
+- Simplifies the management of UDP data streams from NetFlow, sFlow, Syslog, SNMP Traffic
+- Forwards data from multiple network and security locations in a single data stream to network devices including the flow collector;
+- Aggregates and provides a single destination for UDP data and allows distribution of it across the organization
+- High speed high performance appliance that simplifies the collection of network and security across your network
+- reduces point of failure on your network
+- provides a single destination for all UDP formats on network including NetFlow, SNMP, Syslog
+- Reduces network congestion for optimum network performance.
+
+**SMC Config**
+
+![](assets/markdown-img-paste-20191021051456610.png)
+
+**FC Config**
+![](assets/markdown-img-paste-20191021051015566.png)
+
+![](assets/markdown-img-paste-2019102105173752.png)
+
+> Netflow Configuration Template https://configurenetflow.info/
+
+> Stealthwatch Condifuration Guide 7.1.1 https://www.cisco.com/c/dam/en/us/td/docs/security/stealthwatch/system_installation_configuration/SW_7_1_1_Installation_and_Configuration_Guide_DV_1_0.pdf
+
+
+***Very interesting Packet Capture***
 
 Notes below from https://www.netresec.com/?page=PcapFiles
 
-```
 Publicly available PCAP files
 This is a list of public packet capture repositories, which are freely available on the Internet.
 Most of the sites listed below share Full Packet Capture (FPC) files, but some do unfortunately only have truncated frames.
