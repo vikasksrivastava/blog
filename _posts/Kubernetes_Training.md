@@ -35,6 +35,9 @@ Since we are using `kubeadm` , the control plane services will be running as con
 > 3. Disable Swap in /etc/fstab
 > vi /etc/fstab and # the swap line.
 
+
+![](assets/markdown-img-paste-20191029221252629.png)
+
 **Step 1.** Install **Docker** (rkt,containerd are the alternatives) on all three servers.
 
 ```sh
