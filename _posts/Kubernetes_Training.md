@@ -7,8 +7,6 @@ https://linuxacademy.com/course/kubernetes-the-hard-way/
 https://medium.com/platformer-blog/how-i-passed-the-cka-certified-kubernetes-administrator-exam-8943aa24d71d
 
 
-
-
 ## Kubernetes Architecture
 
 ![](assets/markdown-img-paste-2019102918553480.png)
@@ -30,6 +28,12 @@ Since we are using `kubeadm` , the control plane services will be running as con
 ---
 
 ## Setting up the Lab
+
+> Pre-work
+> 1. Set Hostname Correctly /etc/hostname
+> 2. Set /etc/hosts file correct
+> 3. Disable Swap in /etc/fstab
+> vi /etc/fstab and # the swap line.
 
 **Step 1.** Install **Docker** (rkt,containerd are the alternatives) on all three servers.
 
@@ -257,3 +261,24 @@ kube-scheduler-kube-mast
 ---
 
 # Containers and Pods
+
+
+
+
+
+# Kubernetes Troubleshooting
+
+```sh
+root@kube-master:~# swapoff --a
+root@kube-master:~# systemctl start kubelet
+
+root@kube-master:~# systemctl status kubelet
+● kubelet.service - kubelet: The Kubernetes Node Agent
+   Loaded: loaded (/lib/systemd/system/kubelet.service; enabled; vendor preset:
+  Drop-In: /etc/systemd/system/kubelet.service.d
+           └─10-kubeadm.conf
+   Active: active (running) since Wed 2019-10-30 03:57:33 EET; 29s ago
+     Docs: https://kubernetes.io/docs/home/
+ Main PID: 2057 (kubelet)
+    Tasks: 20
+```
