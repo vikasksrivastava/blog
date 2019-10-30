@@ -36,7 +36,7 @@ Since we are using `kubeadm` , the control plane services will be running as con
 > vi /etc/fstab and # the swap line.
 
 
-![](assets/markdown-img-paste-20191029221252629.png)
+![](/assets/markdown-img-paste-20191029221252629.png)
 
 **Step 1.** Install **Docker** (rkt,containerd are the alternatives) on all three servers.
 
@@ -258,7 +258,7 @@ kube-scheduler-kube-mast
 
 ---
 <p align="center">
-  <img width="200" height="100" src="assets/markdown-img-paste-20191029211927809.png">
+  <img width="200" height="100" src="/assets/markdown-img-paste-20191029211927809.png">
 </p>
 
 ---
