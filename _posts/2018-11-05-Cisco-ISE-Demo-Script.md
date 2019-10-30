@@ -350,10 +350,10 @@ line vty 0 4
 ```
 
 
-![](assets/markdown-img-paste-20191010045756905.png)
+![](/assets/markdown-img-paste-20191010045756905.png)
 
 
-![](assets/markdown-img-paste-20191010045918416.png)
+![](/assets/markdown-img-paste-20191010045918416.png)
 
 # POSTURE **
 
@@ -379,55 +379,55 @@ And corresponding three Authorization Profiles respective to above DALCs
 **We are going to use the Workcenter for Posture**
 
 
-![](assets/markdown-img-paste-20191014064401886.png)
+![](/assets/markdown-img-paste-20191014064401886.png)
 
 **The workflow is to move from Left to Right**
 
-![](assets/markdown-img-paste-20191014064835940.png)
+![](/assets/markdown-img-paste-20191014064835940.png)
 
 **As a Next Step we ensure that the Dot1X Configuration is done on the switch and is added to the ISE**
 
 
-![](assets/markdown-img-paste-2019101406504572.png)
+![](/assets/markdown-img-paste-2019101406504572.png)
 
 For the client provisioning the workflow looks like this :
 
 
-![](assets/markdown-img-paste-20191014071001603.png)
+![](/assets/markdown-img-paste-20191014071001603.png)
 
 **Next we create a Posture Profile (XML) file to be used by the Anyconnect client**
 
-![](assets/markdown-img-paste-20191014065600965.png)
+![](/assets/markdown-img-paste-20191014065600965.png)
 
 In this section we define the characteristics of the client on what it should be doign based on the XML file:
 
 
-![](assets/markdown-img-paste-20191014065812760.png)
+![](/assets/markdown-img-paste-20191014065812760.png)
 
 Server Name Rule is Mandatory (We keep it as * (All))
 
-![](assets/markdown-img-paste-2019101406590417.png)
+![](/assets/markdown-img-paste-2019101406590417.png)
 
 Ensure that the compliance Module is present
 
-![](assets/markdown-img-paste-20191014070347884.png)
+![](/assets/markdown-img-paste-20191014070347884.png)
 
 Now that the profile is configured and we configure the the actual anyconnect software package.
 
-![](assets/markdown-img-paste-20191014070113731.png)
+![](/assets/markdown-img-paste-20191014070113731.png)
 
-![](assets/markdown-img-paste-20191014070129570.png)
-
-
-![](assets/markdown-img-paste-20191014070738493.png)
+![](/assets/markdown-img-paste-20191014070129570.png)
 
 
-![](assets/markdown-img-paste-2019101407162502.png)
+![](/assets/markdown-img-paste-20191014070738493.png)
+
+
+![](/assets/markdown-img-paste-2019101407162502.png)
 
 We leave the "Client Provisioning Portal" as default (Its a straight forward config)
 
 
-![](assets/markdown-img-paste-20191014071829379.png)
+![](/assets/markdown-img-paste-20191014071829379.png)
 
 **FOR NOW WER ARE NOT DOING ANY POLICY ELEMENT /POSTURE CHECK AND ENSURE THAT THE CLIENT IS ABLE TO DOWNLOAD THE ANYCONNECT MODULE**
 
@@ -446,7 +446,7 @@ permit ip any host ISE_SERVER_IP_ADDRESS_2
 deny ip any any
 ```
 
-![](assets/markdown-img-paste-20191014072535301.png)
+![](/assets/markdown-img-paste-20191014072535301.png)
 
 
 - **DACL_INTERNET_ONLY_NON_COMPLIANT_POSTURE**
@@ -467,7 +467,7 @@ deny ip any 192.168.0.0 0.0.255.255
 permit ip any any
 ```
 
-![](assets/markdown-img-paste-20191014073235916.png)
+![](/assets/markdown-img-paste-20191014073235916.png)
 
 
 - DACL_COMPLIANT
@@ -483,7 +483,7 @@ permit tcp any any
 permit icmp any any
 ```
 
-![](assets/markdown-img-paste-20191014073526505.png)
+![](/assets/markdown-img-paste-20191014073526505.png)
 
 **AN ACL On the switch is required which will redirect the web traffic to the posture page**
 
@@ -503,36 +503,36 @@ permit tcp any any eq 443
 - AUTH_PROF_UNKNOWN_POSTURE
 
 
-![](assets/markdown-img-paste-20191014075624886.png)
-![](assets/markdown-img-paste-20191014075637414.png)
+![](/assets/markdown-img-paste-20191014075624886.png)
+![](/assets/markdown-img-paste-20191014075637414.png)
 
 - AUTH_PROF_INTERNET_ONLY_NON_COMPLIANT_POSTURE
 
-![](assets/markdown-img-paste-20191014075807246.png)
+![](/assets/markdown-img-paste-20191014075807246.png)
 
 - AUTH_PROF_COMPLIANT
 
 
-![](assets/markdown-img-paste-20191014075904713.png)
+![](/assets/markdown-img-paste-20191014075904713.png)
 
 
 **FOR NOW WE WILL SKIPP TO THE POSTURE POLICY AND MOVE TO POLICY SETS TO ENURE OUR CONFIG SO FAR IS WORKKIGN**
 
 
-![](assets/markdown-img-paste-20191014080337817.png)
+![](/assets/markdown-img-paste-20191014080337817.png)
 
 
 **Now Create the Respective Authorization Rules**
 
 - AUTHZ_RULE_USER_UNKNOWN
 
-![](assets/markdown-img-paste-20191014081607240.png)
+![](/assets/markdown-img-paste-20191014081607240.png)
 
 - AUTHZ_RULE_INTERNET_ONLY
 - AUTHZ_RULE_COMPLIANT
 
 
-![](assets/markdown-img-paste-20191014082200779.png)
+![](/assets/markdown-img-paste-20191014082200779.png)
 
 
 1.
