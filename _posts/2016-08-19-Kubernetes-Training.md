@@ -1,15 +1,18 @@
 
 # Getting Started with Kubernetes
 
-https://linuxacademy.com/course/kubernetes-essentials/
-https://linuxacademy.com/course/cloud-native-certified-kubernetes-administrator-cka/
-https://linuxacademy.com/course/kubernetes-the-hard-way/
-https://medium.com/platformer-blog/how-i-passed-the-cka-certified-kubernetes-administrator-exam-8943aa24d71d
+```
+- https://linuxacademy.com/course/kubernetes-essentials/
+- https://linuxacademy.com/course/cloud-native-certified-kubernetes-administrator-cka/
+- https://linuxacademy.com/course/kubernetes-the-hard-way/
+- https://medium.com/platformer-blog/how-i-passed-the-cka-certified-kubernetes-administrator-exam-8943aa24d71d
+```
 
+![](assets/markdown-img-paste-20191030180458986.png)
 
 ## Kubernetes Architecture
 
-![](assets/markdown-img-paste-2019102918553480.png)
+![](/assets/markdown-img-paste-2019102918553480.png)
 
 **Kube Master has the following components**
 
@@ -265,7 +268,186 @@ kube-scheduler-kube-mast
 
 # Containers and Pods
 
+## How to create a pod
+`Pods` are the smallest and most basic building block of the Kubernetes model.
 
+![](assets/markdown-img-paste-20191030170225644.png)
+
+A `pod` consists of one or more `containers`, `storage resources` and a `unique ip address`
+
+Kubernetes shcedules pods to be created on the nodes. These pods are then used to create the containers inside.
+
+Example of a basic pod creation
+```sh
+root@kube-master:~# kubectl create -f basic.yml
+pod/nginx created
+```
+
+```yaml
+#basic.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+```
+## How to see pod details
+```sh
+root@kube-master:~# kubectl get pods
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          85s
+```
+```sh
+root@kube-master:~# kubectl describe pod nginx
+Name:               nginx
+Namespace:          default
+Priority:           0
+PriorityClassName:  <none>
+Node:               kube-node-1/150.1.7.52
+Start Time:         Wed, 30 Oct 2019 23:07:18 +0200
+Labels:             <none>
+Annotations:        <none>
+Status:             Running
+IP:                 10.244.1.2
+Containers:
+  nginx:
+    Container ID:   docker://927944a0f4224d2c4b32b35003897ed17c522e11884cd316db4dfb2ac6ca21ea
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:922c815aa4df050d4df476e92daed4231f466acc8ee90e0e774951b0fd7195a4
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Wed, 30 Oct 2019 23:08:01 +0200
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-ftzdf (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-ftzdf:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-ftzdf
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age    From                  Message
+  ----    ------     ----   ----                  -------
+  Normal  Scheduled  2m28s  default-scheduler     Successfully assigned default/nginx to kube-node-1
+  Normal  Pulling    2m27s  kubelet, kube-node-1  pulling image "nginx"
+  Normal  Pulled     105s   kubelet, kube-node-1  Successfully pulled image "nginx"
+  Normal  Created    105s   kubelet, kube-node-1  Created container
+  Normal  Started    105s   kubelet, kube-node-1  Started container
+```
+## How to check the node details
+
+```sh
+root@kube-master:~# kubectl describe node kube-node-1
+Name:               kube-node-1
+Roles:              <none>
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/hostname=kube-node-1
+Annotations:        flannel.alpha.coreos.com/backend-data: {"VtepMAC":"32:ae:45:85:75:0c"}
+                    flannel.alpha.coreos.com/backend-type: vxlan
+                    flannel.alpha.coreos.com/kube-subnet-manager: true
+                    flannel.alpha.coreos.com/public-ip: 150.1.7.52
+                    kubeadm.alpha.kubernetes.io/cri-socket: /var/run/dockershim.sock
+                    node.alpha.kubernetes.io/ttl: 0
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Wed, 30 Oct 2019 02:57:17 +0200
+Taints:             <none>
+Unschedulable:      false
+Conditions:
+  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----             ------  -----------------                 ------------------                ------                       -------
+  OutOfDisk        False   Wed, 30 Oct 2019 23:14:47 +0200   Wed, 30 Oct 2019 04:07:42 +0200   KubeletHasSufficientDisk     kubelet has sufficient disk space available
+  MemoryPressure   False   Wed, 30 Oct 2019 23:14:47 +0200   Wed, 30 Oct 2019 04:07:42 +0200   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure     False   Wed, 30 Oct 2019 23:14:47 +0200   Wed, 30 Oct 2019 04:07:42 +0200   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure      False   Wed, 30 Oct 2019 23:14:47 +0200   Wed, 30 Oct 2019 02:57:17 +0200   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready            True    Wed, 30 Oct 2019 23:14:47 +0200   Wed, 30 Oct 2019 04:07:42 +0200   KubeletReady                 kubelet is posting ready status. AppArmor enabled
+Addresses:
+  InternalIP:  150.1.7.52
+  Hostname:    kube-node-1
+Capacity:
+ cpu:                4
+ ephemeral-storage:  19027240Ki
+ hugepages-2Mi:      0
+ memory:             8076512Ki
+ pods:               110
+Allocatable:
+ cpu:                4
+ ephemeral-storage:  17535504355
+ hugepages-2Mi:      0
+ memory:             7974112Ki
+ pods:               110
+System Info:
+ Machine ID:                 ee5322b8d5ec03b7129cec5b5ac40a31
+ System UUID:                F871B357-D927-45A8-B163-042F5A3607D5
+ Boot ID:                    f5796017-10ec-48a4-8421-f194bbe0fc22
+ Kernel Version:             4.4.0-116-generic
+ OS Image:                   Ubuntu 16.04.4 LTS
+ Operating System:           linux
+ Architecture:               amd64
+ Container Runtime Version:  docker://18.6.1
+ Kubelet Version:            v1.12.7
+ Kube-Proxy Version:         v1.12.7
+PodCIDR:                     10.244.1.0/24
+Non-terminated Pods:         (3 in total)
+  Namespace                  Name                           CPU Requests  CPU Limits  Memory Requests  Memory Limits
+  ---------                  ----                           ------------  ----------  ---------------  -------------
+  default                    nginx                          0 (0%)        0 (0%)      0 (0%)           0 (0%)
+  kube-system                kube-flannel-ds-amd64-jvtdn    100m (2%)     100m (2%)   50Mi (0%)        50Mi (0%)
+  kube-system                kube-proxy-nqtfd               0 (0%)        0 (0%)      0 (0%)           0 (0%)
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource  Requests   Limits
+  --------  --------   ------
+  cpu       100m (2%)  100m (2%)
+  memory    50Mi (0%)  50Mi (0%)
+Events:
+  Type     Reason                   Age                From                     Message
+  ----     ------                   ----               ----                     -------
+  Normal   Starting                 20h                kubelet, kube-node-1     Starting kubelet.
+  Normal   NodeHasSufficientDisk    20h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientDisk
+  Normal   NodeHasSufficientMemory  20h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    20h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientPID     20h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  20h                kubelet, kube-node-1     Updated Node Allocatable limit across pods
+  Normal   Starting                 20h                kube-proxy, kube-node-1  Starting kube-proxy.
+  Normal   NodeReady                20h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeReady
+  Normal   NodeReady                19h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeReady
+  Normal   NodeHasSufficientDisk    19h (x2 over 19h)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientDisk
+  Normal   NodeHasSufficientMemory  19h (x2 over 19h)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    19h (x2 over 19h)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientPID     19h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientPID
+  Normal   Starting                 19h                kubelet, kube-node-1     Starting kubelet.
+  Normal   NodeNotReady             19h                kubelet, kube-node-1     Node kube-node-1 status is now: NodeNotReady
+  Normal   NodeAllocatableEnforced  19h                kubelet, kube-node-1     Updated Node Allocatable limit across pods
+  Warning  Rebooted                 19h                kubelet, kube-node-1     Node kube-node-1 has been rebooted, boot id: db07bcb4-6975-4211-a112-7381340be70d
+  Normal   Starting                 19h                kube-proxy, kube-node-1  Starting kube-proxy.
+  Normal   Starting                 13m                kubelet, kube-node-1     Starting kubelet.
+  Normal   NodeHasSufficientDisk    13m (x2 over 13m)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientDisk
+  Normal   NodeHasSufficientMemory  13m (x2 over 13m)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientMemory
+  Normal   NodeHasNoDiskPressure    13m (x2 over 13m)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasNoDiskPressure
+  Normal   NodeHasSufficientPID     13m (x2 over 13m)  kubelet, kube-node-1     Node kube-node-1 status is now: NodeHasSufficientPID
+  Normal   NodeAllocatableEnforced  13m                kubelet, kube-node-1     Updated Node Allocatable limit across pods
+  Warning  Rebooted                 13m                kubelet, kube-node-1     Node kube-node-1 has been rebooted, boot id: f5796017-10ec-48a4-8421-f194bbe0fc22
+  Normal   Starting                 13m                kube-proxy, kube-node-1  Starting kube-proxy.
+```
+
+# Networking in Kubernetes
 
 
 
@@ -284,4 +466,12 @@ root@kube-master:~# systemctl status kubelet
      Docs: https://kubernetes.io/docs/home/
  Main PID: 2057 (kubelet)
     Tasks: 20
+```
+
+```sh
+root@kube-master:~# kubectl get nodes
+NAME          STATUS   ROLES    AGE   VERSION
+kube-master   Ready    master   20h   v1.12.7
+kube-node-1   Ready    <none>   20h   v1.12.7
+kube-node-2   Ready    <none>   20h   v1.12.7
 ```
