@@ -452,7 +452,213 @@ Events:
   Normal   Starting                 13m                kube-proxy, kube-node-1  Starting kube-proxy.
 ```
 
-# Networking in Kubernetes
+# Kubernetes Architecture and Components
+
+There are multiple components which comprise the Kubernetes system.
+
+The following commands basically lists all the components responsible for running the kubernetes-system.
+
+```sh
+root@kube-master:~# kubectl get pods -n kube-system
+NAME                                  READY   STATUS    RESTARTS   AGE
+coredns-bb49df795-hhzfj               1/1     Running   4          33h
+coredns-bb49df795-zh972               1/1     Running   4          33h
+etcd-kube-master                      1/1     Running   4          33h
+kube-apiserver-kube-master            1/1     Running   4          33h
+kube-controller-manager-kube-master   1/1     Running   4          33h
+kube-flannel-ds-amd64-4jf9p           1/1     Running   3          32h
+kube-flannel-ds-amd64-gvnzp           1/1     Running   4          32h
+kube-flannel-ds-amd64-jvtdn           1/1     Running   3          32h
+kube-proxy-2mxbl                      1/1     Running   4          33h
+kube-proxy-hkczm                      1/1     Running   3          33h
+kube-proxy-nqtfd                      1/1     Running   3          33h
+kube-scheduler-kube-master            1/1     Running   4          33h
+```
+
+`etcd` : Distibuted synchornised datastore , all information about Pod , Nodes and al data storage .
+
+`kube-api` : It serves the Kubernetes API , which every system uses.
+
+`kube-controller-manager` : Does all the behind the scenes work.
+
+`kube-scheduler` : Is behind the scenes responsible for scheduling pods.
+
+`kubelet` service which runs as a system service , is the middleman between Container runtime and Kubernetes.
+
+`kube-proxy`kube-proxy handles network communication between different nodes.
+
+# Kubernetes Deployments
+
+`Deployments` are a type of object in kubernetes. So far we have been running individiual pods. But when we need to run it production we need something better.
+
+`Scaling` : In Deployment we defien the desired state. Here we can define the number of replicas we need in our pod, Deployment will ensure that those many replicas stay in the system.
+
+`Rolling Update` Deployments enables rolling updates as new version of services are being deployed.
+
+**Deployment Example**
+
+Following is the Deployment file we are goign to use.
+The deployment is named `nginx-deployment` , having `2` replicas.
+
+```yaml
+#nginxDeployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.15.4
+        ports:
+        - containerPort: 80
+```
+
+Following command executed the above deployment file
+```sh
+root@kube-master:~# kubectl create -f nginxDeployment.yaml
+deployment.apps/nginx-deployment created
+```
+
+We can check the status of the pods created by the deployment below.
+
+```sh
+root@kube-master:~# kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+nginx                             1/1     Running   1          13h
+nginx-deployment-d55b94fd-72pj4   1/1     Running   0          107s
+nginx-deployment-d55b94fd-n8fjm   1/1     Running   0          107s
+```
+
+In this example , we will delete a pod which was created by the deloyment and notice that the Deployment spins up a new Pod to replinish the same
+
+```sh
+root@kube-master:~# kubectl delete pod nginx-deployment-d55b94fd-72pj4
+pod "nginx-deployment-d55b94fd-72pj4" deleted
+```
+
+The following command show the deployments and you can use the `describe` to get more details.
+
+```sh
+root@kube-master:~# kubectl get deployments
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   2         2         2            2           88s
+```
+
+```sh
+root@kube-master:~# kubectl describe deployments nginx-deployment
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=nginx
+  Containers:
+   nginx:
+    Image:        nginx:1.15.4
+    Port:         80/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   nginx-deployment-d55b94fd (2/2 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  3m43s  deployment-controller  Scaled up replica set nginx-deployment-d55b94fd to 2
+root@kube-master:~# kubectl describe deployments nginx-deployment
+Name:                   nginx-deployment
+Namespace:              default
+CreationTimestamp:      Thu, 31 Oct 2019 12:11:56 +0200
+Labels:                 app=nginx
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=nginx
+Replicas:               2 desired | 2 updated | 2 total | 1 available | 1 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=nginx
+  Containers:
+   nginx:
+    Image:        nginx:1.15.4
+    Port:         80/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      False   MinimumReplicasUnavailable
+OldReplicaSets:  <none>
+NewReplicaSet:   nginx-deployment-d55b94fd (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  4m7s  deployment-controller  Scaled up replica set nginx-deployment-d55b94fd to 2
+```
+
+# Kubernetes Services
+
+A Kubernetes Service allows the access to the rapidly changing pods and their location.
+
+Services allows load-balanced service from one of the pods.
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30080
+  type: NodePort
+```
+
+```sh
+root@kube-master:~# kubectl create -f nginxService.yaml
+service/nginx-service created
+```
+
+```sh
+root@kube-master:~# kubectl get service
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.96.0.1      <none>        443/TCP        33h
+nginx-service   NodePort    10.105.91.20   <none>        80:30080/TCP   25s
+```
+
+```sh
+kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'
+```
+
+
+
+
+
+
 
 
 
@@ -464,13 +670,10 @@ root@kube-master:~# systemctl start kubelet
 
 root@kube-master:~# systemctl status kubelet
 ● kubelet.service - kubelet: The Kubernetes Node Agent
-   Loaded: loaded (/lib/systemd/system/kubelet.service; enabled; vendor preset:
+   Loaded: loaded /lib/systemd/system/kubelet.service; enabled; vendor preset:
   Drop-In: /etc/systemd/system/kubelet.service.d
            └─10-kubeadm.conf
-   Active: active (running) since Wed 2019-10-30 03:57:33 EET; 29s ago
-     Docs: https://kubernetes.io/docs/home/
- Main PID: 2057 (kubelet)
-    Tasks: 20
+
 ```
 
 ```sh
@@ -479,4 +682,50 @@ NAME          STATUS   ROLES    AGE   VERSION
 kube-master   Ready    master   20h   v1.12.7
 kube-node-1   Ready    <none>   20h   v1.12.7
 kube-node-2   Ready    <none>   20h   v1.12.7
+```
+
+```sh
+#This command provides container listings with their IP Addresses and Node Information.
+root@kube-master:~# kubectl get pods -o wide
+NAME    READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE
+nginx   1/1     Running   1          12h   10.244.1.4   kube-node-1   <none>
+```
+
+```sh
+#This command lets you execute your command inside the container.
+#Here you are running a command 'curl' in the busybox container.
+kubectl exec busybox -- curl nginx_pod_ip
+```
+
+# Kubernetes GUI Access
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
+
+kubectl describe sa admin-user -n kubernetes-dashboard
+kubectl describe secret admin-user1-token-8wdg9 -n kubernetes-dashboard
+```
+
+```sh
+# User Creation
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
 ```
