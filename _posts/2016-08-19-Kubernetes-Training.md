@@ -1,11 +1,16 @@
 
 # Getting Started with Kubernetes
 
-```
+```sh
 - https://linuxacademy.com/course/kubernetes-essentials/
 - https://linuxacademy.com/course/cloud-native-certified-kubernetes-administrator-cka/
 - https://linuxacademy.com/course/kubernetes-the-hard-way/
 - https://medium.com/platformer-blog/how-i-passed-the-cka-certified-kubernetes-administrator-exam-8943aa24d71d
+
+Networking
+
+https://itnext.io/benchmark-results-of-kubernetes-network-plugins-cni-over-10gbit-s-network-36475925a560
+
 ```
 
 ![](assets/markdown-img-paste-20191030180458986.png)
