@@ -266,7 +266,7 @@ kube-scheduler-kube-mast
 
 ---
 <p align="center">
-  <img width="200" height="100" src="/assets/markdown-img-paste-20191029211927809.png">
+  <img width="50" height="100" src="/assets/markdown-img-paste-20191029211927809.png">
 </p>
 
 ---
@@ -642,6 +642,7 @@ spec:
 root@kube-master:~# kubectl create -f nginxService.yaml
 service/nginx-service created
 ```
+The service allows the nginx containers now to be accessible on the node with the port 30080
 
 ```sh
 root@kube-master:~# kubectl get service
@@ -654,12 +655,22 @@ nginx-service   NodePort    10.105.91.20   <none>        80:30080/TCP   25s
 kubectl proxy --address='0.0.0.0' --accept-hosts='^*$'
 ```
 
+# Kubernetes Microservices
 
+Microservices are a collection of services which forms the full service
 
+Example here is the **Robot Shop Microservice**
 
+```sh
+git clone https://github.com/linuxacademy/robot-shop.git
 
+kubectl create namespace robot-shop
+kubectl -n robot-shop create -f ~/robot-shop/K8s/descriptors/
 
+kubectl get pods -n robot-shop -w
 
+http://$kube_server_public_ip:30080
+```
 
 
 # Kubernetes Troubleshooting
