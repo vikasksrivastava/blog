@@ -6,7 +6,15 @@
 - https://linuxacademy.com/course/cloud-native-certified-kubernetes-administrator-cka/
 - https://linuxacademy.com/course/kubernetes-the-hard-way/
 - https://medium.com/platformer-blog/how-i-passed-the-cka-certified-kubernetes-administrator-exam-8943aa24d71d
+- Google Kubernetes Enginer Deep Dive
+- Implementing a Full CI/CD Pipeline
+- https://kubedex.com/7-5-tips-to-help-you-ace-the-certified-kubernetes-administrator-cka-exam/
 
+- https://blog.shanelee.name/2018/10/17/how-i-aced-the-certified-kubernetes-administrator-cka-exam/
+- https://www.katacoda.com/courses/kubernetes
+- https://matthewpalmer.net/kubernetes-app-developer/
+- http://devnetstack.com/certified-kubernetes-administrator-exam-study-guide/
+-
 Networking
 
 https://itnext.io/benchmark-results-of-kubernetes-network-plugins-cni-over-10gbit-s-network-36475925a560
