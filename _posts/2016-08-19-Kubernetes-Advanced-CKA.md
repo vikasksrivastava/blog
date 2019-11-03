@@ -4,6 +4,9 @@
 https://docs.bitnami.com/kubernetes/how-to/create-your-first-helm-chart/
 https://www.youtube.com/watch?list=PLGgVZHi3XQNn8uIb3wy3u-Eq0xL-BU2Nk&time_continue=222&v=TJ9hPLn0oAs
 
+https://learn.hashicorp.com/consul/getting-started-k8s/minikube?utm_source=consul.io&utm_medium=docs
+https://learn.hashicorp.com/consul/getting-started-k8s/helm-deploy
+
 
 **The Control Plane**
 
