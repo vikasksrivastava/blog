@@ -14,7 +14,7 @@
 - https://www.katacoda.com/courses/kubernetes
 - https://matthewpalmer.net/kubernetes-app-developer/
 - http://devnetstack.com/certified-kubernetes-administrator-exam-study-guide/
--
+- https://linux.xvx.cz/2018/04/cka-kubernetes-certified-administrator.html
 Networking
 
 https://itnext.io/benchmark-results-of-kubernetes-network-plugins-cni-over-10gbit-s-network-36475925a560
@@ -682,6 +682,18 @@ http://$kube_server_public_ip:30080
 
 
 # Kubernetes Troubleshooting
+
+**Bash Completions**
+```sh
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+
+source <(kubectl completion bash)
+```
+
+**Services Status Check**
 
 ```sh
 root@kube-master:~# swapoff --a
