@@ -4,9 +4,9 @@
 
 **Challenges Faced Today**
 
-- Configuring Software to Connect Services
-- Hardcoding IP Address
-- Hostnme into config files
+- Configuring Software to Connect Services.
+- Hardcoding IP Address.
+- Hostnme into config files.
 - - Trying to update thise
 - With advent od docker , need to find critical services
 
@@ -132,7 +132,7 @@ We can also connect to the RPC Address
 ![](assets/markdown-img-paste-20191112050734813.png)
 Notice the advertise flag is only for the services hosted on the cluster address.
 
-***Running Consul Agent Service**
+**Running Consul Agent Service**
 ```sh
 consul agent -advertise $ip --config-file /vagrant/common.json
 ```
@@ -148,3 +148,55 @@ consul agent -advertise $ip --config-file /vagrant/common.json
 **Consul Execurting Remote Commands**
 
 ![](assets/markdown-img-paste-20191112051729964.png)
+
+![](assets/markdown-img-paste-20191112051852446.png)
+
+
+**Differnet Signals**
+`SIGHUP (Hangup)` : Leavbes the cluster gracefully
+`SIGKILL` : Abrupt Kill
+
+
+![](assets/markdown-img-paste-20191112052006119.png)
+
+![](assets/markdown-img-paste-20191112052300610.png)
+
+### Defining/Registering a Service In Consul
+
+```json
+{
+  "service": {
+    "name": "web",
+    "port": "8080"
+  }
+}
+```
+
+
+![](assets/markdown-img-paste-20191112053146180.png)
+
+A service registration is different from service maangement. So basically what it means is that when you register a service , irrespective of the actual service status this will show healthy. So even if there was no we server on port 8080 this will stay green.
+
+### Addign Health Check to the service above
+
+```json
+{
+  "service": {
+    "name": "web",
+    "port": "8080",
+    "check": {
+      "http": "http://localhost:8080",
+      "interval": "10s"
+    }
+  }
+}
+```
+
+> Serf : Is basically health check for the "node" itself.
+
+**Running the Docker Container for Tests**
+
+![](assets/markdown-img-paste-20191112054009153.png)
+
+`Local Machnine Port` : `Container Port`
+`Local File System` : `Container File System`

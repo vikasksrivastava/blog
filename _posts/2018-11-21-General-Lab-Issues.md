@@ -92,3 +92,30 @@ The secret key combination to drag a pane back to a window or to the tab bar is:
 
 On MAC Look for JavaAppletPlugin.plugin , Open in Atom and In tree view do the following:
 Comment “jdk.jar.disabledAlgorithms” in the file of”lib/security/java.security”
+
+
+**Adding Capability to Upgrade in EVE VM**
+
+root@vagrant-eve:~# cat /etc/apt/sources.list | grep eve
+deb [arch=amd64] http://www.eve-ng.net/repo xenial main
+# deb-src [arch=amd64] http://www.eve-ng.net/repo xenial main
+
+Delete or comment  the refrence to eve repo .
+
+**X Window Forwarding**
+ssh -Y vikassri@192.168.1.195
+
+**TMUX Integration with iTerm**
+
+`tmux` should be installed in the remote machine where we are sshing to.
+Once Connected to the remote machine
+
+`tmux -CC` to start the tmux session
+
+`Cmnd + n` for New window
+`Cmnd + Shift + Option` To rearragne the windows
+`Esc` to dettach in the main window
+`tmux -CC attach` to attach back the same arrangment.
+
+![](assets/markdown-img-paste-20191117154150432.png)
+![](assets/markdown-img-paste-20191117154337895.png)
