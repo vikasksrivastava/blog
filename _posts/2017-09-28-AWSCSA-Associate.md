@@ -157,7 +157,7 @@ An IAM Policy, looks like this. Note that `Deny` will have a precedence over `Al
 
 ![](assets/markdown-img-paste-20191119072236119.png)
 
-<iframe width="700" height="315"
+<iframe width="700" height="700"
 src="https://www.youtube.com/embed/9a0IQCXguCY"
 frameborder="0"
 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
