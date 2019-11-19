@@ -89,20 +89,21 @@ comments: true
 
 
 
-## Introduction
+# Introduction
 
-## AWS Organisation
+---
+### AWS Well Architected Framework
 
-### WELL Oriented Architecture
+The well oriented architecture consist of the following **`5`** Pillars ;  by following a process of **evaluating your architecture against each pillar**.
 
-The well oriented architecture consist of the following `5` Pillars ; any by following a process of **evaluating your architecture against each pillar**.
+Each of these pillars are **<span style="color:blue"> questions you ask yourself</span>**
 
 - **`Operation Excellence`** : How will you implement monitoring and logging and redesign your architecture based on the information from the monitoring system.
 - **`Reliability`** : Recover from Failure and mitigate disruptions.
 - **`Security`** : Protect and Monitor systems.
 - **`Performance Efficiency`** : Use computing resource efficiently
 - **`Cost Optimization`** : Avoid or Limit expense.
-
+---
 ### AWS Account and Physical Organisation
 
 This represents how how you manage multiple services and account managment.
