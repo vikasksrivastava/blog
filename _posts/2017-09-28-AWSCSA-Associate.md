@@ -5,90 +5,6 @@ description: My Notes on AWS CSA
 comments: true
 ---
 
-
-
-<!-- TOC START min:1 max:5 link:true update:true -->
-  - [Introduction](#introduction)
-  - [AWS Organisation](#aws-organisation)
-    - [AWS Account and Physical Organisation](#aws-account-and-physical-organisation)
-    - [Physical Organisation](#physical-organisation)
-    - [AWS Terminology](#aws-terminology)
-  - [AWS Access Management](#aws-access-management)
-    - [IAM Policy](#iam-policy)
-    - [IAM groups](#iam-groups)
-    - [IAM Roles](#iam-roles)
-      - [Role Assumption](#role-assumption)
-      - [Security Token Service](#security-token-service)
-      - [IAM API Keys](#iam-api-keys)
-  - [AWS Networking](#aws-networking)
-    - [Typical VPC screen](#typical-vpc-screen)
-    - [VPC Routing Basics](#vpc-routing-basics)
-    - [VPC Security](#vpc-security)
-    - [VPC Workflow](#vpc-workflow)
-    - [VPC Limits](#vpc-limits)
-  - [Server-Based Compute Services](#server-based-compute-services)
-    - [EC2 Limits](#ec2-limits)
-    - [EC2 Purchasing Options](#ec2-purchasing-options)
-    - [Linux AMI Virtualisation Type :](#linux-ami-virtualisation-type-)
-    - [EC2 Instance Type :](#ec2-instance-type-)
-    - [EC2 Instance Metadata](#ec2-instance-metadata)
-    - [EC2 Instance Storage types](#ec2-instance-storage-types)
-    - [Different EBS types](#different-ebs-types)
-    - [EBS snapshot](#ebs-snapshot)
-    - [Placement groups](#placement-groups)
-    - [EFS Elastic File System](#efs-elastic-file-system)
-  - [Server**less** Compute Services (AWS Lambda)](#serverless-compute-services-aws-lambda)
-  - [Quick Detour](#quick-detour)
-    - [CloudWatch (Monitoring)](#cloudwatch-monitoring)
-    - [CloudTrail (API Logging Service)](#cloudtrail-api-logging-service)
-    - [SNS Notification Service](#sns-notification-service)
-  - [Advanced Networking](#advanced-networking)
-  - [Workflow](#workflow)
-    - [Service Traffic to and from Private Web Servers](#service-traffic-to-and-from-private-web-servers)
-    - [ELB Troubleshooting](#elb-troubleshooting)
-    - [Auto Scaling Troubleshooting](#auto-scaling-troubleshooting)
-  - [Storage Services](#storage-services)
-    - [S3 Permissions](#s3-permissions)
-    - [S3 Storage Class](#s3-storage-class)
-      - [S3 Versioning](#s3-versioning)
-      - [S3 Lifecycle managment](#s3-lifecycle-managment)
-      - [S3 Event Notification](#s3-event-notification)
-      - [S3 Static Web Hosting](#s3-static-web-hosting)
-      - [CORS / Cross Origin Resource Sharing](#cors--cross-origin-resource-sharing)
-      - [Multipart Upload](#multipart-upload)
-      - [AWS Import Export](#aws-import-export)
-      - [Snowball](#snowball)
-      - [Storage Gateway](#storage-gateway)
-      - [DNS Management](#dns-management)
-      - [CloudFront](#cloudfront)
-      - [VPN Connection](#vpn-connection)
-      - [AWS Direct Connnect](#aws-direct-connnect)
-      - [VPC Peering](#vpc-peering)
-      - [AWS CLI Configuration](#aws-cli-configuration)
-      - [AWS Database](#aws-database)
-      - [AWS RDS](#aws-rds)
-    - [RDS Launch Demo](#rds-launch-demo)
-    - [DynamoDB](#dynamodb)
-    - [ElasticCache](#elasticcache)
-    - [RedShift](#redshift)
-  - [AWS Application Services](#aws-application-services)
-    - [SNS](#sns)
-      - [Workflow Example](#workflow-example)
-    - [SQS Essentials](#sqs-essentials)
-    - [SWF , Simple Workflow Service](#swf--simple-workflow-service)
-    - [AWS API Gateway](#aws-api-gateway)
-    - [CloudWatch Essentials](#cloudwatch-essentials)
-  - [Hybrid Environments](#hybrid-environments)
-- [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
-  - [Advanced VPC Networking](#advanced-vpc-networking)
-  - [Network Troubleshooting](#network-troubleshooting)
-  - [Storage Services](#storage-services-1)
-  - [Hybrid Environments](#hybrid-environments-1)
-
-<!-- TOC END -->
-
-
-
 # Introduction
 
 ---
@@ -103,6 +19,31 @@ Each of these pillars are **<span style="color:blue"> questions you ask yourself
 - **`Security`** : Protect and Monitor systems.
 - **`Performance Efficiency`** : Use computing resource efficiently
 - **`Cost Optimization`** : Avoid or Limit expense.
+
+---
+
+### AWS Shared Security Model
+
+AWS is responsible for the security of the global infrastructure and foundational services. The responsibility for security is shared between customer and AWS.
+
+**AWS Responsibilities**
+- `Facilities`
+- `Physical security of Hardware`
+- `Storage Decomissioning`
+- `Netwrok Infrastrcutre`
+- `Virtualisation Infrastructure`
+
+**Customer Responsibilities**
+- `Amazon Machine Images`
+- `Operating Systems`
+- `Applications`
+- `Secuirty Groups`
+- `Firewalls`
+- `Data in Transit`
+- `Data at rest`
+- `Credentials`
+- `Intrusion Detection and Intrusion Prevention`
+
 
 ---
 
@@ -176,44 +117,10 @@ Let look into one of the regions: <span style="color:blue">**`us-east`**</span>
 |---|---|
 | ![](/assets/markdown-img-paste-20190725094118435.png)  |  ![](/assets/markdown-img-paste-20190725094202242.png)  |
 
+
 ---
 
-
-https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
-
-Now as we further move ahead , the `VPC` :
-
-
-![](/assets/markdown-img-paste-20190725103828635.png)
-
->  - **The VPC is a Logical Construct with little significance to actual networking.**
->  - **A Large IP Space is define while creating a VPC , but eventually smaller subnets are to be created specific to the AZs.**
->  - **A subnet spans only the AZ**
-> - **When an Instance is created with a Subnet Specified -- The instance gets created in the same AZ as the subnet (Obviously :))**
-> - **Dual Interfaces can reside in a single subnet only** (As per the lab)
-
-
-> **Security Groups are State Full , once you allow a traffic inbount , there is no need to create an outbout rule for the same.**
-> **NACLs are not statefull , both INBOUND and OUTBOUND rules need to be created**
-
-
-
-
-<img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
-
-### AWS Terminology
-
-- `High Availability (HA)` This means creating and managing the ability to automatically “failover” to a secondary system if the primary system goes down for any reason as well as **eliminating all single points of failure** from your infrastructure.
-
-- `Fault Tolerance` this means infrastructure that is designed in such a way that **when one component fails**(be it hardware or software), a **backup component takes over operations immediately** so that there is no loss of service.
-
-- `Scalability` is the capability to scale out **easily**.
-
-- `Elasticity` the ability to **scale-up** as well as **scale-down**
-
--------
-
-## AWS Access Management
+## AWS Indentity and Access Management
 
 Now lets look at the `IAM` Components where you manager Users, roles and groups, IAM Consistes of :
 
@@ -224,24 +131,37 @@ Now lets look at the `IAM` Components where you manager Users, roles and groups,
 - `IAM API Keys`
 - `IAM Password Policy`
 
-
-<img src="/assets/markdown-img-paste-20180317162435923.png" alt="Drawing" style="width: 500px;"/>
-
-> IAM is Global and does not require a region selection.
+> **IAM is Global and does not require a region selection.**
 
 Now once you have enable IAM , you can use the link show in the picture below to login
 
-<img src="/assets/markdown-img-paste-20180317163005646.png" alt="Drawing" style="width: 300px;"/>
 
-### IAM Policy
+![](assets/markdown-img-paste-2019111907144369.png)
 
-An IAM Policy , looks like this. Note that `Deny` will have a precedence over `Allow`.
+### IAM Policies
+
+Here's where the IAM Policies exist in AWS
+
+![](assets/markdown-img-paste-20191119071607205.png)
+
+Clicking on that policy further gives you information on the **JSON properties**
+
+![](assets/markdown-img-paste-20191119071843610.png)
+
+An IAM Policy, looks like this. Note that `Deny` will have a precedence over `Allow`.
+
 
 <img src="/assets/markdown-img-paste-20180317163328797.png" alt="Drawing" style="width: 500px;"/>
 
-An example of where you can see the policy in detail and whats how it is organised
+**IAM Policies can be created into Visual Editor or JSON Editor**
 
-<img src="/assets/markdown-img-paste-20180317163621375.png" alt="Drawing" style="width: 500px;"/>
+![](assets/markdown-img-paste-20191119072236119.png)
+
+<iframe width="700" height="315"
+src="https://www.youtube.com/watch?v=9a0IQCXguCY"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
 
 ### IAM groups
 
@@ -297,6 +217,40 @@ STS times out / expires after certain time period.
 These are the API Keys like openstack which enables programmatic access to the AWS APIs.
 
 -------
+
+> https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
+
+Now as we further move ahead , the `VPC` :
+
+
+![](/assets/markdown-img-paste-20190725103828635.png)
+
+>  - **The VPC is a Logical Construct with little significance to actual networking.**
+>  - **A Large IP Space is define while creating a VPC , but eventually smaller subnets are to be created specific to the AZs.**
+>  - **A subnet spans only the AZ**
+> - **When an Instance is created with a Subnet Specified -- The instance gets created in the same AZ as the subnet (Obviously :))**
+> - **Dual Interfaces can reside in a single subnet only** (As per the lab)
+
+
+> **Security Groups are State Full , once you allow a traffic inbount , there is no need to create an outbout rule for the same.**
+> **NACLs are not statefull , both INBOUND and OUTBOUND rules need to be created**
+
+
+
+
+<img src="/assets/markdown-img-paste-20180317161347849.png" alt="Drawing" style="width: 300px;"/>
+
+### AWS Terminology
+
+- `High Availability (HA)` This means creating and managing the ability to automatically “failover” to a secondary system if the primary system goes down for any reason as well as **eliminating all single points of failure** from your infrastructure.
+
+- `Fault Tolerance` this means infrastructure that is designed in such a way that **when one component fails**(be it hardware or software), a **backup component takes over operations immediately** so that there is no loss of service.
+
+- `Scalability` is the capability to scale out **easily**.
+
+- `Elasticity` the ability to **scale-up** as well as **scale-down**
+
+
 ## AWS Networking
 
 > VPC `Virtual Private Cloud` is how the networking is architected in the cloud.
