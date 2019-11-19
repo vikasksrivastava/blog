@@ -106,87 +106,80 @@ Each of these pillars are **<span style="color:blue"> questions you ask yourself
 
 ---
 
-### AWS Account and Physical Organisation
-
-This represents how how you manage multiple services and account managment.
-
-<!-- assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 300px;"/>
--->
-
-<img src="/assets/markdown-img-paste-20180317155120909.png" alt="Drawing" style="width: 400px;"/>
-
-
-
- > The above picture shows a organisation of the AWS Users and Groups and the different ways (You can have different groups for `PROD` and `QA`) , Console or CLI they can use to login and manage the AWS Cloud.
-
-### Physical Organisation
+### AWS Physical Organisation
 
 At a very high level AWS can be broken down into two main blocks
 
-- **`AWS Regions`** : These are grouping of independenly separated datacenters in a specific geographic regions know as `Availabilty Zones`.
+- **`AWS Regions`** : Are grouping of independently separated datacenters (`Availabilty Zones`) in a specific geographic regions ,
 
 - **`AWS Edge Location`** : It is a Datacenter which does not contain any AWS Services ; Instead it is used to deliver contents to parts of the world. `CloudFront`
 
-> Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
 
+**<span style="color:blue"> Important Points </span>**
 
+![](/assets/markdown-img-paste-20190725071537652.png)
 
-An `AWS Region` has multiple `Availabilty Zones`
-
-
-
-Now within each `Availabilty Zone` there can be multiple `Datacenters`
-
-`Availabilty Zones` are **phyically sperated** to each other but **have high speed connection between them** to provide **Fault Tolerance**
+> - Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
+> - AWS Services are region specific and when they are first rolled out , they are rolled out in a region first
+>- An `AWS Region` has multiple `Availabilty Zones`
+> - Now within each `Availabilty Zone` there can be multiple `Datacenters`
+> - `Availabilty Zones` are **phyically sperated** to each other but **have high speed connection between them** to provide **Fault Tolerance**
 
 > So as an example `S3` is replicated accross all `Availabilty Zones` and all `Datacenters` for **reliability and high availaibility**.
 
 
+
 **AWS has 19 Regions and 57 AZs within those 19 regions.**
-
 ![](/assets/markdown-img-paste-20190725061715368.png)
-
-
-![](/assets/markdown-img-paste-20190725071537652.png)
 
 -------
 
 ### AWS Region
 
+![](/assets/markdown-img-paste-20190725072213950.png)
 >**AWS re:Invent 2014: AWS Innovation at Scale with James Hamilton**
 >https://www.youtube.com/watch?v=JIQETrFC_SQ
 
-Let look into one of the Regions: US East
-Each region has at least 2 availaibility zones. Instead of a DC being a region, AWS has an AZ as a Region. There are two transit centers which connect to customers.
 
-The AZs are quite apart (few miles). The speed between AZs are extremely high. 25Tbps.
+Let look into one of the regions: <span style="color:blue">**`us-east`**</span>
+- Each region has at least **2** `availaibility zones`.
+- Instead of a `DC` being a region, AWS has a collection of `AZ` as a **region**. There are **two transit centers** which connect to customers.
+- The AZs are quite apart (few miles). The speed between AZs are **extremely high**. **25Tbps**.
 
-> **Transit points allow conectivity with other Regions and Customer Peering Points.**
+> **Transit points allow conectivity with other `regions` and customer peering points.**
 
-![](/assets/markdown-img-paste-20190725072213950.png)
+---
 
 ![](/assets/markdown-img-paste-20190725073401480.png)
+**The Problem :** <span style="color:red">The picture above illustrates the limitation/problems with DCs that are separated too far (LA and NY)</span>
 
-- If an AZ you can commit synchronously to your Data with a 1ms delay rather than 74ms delay (above) . This is empowering and great for the applications.
+**Solution :**
+- In an AZ you can commit synchronously to your Data with a 1ms delay rather than 74ms delay (above) . This is empowering and great for the applications.
 - Failover between AZs is **SUPERFAST** , compare this to a Intra Region failover which would be much slower.
 
+---
 
-Going further , lets look into Availability Zones
+### Deeper view of 'Availaibility Zone' and 'Data Center'
+
+**Going further**, lets look into **<span style="color:blue">Availability Zones</span>**
 
 ![](/assets/markdown-img-paste-20190725090416853.png)
+
+**Double clicking** into **<span style="color:blue">Data Center</span>**
+
 ![](/assets/markdown-img-paste-20190725090810986.png)
 ![](/assets/markdown-img-paste-20190725090954823.png)
+
+**Another view of details shared above**
+
+|   |   |
+|---|---|
+| ![](/assets/markdown-img-paste-20190725094118435.png)  |  ![](/assets/markdown-img-paste-20190725094202242.png)  |
 
 ---
 
 
-![](/assets/markdown-img-paste-20190725094118435.png)
-
-
-![](/assets/markdown-img-paste-20190725094202242.png)
-
-> https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
-
+https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
 
 Now as we further move ahead , the `VPC` :
 
