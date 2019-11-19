@@ -103,7 +103,9 @@ Each of these pillars are **<span style="color:blue"> questions you ask yourself
 - **`Security`** : Protect and Monitor systems.
 - **`Performance Efficiency`** : Use computing resource efficiently
 - **`Cost Optimization`** : Avoid or Limit expense.
+
 ---
+
 ### AWS Account and Physical Organisation
 
 This represents how how you manage multiple services and account managment.
