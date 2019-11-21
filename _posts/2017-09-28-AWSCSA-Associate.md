@@ -163,6 +163,10 @@ frameborder="0"
 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 allowfullscreen></iframe>
 
+<br>
+
+> `ARN` stands for : **Amazon Resource Name**
+
 ### IAM groups
 
 Groups are like AD Groups in a company where you segregate users into respective division , like HR, Finace etc .
@@ -171,6 +175,18 @@ So now the `policies` can be attached to the `groups` directy.
 
 ### IAM Roles
 
+**IAM Roles are an Important Concept to understand**
+
+> An AWS IAM Role is like the 'sudo' in Linux. A user can assume the role of root and do the required tasks without knowing the actual root password.
+
+<iframe width="700" height="500"
+src="https://www.youtube.com/embed/Z4jogVG30-w"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
+
+A real example is a AWS Instance trying to access S3
+
 - Look at the example below and notice how that all the Users and Roles are created at the IAM Level.
 
   - `Non AWS Account Holder` : Now what we integrate AWS with the AD in a company. The users from AD who are **authenticated via SAML** now need to be mapped to `Role` to be able to do things in the AWS
@@ -178,6 +194,9 @@ So now the `policies` can be attached to the `groups` directy.
   - `EC2 instance needing access to S3`
 
 > An EC2 instance can only have one role attached to it .
+
+> Credentials configure using the `aws-configure` command are store as cleartext int he `.aws` dir under the file `credentials`
+> which is `.aws/credentials`
 
 <img src="/assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
 
