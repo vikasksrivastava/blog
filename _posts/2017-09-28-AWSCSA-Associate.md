@@ -265,20 +265,46 @@ The major difference between the **Assume** roles and **GetRoles**
 
 There are three primary ways of Identity Federation :
 
-- **`Custom Indentity Provider`**
-- **`An Access Key ID`**
-- **`A Secret Access Key`**
-- **`Expiration Timestamp`**
+- **`Custom Indentity Provider`** : Your inhouse Identity Solution
+- **`LDAP / Active Directory`** : Standards based identity solution (SAML)
+- **`Web Indentity`**
+
+#### Custom Indentity Provider
+
+![](assets/markdown-img-paste-20191122063904308.png)
+In a custom indentity provider :
+1. You client connect to the `Identity Broker`
+2. Teh Identity broker confirm the credentials from the Identity Store
+3. Once step 2 is successsfull , Indentity Broker now reaches out to `STS` for a token.
+4. The token is then provided to the Client
+5. Now the client can access AWS Console/Services
+
+#### LDAP / Active Directory (SAML) for SSO
+
+> `SAML : Security Assertion Markup Language`
+
+![](assets/markdown-img-paste-20191122064402130.png)
+In a SAML/LDAP Login :
+1. User Logs into a AD Webpage
+2. Authentication is done and a SAML Asser to the user browser is done
+3. User is then redirected to AWS Sign in which validates the SAML and responds back with login to the AWS Console.
+4. The permissions in the console are based on the mapping of groups in AWS and AD.
+
+#### Web Indentity Provider (OpenID like Google,FB)
+
+
+![](assets/markdown-img-paste-20191122064956631.png)
+In a Web Indentity Login :
+
 
 
 ---
+
 
 > https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
 
 Now as we further move ahead , the `VPC` :
 
-
-![](/assets/markdown-img-paste-20190725103828635.png)
 
 >  - **The VPC is a Logical Construct with little significance to actual networking.**
 >  - **A Large IP Space is define while creating a VPC , but eventually smaller subnets are to be created specific to the AZs.**
