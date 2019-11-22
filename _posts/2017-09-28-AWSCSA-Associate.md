@@ -49,6 +49,7 @@ AWS is responsible for the security of the global infrastructure and foundationa
 
 ### AWS Physical Organisation
 
+
 At a very high level AWS can be broken down into two main blocks
 
 - **`AWS Regions`** : Are grouping of independently separated datacenters (`Availabilty Zones`) in a specific geographic regions ,
@@ -169,7 +170,7 @@ allowfullscreen></iframe>
 
 ### IAM groups
 
-Groups are like AD Groups in a company where you segregate users into respective division , like HR, Finace etc .
+Groups are like AD Groups are also there  in a company where you segregate users into respective division , like HR, Finace etc .
 
 So now the `policies` can be attached to the `groups` directy.
 
@@ -198,13 +199,11 @@ A real example is a AWS Instance trying to access S3
 > Credentials configure using the `aws-configure` command are store as cleartext int he `.aws` dir under the file `credentials`
 > which is `.aws/credentials`
 
-<img src="/assets/markdown-img-paste-20180317164404537.png" alt="Drawing" style="width: 300px;"/>
+
 
 #### Role Assumption
 
 Now lets say , the users below in the `DEV` group need access to the  resources in the `PROD`, then can **assume** a `Role` and be able to access the resource in `PROD`.
-
-<img src="/assets/markdown-img-paste-20180317165031723.png" alt="Drawing" style="width: 300px;"/>
 
 **How does the above assumption happen?**
 
@@ -222,20 +221,57 @@ Notice in the screenshot below , we have 3 different types of Roles:
 
 <img src="/assets/markdown-img-paste-20180317165948959.png" alt="Drawing" style="width: 600px;"/>
 
+---
+
+### IAM API Keys
+
+When a user is created , he can have programmatic access to his environment using the Secret Access Key
+
+![](assets/markdown-img-paste-20191122052631862.png)
+
+**BUT** hardcoding this API  access key into git is also not a good idea, so it better to leverage roles (which we discussed above 'IAM Roles')
+
+**Now** `IAM Roles` also in the backend use "Security Access Keys" **BUT** they are short lived. This temporary set of access keys is provided by **Security Token Service**.
+
 #### Security Token Service
 
-This a temporary credetials which allows access to the AWS Resource.
+As mentioned above this a temporary credetials which allows access to the AWS Resource.
 So in the example of `EC2` accessing `S3` and `STS` is generated for the EC2 instance.
 
 The benefit is that the **credetials are not required to be embedded** in the application.
-
 STS times out / expires after certain time period.
+When an STS call is made , a credential object is returned conatining :
 
-#### IAM API Keys
+- **`Session Token`**
+- **`An Access Key ID`**
+- **`A Secret Access Key`**
+- **`Expiration Timestamp`**
 
-These are the API Keys like openstack which enables programmatic access to the AWS APIs.
+Here are the type of STS API Calls which can be made :
 
--------
+- **`AssumeRole`** : When you are using a Role you can use an Assume Role to choose a Role you want to assume. You permissions are replaced to the permissions provided by the new role.
+- **`AssumeRoleWithWebIdentity`**  Facebook/Google/Amazaon , essentials you allow users to login using Web Identity and then allow them to make API calls using the same.
+- **`AssumeRoleWithSAML`** This is for integration with SAML providers like AD. Helps achiveving SSO (Single Sign On)
+- **`GetFederationToken`** *"Give me a set of credetials and I only want to have these permissions."*
+- **`GetSessionToken`** :  A person who would normally use his permanent credentials but is logging in from an untrusted device , hence can request safer temporary credentials then permanent)
+
+The major difference between the **Assume** roles and **GetRoles**
+
+![](assets/markdown-img-paste-20191122061036280.png)
+> `https://mermaidjs.github.io/mermaid-live-editor/`
+---
+
+### IAM Identity Federation
+
+There are three primary ways of Identity Federation :
+
+- **`Custom Indentity Provider`**
+- **`An Access Key ID`**
+- **`A Secret Access Key`**
+- **`Expiration Timestamp`**
+
+
+---
 
 > https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
 
