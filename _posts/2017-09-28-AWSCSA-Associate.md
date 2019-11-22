@@ -283,6 +283,9 @@ In a custom indentity provider :
 
 > `SAML : Security Assertion Markup Language`
 
+> **2018 AWS Federated Authentication with Active Directory Federation Services (AD FS)** https://aws.amazon.com/blogs/security/aws-federated-authentication-with-active-directory-federation-services-ad-fs/
+> **2013 Enabling Federation to AWS Using Windows Active Directory, ADFS, and SAML 2.0** https://aws.amazon.com/blogs/security/enabling-federation-to-aws-using-windows-active-directory-adfs-and-saml-2-0/
+
 ![](assets/markdown-img-paste-20191122064402130.png)
 In a SAML/LDAP Login :
 1. User Logs into a AD Webpage
