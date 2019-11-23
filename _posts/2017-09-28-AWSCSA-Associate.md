@@ -293,6 +293,8 @@ In a SAML/LDAP Login :
 3. User is then redirected to AWS Sign in which validates the SAML and responds back with login to the AWS Console.
 4. The permissions in the console are based on the mapping of groups in AWS and AD.
 
+
+
 #### Web Indentity Provider (OpenID like Google,FB)
 
 
