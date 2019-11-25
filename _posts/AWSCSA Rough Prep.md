@@ -66,7 +66,7 @@ Go to https://localhost/federationmetadata/2007-06/federationmetadata.xml
 **On AWS side of Trus relation ships is done .**
 
 ---
-# Configuring Trus Relation ship and SAML
+# Configuring Trust Relation ship and SAML
 ## Now go to ADFS managment Console (To setup trust from this side)
 
 ## Step 1
