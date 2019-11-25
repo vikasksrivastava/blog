@@ -10,7 +10,7 @@ comments: true
 > **2018 AWS Federated Authentication with Active Directory Federation Services (AD FS)** https://aws.amazon.com/blogs/security/aws-federated-authentication-with-active-directory-federation-services-ad-fs/
 
 
-![](assets/markdown-img-paste-20191124215412168.png)
+![](/assets/markdown-img-paste-20191124215412168.png)
 
 1. Corporate user accesses the corporate Active Directory Federation Services portal sign-in page and provides Active Directory authentication credentials.
 2. AD FS authenticates the user against Active Directory.
@@ -58,22 +58,9 @@ comments: true
 
 ---
 
-
-## Now We will Configure Trust Relation Ship between AWS and AD
-
-Go to https://localhost/federationmetadata/2007-06/federationmetadata.xml
-
-## Import this file in AWS, Name it `idp1`
-
-- We name it `idp1` hust for follwign the guide we referenced earlier.
-
-**IAM --> Indentity Providers --> Creta provide --> SAML**
-
-**On AWS side of Trus relation ships is done .**
-
 ---
 # Configuring Trust Relation ship and SAML
-## Now go to ADFS managment Console (To setup trust from this side)
+## Now go to ADFS managment Console (To setup trust from AD side)
 
 ## Step 1
 
@@ -105,14 +92,22 @@ c:[Type == "http://temp/variable", Value =~ "(?i)^AWS-([\d]{12})"]
 
 ![](/assets/markdown-img-paste-20191122235347442.png)
 
+---
+## Trust relationship from AWS Side
+Go to AD and download https://localhost/federationmetadata/2007-06/federationmetadata.xml
 
+## Import this file in AWS, Name it `idp1`
+
+- We name it `idp1` hust for follwign the guide we referenced earlier.
+
+**IAM --> Indentity Providers --> Creta provide --> SAML**
 ## Now in AWS IAM Create a SAML Role which the user will choose to Assume
 
 `ADFS-AWS-Admin`
 
 ---
 
-# Verification
+# Verification / SAML Tracer
 
 ## Now login to ADFS Single Sign on on URL
 https://localhost/adfs/ls/idpinitiatedsignon.aspx

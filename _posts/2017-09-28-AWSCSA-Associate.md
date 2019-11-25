@@ -258,7 +258,9 @@ Here are the type of STS API Calls which can be made :
 The major difference between the **Assume** roles and **GetRoles**
 
 ![](/assets/markdown-img-paste-20191122061036280.png)
+
 > `https://mermaidjs.github.io/mermaid-live-editor/`
+
 ---
 
 ### IAM Identity Federation
