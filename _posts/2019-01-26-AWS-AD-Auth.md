@@ -1,5 +1,11 @@
+---
+layout: post
+title: AWS IAM Integration with Active Directory for SSO/SAML
+description: AWS IAM Integration with Active Directory for SSO/SAML
+comments: true
+---
 
-**This video is based on**
+**This content is based on**
 
 > **2018 AWS Federated Authentication with Active Directory Federation Services (AD FS)** https://aws.amazon.com/blogs/security/aws-federated-authentication-with-active-directory-federation-services-ad-fs/
 
@@ -100,11 +106,15 @@ c:[Type == "http://temp/variable", Value =~ "(?i)^AWS-([\d]{12})"]
 ![](/assets/markdown-img-paste-20191122235347442.png)
 
 
-## Now in AWS IAM Create a SAML Role
+## Now in AWS IAM Create a SAML Role which the user will choose to Assume
 
 `ADFS-AWS-Admin`
 
-## Now login to ADFS Single Sighn on URL
+---
+
+# Verification
+
+## Now login to ADFS Single Sign on on URL
 https://localhost/adfs/ls/idpinitiatedsignon.aspx
 
 
