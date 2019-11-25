@@ -137,17 +137,17 @@ Now lets look at the `IAM` Components where you manager Users, roles and groups,
 Now once you have enable IAM , you can use the link show in the picture below to login
 
 
-![](assets/markdown-img-paste-2019111907144369.png)
+![](/assets/markdown-img-paste-2019111907144369.png)
 
 ### IAM Policies
 
 Here's where the IAM Policies exist in AWS
 
-![](assets/markdown-img-paste-20191119071607205.png)
+![](/assets/markdown-img-paste-20191119071607205.png)
 
 Clicking on that policy further gives you information on the **JSON properties**
 
-![](assets/markdown-img-paste-20191119071843610.png)
+![](/assets/markdown-img-paste-20191119071843610.png)
 
 An IAM Policy, looks like this. Note that `Deny` will have a precedence over `Allow`.
 
@@ -156,7 +156,7 @@ An IAM Policy, looks like this. Note that `Deny` will have a precedence over `Al
 
 **IAM Policies can be created into Visual Editor or JSON Editor**
 
-![](assets/markdown-img-paste-20191119072236119.png)
+![](/assets/markdown-img-paste-20191119072236119.png)
 
 <iframe width="700" height="500"
 src="https://www.youtube.com/embed/9a0IQCXguCY"
@@ -227,7 +227,7 @@ Notice in the screenshot below , we have 3 different types of Roles:
 
 When a user is created , he can have programmatic access to his environment using the Secret Access Key
 
-![](assets/markdown-img-paste-20191122052631862.png)
+![](/assets/markdown-img-paste-20191122052631862.png)
 
 **BUT** hardcoding this API  access key into git is also not a good idea, so it better to leverage roles (which we discussed above 'IAM Roles')
 
@@ -257,7 +257,7 @@ Here are the type of STS API Calls which can be made :
 
 The major difference between the **Assume** roles and **GetRoles**
 
-![](assets/markdown-img-paste-20191122061036280.png)
+![](/assets/markdown-img-paste-20191122061036280.png)
 > `https://mermaidjs.github.io/mermaid-live-editor/`
 ---
 
@@ -271,7 +271,7 @@ There are three primary ways of Identity Federation :
 
 #### Custom Indentity Provider
 
-![](assets/markdown-img-paste-20191122063904308.png)
+![](/assets/markdown-img-paste-20191122063904308.png)
 In a custom indentity provider :
 1. You client connect to the `Identity Broker`
 2. Teh Identity broker confirm the credentials from the Identity Store
@@ -286,7 +286,7 @@ In a custom indentity provider :
 > **2018 AWS Federated Authentication with Active Directory Federation Services (AD FS)** https://aws.amazon.com/blogs/security/aws-federated-authentication-with-active-directory-federation-services-ad-fs/
 > **2013 Enabling Federation to AWS Using Windows Active Directory, ADFS, and SAML 2.0** https://aws.amazon.com/blogs/security/enabling-federation-to-aws-using-windows-active-directory-adfs-and-saml-2-0/
 
-![](assets/markdown-img-paste-20191122064402130.png)
+![](/assets/markdown-img-paste-20191122064402130.png)
 In a SAML/LDAP Login :
 1. User Logs into a AD Webpage
 2. Authentication is done and a SAML Asser to the user browser is done
@@ -298,7 +298,7 @@ In a SAML/LDAP Login :
 #### Web Indentity Provider (OpenID like Google,FB)
 
 
-![](assets/markdown-img-paste-20191122064956631.png)
+![](/assets/markdown-img-paste-20191122064956631.png)
 In a Web Indentity Login :
 
 
