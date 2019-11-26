@@ -19,6 +19,13 @@ comments: true
 5. Temporary credentials are returned using STS `AssumeRoleWithSAML`.
 6. The user is authenticated and provided access to the AWS management console.
 
+<iframe width="700" height="500"
+src="https://www.youtube.com/embed/VP9wBGm982g"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
+
+
 ## Install the Required Services
 
 - Install these servcies , `Active Directory Domain Services` , `Active Directory Federation Services` and `DNS` , `IIS`
