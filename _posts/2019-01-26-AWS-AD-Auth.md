@@ -26,6 +26,8 @@ allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 allowfullscreen></iframe>
 
 
+https://www.youtube.com/watch?v=SIBCi76wspQ&t=1947s
+
 ## Install the Required Services
 
 - Install these servcies , `Active Directory Domain Services` , `Active Directory Federation Services` and `DNS` , `IIS`
