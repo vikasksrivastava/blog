@@ -390,8 +390,9 @@ An **`allow list`** – actions are prohibited by default, and you specify what 
 
 **`Service Control Policy`  in conjuction with  `IAM Policy`**
 
+<img src="/assets/markdown-img-paste-20191127074422917.png" alt="Drawing" style="width: 200px;"/>
 
-![](/assets/markdown-img-paste-20191127074422917.png)
+<br>
 
 > Service Link Roles "Roles Used by services" to operate on other services are not affected by **Service Control Polices**
 
