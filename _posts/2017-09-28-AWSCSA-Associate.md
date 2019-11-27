@@ -302,18 +302,137 @@ allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 allowfullscreen></iframe>
 
 
-https://www.youtube.com/watch?v=SIBCi76wspQ&t=1947s
-https://www.youtube.com/watch?v=bXrsUEI1V38
-
 #### Web Indentity Provider (OpenID like Google,FB)
 
 
 ![](/assets/markdown-img-paste-20191122064956631.png)
+
 In a Web Indentity Login :
 
 
+---
+
+> https://www.youtube.com/watch?v=SIBCi76wspQ&t=1947s
+> https://www.youtube.com/watch?v=bXrsUEI1V38
 
 ---
+
+# AWS Organisations
+
+AWS Organisations is a way to **consolidate multiple individual AWS accounts** **into one Organisation.**
+
+So for example , **you can group multiple discrete accounts** like the following into one.
+
+<img src="assets/markdown-img-paste-20191127054106107.png" alt="Drawing" style="width: 200px;"/>
+
+<br><br>
+
+**Challenges** (without AWS Ogranisations)
+
+  - IAM policy replication across AWS accounts requires custom automation.
+  - Creating new accounts involved many steps including the requirements to validate the payment method. **The account needed to be created manually in AWS UI**
+  - It would bery difficult to do security governance at individual account levels.
+
+**Benefits** (with AWS Organisations)
+
+  - Grouping accouts gives you consolidated billing. (**Getting billing consolidated gets you better discount.**)
+  - **Single place to manage your accounts without**the need to validate billing for each account.
+  - **Automate account creation** : Instead of the need to go to AWS UI everytime , AWS Organisation provides API calls for account creation.
+  - **Single place to manage security policies** from one place (IAM could only have managed security policies in one account)
+
+
+### How are Accounts and OUs Organised under `AWS Organisations`
+
+<img src="assets/markdown-img-paste-2019112705591646.png" alt="Drawing" style="width: 600px;"/>
+<br>
+
+<br>
+
+- One OU cannot be under two OUs
+- One AWS Account only belongs to One OU , it cannot belong to multple OU
+- The tree can only go 5 levels deeps.
+- Security Policy can be applied to OU or the Account.
+
+> **By default the level of depth allowed on AWS Organisation is low** a service case needs to be opened to fix it.
+
+**Best Practices:**
+
+- CloudTrail (AccessLogs) in master account and esnure the SCP does not let the same to be deleted at individiual account level.
+- Do not create resources (`EC2` etc) in Master Account, Use it for Billign , Manageent , Policies
+
+## Service Control Policy
+
+Service control policy is the policy feature used in AWS Organisation. It can be applied at the Organisation or OU level.
+
+SCP is like a boundary to multiple accounts.
+**A Good Example** : Lets say you have multiple accounts , and CloudTrail (logging) is enabled. Now the root user can go ahead and delete the logs. In this case if the policy is set at the AWS Org level **DENIES* access to be taken place.
+**Even the root user cant do it**
+
+**A service policy is applied to level its applied to and trickles down to everything below it.**
+
+
+**How does the Permissions Apply when two SCPs intersect**
+
+<img src="assets/markdown-img-paste-20191127071224350.png" alt="Drawing" style="width: 400px;"/>
+
+### Strategies for using SCPs
+
+You can configure the SCPs in your organization to work as either of the following:
+
+A **`deny list`** – actions are allowed by default, and you specify what services and actions are prohibited.
+
+An **`allow list`** – actions are prohibited by default, and you specify what services and actions are allowed
+
+**Decision Process**
+
+![](assets/markdown-img-paste-2019112707292648.png)
+
+
+**`Service Control Policy`  in conjuction with  `IAM Policy`**
+
+
+![](assets/markdown-img-paste-20191127074422917.png)
+
+> Service Link Roles "Roles Used by services" to operate on other services are not affected by **Service Control Polices**
+
+
+**SCP Configuration Example**
+
+https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_example-scps.html#example_scp_1
+
+![](assets/markdown-img-paste-20191127072249878.png)
+
+Reference
+
+> https://www.youtube.com/watch?v=-HsfTwdRxRI
+> https://www.youtube.com/watch?v=_50P0o14Ul0
+
+**Lab Tasks/Video**
+
+- Create Test Accounts
+- Show no need for payment validation
+- An Organisational Account is the Collection of Accounts
+
+- An OU Will Inherit All POlicies from ALL OU Above
+- Show SCP Attach / Detach options.
+
+- Create A service control policy for  VPC Restriction .
+    - Create
+    - Attach
+
+---
+
+# Make A Template of a good section with Challenges , benefits , CloudFormation , Reference
+
+# AWS Single Sign On
+
+# AWS Tower
+
+# AWS Active Directory
+
+---
+
+
 
 
 > https://daviseford.com/blog/2018/12/21/aws-advanced-networking-specialty-exam-tips.html
