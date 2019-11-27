@@ -323,7 +323,7 @@ AWS Organisations is a way to **consolidate multiple individual AWS accounts** *
 
 So for example , **you can group multiple discrete accounts** like the following into one.
 
-<img src="assets/markdown-img-paste-20191127054106107.png" alt="Drawing" style="width: 200px;"/>
+<img src="/assets/markdown-img-paste-20191127054106107.png" alt="Drawing" style="width: 200px;"/>
 
 <br><br>
 
@@ -343,7 +343,7 @@ So for example , **you can group multiple discrete accounts** like the following
 
 ### How are Accounts and OUs Organised under `AWS Organisations`
 
-<img src="assets/markdown-img-paste-2019112705591646.png" alt="Drawing" style="width: 600px;"/>
+<img src="/assets/markdown-img-paste-2019112705591646.png" alt="Drawing" style="width: 600px;"/>
 <br>
 
 <br>
@@ -373,7 +373,7 @@ SCP is like a boundary to multiple accounts.
 
 **How does the Permissions Apply when two SCPs intersect**
 
-<img src="assets/markdown-img-paste-20191127071224350.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/markdown-img-paste-20191127071224350.png" alt="Drawing" style="width: 400px;"/>
 
 ### Strategies for using SCPs
 
@@ -385,13 +385,13 @@ An **`allow list`** – actions are prohibited by default, and you specify what 
 
 **Decision Process**
 
-![](assets/markdown-img-paste-2019112707292648.png)
+![](/assets/markdown-img-paste-2019112707292648.png)
 
 
 **`Service Control Policy`  in conjuction with  `IAM Policy`**
 
 
-![](assets/markdown-img-paste-20191127074422917.png)
+![](/assets/markdown-img-paste-20191127074422917.png)
 
 > Service Link Roles "Roles Used by services" to operate on other services are not affected by **Service Control Polices**
 
@@ -400,7 +400,7 @@ An **`allow list`** – actions are prohibited by default, and you specify what 
 
 https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_example-scps.html#example_scp_1
 
-![](assets/markdown-img-paste-20191127072249878.png)
+![](/assets/markdown-img-paste-20191127072249878.png)
 
 Reference
 
