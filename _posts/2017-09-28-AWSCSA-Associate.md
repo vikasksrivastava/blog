@@ -686,7 +686,7 @@ If the instance is rebooted the data is retained.
  - Creatign Custom AMIs using the Snapshot
 
 
-  <img src="/assets/JB392svLUx.gif" alt="Drawing" style="width: 900px;"/>
+  <img src="/assets/JB392svLUx.gif" alt="Drawing" style="width: 2000px;"/>
 
 ![EC2 Instance Creation](/assets/JB392svLUx.gif)
 
