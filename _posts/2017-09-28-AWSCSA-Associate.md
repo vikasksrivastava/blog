@@ -685,6 +685,9 @@ If the instance is rebooted the data is retained.
  - Restore Snapshot
  - Creatign Custom AMIs using the Snapshot
 
+
+  <img src="/assets/JB392svLUx.gif" alt="Drawing" style="width: 900px;"/>
+
 ![EC2 Instance Creation](/assets/JB392svLUx.gif)
 
 ### Placement groups
