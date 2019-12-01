@@ -567,7 +567,7 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 
 -------
 
-## Server-Based Compute Services
+## Server-Based Compute Services (EC2 Elastic Cloud Compute)
 
 ### EC2 Limits
 
@@ -578,9 +578,6 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 ### EC2 Purchasing Options
 
 
-- <img src="/assets/markdown-img-paste-20180318202820909.png" alt="Drawing" style="width: 300px;"/>
-
-  Workflow : Choose `AMI` --> Choose `Instance Type`
 
 **There are 3 different types of EC2 Instances :**
 
@@ -596,13 +593,20 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 
   If the instance is **terminated by AWS** you **dont pay for that slot** of duration (1 minute or 1 hour) . If **you delete it**, **you pay** for it.
 
+
+### AMI's
+
+AMI are the images/files that goes to the boot volume of the instance.
+
 ### Linux AMI Virtualisation Type :
 
 - **`HVM`**  **Hardware Virtual Machine** , Conside this like Intel VTx/d technology by which guests can take advantage of virtualisation feature supported by the CPU. Proved enhanced networking and GPU processing to the VM.
 
 - **`PV`**  **Paravirtual** AMIs Guests could run on Hardware which does not have HVM support. cannot take advantage of GPU / Advanced networking.
 
+HVM is the recommended AMI type.
 
+> `ENA Enabled` : Means enhanced networking capabilities based provided by hardware extensions (HVM)
 
 ### EC2 Instance Type :
 
@@ -616,9 +620,22 @@ Has the following virtual hardware components, you have to choose the right inst
   Notice in the picture below the above characteristics.
   <img src="/assets/markdown-img-paste-20180318203911238.png" alt="Drawing" style="width: 600px;"/>
 
-  Different Instance types
+  **Different Instance types**
 
-  <img src="/assets/markdown-img-paste-20180318204119218.png" alt="Drawing" style="width: 600px;"/>
+  <img src="assets/markdown-img-paste-20191201073012960.png" alt="Drawing" style="width: 600px;"/>
+
+  An instance type is given a `Letter` and a `Number` so example `T` and `2` which becomes `T2`
+
+  Further T2 comes into a wide range for flavors - `t2.small` to `t2.xlarge`
+
+  All instance types are documented here : https://aws.amazon.com/ec2/instance-types/
+
+  **T2 Burstable** : When you are not using CPU , you are building credits and you use these credits when you use the CPU. So its a credits based system.
+
+  **T2 Unlimited** Its an option when launching instance where you can request AWS to not bring your instance down to the lower baseline CPU performance and let it continue to use standard CPU utilisation. This has additional charge.
+
+
+
 
 ### EC2 Instance Metadata
 
@@ -628,7 +645,16 @@ Has the following virtual hardware components, you have to choose the right inst
 
 ### EC2 Instance Storage types
 
-EBS Elastic Block Store ,
+
+
+![](assets/markdown-img-paste-20191201082628711.png)
+
+**`Instance Store`** volumes are ephemeral data. The data on the volume only exists till the life of the instance. If the instance is stopped or shutdown the data will be lost.
+If the instance is rebooted the data is retained.
+
+> Instance store is good for a `swap` type usage
+
+**`EBS Elastic Block Store`**
 
  - EBS Volumes are persistent and can stay even after instance deletion, unlike Instance Store.
  - Can **only be attached to one instance** a time.
@@ -638,21 +664,28 @@ EBS Elastic Block Store ,
  - New EBS volume no longer need to be pre-warmed. Maximum performance is received as soon as the EBS volume is spawned.
  - Now with the above point note that if you created a volume from a snapshot you still need to warm-up  (read all the storage blocks)/ read otherwise the access could be slow.
 
+> In an EBS Volume there are two separate hardware devices per EBS volume , so if there is a failure in one disk , while it rebuilds the data is still accessible from the other device. **EBS Volumes can be backed up in S3**
+
 
 ### Different EBS types
 
-- `General Purpose` (1GiB - 16TiB), best used for Dev and Test environment. This allows 3 IOPS/GiB (so size of the disk has direct relation with the IOPS) but is burstable upto 3000 IOPS.
-- `Provisioned IOPS SSD` (4GiB - 16TiB) , Used for mission critical applications. This performs at the provisioned IOPS level and can go upto 20,000 IOPS.
-- `Magnetic` Rarely used , slow .
+- `General Purpose` (1GiB - 16TiB), best used for Dev and Test environment. This allows 3 IOPS/GiB (so size of the disk has direct relation with the IOPS) but is burstable upto 3000 IOPS (Remember burst is a credit based system , which means you ear credits for not using it and then you can use those credits). Max performance of 32000 IOPS per volume.
+- `Provisioned IOPS SSD` (4GiB - 16TiB) , Used for mission critical applications. This performs at the provisioned IOPS level and can go upto 64,000 IOPS.
 
-Now there is another type of store different than EBS :
-
-- `Instance Store` volumes are ephemeral data. The data on the volume only exists till the life of the instance. If the instance is stopped or shutdown the data will be lost.
-If the instance is rebooted the data is retained.
 
 ### EBS snapshot
 
 - You can take a snapshot to recreate the volume. Snapshots are stored in S3. You are only charged for the difference between the snapshots.
+- When a `restore` is done from this snapshot , the data is made availaible as they are read , which makes it slow. So you can make an script to access the entire disk so that all data is accessible.
+
+## Lab
+
+ - Instance Creation Flow Chart
+ - EBS Snapshot --> Show in S3 if its exists
+ - Restore Snapshot
+ - Creatign Custom AMIs using the Snapshot
+
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
 ### Placement groups
 
