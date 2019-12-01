@@ -685,7 +685,7 @@ If the instance is rebooted the data is retained.
  - Restore Snapshot
  - Creatign Custom AMIs using the Snapshot
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Alt Text](/assets/JB392svLUx.gif)
 
 ### Placement groups
 
