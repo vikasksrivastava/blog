@@ -6,8 +6,11 @@
 - Git Checkout a Specific Branch `git checkout 2019.11br` then `make` it
 - HDD should be above VM
 - Ensure to Power Off the VM when the first install on "ONIE Embed" is complete
-- Make a Video 
+- Make a Video
 
+### FRR Links
+
+https://www.2stacks.net/blog/getting-started-with-frr-on-eveng/#enable-eve-ng-telnet-access-to-frr-nodes
 
 https://rendoaw.github.io/2019/02/Trying-Whitebox-OS-on-VM
 https://esc.fnwi.uva.nl/thesis/centraal/files/f1729148638.pdf
