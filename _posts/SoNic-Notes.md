@@ -1,4 +1,14 @@
 
+
+### Important Notes
+
+- Ensure to do the steps on Mint 19 or latest
+- Git Checkout a Specific Branch `git checkout 2019.11br` then `make` it
+- HDD should be above VM
+- Ensure to Power Off the VM when the first install on "ONIE Embed" is complete
+- Make a Video 
+
+
 https://rendoaw.github.io/2019/02/Trying-Whitebox-OS-on-VM
 https://esc.fnwi.uva.nl/thesis/centraal/files/f1729148638.pdf
 
