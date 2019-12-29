@@ -35,8 +35,19 @@ https://learnvmware.online/2016/01/17/sdn-nos-and-white-box-switches/
 
 http://lists.opencompute.org/pipermail/opencompute-onie/2016-March/001078.html
 
+https://www.servethehome.com/get-started-with-40gbe-sdn-with-microsoft-azure-sonic-for-under-1k/#_copy_the_sonic_distribution_for_arista
+
 https://ajketech.wordpress.com/2016/07/24/howto-install-ubuntu-on-an-onie-enabled-device-part-1/
 
+https://wiki.akraino.org/display/AK/Edgecore+Switch+Usage+with+SONiC
+
+https://community.mellanox.com/s/article/howto-enable-rdma-and-tcp-over-sonic--ocp-2017-demonstration-x#jive_content_id_ToR1_configuration
+
+https://blog.mellanox.com/2019/10/open-ethernet-at-full-speed-with-leaf-spine-architecture-cumulus-and-sonic-vxlan-evpn-interoperate-over-mellanox/
+
+https://github.com/Azure/SONiC/blob/master/doc/vrf/sonic-vrf-hld.md
+
+https://academy.mellanox.com/en/wp-content/uploads/2019/08/MELLANOXS-SONIC-ADMINISTRATOR-TRAINING2.pdf?ls=pr&lsd=190925-SONiC-2
 
 sudo apt-get install -f
 
