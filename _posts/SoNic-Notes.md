@@ -128,3 +128,28 @@ Allocating group tables: done
 Writing inode tables: done
 Creating journal (16384 blocks): done
   Booting `ONIE: Rescue'
+
+
+
+Image Build
+
+Create empty file :  /opt/qemu/bin/qemu-img create -f qcow2  virtioa.qcow2 8G
+
+1.
+/opt/qemu-2.2.0/bin/qemu-system-x86_64 -nographic -drive file=virtioa.qcow2,if=virtio,bus=0,unit=0,cache=none -machine type=pc-1.0,accel=kvm -serial mon:stdio -nographic -nodefconfig -nodefaults -rtc base=utc -cdrom onie.iso -boot order=dc -m 3072
+
+2. Embed ONIE
+
+Now Stop ONIE booting and get to qemu prompt using key combo ctrl+a release keys and then press c, once appears (qemu) type quit.
+
+3. Create New Lab - Ensure e1000 and connect all interfaces
+4. Once DHCP , onie-nos-install sonic-vs - Configure per taste
+
+5. STOP Lab
+6. Commit Image
+cd /opt/unetlab/tmp/0/72b1903b-4885-4a1c-b9e2-aed46032583a/1/
+qemu-img commit virtioa.qcow2
+
+7. Move the above file /opt/unetlab/addons/csr1000vng-sonic
+
+/opt/unetlab/wrappers/unl_wrapper -a fixpermissions
