@@ -3,7 +3,7 @@
 ### Important Notes
 
 - Ensure to do the steps on Mint 19 or latest
-- Git Checkout a Specific Branch `git checkout 2019.11br` then `make` it
+- Git Checkout a Specific Branch `git checkout 2019.11br` then `make` it `https://github.com/opencomputeproject/onie/tree/2019.11br`
 - HDD should be above VM
 - Ensure to Power Off the VM when the first install on "ONIE Embed" is complete
 - Make a Video
