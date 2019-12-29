@@ -21,7 +21,13 @@ https://esc.fnwi.uva.nl/thesis/centraal/files/f1729148638.pdf
 
 https://sonic-jenkins.westus2.cloudapp.azure.com/job/vs/job/buildimage-vs-image/lastSuccessfulBuild/artifact/target/
 
+### LastSUCCESSFULLBuild
 https://sonic-jenkins.westus2.cloudapp.azure.com/job/vs/job/buildimage-vs-image/lastSuccessfulBuild/artifact/target/sonic-vs.bin
+
+### LastSTABLEFullBuild
+https://sonic-jenkins.westus2.cloudapp.azure.com/job/vs/job/buildimage-vs-image/lastStableBuild/artifact/target/sonic-vs.bin
+
+
 
 https://sonic-jenkins.westus2.cloudapp.azure.com/job/vs/job/buildimage-vs-image/
 
