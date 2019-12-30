@@ -164,3 +164,33 @@ qemu-img commit virtioa.qcow2
 7. Move the above file /opt/unetlab/addons/csr1000vng-sonic
 
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
+
+
+
+
+### GRUB Changes
+
+https://github.com/Azure/sonic-buildimage/blob/master/installer/x86_64/install.sh
+
+```
+# Add common configuration, like the timeout and serial console.
+cat <<EOF > $grub_cfg
+$GRUB_SERIAL_COMMAND
+terminal_input serial
+terminal_output serial
+set timeout=5
+```
+### SONIC Mgmt Interface is `eth0` NOT Ethernet0
+
+Notice the IP on `eth0`
+
+```
+Ethernet112            10.0.0.56/31         up/up         ARISTA13T0      10.0.0.57
+Ethernet116            10.0.0.58/31         up/up         ARISTA14T0      10.0.0.59
+Ethernet120            10.0.0.60/31         up/up         ARISTA15T0      10.0.0.61
+Ethernet124            10.0.0.62/31         up/up         ARISTA16T0      10.0.0.63
+Loopback0              10.1.0.1/32          up/up         N/A             N/A
+docker0                240.127.1.1/24       up/down       N/A             N/A
+eth0                   192.168.77.131/24    up/up         N/A             N/A
+lo                     127.0.0.1/8          up/up         N/A             N/A
+```
