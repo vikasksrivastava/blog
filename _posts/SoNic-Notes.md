@@ -194,3 +194,12 @@ docker0                240.127.1.1/24       up/down       N/A             N/A
 eth0                   192.168.77.131/24    up/up         N/A             N/A
 lo                     127.0.0.1/8          up/up         N/A             N/A
 ```
+
+### Config Change and Applying Config without Reload
+
+```
+root@sonic:/home/admin# vi /etc/sonic/config_db.json
+root@sonic:/home/admin# config reload
+Clear current config and reload config from the file /etc/sonic/config_db.json? [y/N]: y
+Stopping service swss ...
+```
