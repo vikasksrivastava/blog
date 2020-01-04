@@ -5,6 +5,8 @@ description: First steps with CloudFormation
 comments: true
 ---
 
+
+
 #### 1:33 Speed / kcfnuser / D
 
 > **Good link for CFN  IDE Tips**
