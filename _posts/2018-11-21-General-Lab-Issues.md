@@ -119,3 +119,11 @@ Once Connected to the remote machine
 
 ![](assets/markdown-img-paste-20191117154150432.png)
 ![](assets/markdown-img-paste-20191117154337895.png)
+
+
+# EVE Issues
+
+/opt/unetlab/wrappers/unl_wrapper -a stopall
+then run again
+apt update
+apt install --reinstall eve-ng-pro
