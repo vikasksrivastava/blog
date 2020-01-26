@@ -46,11 +46,15 @@ BRKSEC-3004 - Deep Dive on Cisco Security in ACI
 
 1. In the local statiion table the IP address , MAC Address and port number is learned on the Leaf .
 
-```
-Local Station LEAF 1
+> The learning switch does not know the subnet mask in the learned the IP Address. (hence /32)
 
-10.1.1.1      MAC-A  Eth1/1
-10.1.2.1      MAC-B  Eth1/2
+```
+Local Station LEAF-1
+
+IP Address   MAC-Address    Port
+-------------------------------------
+10.1.1.1/32      MAC-PC1      Port-4
+10.1.2.1/32      MAC-PC2      Port-6
 ```
 
 2. The Leaf sends this information to the Spines using multicast , so that it can send it to multiple spines at the same time.  The SPINEs build up a PROXY table which has informations on the IP Address and Corresponding VTEP.
@@ -60,13 +64,13 @@ Proxy Table
 
 IP            VTEP1
 10.1.1.1      192.168.1.1 (Leaf 1 VTEP)
-10.1.2.1      192.168.1.2 )Leaf 2 VTEP)
+10.1.2.1      192.168.1.2 (Leaf 2 VTEP)
 ```
 
 3. When PC1 wants to talk to PC3 , a lookup is done in SPINE's DB and the destination (PC3) location is learned (which is on another VTEP2)
 
 ```
-Global Stattion Table
+Global Station Table
 
 IP            VTEP1
 10.1.1.3      192.168.1.2 (Leaf 2 VTEP)
@@ -363,6 +367,8 @@ After that the **Application Network Profile** is created under which the **EPG*
 - EPGs for L3 Outs
 - L3 Out for EIGRP
 - Transit Routing
+
+
 ---
 <br>
 
