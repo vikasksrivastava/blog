@@ -5,6 +5,15 @@ description: ACI Learning
 comments: true
 ---
 
+# Revised Learning Path
+
+1. Finish "Your First Seven Days Of ACI" - BRKACI-1001
+2. Finish "Mastering ACI Forwarding Behaviour – A Day in the Life of a Packet - BRKACI-3545"
+3. Finish to ACI Bootcamp Videos
+4. Labs on Digital Learning
+5. Labs on AS CX
+
+
 # Write an overall learning summary and path here.
 
 1. **Learning notes from BRKACI-3545 Ciscolive Session**
@@ -42,14 +51,23 @@ BRKSEC-3004 - Deep Dive on Cisco Security in ACI
 
 ----
 
+## Basic Packet Flow in an ACI
+
 ![](/assets/markdown-img-paste-20190906055619781.png)
 
-1. In the local statiion table the IP address , MAC Address and port number is learned on the Leaf .
+> **Local Station Table** and **Global Station Table** are on Leaf
+> **Proxy Table** is on the Spine
 
-> The learning switch does not know the subnet mask in the learned the IP Address. (hence /32)
+**<span style="color:blue"> ON THE LEAF  </span>** : **In the local station table the IP address , MAC Address and port number is learned on the Leaf**
 
-```
-Local Station LEAF-1
+> The learning switch does not know the subnet mask of the learned the IP Address. (hence /32)
+
+> In a "normal" switch the "switching" happends based on the learnt MAC Address , in ACI it is a combination if Switching and Routing.
+
+
+
+```sh
+# Local Station LEAF-1
 
 IP Address   MAC-Address    Port
 -------------------------------------
@@ -57,28 +75,54 @@ IP Address   MAC-Address    Port
 10.1.2.1/32      MAC-PC2      Port-6
 ```
 
-2. The Leaf sends this information to the Spines using multicast , so that it can send it to multiple spines at the same time.  The SPINEs build up a PROXY table which has informations on the IP Address and Corresponding VTEP.
+```sh
+# Local Station LEAF-2
 
+IP Address   MAC-Address    Port
+-------------------------------------
+10.2.2.1/32      MAC-PC3      Port-7
+10.1.2.6/32      MAC-PC4      Port-9
 ```
-Proxy Table
+
+**<span style="color:blue"> ON THE SPINE  </span>** : **The Leaf sends this information to the Spines using multicast , so that it can send it to multiple spines at the same time.  The SPINEs build up a `PROXY` table which has informations on the IP Address and Corresponding VTEP.**
+
+> Inter Fabric Routing setup is via ISIS Only , BGP is only used for L3 Out.
+
+```sh
+# Proxy Table for SPINE1 and SPINE2 contains everyones information
 
 IP            VTEP1
-10.1.1.1      192.168.1.1 (Leaf 1 VTEP)
-10.1.2.1      192.168.1.2 (Leaf 2 VTEP)
+10.1.1.1/32      192.168.1.1 (Leaf 1 VTEP)
+10.1.2.1/32      192.168.1.1 (Leaf 1 VTEP)
+10.2.2.1/32      192.168.1.2 (Leaf 2 VTEP)
+10.1.2.6/32      192.168.1.2 (Leaf 2 VTEP)
 ```
 
-3. When PC1 wants to talk to PC3 , a lookup is done in SPINE's DB and the destination (PC3) location is learned (which is on another VTEP2)
+**<span style="color:blue"> SCENARIO 1  </span>** : When `PC1:10.1.1.1` wants to talk to `PC3:10.2.2.1`:
 
-```
-Global Station Table
+> **<span style="color:red"> ARP Process to Be Clarified and Documented later as this example is directly assuming that the IP Address is known  </span>**
+
+- A lookup is done in `Leaf1`'s Local station table and is NOT found.
+- A look is done on the `SPINE`'s proxy table , which responds back witht he VTEP address of the Leaf which has the IP Address `10.2.2.1`
+- `Leaf1` Stores this received information about `10.2.2.1` into its `Global Station Table`
+- Communicatin starts on a VXLAN encapuslated packet as usual.
+
+
+```sh
+# Global Station Table on Leaf 1
 
 IP            VTEP1
-10.1.1.3      192.168.1.2 (Leaf 2 VTEP)
+10.2.2.1     192.168.1.2 (Leaf 2 VTEP)
 ```
 
-Now once the packet is sent from Leaf1 to Leaf2 ; the packet will be encapsulated as source of Leaf1 and Destination of Leaf2 for VXLAN .
+```sh
+# Global Station Table on Leaf 2
 
+IP            VTEP1
+10.1.1.1     192.168.1.1 (Leaf 2 VTEP)
+```
 
+---
 
 
 ![](/assets/markdown-img-paste-20190906055602822.png)
@@ -114,21 +158,14 @@ For communications  for the devices on the same Leaf the Leaf responds to local 
 
 It's a combination of MAC address and IP Address.
 
-```
-##  An example showing a MAC and IP Entry for an endpoint.
+We can see it on the APIC
+![](assets/markdown-img-paste-2020012611072006.png)
 
-LEAF1# show endpoint ip 10.10.217.20
-Legend:
- s - arp              O - peer-attached    a - local-aged       S - static
- V - vpc-attached     p - peer-aged        M - span             L - local
- B - bounce           H - vtep
-+-----------------------------------+---------------+-----------------+--------------+-------------+
-      VLAN/                           Encap           MAC Address       MAC Info/       Interface
-      Domain                          VLAN            IP Address        IP Info
-+-----------------------------------+---------------+-----------------+--------------+-------------+
-31                                           vlan-1    2cd0.2dbd.f242 LaV                       po3
-DC2-UCS-N5K-NSX:DC2-ISCSI-VLAN1-VRF          vlan-1     10.10.217.20 LV                        po3
-```
+We can find more details about the same on the specific Leaf
+
+
+![](assets/markdown-img-paste-20200126110818755.png)
+
 
 MAC and /32 IP Address are stored in the `Endpoint Table`
 Exception is L3 Out , If we use the same mechanism of learnign all the IP Address , on the MAC address on Nexus router we would have thousand of /32.  Other IP Information is used int he Ip Table just as the normal routing. That is the reason why we use arp table for L3 out.
