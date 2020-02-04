@@ -98,15 +98,68 @@ Note in the picture below that when , this setting is disabled during the backup
 
 ---
 
-**Fabric Policies vs Tenant Policies**
+### What's unders the Fabric Tab - This is where you build the UNDERLAY
+##### Under Fabric we have Fabric Policies and Access Policies
 
-`Fabric Policies` : More about Interfaces , Speeds , LLDP
-`Tenant Policies` : Its is more about configuration related to EPG/BD/VRF etc
+- #### **Fabric Policies**
 
-![](assets/markdown-img-paste-20200126101806428.png)
+  Fabric policies govern the operation of internal fabric interfaces.
+**<span style="color:blue"> Fabric policies configure interfaces that connect spine and leaf switches.</span>** Fabric policies can enable features such as monitoring (statistics collection and statistics export), troubleshooting (on-demand diagnostics and SPAN), or NTP.
+
+  ![](assets/markdown-img-paste-20200204132053437.png)
 
 
-![](assets/markdown-img-paste-20200126102954828.png)
+- #### **Access Policies**
+
+  Access policies govern the operation of interfaces that provide external access to the fabric. **<span style="color:blue">Access policies configure external-facing interfaces that do not connect to a spine switch.</span>** External-facing interfaces connect to external devices such as virtual machine controllers and hypervisors, hosts, routers, or fabric extenders (FEX).
+
+  ![](assets/markdown-img-paste-20200204132444173.png)
+
+---
+
+### Whats unders the Tenants Tab - This is where you build the OVERLAY
+
+- #### Tenant Policies
+  `Tenant Policies` : Its is more about configuration related to EPG/BD/VRF.
+  A tenant is a logical container or a folder for application policies. This container can represent an actual tenant, an organization, or a domain or can just be used for the convenience of organizing information.
+
+  ![](assets/markdown-img-paste-20200204133750270.png)
+
+**We have three types of configuration in Tenant Policies**
+
+![](assets/markdown-img-paste-20200204134548149.png)
+
+
+- **Static Binding**
+
+   ![](assets/markdown-img-paste-20200204135424679.png)
+
+
+   ![](assets/markdown-img-paste-2020020413575866.png)
+   `Policy Control Enfrocement` defines if the any contracts policies will be enforced or not. `Policy Control Direction` defines which direction it is applied.
+
+   **An Example of a Static Path Binding Config**
+   ![](assets/markdown-img-paste-20200204154603949.png)
+   With the above binding configured , you can extend your legacy VLAN configuration to ACI and vice versa
+
+   ![](assets/markdown-img-paste-20200204154924457.png)
+   *In Picture above VLAN from N7K is extended to ACI*
+
+   <br><br>
+
+- **Cisco ACI VMWare Integration**
+
+   ![](assets/markdown-img-paste-20200204175320396.png)
+   - **Step 1.**  Define the vCenter Domain We are going to talk to .
+   - **Step 2.**  ACI and VMWare handshake (the communication between APIC and VMWare happens on the Out of Band Network NOT on the INFRA network; We can use the Inband network but is NOT recommened.)
+   - **Step 3.** vCenter goes ahead and created a vDS on the VMWare
+   - **Step 4.** VMWare Admins Associated the ESXi to the vDS created above
+   - **Step 5.** Between the vDS and ACI ; `LLDP` happens , this will tell what VMWare Blade is on what Leaf.
+   - **Step 6.** Associate the EPGs to the VMMDomain
+   - **Step 7. and Step 8** The EPGs are auto mapped to VMWare Port Groups and are created in VMWare
+   - **Step 9.** Now since ACI knows about the Server location based the information learned from LLDP , ACI and now push the policy on the exact switch where needed (Instead of pushing it everywhere).
+   - **So the network path is established above for the VM to ACI**
+
 
 ---
 ## Endpoint
