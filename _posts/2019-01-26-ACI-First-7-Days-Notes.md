@@ -11,6 +11,9 @@ comments: true
 ---
 
 # Day 1 - Why ACI
+---
+
+### ACI Advantages
 
  ![](assets/markdown-img-paste-20200126092949307.png)
 
@@ -18,7 +21,9 @@ comments: true
 
 ![](assets/markdown-img-paste-20200126093011812.png)
 
-### ACI Fabric Discovery
+---
+
+### ACI Fabric Discovery Basics
 
 ![](assets/markdown-img-paste-20200126093627913.png)
 
@@ -31,23 +36,67 @@ All the internal communication betweek the Spines,Leafs and the APIC happens on 
 
 `MP-BGP` : This is L3 Out Configuration . The routes learned via the WAN (L3 Out in the above pic) needs to be "reflected" / "learnt" by other Leafs. Hence the MP-BGP config.  Note that the no manual config is required except for the the assignment of RR (Route Reflector)
 
+Using the above two components we build the `Underlay Network` which builds as the foundation for the overlay network.
+
+
 ---
+
+### APIC Controlled Basics
 
 **Basic Details about the Ports on the APIC and the the Leafs/Spine**
 
 ![](assets/markdown-img-paste-20200126094750556.png)
 
+- The Blue cables connect to the Leafs
+- The Red cables is the CIMC connection (MGMT)
+- The Green Ones are the interfaces on which the Managment Interface of the APIC resides.
+
+> **Irrespective of what APIC IP Address you connect to via HTTP you see the same data**
+
+> Its a good idea to ensure all the controller status are in healthy status while troubleshooting an APIC issue ![](assets/markdown-img-paste-20200203185456630.png)
+
+---
+
+# Day 2 - Infrastructure and Policies
+
+---
+
+### Managment Access to Switches
+
 ![](assets/markdown-img-paste-20200126094915966.png)
 
-**Each device needs their individual mgmt IP rechability for AAA and NTP**
+
+![](assets/markdown-img-paste-20200203185939462.png)
+
+You can access the the Leafs and the Spines using their Console ports on via the APIC (which in turn connects via VTEP addreses). BUT it is advisable to have individual Management IP Addreses assigned to these devices directly (config done after discovery) , so that inc ase we need to access them.
+
+
+**Each device needs their individual mgmt IP (Oulined above) rechability for AAA and NTP**
 
 ![](assets/markdown-img-paste-20200126095656484.png)
 
-**Capability to compare configuration**
+---
+
+### ACI Backups
+
+**There are two ways to do backups**
+
+- Full Backup
+- Snapshots
+
+**Capability to compare configuration (Snapshots)**
 
 ![](assets/markdown-img-paste-20200126101615741.png)
 
 ![](assets/markdown-img-paste-20200126101638584.png)
+
+**Full Backup**
+
+Note in the picture below that when , this setting is disabled during the backup ; the passwords stored for VMWare Integration or any third part integration are NOT exported. If its enabled , the password is exported in an encrypted fashion.
+
+![](assets/markdown-img-paste-20200203190922958.png)
+
+---
 
 **Fabric Policies vs Tenant Policies**
 
@@ -103,11 +152,7 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 ---
 
 
----
 
-# Day 2 - Infrastructure and Policies
-
----
 
 ---
 
