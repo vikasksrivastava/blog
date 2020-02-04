@@ -162,8 +162,13 @@ Note in the picture below that when , this setting is disabled during the backup
 
 
 ---
-## Endpoint
+
+# Day 3 - Forwarding Overview
+
 ---
+
+## Endpoint
+
 **What is an endpoint ?**
 
 It's a combination of MAC address and IP Address.
@@ -207,11 +212,7 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 
 
 
----
 
-# Day 3 - Forwarding Overview
-
----
 
 
 ---
