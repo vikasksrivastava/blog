@@ -240,3 +240,175 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 # Day 7 - Additional Resources
 
 ---
+
+
+---
+
+# Lab 1. Explore the Cisco ACI Fabric Inventory
+##### Digital Learning
+---
+
+`Fabric`: Cisco ACI inventory and configuration point for intra-fabric and access policies
+
+`Virtual Networking`: Configuration menu for VM Manager interoperability, such as vCenter, Hyper-V, or KVM
+
+`L4-L7 Services`: Package repository for upper-layer service elements, such as firewalls or load balancers, that can be inserted into the fabric
+
+`Admin`: Menu for controlling the operation, administration, and maintenance (OAM) aspects
+
+`Operations`: Menu for visibility, troubleshooting, and capacity profiling
+
+`Apps`: App center used for deploying applications in the Cisco ACI
+
+> The Cisco ACI solution uses an overlay, based on VXLAN, to virtualize the physical infrastructure. This overlay, like most overlays, requires the data path at the edge of the network to map from the tenant end-point address in the packet, also known as its identifier, to the location of the endpoint, also known as its locator. This mapping occurs in a function called a tunnel endpoint (TEP), also known as VXLAN tunnel end point (VTEP). The VTEP addresses are displayed in the INFRASTRUCTURE IP column. The TEP address pool 10.0.0.0/16 has been configured on the Cisco APIC using the initial setup dialog. The APIC assigns the TEP addresses to the fabric switches via DHCP, so the infrastructure IP addresses in your fabric will be different from the figure.
+
+
+Clickign on the Node provides information on the neigbor and port connectivity
+
+
+![](assets/markdown-img-paste-20200205182333520.png)
+
+***The Link Layer Discovery Protocol (LLDP) is responsible for discovering directly adjacent neighbors. When run between the Cisco APIC and a leaf switch, it precedes three other processes: Tunnel endpoint (TEP) IP address assignment, node software upgrade (if necessary), and the intra-fabric messaging (IFM) process, which is used by the Cisco APIC to push policy to the leaves.***
+
+
+**This is where you can see the swith level details**
+![](assets/markdown-img-paste-20200205182608720.png)
+
+**Interface Level Details**
+
+![](assets/markdown-img-paste-20200205182734834.png)
+
+
+
+![](assets/markdown-img-paste-20200205182757602.png)
+
+
+**ACI Diag is the Diagnostic Command for the APIC**
+
+```sh
+apic1# acidiag -h
+usage: acidiag [-h] [-v]
+{avread,fnvread,fnvreadex,rvread,rvreadle,crashsuspecttracker,bootother,bootcurr,journal,logs,telemetry,hwcheck,dbgtoken,validateimage,validateng inxconf,version,preservelogs,platform,verifyapic,bond0test,linkflap,touch,run,installer,start,stop,restart,dmestack,dmecore,reboot}
+               ...
+positional arguments:
+{avread,fnvread,fnvreadex,rvread,rvreadle,crashsuspecttracker,bootother,bootcurr,journal,logs,telemetry,hwcheck,dbgtoken,validateimage,validatenginxconf,version,preservelogs,platform,verifyapic,bond0test,linkflap,touch,run,installer,start          ,stop,restart,dmestack,dmecore,reboot}
+                        sub-command help
+    avread              read appliance vector
+    fnvread             read fabric node vector
+    fnvreadex           read fabric node vector (extended mode)
+    rvread              read replica vector
+    rvreadle            read replica leader summary
+    crashsuspecttracker
+                        read crash suspect tracker state
+    bootother           on next boot, boot other Linux Partition, and display
+                        updated /etc/grub.conf
+    bootcurr            on next boot, boot current Linux Partition, and
+                        display updated /etc/grub.conf
+    journal             Contents of journal logs
+    logs                show log history
+    telemetry           enable/disable telemetry
+    hwcheck             Quick check of APIC Hardware
+    dbgtoken            show debug token
+    validateimage       validate image
+    validatenginxconf   validate nginx conf
+    version             show ISO version
+    preservelogs        stash away logs in preparation for hard reboot
+    platform            show platform
+    verifyapic          run apic installation verify command
+    bond0test           ==SUPPRESS==
+    linkflap            flap a link
+    touch               touch special files
+    run                 run specific commands and capture output
+    installer           installer
+    start               start a service
+    stop                stop a service
+    restart             restart a service
+    reboot              reboot
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --verbose         verbose
+
+```
+
+```
+
+apic1# acidiag fnvread
+ID   Pod ID   Name     Serial Number  IP Address      Role   State   LastUpdMsgId
+----------------------------------------------------------------------------------
+101    1      leaf-a   FDO21351F7L   10.0.128.66/32   leaf   active   0
+102    1      leaf-b   FDO21351F9A   10.0.128.64/32   leaf   active   0
+201    1      spine    FDO214111Q5   10.0.128.65/32   spine  active   0
+
+Total 3 nodes
+
+```
+
+ Cisco APIC Version (3.1) allows you to configure the system and view the configuration through the CLI.
+
+```
+apic1# conf t
+apic1(config)# sh run
+# Command: show running-config
+  aaa banner 'Application Policy Infrastructure Controller'
+  aaa authentication login console
+    exit
+<... output omitted ...>
+```
+
+
+**Static Out of Band management Address**
+
+*Notice that you assign a subnet , and IP Addresses are choosen from that block**
+
+![](assets/markdown-img-paste-20200205183537995.png)
+
+Result of Above configuration
+
+
+![](assets/markdown-img-paste-20200205183647111.png)
+
+
+To assign to the ONLY ONE  devide put the same number twice
+
+
+![](assets/markdown-img-paste-20200205183752216.png)
+
+
+```
+leaf-a# show lldp neighbors
+Capability codes:
+  (R) Router, (B) Bridge, (T) Telephone, (C) DOCSIS Cable Device
+  (W) WLAN Access Point, (P) Repeater, (S) Station, (O) Other
+Device ID            Local Intf      Hold-time  Capability  Port ID
+3560-x.dc.local       Eth1/1          120        BR          Gi1/0/3
+apic1                 Eth1/2          120                    eth2-1
+spine                 Eth1/49         120        BR          Eth1/1
+Total entries displayed: 3
+```
+
+**Removing OOB Management Address Does not affect the capabilit to SSH from APIC to Leaf as this happens with the inra network which ACI had seatup**
+
+![](assets/markdown-img-paste-20200205184419109.png)
+
+
+
+![](assets/markdown-img-paste-20200205184714373.png)
+
+
+This is where you can validate the OOB Management address of a specific Leaf/Spine
+
+![](assets/markdown-img-paste-2020020518531889.png)
+
+---
+
+# Lab 2. Configuring Port Channel
+---
+
+**Topology**
+
+![](assets/markdown-img-paste-20200205185831244.png)
+
+**Out of Band Management Access**
+
+![](assets/markdown-img-paste-20200205185901826.png)
