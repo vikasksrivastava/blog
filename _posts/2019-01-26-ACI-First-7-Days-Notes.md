@@ -257,6 +257,10 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 ##### Digital Learning
 ---
 
+
+
+![](assets/markdown-img-paste-20200207071921760.png)
+
 `Fabric`: Cisco ACI inventory and configuration point for intra-fabric and access policies
 
 `Virtual Networking`: Configuration menu for VM Manager interoperability, such as vCenter, Hyper-V, or KVM
@@ -280,7 +284,7 @@ Clickign on the Node provides information on the neigbor and port connectivity
 ***The Link Layer Discovery Protocol (LLDP) is responsible for discovering directly adjacent neighbors. When run between the Cisco APIC and a leaf switch, it precedes three other processes: Tunnel endpoint (TEP) IP address assignment, node software upgrade (if necessary), and the intra-fabric messaging (IFM) process, which is used by the Cisco APIC to push policy to the leaves.***
 
 
-**This is where you can see the swith level details**
+**This is where you can see the switch level details**
 ![](assets/markdown-img-paste-20200205182608720.png)
 
 **Interface Level Details**
@@ -444,7 +448,7 @@ The following components are to be configured (show in <span style="color:purple
   > What's happenign int he above step is that you are defining the characteristics of what a vPC member port would look like
 
   5. Create a Leaf Interface Profile name `InterProf-ESX`
-  6. Slect the Interfaces as `1/3`
+  6. Select the Interfaces as `1/3`
   7. Select the `Interface Policy Group` created above int he `Port Charachter` section : `IPG-VPC-ESX`
 
 - ##### Configuring the Switch Character
@@ -529,6 +533,10 @@ vPC local role-priority         : 101
 
 ![](assets/markdown-img-paste-20200207070854660.png)
 
+**Note once the vPC config above is complete you can verify your config in the UI**
+
+
+![](assets/markdown-img-paste-20200207071531977.png)
 
 
 
