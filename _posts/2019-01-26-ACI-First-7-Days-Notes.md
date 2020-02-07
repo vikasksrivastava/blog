@@ -15,22 +15,22 @@ comments: true
 
 ### ACI Advantages
 
- ![](assets/markdown-img-paste-20200126092949307.png)
+ ![](/assets/markdown-img-paste-20200126092949307.png)
 
 >**ACI solves the above challenges by providing a simple Leaf/Spine Topology, ECMP which removes the dependency on STP and so on an so forth .**
 
-![](assets/markdown-img-paste-20200126093011812.png)
+![](/assets/markdown-img-paste-20200126093011812.png)
 
 ---
 
 ### ACI Fabric Discovery Basics
 
-![](assets/markdown-img-paste-20200126093627913.png)
+![](/assets/markdown-img-paste-20200126093627913.png)
 
 All the internal communication betweek the Spines,Leafs and the APIC happens on the Infra IP Address denoted by red T in the picture above. The reachability provided by this Infra Network is then used to deploy the required L2/L2 config wherever needed on the leafs.
 
 
-![](assets/markdown-img-paste-20200126094243775.png)
+![](/assets/markdown-img-paste-20200126094243775.png)
 
 `ISIS` : This enables IP reachability between TEPs , the APIC assigns the TEP address. ISIS is automatically established and requires no configuration.
 
@@ -45,7 +45,7 @@ Using the above two components we build the `Underlay Network` which builds as t
 
 **Basic Details about the Ports on the APIC and the the Leafs/Spine**
 
-![](assets/markdown-img-paste-20200126094750556.png)
+![](/assets/markdown-img-paste-20200126094750556.png)
 
 - The Blue cables connect to the Leafs
 - The Red cables is the CIMC connection (MGMT)
@@ -53,7 +53,7 @@ Using the above two components we build the `Underlay Network` which builds as t
 
 > **Irrespective of what APIC IP Address you connect to via HTTP you see the same data**
 
-> Its a good idea to ensure all the controller status are in healthy status while troubleshooting an APIC issue ![](assets/markdown-img-paste-20200203185456630.png)
+> Its a good idea to ensure all the controller status are in healthy status while troubleshooting an APIC issue ![](/assets/markdown-img-paste-20200203185456630.png)
 
 ---
 
@@ -63,17 +63,17 @@ Using the above two components we build the `Underlay Network` which builds as t
 
 ### Managment Access to Switches
 
-![](assets/markdown-img-paste-20200126094915966.png)
+![](/assets/markdown-img-paste-20200126094915966.png)
 
 
-![](assets/markdown-img-paste-20200203185939462.png)
+![](/assets/markdown-img-paste-20200203185939462.png)
 
 You can access the the Leafs and the Spines using their Console ports on via the APIC (which in turn connects via VTEP addreses). BUT it is advisable to have individual Management IP Addreses assigned to these devices directly (config done after discovery) , so that inc ase we need to access them.
 
 
 **Each device needs their individual mgmt IP (Oulined above) rechability for AAA and NTP**
 
-![](assets/markdown-img-paste-20200126095656484.png)
+![](/assets/markdown-img-paste-20200126095656484.png)
 
 ---
 
@@ -86,15 +86,15 @@ You can access the the Leafs and the Spines using their Console ports on via the
 
 **Capability to compare configuration (Snapshots)**
 
-![](assets/markdown-img-paste-20200126101615741.png)
+![](/assets/markdown-img-paste-20200126101615741.png)
 
-![](assets/markdown-img-paste-20200126101638584.png)
+![](/assets/markdown-img-paste-20200126101638584.png)
 
 **Full Backup**
 
 Note in the picture below that when , this setting is disabled during the backup ; the passwords stored for VMWare Integration or any third part integration are NOT exported. If its enabled , the password is exported in an encrypted fashion.
 
-![](assets/markdown-img-paste-20200203190922958.png)
+![](/assets/markdown-img-paste-20200203190922958.png)
 
 ---
 
@@ -106,14 +106,14 @@ Note in the picture below that when , this setting is disabled during the backup
   Fabric policies govern the operation of internal fabric interfaces.
 **<span style="color:blue"> Fabric policies configure interfaces that connect spine and leaf switches.</span>** Fabric policies can enable features such as monitoring (statistics collection and statistics export), troubleshooting (on-demand diagnostics and SPAN), or NTP.
 
-  ![](assets/markdown-img-paste-20200204132053437.png)
+  ![](/assets/markdown-img-paste-20200204132053437.png)
 
 
 - #### **Access Policies**
 
   Access policies govern the operation of interfaces that provide external access to the fabric. **<span style="color:blue">Access policies configure external-facing interfaces that do not connect to a spine switch.</span>** External-facing interfaces connect to external devices such as virtual machine controllers and hypervisors, hosts, routers, or fabric extenders (FEX).
 
-  ![](assets/markdown-img-paste-20200204132444173.png)
+  ![](/assets/markdown-img-paste-20200204132444173.png)
 
 ---
 
@@ -123,33 +123,33 @@ Note in the picture below that when , this setting is disabled during the backup
   `Tenant Policies` : Its is more about configuration related to EPG/BD/VRF.
   A tenant is a logical container or a folder for application policies. This container can represent an actual tenant, an organization, or a domain or can just be used for the convenience of organizing information.
 
-  ![](assets/markdown-img-paste-20200204133750270.png)
+  ![](/assets/markdown-img-paste-20200204133750270.png)
 
 **We have three types of configuration in Tenant Policies**
 
-![](assets/markdown-img-paste-20200204134548149.png)
+![](/assets/markdown-img-paste-20200204134548149.png)
 
 
 - **Static Binding**
 
-   ![](assets/markdown-img-paste-20200204135424679.png)
+   ![](/assets/markdown-img-paste-20200204135424679.png)
 
 
-   ![](assets/markdown-img-paste-2020020413575866.png)
+   ![](/assets/markdown-img-paste-2020020413575866.png)
    `Policy Control Enfrocement` defines if the any contracts policies will be enforced or not. `Policy Control Direction` defines which direction it is applied.
 
    **An Example of a Static Path Binding Config**
-   ![](assets/markdown-img-paste-20200204154603949.png)
+   ![](/assets/markdown-img-paste-20200204154603949.png)
    With the above binding configured , you can extend your legacy VLAN configuration to ACI and vice versa
 
-   ![](assets/markdown-img-paste-20200204154924457.png)
+   ![](/assets/markdown-img-paste-20200204154924457.png)
    *In Picture above VLAN from N7K is extended to ACI*
 
    <br><br>
 
 - **Cisco ACI VMWare Integration**
 
-   ![](assets/markdown-img-paste-20200204175320396.png)
+   ![](/assets/markdown-img-paste-20200204175320396.png)
    - **Step 1.**  Define the vCenter Domain We are going to talk to .
    - **Step 2.**  ACI and VMWare handshake (the communication between APIC and VMWare happens on the Out of Band Network NOT on the INFRA network; We can use the Inband network but is NOT recommened.)
    - **Step 3.** vCenter goes ahead and created a vDS on the VMWare
@@ -174,12 +174,12 @@ Note in the picture below that when , this setting is disabled during the backup
 It's a combination of MAC address and IP Address.
 
 We can see it on the APIC
-![](assets/markdown-img-paste-2020012611072006.png)
+![](/assets/markdown-img-paste-2020012611072006.png)
 
 We can find more details about the same on the specific Leaf
 
 
-![](assets/markdown-img-paste-20200126110818755.png)
+![](/assets/markdown-img-paste-20200126110818755.png)
 
 
 MAC and /32 IP Address are stored in the `Endpoint Table`
@@ -197,7 +197,7 @@ ACI Learns the :
 
 Pervasive gateway means a local gateway residing on every switch for each subnet on that switch.
 
-![](assets/markdown-img-paste-20200126174516134.png)
+![](/assets/markdown-img-paste-20200126174516134.png)
 
 **Proxy Routing**
 
@@ -205,7 +205,7 @@ Every endpoint learn by a Leaf is informed to every spine using multicast. This 
 
 When Leafs do not know a path to a remote endpoint , they can query the Spine for the same.
 
-![](assets/markdown-img-paste-20200126174645703.png)
+![](/assets/markdown-img-paste-20200126174645703.png)
 
 ---
 
@@ -245,11 +245,11 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 
 **Topology**
 
-![](assets/markdown-img-paste-20200205185831244.png)
+![](/assets/markdown-img-paste-20200205185831244.png)
 
 **Out of Band Management Access**
 
-![](assets/markdown-img-paste-20200205185901826.png)
+![](/assets/markdown-img-paste-20200205185901826.png)
 
 ---
 
@@ -259,7 +259,7 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 
 
 
-![](assets/markdown-img-paste-20200207071921760.png)
+![](/assets/markdown-img-paste-20200207071921760.png)
 
 `Fabric`: Cisco ACI inventory and configuration point for intra-fabric and access policies
 
@@ -279,21 +279,21 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 Clickign on the Node provides information on the neigbor and port connectivity
 
 
-![](assets/markdown-img-paste-20200205182333520.png)
+![](/assets/markdown-img-paste-20200205182333520.png)
 
 ***The Link Layer Discovery Protocol (LLDP) is responsible for discovering directly adjacent neighbors. When run between the Cisco APIC and a leaf switch, it precedes three other processes: Tunnel endpoint (TEP) IP address assignment, node software upgrade (if necessary), and the intra-fabric messaging (IFM) process, which is used by the Cisco APIC to push policy to the leaves.***
 
 
 **This is where you can see the switch level details**
-![](assets/markdown-img-paste-20200205182608720.png)
+![](/assets/markdown-img-paste-20200205182608720.png)
 
 **Interface Level Details**
 
-![](assets/markdown-img-paste-20200205182734834.png)
+![](/assets/markdown-img-paste-20200205182734834.png)
 
 
 
-![](assets/markdown-img-paste-20200205182757602.png)
+![](/assets/markdown-img-paste-20200205182757602.png)
 
 
 **ACI Diag is the Diagnostic Command for the APIC**
@@ -374,18 +374,18 @@ apic1(config)# sh run
 
 *Notice that you assign a subnet , and IP Addresses are choosen from that block**
 
-![](assets/markdown-img-paste-20200205183537995.png)
+![](/assets/markdown-img-paste-20200205183537995.png)
 
 Result of Above configuration
 
 
-![](assets/markdown-img-paste-20200205183647111.png)
+![](/assets/markdown-img-paste-20200205183647111.png)
 
 
 To assign to the ONLY ONE  devide put the same number twice
 
 
-![](assets/markdown-img-paste-20200205183752216.png)
+![](/assets/markdown-img-paste-20200205183752216.png)
 
 
 ```
@@ -402,16 +402,16 @@ Total entries displayed: 3
 
 **Removing OOB Management Address Does not affect the capabilit to SSH from APIC to Leaf as this happens with the inra network which ACI had seatup**
 
-![](assets/markdown-img-paste-20200205184419109.png)
+![](/assets/markdown-img-paste-20200205184419109.png)
 
 
 
-![](assets/markdown-img-paste-20200205184714373.png)
+![](/assets/markdown-img-paste-20200205184714373.png)
 
 
 This is where you can validate the OOB Management address of a specific Leaf/Spine
 
-![](assets/markdown-img-paste-2020020518531889.png)
+![](/assets/markdown-img-paste-2020020518531889.png)
 
 ---
 
@@ -422,17 +422,17 @@ This is where you can validate the OOB Management address of a specific Leaf/Spi
 In this Lab2 we wil configure the following scenario
 
 
-![](assets/markdown-img-paste-20200207055238481.png)
+![](/assets/markdown-img-paste-20200207055238481.png)
 
 The following components are to be configured (show in <span style="color:purple">purple</span>)
 
 
-![](assets/markdown-img-paste-20200207055302373.png)
+![](/assets/markdown-img-paste-20200207055302373.png)
 
 **High Level Steps**
 
 
-![](assets/markdown-img-paste-20200207065148867.png)
+![](/assets/markdown-img-paste-20200207065148867.png)
 
 
 - ##### Configuring the Port Character
@@ -458,7 +458,7 @@ The following components are to be configured (show in <span style="color:purple
   2. Associate the Interface Selector `Interface-Profile-ESX`
   This is the actual step where the `Interface Profile` and `Switch Profile` connect.
 
-  ![](assets/markdown-img-paste-20200207065238851.png)
+  ![](/assets/markdown-img-paste-20200207065238851.png)
 
 - ##### Finally Configure vPC between Leafs
 
@@ -531,12 +531,12 @@ vPC local role-priority         : 101
 
 **Notice that in the above configuration the Port Channel Number is NOT the same , one 56 and other is 58 for the SAME port channel configured towards a single end host**
 
-![](assets/markdown-img-paste-20200207070854660.png)
+![](/assets/markdown-img-paste-20200207070854660.png)
 
 **Note once the vPC config above is complete you can verify your config in the UI**
 
 
-![](assets/markdown-img-paste-20200207071531977.png)
+![](/assets/markdown-img-paste-20200207071531977.png)
 
 
 
