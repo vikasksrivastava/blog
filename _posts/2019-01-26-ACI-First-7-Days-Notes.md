@@ -241,6 +241,15 @@ When Leafs do not know a path to a remote endpoint , they can query the Spine fo
 
 ---
 
+### Digital Learning Topologies
+
+**Topology**
+
+![](assets/markdown-img-paste-20200205185831244.png)
+
+**Out of Band Management Access**
+
+![](assets/markdown-img-paste-20200205185901826.png)
 
 ---
 
@@ -405,10 +414,140 @@ This is where you can validate the OOB Management address of a specific Leaf/Spi
 # Lab 2. Configuring Port Channel
 ---
 
-**Topology**
 
-![](assets/markdown-img-paste-20200205185831244.png)
+In this Lab2 we wil configure the following scenario
 
-**Out of Band Management Access**
 
-![](assets/markdown-img-paste-20200205185901826.png)
+![](assets/markdown-img-paste-20200207055238481.png)
+
+The following components are to be configured (show in <span style="color:purple">purple</span>)
+
+
+![](assets/markdown-img-paste-20200207055302373.png)
+
+**High Level Steps**
+
+
+![](assets/markdown-img-paste-20200207065148867.png)
+
+
+- ##### Configuring the Port Character
+
+  1. Enable the CDP in a CDP interface policy that is named `CDP-Enabled`.
+  2. Configure an interface policy (`LLDP-Disabled`), with LLDP **disabled**.
+  3. Configure a **port channel policy**, named `PC-Policy`, with a static port channel mode. Ensure that you have `Static Channel—Mode On`
+
+   > Notice above that you have separate config item named "Port Channel Policy" in ACI
+
+  4. **Configure vPC Interface Policy Group** - An interface policy group gathers multiple interface policies into one set. **A vPC interface policy group gathers the policies with the purpose of activating them on a vPC interface bundle.**  In your topology, the hypervisor is connected to the leaves in a redundant fashion that allows a vPC deployment. You will configure a vPC policy group for your hypervisor. **Name is `IPG-VPC-ESX`** and add everything you created above within it.
+
+  > What's happenign int he above step is that you are defining the characteristics of what a vPC member port would look like
+
+  5. Create a Leaf Interface Profile name `InterProf-ESX`
+  6. Slect the Interfaces as `1/3`
+  7. Select the `Interface Policy Group` created above int he `Port Charachter` section : `IPG-VPC-ESX`
+
+- ##### Configuring the Switch Character
+
+
+  1. Create a Leaf Profile - `LeafProfile-ESX` , add both-leaves 101 and 102
+  2. Associate the Interface Selector `Interface-Profile-ESX`
+  This is the actual step where the `Interface Profile` and `Switch Profile` connect.
+
+  ![](assets/markdown-img-paste-20200207065238851.png)
+
+- ##### Finally Configure vPC between Leafs
+
+  1. Review/Look at the VPC Default Domain
+  `Fabric > Access Policies > Switch Policies > Policies > VPC Domain.`
+  2. Add both leaf switches to the vPC security policy
+  `Fabric > Access Policies > Switch Policies > Policies > Virtual Port Channel default.`
+  3. Configure a VPC Protection Group table with these settings and click Submit.
+
+    ```
+      Name: ACI
+      ID: 100
+      vPC domain policy: default
+      Switch 1: leaf-a (switch ID 101)
+      Switch 2: leaf-b (switch ID 102)
+    ```
+
+
+- #### Verification
+
+After the above configuration you will see
+
+**show vpc status show the Peer Link Connectivt and ALso list the Port Channels that are configured on the Leafs**
+
+```
+leaf-a# show vpc
+Legend:
+                (*) - local vPC is down, forwarding via vPC peer-link
+
+vPC domain id                     : 100
+Peer status                       : peer adjacency formed ok
+vPC keep-alive status             : Disabled
+Configuration consistency status  : success
+Per-vlan consistency status       : success
+Type-2 consistency status         : success
+vPC role                          : primary
+Number of vPCs configured         : 1
+Peer Gateway                      : Disabled
+Dual-active excluded VLANs        : -
+Graceful Consistency Check        : Enabled
+Auto-recovery status              : Enabled (timeout = 240 seconds)
+Operational Layer3 Peer           : Disabled
+
+vPC Peer-link status
+---------------------------------------------------------------------
+id   Port   Status Active vlans
+--   ----   ------ --------------------------------------------------
+1           up     -
+
+vPC status
+----------------------------------------------------------------------
+id   Port   Status Consistency Reason                     Active vlans
+--   ----   ------ ----------- ------                     ------------
+343  Po5    up     success     success
+```
+
+```
+leaf-a# show vpc role
+
+vPC Role status
+----------------------------------------------------
+vPC role                        : primary
+Dual Active Detection Status    : 0
+vPC system-mac                  : 00:23:04:ee:be:64
+vPC system-priority             : 32667
+vPC local system-mac            : 70:7d:b9:f3:f1:c5
+vPC local role-priority         : 101
+```
+
+
+**Notice that in the above configuration the Port Channel Number is NOT the same , one 56 and other is 58 for the SAME port channel configured towards a single end host**
+
+![](assets/markdown-img-paste-20200207070854660.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
