@@ -538,20 +538,31 @@ vPC local role-priority         : 101
 
 ![](/assets/markdown-img-paste-20200207071531977.png)
 
+---
+
+# Lab 3. Configure Cisco ACI Logical Constructs
+---
 
 
 
+![](assets/markdown-img-paste-20200208144443276.png)
+
+
+**High Level Steps**
 
 
 
+- ##### Configuring the Port Character
+
+  1. Create a Tenant `Sales` - skip the step to create the VRF.
+  2. Create a VRF named `Pre-Sales` under `Sales` tenant - Without creatign a `Bridge Domain` in the same step.
+**Each tenant can have one or more VRFs, or share one default VRF with other tenants when there is no overlapping IP addressing being used in the ACI fabric.**
+  3. Create a bridge domain, named `Presales-BD`, associated with the Presales VRF inside the `Sales` tenant.
+**A bridge domain is a unique Layer 2 forwarding domain that contains one or more subnets. Each bridge domain must be linked to a VRF.**
+**By default, unicast routing is enabled. ARP flooding is disabled so that unicast routing will be performed on the target IP address. Endpoint dataplane learning controls whether the remote leaf switch should update the IP-to-VTEP information with the source VTEP of traffic coming from this bridge domain.**
 
 
-
-
-
-
-
-
+      **Note: First-hop security and other policies are enabled on a per tenant bridge domain basis. As the bridge domain may be deployed on a single or across multiple leaf switches, the first-hop security threat control and mitigation mechanisms cater to a single switch and multiple switch scenarios.** ![](assets/markdown-img-paste-2020020815035462.png)
 
 
 
