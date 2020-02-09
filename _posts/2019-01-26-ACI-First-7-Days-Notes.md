@@ -551,22 +551,99 @@ vPC local role-priority         : 101
 **High Level Steps**
 
 
-
-- ##### Configuring the Port Character
-
   1. Create a Tenant `Sales` - skip the step to create the VRF.
   2. Create a VRF named `Pre-Sales` under `Sales` tenant - Without creatign a `Bridge Domain` in the same step.
 **Each tenant can have one or more VRFs, or share one default VRF with other tenants when there is no overlapping IP addressing being used in the ACI fabric.**
   3. Create a bridge domain, named `Presales-BD`, associated with the Presales VRF inside the `Sales` tenant.
+
+---
+
 **A bridge domain is a unique Layer 2 forwarding domain that contains one or more subnets. Each bridge domain must be linked to a VRF.**
 **By default, unicast routing is enabled. ARP flooding is disabled so that unicast routing will be performed on the target IP address. Endpoint dataplane learning controls whether the remote leaf switch should update the IP-to-VTEP information with the source VTEP of traffic coming from this bridge domain.**
 
+**Note: First-hop security and other policies are enabled on a per tenant bridge domain basis. As the bridge domain may be deployed on a single or across multiple leaf switches, the first-hop security threat control and mitigation mechanisms cater to a single switch and multiple switch scenarios.** ![](assets/markdown-img-paste-2020020815035462.png)
 
-      **Note: First-hop security and other policies are enabled on a per tenant bridge domain basis. As the bridge domain may be deployed on a single or across multiple leaf switches, the first-hop security threat control and mitigation mechanisms cater to a single switch and multiple switch scenarios.** ![](assets/markdown-img-paste-2020020815035462.png)
-
-
-
+---
 
 
+  4. Configure four subnets for the Presales-BD with these default gateways: `10.0.1.254/24`, `10.0.2.254/24`, `10.0.3.254/24,` and `10.0.4.254/24`.![](/assets/aci-advertise-external-internal.gif)
+  5. Create Application Profile `Tiered-App` and create EPGs `Web` , `App` , `DB`
 
-<br>
+
+  6. Create another filter named `HTTP` add `HTTP` under it.
+  6. Configre a filter names `Basic-Ping-SSH` and under it create `ICMP` , `SSH` ![](assets/markdown-img-paste-20200208163905538.png)
+
+
+  7. Create a Contract `Web-Access` and include the filter `Basic-Ping-SSH` and `HTTP`
+
+
+
+![](assets/markdown-img-paste-20200208155300693.png)
+
+
+
+![](assets/markdown-img-paste-20200208161253674.png)
+
+
+  8. Finally do the following
+
+
+
+![](assets/markdown-img-paste-20200208164245784.png)
+
+
+---
+
+# Lab 4. Configure VMM Domain Integration
+---
+
+#### PICTURE DRAWING HERE
+
+
+**Cisco ACI supports three integration methods with VMware vCenter:**
+
+- Distributed Virtual Switch (DVS)
+
+- Cisco Application Virtual Switch (Cisco AVS)
+
+- Cisco ACI Virtual Edge (AVE)
+
+
+1. Create a `vCenter VMM Domain` in ACI and also configure the Dynamic VLAN Range .
+
+![](assets/markdown-img-paste-20200208194224127.png)
+
+2. Provide the vCenter Credentials and IP Address of vCenter
+3. The steps provisions VMWare DVS named `Sales-vCetner` in the VMWare environment
+
+![](assets/markdown-img-paste-20200208194932523.png)
+
+4. Create an `AAEP`  name `vCenter AAEP` and join the `vCenter VMM Domain` and the `ESX` Policy Group created in `Lab 2`
+
+5. Now go to the `Interface Policy Group` `ESX` and attach the `vCetner AAEP` to it as well.
+
+6. Add  ESXi Host 192.168.10.62 to the DVS Switchs and assign the uplinks
+
+```
+For this lab
+
+vmnic2 --- uplink1
+vmnic3 --- uplink2
+
+```
+
+
+7. Ensure CDP is on in vCetner side ![](assets/markdown-img-paste-20200208200432132.png)
+
+
+8. Verify the Leaf is discovered ![](assets/markdown-img-paste-20200208200603747.png)
+
+
+9. Now go the APIC and look for the Uplink `vmnics` there ans see the discovered peers (leafs) ![](assets/markdown-img-paste-20200208200746845.png)
+
+10. Now associate the `Application Profile`s `Domain (VMs and BareMetals)` to the VMM Domain created.
+
+
+**This will create the EPGs under this Application Profile as port groups in VMWare!** ![](assets/markdown-img-paste-20200208201143960.png)
+
+**Now these Port Groups can be assigned to different VMs which in ACI map to different EPGs.**
