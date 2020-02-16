@@ -673,13 +673,13 @@ and identify the differences between the two.
 **High Level Steps**
 
 
-![](assets/markdown-img-paste-20200211195737484.png)
+![](/assets/markdown-img-paste-20200211195737484.png)
 
 - **Step 1.** **LOAD the device package** A device package contains the mappings and abstrations of the object model of the device that is being controlled and the scripts to configure the device.
-**`L4–L7 Services > Packages > Quick Start > Import Device Package` (asa-device-pkg-1.3.10.24.zip)**![](assets/markdown-img-paste-20200211194054185.png)
+**`L4–L7 Services > Packages > Quick Start > Import Device Package` (asa-device-pkg-1.3.10.24.zip)**![](/assets/markdown-img-paste-20200211194054185.png)
 
 
-- **Step 2.** **REVIEW the details of the package** You should see several web policy profiles, for **routed and transparent mode**. All of them initially permit web traffic, with different combinations of IP version and NAT.![](assets/markdown-img-paste-20200211195534165.png)
+- **Step 2.** **REVIEW the details of the package** You should see several web policy profiles, for **routed and transparent mode**. All of them initially permit web traffic, with different combinations of IP version and NAT.![](/assets/markdown-img-paste-20200211195534165.png)
 
 > **EXAMINE** **WebPolicyForRoutedMode**, the first profile in the list. This section is the configuration placeholder for a Cisco ASA deployment in the Layer 3 mode. Among others, you will see the configuration of an ACL and the external and internal interfaces.
 
@@ -721,19 +721,19 @@ and identify the differences between the two.
 
 - **Step 9.** **Create a L4–L7 Device for Cisco ASAv**
 
-  ![](assets/markdown-img-paste-20200211202214483.png)
+  ![](/assets/markdown-img-paste-20200211202214483.png)
 
-  ![](assets/markdown-img-paste-20200211202253156.png)
+  ![](/assets/markdown-img-paste-20200211202253156.png)
 
 
 - **Step 10.** **Create and Apply Service Graph**
 
-  ![](assets/markdown-img-paste-20200211202446497.png)
+  ![](/assets/markdown-img-paste-20200211202446497.png)
 
-  ![](assets/markdown-img-paste-2020021120250574.png)
+  ![](/assets/markdown-img-paste-2020021120250574.png)
 
   **Check the Above Config Here**
-  ![](assets/markdown-img-paste-20200211202603880.png)
+  ![](/assets/markdown-img-paste-20200211202603880.png)
 
 
 > **NOTICE** That nothing has yet been deployed on the ASAv
@@ -741,17 +741,17 @@ and identify the differences between the two.
 - **Step 9.** **Apply the service graph template to the DB-to-Backup traffic**
 
 
-  ![](assets/markdown-img-paste-20200211202825309.png)
+  ![](/assets/markdown-img-paste-20200211202825309.png)
 
-  ![](assets/markdown-img-paste-20200211202843192.png)
+  ![](/assets/markdown-img-paste-20200211202843192.png)
 
-  ![](assets/markdown-img-paste-20200211204719420.png)
+  ![](/assets/markdown-img-paste-20200211204719420.png)
 
 
-  ![](assets/markdown-img-paste-20200211204817979.png)
+  ![](/assets/markdown-img-paste-20200211204817979.png)
 
   **Double-click the network_ip_address field of the network object web_server and enter the IP address of the TRANSACT VM (10.0.4.1/32).**
-  ![](assets/markdown-img-paste-2020021120484281.png)
+  ![](/assets/markdown-img-paste-2020021120484281.png)
 
 
 
@@ -787,83 +787,89 @@ and identify the differences between the two.
 
 - **Step 9.** **Verify Contract is applied**
 
+  ![](/assets/markdown-img-paste-20200211205152138.png)
 
-![](assets/markdown-img-paste-20200211205152138.png)
-
-![](assets/markdown-img-paste-20200211205218220.png)
+  ![](/assets/markdown-img-paste-20200211205218220.png)
 
 **Also lok at the Subject**
 
-![](assets/markdown-img-paste-20200211205253392.png)
+  ![](/assets/markdown-img-paste-20200211205253392.png)
 
 - **Step 9.** **Look at the Topology**
 
-![](assets/markdown-img-paste-2020021120532213.png)
+  ![](/assets/markdown-img-paste-2020021120532213.png)
 
 - **Step 9.** **Examine the L4–L7 service parameters of the provider EPG (Backup).**
 
-![](assets/markdown-img-paste-20200211205356406.png)
+  ![](/assets/markdown-img-paste-20200211205356406.png)
 
 - **Step 10.** **Examine the deployed graph instance and device.**
 
 
-  ![](assets/markdown-img-paste-20200211214532111.png)
+  ![](/assets/markdown-img-paste-20200211214532111.png)
 
 
 
 
-- **Step 9.** **Go to Services > L4–L7, expand Deployed Devices, and examine the ASA-Presales device. You should see the VLAN encapsulations for the cluster devices.** ![](assets/markdown-img-paste-20200211214701944.png)
+- **Step 9.** **Go to Services > L4–L7, expand Deployed Devices, and examine the ASA-Presales device. You should see the VLAN encapsulations for the cluster devices.** ![](/assets/markdown-img-paste-20200211214701944.png)
 
 - **Step 9.** **Notice the VM Settings**
 
-  ![](assets/markdown-img-paste-20200211214758213.png)
+  ![](/assets/markdown-img-paste-20200211214758213.png)
 
 
-- **Step 9.** **Notice the Roll Back Options** ![](assets/markdown-img-paste-20200211214928217.png)
+- **Step 9.** **Notice the Roll Back Options** ![](/assets/markdown-img-paste-20200211214928217.png)
 
 - **Step 9.** **Customize the Cisco ASAv Configuration** You can assign ASAv interface IP Addresses right from the ACI.
 
 
-![](assets/markdown-img-paste-20200211215255628.png)
+  ![](/assets/markdown-img-paste-20200211215255628.png)
 
-![](assets/markdown-img-paste-20200211215316110.png)
+  ![](/assets/markdown-img-paste-20200211215316110.png)
 
-![](assets/markdown-img-paste-20200211215335358.png)
+  ![](/assets/markdown-img-paste-20200211215335358.png)
 
-```sh
-ciscoasa# show interface ip brief
-Interface                  IP-Address      OK? Method Status                Protocol
-GigabitEthernet0/0         10.0.4.253      YES manual up                    up
-GigabitEthernet0/1         10.0.3.253      YES manual up
-```
+  ```sh
+  ciscoasa# show interface ip brief
+  Interface                  IP-Address      OK? Method Status                Protocol
+  GigabitEthernet0/0         10.0.4.253      YES manual up                    up
+  GigabitEthernet0/1         10.0.3.253      YES manual up
+  ```
 
-You can verify the connectivity in the ASA
+**You can verify the connectivity in the ASA**
 
-```sh
+  ```sh
 
-ciscoasa# show access-list
-access-list cached ACL log flows: total 0, denied 0 (deny-flow-max 4096)
-            alert-interval 300
-access-list access-list-inbound; 2 elements; name hash: 0xcb5bd6c7
-access-list access-list-inbound line 1 extended permit tcp any object web_server eq www (hitcnt=3) 0x1560fdca
-  access-list access-list-inbound line 1 extended permit tcp any host 10.0.4.1 eq www (hitcnt=3) 0x1560fdca
-access-list access-list-inbound line 2 extended permit tcp any object web_server eq https (hitcnt=0) 0x122c48e4
-  access-list access-list-inbound line 2 extended permit tcp any host 10.0.4.1 eq https (hitcnt=0) 0x122c48e4
+  ciscoasa# show access-list
+  access-list cached ACL log flows: total 0, denied 0 (deny-flow-max 4096)
+              alert-interval 300
+  access-list access-list-inbound; 2 elements; name hash: 0xcb5bd6c7
+  access-list access-list-inbound line 1 extended permit tcp any object web_server eq www (hitcnt=3) 0x1560fdca
+    access-list access-list-inbound line 1 extended permit tcp any host 10.0.4.1 eq www (hitcnt=3) 0x1560fdca
+  access-list access-list-inbound line 2 extended permit tcp any object web_server eq https (hitcnt=0) 0x122c48e4
+    access-list access-list-inbound line 2 extended permit tcp any host 10.0.4.1 eq https (hitcnt=0) 0x122c48e4
 
-```
-
-
-- **Step 9.** **Exami**
-
-- **Step 9.** **Exami**
-
-- **Step 9.** **Exami**
+  ```
 
 
-
-### Use L4–L7 Device in Unmanaged Mode
 
 ---
+
+# Use L4–L7 Device in Unmanaged Mode
+
+- **Step 1.** **Exami**
+
+- **Step 2.** **Exami**
+
+- **Step 3.** **Exami**
+
+- **Step 4.** **Exami**
+
+- **Step 5.** **Exami**
+
+- **Step 6.** **Exami**
+
+
 
 **ACI Operations and Troubleshooting (CI-ACIOPS)**
 
@@ -1042,4 +1048,4 @@ Lab 26 – Upgrade APIC and Switch Firmware
 https://www.cisco.com/c/dam/en_us/training-events/le31/le46/cln/marketing/exam-topics/600-660-DCACIA.pdf
 
 
-![](assets/markdown-img-paste-20200210114008920.png)
+![](/assets/markdown-img-paste-20200210114008920.png)
