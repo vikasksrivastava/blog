@@ -592,6 +592,7 @@ vPC local role-priority         : 101
 ![](/assets/markdown-img-paste-20200208164245784.png)
 
 
+
 ---
 
 # Lab 4. Configure VMM Domain Integration
