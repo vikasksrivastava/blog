@@ -19,16 +19,9 @@ comments: true
 5. Temporary credentials are returned using STS `AssumeRoleWithSAML`.
 6. The user is authenticated and provided access to the AWS management console.
 
-<iframe width="700" height="500"
-src="https://www.youtube.com/embed/VP9wBGm982g"
-frameborder="0"
-allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen></iframe>
-
-<iframe src="https://player.vimeo.com/video/396765915" width="640" height="480" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
 
-https://www.youtube.com/watch?v=SIBCi76wspQ&t=1947s
+<iframe src="https://player.vimeo.com/video/396773347" width="640" height="361" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
 ## Install the Required Services
 
@@ -212,3 +205,9 @@ mail
 sAMAccountName
 userPrincipalName
 ```
+
+<iframe width="700" height="500"
+src="https://www.youtube.com/embed/VP9wBGm982g"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
