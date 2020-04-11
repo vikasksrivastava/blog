@@ -163,9 +163,6 @@ apt install --reinstall eve-ng-pro
 	z-index: 1;
 }
 </style>
-</head>
-<body>
-
 
 <div class="video-wrap">
   <div class="video">
