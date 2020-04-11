@@ -167,16 +167,34 @@ apt install --reinstall eve-ng-pro
 <body>
 
 
-
-<p>A Collapsible:</p>
-<button type="button" class="collapsible">Open Collapsible</button>
 <div class="video-wrap">
   <div class="video">
     <iframe width="600" height="340" src="https://www.youtube.com/embed/0pThnRneDjw" frameborder="0" gesture="media" allowfullscreen></iframe>
   </div>
 </div>
-</div>
 
+
+<script type="text/javascript">
+(function($) {
+	var $window = $(window);
+	var $videoWrap = $('.video-wrap');
+	var $video = $('.video');
+	var videoHeight = $video.outerHeight();
+
+	$window.on('scroll',  function() {
+		var windowScrollTop = $window.scrollTop();
+		var videoBottom = videoHeight + $videoWrap.offset().top;
+
+		if (windowScrollTop > videoBottom) {
+			$videoWrap.height(videoHeight);
+			$video.addClass('stuck');
+		} else {
+			$videoWrap.height('auto');
+			$video.removeClass('stuck');
+		}
+	});
+}(jQuery));
+</script>
 
 
 
