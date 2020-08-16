@@ -121,3 +121,117 @@ print(motorcycles)
 ['honda', 'yamaha', 'suzuki']
 ['honda', 'yamaha', 'suzuki', 'ducati']
 ```
+**Removing Items from a list**
+
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+del motorcycles[0]  # Deletes the first item from the list
+print(motorcycles)
+```
+
+```
+['honda', 'yamaha', 'suzuki']
+['yamaha', 'suzuki']
+```
+
+**Starting with an empty list and adding items**
+
+```py
+motorcycles = [] # Start with an empty list
+motorcycles.append('honda')  # Add Items
+motorcycles.append('yamaha')
+motorcycles.append('suzuki')
+
+print(motorcycles)
+```
+
+```
+['honda', 'yamaha', 'suzuki']
+```
+
+**Removing an Item Using the pop() Method**
+
+**pop takes out the first item of the list**
+
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+popped_motorcycle = motorcycles.pop()
+print(motorcycles)
+print(popped_motorcycle)
+```
+```
+['honda', 'yamaha', 'suzuki']
+['honda', 'yamaha']
+```
+**The pop() method removes the last item in a list, but it lets you work with that item after removing it.**
+
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+last_owned = motorcycles.pop()
+print("The last motorcycle I owned was a " + last_owned.title() + ".")
+```
+
+```
+The last motorcycle I owned was a Suzuki.
+```
+
+**Removing an Item by Value**
+
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki', 'ducati']
+print(motorcycles)
+motorcycles.remove('ducati')
+print(motorcycles)
+```
+```
+['honda', 'yamaha', 'suzuki', 'ducati']
+['honda', 'yamaha', 'suzuki']
+```
+
+```py
+# Original Invitation
+guestlist = ['Ben S', 'Tammy G', 'Anna M', 'Bobby L']
+
+for guest in guestlist:
+  print("Hello my dear friend "+ str(guest) + " please come to my party")
+
+# A guest said they cant come
+can_not_attend = 'Tammy G'
+guestlist.remove(can_not_attend)
+print (" I am sorry but " + str(can_not_attend) + " wont be able to join us")
+
+for guest in guestlist:
+  print("Hello my dear friend "+ str(guest) + " please come to my party")
+
+# Found a bigger table , so invite more guest
+
+guestlist.insert(0,"Bob M") # Insert at beginning of the list
+guestlist.insert(2, "Midde M") # Insert at Middle
+guestlist.append("Mr Append") # Appended at end of the list
+
+for guest in guestlist:
+  print("Hello my dear friend "+ str(guest) + " please come to my party")
+
+# You just found out that your new dinner table won’t arrive in time for the dinner, and you have space for only two guests .
+
+print("I am sorry I can only invite 2 people at the dinner\n")
+number_of_guests = len(guestlist)
+print (number_of_guests)
+
+# for variable_name in range(start, stop, step)
+# https://www.geeksforgeeks.org/g-fact-21-increment-and-decrement-operators-in-python/
+
+## Removing all the people from the list untill only 2 are left
+
+for i in range(number_of_guests, 2, -1):
+  popped_guest = guestlist.pop()
+  print("Hello my dear friend I m sorry you are popped out "+ str(popped_guest))
+
+print ("The new guest list is " + str(guestlist))
+for guest in guestlist:
+  print("Hello my dear friend "+ str(guest) + " please come to my party")
+
+
+```
