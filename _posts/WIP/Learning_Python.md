@@ -180,17 +180,6 @@ The last motorcycle I owned was a Suzuki.
 **Removing an Item by Value**
 
 ```py
-motorcycles = ['honda', 'yamaha', 'suzuki', 'ducati']
-print(motorcycles)
-motorcycles.remove('ducati')
-print(motorcycles)
-```
-```
-['honda', 'yamaha', 'suzuki', 'ducati']
-['honda', 'yamaha', 'suzuki']
-```
-
-```py
 # Original Invitation
 guestlist = ['Ben S', 'Tammy G', 'Anna M', 'Bobby L']
 
@@ -233,5 +222,12 @@ print ("The new guest list is " + str(guestlist))
 for guest in guestlist:
   print("Hello my dear friend "+ str(guest) + " please come to my party")
 
+
+# Cleaning up the list to make it empty
+
+del guestlist[0] # Removign the first item
+del guestlist[0] # Removign the second item , also at 0 since there were only 2 items , when first was remove , second one came to 0.
+
+print(guestlist)
 
 ```
