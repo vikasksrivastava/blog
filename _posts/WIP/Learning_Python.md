@@ -94,4 +94,30 @@ print(vegetables[2])
 
 Prints `carrot`
 
-**Changing, adding, and removing elements** PAGE 73
+**Changing, adding, and removing elements**
+
+**Changing**
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+# Changing the Item
+motorcycles[0] = 'ducati'
+print(motorcycles)
+```
+
+```
+['honda', 'yamaha', 'suzuki']
+['ducati', 'yamaha', 'suzuki']
+```
+
+**Adding**
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+motorcycles.append('ducati')
+print(motorcycles)
+```
+```
+['honda', 'yamaha', 'suzuki']
+['honda', 'yamaha', 'suzuki', 'ducati']
+```
