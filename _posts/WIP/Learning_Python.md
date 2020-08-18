@@ -231,3 +231,120 @@ del guestlist[0] # Removign the second item , also at 0 since there were only 2 
 print(guestlist)
 
 ```
+
+
+**Organizing a List**
+
+```py
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort()  # These changes the order permanently
+# cars.sort(reverse=True)  You can also do reverse.
+print(cars)
+```
+```
+['audi', 'bmw', 'subaru', 'toyota']
+```
+
+The function `.sorted()` only sorts it temporarily
+
+**Finding the Length of a List**
+
+```py
+>>> cars = ['bmw', 'audi', 'toyota', 'subaru']
+>>> len(cars)
+4
+```
+
+```py
+places_to_visit = ['Rome', 'Florence', 'Switzerland', 'India', 'Iceland']
+
+print("Original List : " + str(places_to_visit))
+print("Printing temp sorted : " + str(sorted(places_to_visit))) # Sorted only sort temporrarily without changign the original list
+print("Original List again : " + str(places_to_visit))
+
+temp = sorted(places_to_visit)
+temp.sort(reverse=True) # Notice how to reverse.
+
+print("Sorted Reverse Alphabetical" + str(temp))
+print("Original List again : " + str(places_to_visit))
+places_to_visit.reverse()
+print("Reversed List" + str(places_to_visit))
+places_to_visit.reverse()
+print("back to Original List" + str(places_to_visit))
+```
+
+
+**Avoiding Index Errors When Working with Lists**
+
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles[3])
+```
+
+```
+Traceback (most recent call last):
+File "motorcycles.py", line 3, in <module>
+    print(motorcycles[3])
+IndexError: list index out of range
+
+```
+
+```py
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles[-1])
+```
+
+The index -1 always returns the last item in a list, in this case the value 'suzuki'
+
+**Looping Through an Entire List**
+
+```py
+magicians = ['alice', 'david', 'carolina']
+for magician in magicians:
+    print(magician)
+```
+
+```
+alice
+david
+carolina
+```
+
+**Using the range() Function**
+
+Python’s range() function makes it easy to generate a series of numbers.
+
+```py
+for value in range(1,5):
+    print(value)
+```
+```
+1
+2
+3
+4
+```
+
+**Using range() to Make a List of Numbers**
+
+```py
+numbers = list(range(1,6))
+print(numbers)
+```
+
+```
+[1, 2, 3, 4, 5]
+```
+
+We can also use the range() function to tell Python to skip numbers in a given range. For example, here’s how we would list the even numbers between 1 and 10:
+
+![](assets/markdown-img-paste-20200817205403990.png)
+
+```py
+even_numbers = list(range(2,11,2))
+print(even_numbers)
+```
+
+```
+[2, 4, 6, 8, 10]
+```
