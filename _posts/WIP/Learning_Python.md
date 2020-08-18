@@ -332,6 +332,8 @@ numbers = list(range(1,6))
 print(numbers)
 ```
 
+*Notice that even if the range is till 6 , it stops at 5, Expected Behaviour*
+
 ```
 [1, 2, 3, 4, 5]
 ```
@@ -348,3 +350,52 @@ print(even_numbers)
 ```
 [2, 4, 6, 8, 10]
 ```
+
+```py
+squares = []
+for value in range(1,11): # Runs for numbers 1 - 1- , skips 11
+    square = value**2
+    squares.append(square)
+print(squares)
+```
+
+```
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
+**List Comprehensions**
+
+*Summarises multiple lines of code above into one*
+
+To use this syntax:
+- begin with a descriptive name for the list, such as squares.
+- Next, open a set of square brackets
+- and define the expression for the values you want to store in the new list
+
+```py
+squares = [value**2 for value in range(1,11)]
+print(squares)
+```
+```
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
+```py
+for number in range(1,21):
+    print(number)
+
+#for number in range(1,1000001):
+#    print(number)
+
+million_list = [value for value in range(1,1000001)]
+print(million_list)
+print(min(million_list))
+print(max(million_list))
+
+new_value = 0
+for value1 in range(1,1000001):
+    new_value = new_value + value1
+print(new_value)
+```
+
+At Page 64
