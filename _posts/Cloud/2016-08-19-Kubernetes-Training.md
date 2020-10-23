@@ -550,7 +550,7 @@ nginx-deployment-d55b94fd-72pj4   1/1     Running   0          107s
 nginx-deployment-d55b94fd-n8fjm   1/1     Running   0          107s
 ```
 
-In this example , we will delete a pod which was created by the deloyment and notice that the Deployment spins up a new Pod to replinish the same
+In this example, we will delete a pod which was created by the deloyment and notice that the Deployment spins up a new Pod to replinish the same
 
 ```sh
 root@kube-master:~# kubectl delete pod nginx-deployment-d55b94fd-72pj4
