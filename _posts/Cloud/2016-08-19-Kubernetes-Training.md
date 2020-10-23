@@ -95,7 +95,7 @@ sudo apt-get install -y kubelet=1.12.7-00 kubeadm=1.12.7-00 kubectl=1.12.7-00
 
 **Step 3.** **Bootstraping the cluster**
 
-```
+```sh
 
 root@kube-master:~# kubeadm init --pod-network-cidr=10.244.0.0/16
 
