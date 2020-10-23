@@ -739,7 +739,7 @@ kubectl describe secret admin-user1-token-8wdg9 -n kubernetes-dashboard
 ```
 
 ```sh
-# User Creation
+# User Creation.
 
 apiVersion: v1
 kind: ServiceAccount
