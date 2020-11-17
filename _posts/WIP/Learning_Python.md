@@ -81,7 +81,7 @@ print(vegetables)
 
 The above will print the representation of list with the brackets
 
-```
+```sh
 [`tomato`, `brocolli`, `carrot`]
 ```
 
@@ -105,7 +105,7 @@ motorcycles[0] = 'ducati'
 print(motorcycles)
 ```
 
-```
+```sh
 ['honda', 'yamaha', 'suzuki']
 ['ducati', 'yamaha', 'suzuki']
 ```
@@ -117,7 +117,7 @@ print(motorcycles)
 motorcycles.append('ducati')
 print(motorcycles)
 ```
-```
+```sh
 ['honda', 'yamaha', 'suzuki']
 ['honda', 'yamaha', 'suzuki', 'ducati']
 ```
@@ -130,7 +130,7 @@ del motorcycles[0]  # Deletes the first item from the list
 print(motorcycles)
 ```
 
-```
+```sh
 ['honda', 'yamaha', 'suzuki']
 ['yamaha', 'suzuki']
 ```
@@ -146,7 +146,7 @@ motorcycles.append('suzuki')
 print(motorcycles)
 ```
 
-```
+```sh
 ['honda', 'yamaha', 'suzuki']
 ```
 
@@ -161,7 +161,7 @@ popped_motorcycle = motorcycles.pop()
 print(motorcycles)
 print(popped_motorcycle)
 ```
-```
+```sh
 ['honda', 'yamaha', 'suzuki']
 ['honda', 'yamaha']
 ```
@@ -173,7 +173,7 @@ last_owned = motorcycles.pop()
 print("The last motorcycle I owned was a " + last_owned.title() + ".")
 ```
 
-```
+```sh
 The last motorcycle I owned was a Suzuki.
 ```
 
@@ -281,7 +281,7 @@ motorcycles = ['honda', 'yamaha', 'suzuki']
 print(motorcycles[3])
 ```
 
-```
+```sh
 Traceback (most recent call last):
 File "motorcycles.py", line 3, in <module>
     print(motorcycles[3])
@@ -304,7 +304,7 @@ for magician in magicians:
     print(magician)
 ```
 
-```
+```sh
 alice
 david
 carolina
@@ -318,7 +318,7 @@ Python’s range() function makes it easy to generate a series of numbers.
 for value in range(1,5):
     print(value)
 ```
-```
+```sh
 1
 2
 3
