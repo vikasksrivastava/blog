@@ -8,28 +8,33 @@ permalink: /about/
 
 ## Vikas Srivastava
 
-An experienced **CCIE Datacenter and Security Engineer** having 10 plus years of experience , with recognized strength in implementing and supporting advanced **Enterprise Datacenters, cloud solutions** and applications. Ability to design, troubleshoot and optimize legacy and new datacenter designs. Keen in learning new technologies on my own, current interests include cloud solutions like **OpenStack, AWS and SDN, OpenFlow**. Successfully maintain complete professionalism and personal commitment with excellent communication and people skills and the ability to train, motivate and supervise a team.
+Customer facing trusted advisor, multi-skilled pre-sales Solution Architect with experience in Hybrid Cloud, Security, Datacenter and Networking. Have designed, implemented and automated critical workloads and applications for Fortune 500 customers. Passion for learning and taking difficult tasks and leading it successfully. Having experience working with customers on C-level, director & developer level, allows me to tailor the appropriate messaging.
+My interest areas are Automation, Cloud, Security and AI/ML.
+
 
 **Certifications:**
 
 
-  - CCIE Datacenter # 42302
-  - CCIE Security # 42302
-  - AWS Certified Solutions Architect - Associate
-  - Mirantis Certified Openstack Administrator - Professional Level
-  - Redhat Certified Engineer (RHCE)
-  - VMware Certified Professional – Network Virtualization (VCP-NV)
-  - VMware Certified Professional 5 – Data Center Virtualization (VCP5-DCV)
-  - NetApp Certified Data Management Administrator (NCDA)
-  - Cisco Storage Networking Support Specialist (ICSNS)
-  - Cisco Data Center Unified Computing Support Specialist (DCUCI)
-  - CCNP Voice (CCNP-V)
-  - Cisco Certified Network Associate (CCNA)
-  - Certified Ethical Hacker (CEH)
-  - ITIL Foundation v3
+	CCIE Datacenter # 43202
+	CCIE Security # 43202
+	AWS Certified Solutions Architect – Associate
+	AWS Certified Advanced Networking - Specialty
+	RedHat Certified Engineer (RHCE)
+	Cisco Tech. Leadership Development Program
+	Certified Openstack Administrator
+	Cloudera Certified Hadoop Administrator
+	Advanced Presentation Skills Training
+	VMWare Certified (VCP)
 
 
-**Specialties:** Virtualization, Data Center, Switching, Storage, DCB, SAN, Flexpod solutions, Cisco UCS, Cisco Nexus Switches, Cisco Nexus 1000v, FC, FCoE, NetApp
+
+**Specialties:** 	Cloud: AWS, RedHat OpenStack, Kubernetes, Google Compute Engine, EC2, S3, VPC, Direct Connect.
+	Networking: Catalyst 9000, Cisco ACI, IOS-XE,NX-OS, OSPF, BGP, MPLS, AWS Networking
+	Security: Cisco ISE, Firepower, Umbrella, Stealthwatch, Vulnerability Assessment, Pentesting.
+	Programming: Shell scripting, Python
+	Cloud Automation : Terraform and Foundational CloudFormation, Git , Jenkins, Python
+	Tools: Wireshark, Visual Studio Code, Atom, HackTheBox, VulnHub
+
 
 #### Systems Engineer
 - `Company Name ` :  **Cisco Systems**
