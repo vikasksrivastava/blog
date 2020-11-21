@@ -17,25 +17,26 @@ My interest areas are Automation, Cloud, Security and AI/ML.
 **Certifications:**
 
 
-	CCIE Datacenter # 43202
-	CCIE Security # 43202
-	AWS Certified Solutions Architect – Associate
-	AWS Certified Advanced Networking - Specialty
-	RedHat Certified Engineer (RHCE)
-	Cisco Tech. Leadership Development Program
-	Certified Openstack Administrator
-	Cloudera Certified Hadoop Administrator
-	Advanced Presentation Skills Training
-	VMWare Certified (VCP)
+- CCIE Datacenter # 43202
+- CCIE Security # 43202
+- AWS Certified Solutions Architect – Associate
+- AWS Certified Advanced Networking - Specialty
+- RedHat Certified Engineer (RHCE)
+- Cisco Tech. Leadership Development Program
+- Certified Openstack Administrator
+- Cloudera Certified Hadoop Administrator
+- Advanced Presentation Skills Training
+- VMWare Certified (VCP)
 
 
 
-**Specialties:** 	Cloud: AWS, RedHat OpenStack, Kubernetes, Google Compute Engine, EC2, S3, VPC, Direct Connect.
-	Networking: Catalyst 9000, Cisco ACI, IOS-XE,NX-OS, OSPF, BGP, MPLS, AWS Networking
-	Security: Cisco ISE, Firepower, Umbrella, Stealthwatch, Vulnerability Assessment, Pentesting.
-	Programming: Shell scripting, Python
-	Cloud Automation : Terraform and Foundational CloudFormation, Git , Jenkins, Python
-	Tools: Wireshark, Visual Studio Code, Atom, HackTheBox, VulnHub
+**Specialties:**
+- Cloud: AWS, RedHat OpenStack, Kubernetes, Google Compute Engine, EC2, S3, VPC, Direct Connect.
+- Networking: Catalyst 9000, Cisco ACI, IOS-XE,NX-OS, OSPF, BGP, MPLS, AWS Networking
+- Security: Cisco ISE, Firepower, Umbrella, Stealthwatch, Vulnerability Assessment, Pentesting.
+- Programming: Shell scripting, Python
+- Cloud Automation : Terraform and Foundational CloudFormation, Git , Jenkins, Python
+- Tools: Wireshark, Visual Studio Code, Atom, HackTheBox, VulnHub
 
 
 #### Systems Engineer
