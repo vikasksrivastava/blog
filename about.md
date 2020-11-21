@@ -6,7 +6,7 @@ permalink: /about/
 ---
 <br>
 
-![](assets/markdown-img-paste-2020112104321045.png)
+![](/assets/markdown-img-paste-2020112104321045.png)
 
 ## Vikas Srivastava
 
