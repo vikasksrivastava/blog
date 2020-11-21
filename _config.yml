@@ -187,8 +187,8 @@ protocols:
 
     twitter_image: "/assets/nr-logo.jpg"
 
-    os_repo: "https://github.com/nikhita/nikhita.github.io"
+    os_repo: "https://github.com/vikasksrivastava/blog"
     os_rcs_type: "git"
-    os_src: "git@github.com:nikhita.github.io.git"
+    os_src: "git@github.com:blog.git"
 
 theme: jekyll-theme-cayman
