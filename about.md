@@ -6,6 +6,8 @@ permalink: /about/
 ---
 <br>
 
+![](assets/markdown-img-paste-2020112104321045.png)
+
 ## Vikas Srivastava
 
 Customer facing trusted advisor, multi-skilled pre-sales Solution Architect with experience in Hybrid Cloud, Security, Datacenter and Networking. Have designed, implemented and automated critical workloads and applications for Fortune 500 customers. Passion for learning and taking difficult tasks and leading it successfully. Having experience working with customers on C-level, director & developer level, allows me to tailor the appropriate messaging.
