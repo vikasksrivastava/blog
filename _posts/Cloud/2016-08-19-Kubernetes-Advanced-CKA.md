@@ -18,9 +18,9 @@ https://learn.hashicorp.com/consul/getting-started-k8s/helm-deploy
 
 **Worker Node**
 
-- kubelet : runs and manages the container on the node and talks to the API server .
-- kubeproxy : Loadbalances traffic between application components
-- container runtime : docker , rtk etc.
+- `kubelet` : runs and manages the container on the node and talks to the API server .
+- `kubeproxy` : Loadbalances traffic between application components
+- `container runtime` : docker , rtk etc.
 
 
 ![](assets/markdown-img-paste-20191102195938465.png)
