@@ -73,6 +73,9 @@ Helpful Series of Numbers for Subnetting
 ## Memorize the following
 **Powers of 2**
 
+<img src="/assets/markdown-img-paste-20190727165622171.png" alt="Drawing" style="width: 250px;"/>
+
+
 ![](/assets/markdown-img-paste-20190727165622171.png)
 --
 ![](/assets/markdown-img-paste-20190727173837434.png)
