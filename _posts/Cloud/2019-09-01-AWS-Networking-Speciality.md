@@ -89,7 +89,7 @@ Helpful Series of Numbers for Subnetting
 
 **Step 1.** Based on the Sequence `128 64 32 16 8 4 2 1` , the Subnet bit is `1` and there are `7` bits for host.
 
-> Magic Number here is `128`
+> Magic Number here is `128`(Last Borrowed bit)
 
 - **Network Bits** = $2^1$ = 2
 - **Host Bits** = $2^7$ = 128 (-2 for network and broadcast)
@@ -99,7 +99,7 @@ Helpful Series of Numbers for Subnetting
 ----
 **EXAMPLE 2** **Subnet: 255.255.255.192 (/26)**
 
-> Magic Number here is `64`
+> Magic Number here is `64`(Last Borrowed bit)
 
 **Step 1.** Based on the Sequence `128 64 32 16 8 4 2 1` , the Subnet bit is `2` and there are `6` bits for host.
 
