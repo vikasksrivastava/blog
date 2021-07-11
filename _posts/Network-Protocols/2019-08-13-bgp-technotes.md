@@ -5,28 +5,6 @@ description: My Notes on BGP
 comments: true
 ---
 
-<html>
- <head>
-    <style>
-    {
-        box-sizing: border-box;
-    }
-    /* Set additional styling options for the columns*/
-    .column {
-    float: left;
-    width: 50%;
-    }
-
-    .row:after {
-    content: "";
-    display: table;
-    clear: both;
-    }
-    </style>
- </head>
- <body>
-    <div class="row">
-        <div class="column" style="background-color:#FFB695;">
 <!-- TOC -->
 
 - [About BGP](#about-bgp)
@@ -50,9 +28,6 @@ comments: true
 	- [BGP Practice Questions](#bgp-practice-questions)
 
 <!-- /TOC -->
-        </div>
-        <div class="column" style="background-color:#96D1CD;">
-
 
 > `RIP`, `OSPF` and `EIGRP` are all different but they have one thing in common; they want to find the shortest path to the destination
 > <span style="color:blue">There is only one routing protocol we currently use on the Internet which is BGP.
@@ -564,8 +539,3 @@ The last BGP attribute is router ID. If everything is the same then the router I
 ### BGP Practice Questions
 
 -------------------------------
-
-        </div>
-    </div>
- </body>
-</html>
