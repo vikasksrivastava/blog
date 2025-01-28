@@ -5,8 +5,8 @@ description: Learning YANG
 comments: true
 ---
 
-<meta http-equiv="refresh" content="0; url=https://blog.devopssimplified.com/Learning-YANG">
-<link rel="canonical" href="https://www.synsynack.net/learning-yang" />-
+<meta http-equiv="refresh" content="0; url=https://www.synsynack.net/learning-yang">
+<link rel="canonical" href="https://www.synsynack.net/learning-yang" />
 
 <!-- TOC START min:1 max:5 link:true update:true -->
   - [Modules](#modules)
